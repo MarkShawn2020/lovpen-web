@@ -7,23 +7,26 @@ import Image from 'next/image';
 import {Button} from '@/components/lovpen-ui/button';
 import {useAuth} from '@/contexts/AuthContext';
 import {cn} from '@/lib/utils';
-import {BookOpen, LogOut, Settings, User} from 'lucide-react';
+import {BarChart3, BookOpen, LogOut, Settings, User} from 'lucide-react';
 import {
   AuthNavigationLink,
   AuthNavigationMenu,
   AuthNavigationMenuItem,
   AuthNavigationMenuList
 } from './AuthNavigationMenu';
+import { FeedbackModal } from '@/components/feedback/FeedbackModal';
 
 const AuthNavbar = () => {
   const {user, logout} = useAuth();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
 
   const navigation = [
     {name: '工作空间', href: '/space', icon: '🏠'},
     {name: '知识库', href: '/database', icon: BookOpen},
+    {name: '数据库看板', href: '#', icon: BarChart3, pending: true},
   ];
 
   // 移动端菜单使用的 isActive 函数
@@ -41,8 +44,15 @@ const AuthNavbar = () => {
     await logout();
   };
 
+  const handlePendingItemClick = (e: React.MouseEvent, itemName: string) => {
+    e.preventDefault();
+    if (itemName === '数据库看板') {
+      setIsFeedbackModalOpen(true);
+    }
+  };
+
   return (
-    <nav className="bg-background-main border-b border-border-default/20">
+    <nav className="bg-background-main border-b border-border-default/20 shrink-0">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo */}
@@ -67,7 +77,11 @@ const AuthNavbar = () => {
                   const IconComponent = item.icon;
                   return (
                     <AuthNavigationMenuItem key={item.name}>
-                      <AuthNavigationLink href={item.href}>
+                      <AuthNavigationLink 
+                        href={item.href}
+                        onClick={item.pending ? e => handlePendingItemClick(e, item.name) : undefined}
+                        className={item.pending ? 'opacity-60 cursor-pointer' : ''}
+                      >
                         {typeof IconComponent === 'string'
                           ? (
                             <span className="mr-2">{IconComponent}</span>
@@ -76,6 +90,11 @@ const AuthNavbar = () => {
                             <IconComponent className="w-4 h-4 mr-2"/>
                           )}
                         <span>{item.name}</span>
+                        {item.pending && (
+                          <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                            即将开放
+                          </span>
+                        )}
                       </AuthNavigationLink>
                     </AuthNavigationMenuItem>
                   );
@@ -88,6 +107,7 @@ const AuthNavbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <div className="relative">
               <button
+                type="button"
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                 className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-text-main hover:bg-primary/5 transition-colors"
               >
@@ -120,6 +140,7 @@ const AuthNavbar = () => {
                   </Link>
                   <hr className="my-1 border-border-default/20"/>
                   <button
+                    type="button"
                     onClick={handleLogout}
                     className="flex items-center w-full px-4 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
                   >
@@ -170,11 +191,18 @@ const AuthNavbar = () => {
                   href={item.href}
                   className={cn(
                     'flex items-center px-3 py-2 rounded-md text-base font-medium transition-colors',
+                    item.pending && 'opacity-60 cursor-pointer',
                     isActive(item.href)
                       ? 'bg-primary/10 text-primary'
                       : 'text-text-main hover:text-primary hover:bg-primary/5'
                   )}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    if (item.pending) {
+                      handlePendingItemClick(e, item.name);
+                    } else {
+                      setIsMobileMenuOpen(false);
+                    }
+                  }}
                 >
                   {typeof IconComponent === 'string'
                     ? (
@@ -184,6 +212,11 @@ const AuthNavbar = () => {
                       <IconComponent className="w-5 h-5 mr-3"/>
                     )}
                   {item.name}
+                  {item.pending && (
+                    <span className="ml-auto text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                      即将开放
+                    </span>
+                  )}
                 </Link>
               );
             })}
@@ -215,6 +248,7 @@ const AuthNavbar = () => {
                 设置
               </Link>
               <button
+                type="button"
                 onClick={handleLogout}
                 className="flex items-center w-full px-3 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
               >
@@ -225,6 +259,12 @@ const AuthNavbar = () => {
           </div>
         </div>
       )}
+
+      {/* Feedback Modal */}
+      <FeedbackModal 
+        isOpen={isFeedbackModalOpen} 
+        onClose={() => setIsFeedbackModalOpen(false)} 
+      />
     </nav>
   );
 };

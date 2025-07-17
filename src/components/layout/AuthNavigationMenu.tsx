@@ -79,7 +79,7 @@ type AuthNavigationLinkProps = {
   href: string;
   children: ReactNode;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 function AuthNavigationLink({
@@ -106,7 +106,7 @@ function AuthNavigationLink({
     <NavigationMenuPrimitive.Link asChild active={active}>
       <Link
         href={href}
-        onClick={onClick}
+        onClick={e => onClick?.(e)}
         className={cn(
           authNavigationLinkStyle({
             variant: active ? 'active' : 'default',
