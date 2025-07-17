@@ -135,45 +135,20 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
 
   return (
     <div className="flex flex-col u-gap-m h-full">
-      {/* Chat Header */}
-      <div className="bg-background-main rounded-lg border border-border-default/20 overflow-hidden">
-        <div className="bg-background-ivory-medium px-4 py-3 border-b border-border-default/20">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center u-gap-s">
-              <div className="w-7 h-7 bg-primary/20 rounded-full flex items-center justify-center">
-                <span className="text-sm">🤖</span>
-              </div>
-              <div>
-                <h3 className="font-medium text-text-main text-sm">AI 助手</h3>
-                <p className="text-xs text-text-faded">在线</p>
-              </div>
-            </div>
 
-            <div className="flex items-center u-gap-s">
-              <Button variant="outline" size="sm" className="text-xs h-7 px-2">
-                🗑️ 清空
-              </Button>
-              <button
-                type="button"
-                className="text-sm text-text-faded hover:text-text-main transition-colors p-1 hover:bg-background-oat rounded"
-                title="更多选项"
-              >
-                ⚙️
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Messages Area */}
       <div
         className="bg-background-main rounded-lg border border-border-default/20 flex-1 flex flex-col overflow-hidden"
       >
-        <div className="bg-background-ivory-medium px-4 py-2 border-b border-border-default/20 flex items-center justify-between">
+        <div
+          className="bg-background-ivory-medium px-4 py-2 border-b border-border-default/20 flex items-center justify-between"
+        >
           <h4 className="font-medium text-text-main text-sm flex items-center u-gap-s">
             💬 对话记录
           </h4>
           <div className="flex items-center u-gap-s">
+            <Button variant="outline" size="sm" className="text-xs h-7 px-2">
+              🗑️ 清空
+            </Button>
             <button
               type="button"
               className="text-xs text-text-faded hover:text-text-main transition-colors p-1 hover:bg-background-oat rounded"
@@ -257,82 +232,7 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
         </div>
 
         {/* Input Area */}
-        <div className="border-t border-border-default/20 p-3">
-          {inputMode === 'text'
-            ? (
-                <div className="flex u-gap-s items-end">
-                  <div className="flex-1 relative">
-                    <input
-                      type="text"
-                      value={inputText}
-                      onChange={e => setInputText(e.target.value)}
-                      onKeyDown={handleKeyPress}
-                      placeholder="💬 输入消息..."
-                      className="w-full px-3 py-2 border border-border-default/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm"
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setInputMode('voice')}
-                    className="p-2 text-text-faded hover:text-text-main hover:bg-background-oat rounded-lg transition-all"
-                    title="切换到语音输入"
-                  >
-                    🎙️
-                  </button>
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    onClick={handleSendMessage}
-                    disabled={!inputText.trim()}
-                    className="px-3 py-2 h-auto"
-                  >
-                    📤
-                  </Button>
-                </div>
-              )
-            : (
-                <div className="flex u-gap-s items-center">
-                  <div className="flex-1 flex items-center u-gap-s">
-                    <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center text-sm transition-all cursor-pointer ${
-                        isRecording
-                          ? 'bg-red-500/20 border border-red-500 animate-pulse'
-                          : 'bg-primary/20 border border-primary hover:bg-primary/30'
-                      }`}
-                      onClick={handleVoiceToggle}
-                    >
-                      {isRecording ? '🔴' : '🎤'}
-                    </div>
-                    <span className="text-sm text-text-faded">
-                      {isRecording ? '正在录音...' : '点击录音'}
-                    </span>
-                    {inputText && (
-                      <span className="text-xs text-text-main bg-background-ivory-medium px-2 py-1 rounded">
-                        已录制
-                      </span>
-                    )}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setInputMode('text')}
-                    className="p-2 text-text-faded hover:text-text-main hover:bg-background-oat rounded-lg transition-all"
-                    title="切换到文字输入"
-                  >
-                    📝
-                  </button>
-                  {inputText && (
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      onClick={handleSendMessage}
-                      className="px-3 py-2 h-auto"
-                    >
-                      📤
-                    </Button>
-                  )}
-                </div>
-              )}
-
+        <div className="border-t border-border-default/20 p-3 space-y-2">
           {/* Quick Actions */}
           <div className="flex flex-wrap u-gap-s mt-2">
             <button
@@ -357,6 +257,86 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
               ✨ 优化
             </button>
           </div>
+
+          {inputMode === 'text'
+            ? (
+              <div className="flex u-gap-s items-end">
+                <button
+                  type="button"
+                  onClick={() => setInputMode('voice')}
+                  className="p-2 text-text-faded hover:text-text-main hover:bg-background-oat rounded-lg transition-all"
+                  title="切换到语音输入"
+                >
+                  🎙️
+                </button>
+
+                <div className="flex-1 relative">
+                  <input
+                    type="text"
+                    value={inputText}
+                    onChange={e => setInputText(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    placeholder="💬 输入消息..."
+                    className="w-full px-3 py-2 border border-border-default/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm"
+                  />
+                </div>
+
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={handleSendMessage}
+                  disabled={!inputText.trim()}
+                  className="px-3 py-2 h-auto"
+                >
+                  📤
+                </Button>
+              </div>
+            )
+            : (
+              <div className="flex u-gap-s items-center">
+                <button
+                  type="button"
+                  onClick={() => setInputMode('text')}
+                  className="p-2 text-text-faded hover:text-text-main hover:bg-background-oat rounded-lg transition-all"
+                  title="切换到文字输入"
+                >
+                  📝
+                </button>
+
+                <div className="flex-1 flex items-center u-gap-s">
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm transition-all cursor-pointer ${
+                      isRecording
+                        ? 'bg-red-500/20 border border-red-500 animate-pulse'
+                        : 'bg-primary/20 border border-primary hover:bg-primary/30'
+                    }`}
+                    onClick={handleVoiceToggle}
+                  >
+                    {isRecording ? '🔴' : '🎤'}
+                  </div>
+                  <span className="text-sm text-text-faded">
+                      {isRecording ? '正在录音...' : '点击录音'}
+                    </span>
+                  {inputText && (
+                    <span className="text-xs text-text-main bg-background-ivory-medium px-2 py-1 rounded">
+                        已录制
+                      </span>
+                  )}
+                </div>
+
+                {inputText && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleSendMessage}
+                    className="px-3 py-2 h-auto"
+                  >
+                    📤
+                  </Button>
+                )}
+              </div>
+            )}
+
         </div>
       </div>
     </div>
