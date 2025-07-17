@@ -1,8 +1,8 @@
 import {sql} from 'drizzle-orm';
 import {headers} from 'next/headers';
 import {NextResponse} from 'next/server';
-import {db} from '@/libs/DB';
-import {logger} from '@/libs/Logger';
+import {db} from '@/lib/DB';
+import {logger} from '@/lib/Logger';
 import {counterSchema} from '@/models/Schema';
 import {CounterValidation} from '@/validations/CounterValidation';
 

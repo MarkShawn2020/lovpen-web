@@ -1,13 +1,12 @@
 import type {Metadata} from 'next';
-import {ClerkProvider} from '@clerk/nextjs';
 import {hasLocale, NextIntlClientProvider} from 'next-intl';
 import {setRequestLocale} from 'next-intl/server';
 import {Fira_Code, Inter} from 'next/font/google';
 import {notFound} from 'next/navigation';
 import {PostHogProvider} from '@/components/analytics/PostHogProvider';
 import {ReactQueryProvider} from '@/components/providers/ReactQueryProvider';
-import {routing} from '@/libs/I18nRouting';
-import {ClerkLocalizations} from '@/utils/AppConfig';
+import {AuthProvider} from '@/contexts/AuthContext';
+import {routing} from '@/lib/I18nRouting';
 import '@/styles/global.css';
 
 const inter = Inter({
@@ -64,33 +63,10 @@ export default async function RootLayout(props: {
 
   setRequestLocale(locale);
 
-  const clerkLocale = ClerkLocalizations.supportedLocales[locale] ?? ClerkLocalizations.defaultLocale;
-  let signInUrl = '/sign-in';
-  let signUpUrl = '/sign-up';
-  let dashboardUrl = '/dashboard';
-  let afterSignOutUrl = '/';
-
-  if (locale !== routing.defaultLocale) {
-    signInUrl = `/${locale}${signInUrl}`;
-    signUpUrl = `/${locale}${signUpUrl}`;
-    dashboardUrl = `/${locale}${dashboardUrl}`;
-    afterSignOutUrl = `/${locale}${afterSignOutUrl}`;
-  }
-
   return (
     <html lang={locale} className={`${inter.variable} ${firaCode.variable}`}>
       <body className="font-sans antialiased">
-        <ClerkProvider
-          localization={clerkLocale}
-          signInUrl={signInUrl}
-          signUpUrl={signUpUrl}
-          signInFallbackRedirectUrl={dashboardUrl}
-          signUpFallbackRedirectUrl={dashboardUrl}
-          afterSignOutUrl={afterSignOutUrl}
-          appearance={{
-            cssLayerName: 'clerk',
-          }}
-        >
+        <AuthProvider>
           <NextIntlClientProvider>
             <ReactQueryProvider>
               <PostHogProvider>
@@ -98,7 +74,7 @@ export default async function RootLayout(props: {
               </PostHogProvider>
             </ReactQueryProvider>
           </NextIntlClientProvider>
-        </ClerkProvider>
+        </AuthProvider>
       </body>
     </html>
   );

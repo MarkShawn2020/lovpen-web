@@ -1,6 +1,6 @@
 import {NextRequest} from 'next/server';
-import {AIModel, aiProvider} from '@/libs/AIProvider';
-import {Env} from '@/libs/Env';
+import {AIModel, aiProvider} from '@/lib/AIProvider';
+import {Env} from '@/lib/Env';
 
 export async function POST(request: NextRequest) {
   try {

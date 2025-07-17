@@ -79,7 +79,8 @@ export default antfu(
       'perfectionist/sort-imports': 'off',
       'ts/consistent-type-imports': 'off',
       'no-console': 'off',
-      'ts/ban-ts-comment': 'off'
+      'ts/ban-ts-comment': 'off',
+      'style/no-trailing-spaces': 'off'
     },
   },
 );

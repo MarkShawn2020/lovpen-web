@@ -1,5 +1,5 @@
 import {setRequestLocale} from 'next-intl/server';
-import {AuthLayoutWrapper} from '@/components/layout/AuthLayoutWrapper';
+import {AuthNavbar} from '@/components/layout/AuthNavbar';
 
 export default async function AuthLayout(props: {
   children: React.ReactNode;
@@ -8,5 +8,12 @@ export default async function AuthLayout(props: {
   const {locale} = await props.params;
   setRequestLocale(locale);
 
-  return <AuthLayoutWrapper>{props.children}</AuthLayoutWrapper>;
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <AuthNavbar />
+      <div className="container mx-auto px-4 py-8">
+        {props.children}
+      </div>
+    </div>
+  );
 }

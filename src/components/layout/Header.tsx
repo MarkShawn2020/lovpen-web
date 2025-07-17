@@ -1,8 +1,5 @@
-import {SignOutButton} from '@clerk/nextjs';
-import {auth} from '@clerk/nextjs/server';
 import {getLocale, getTranslations} from 'next-intl/server';
 import Link from 'next/link';
-import {Button} from '@/components/lovpen-ui/button';
 import {LogoWithText} from '@/components/lovpen-ui/logo';
 import {SmartNavLink} from '@/components/lovpen-ui/smart-nav-link';
 import {getI18nPath} from '@/utils/Helpers';
@@ -10,7 +7,7 @@ import {Container} from './Container';
 import {HeaderClient} from './HeaderClient';
 
 const Header = async () => {
-  const {userId} = await auth();
+  // 移除Clerk依赖，使用客户端组件处理认证状态
   const locale = await getLocale();
   const t = await getTranslations('Header');
 
@@ -21,8 +18,8 @@ const Header = async () => {
     {name: t('about'), href: '/about'},
   ];
 
-  const signInUrl = getI18nPath('/sign-in', locale);
-  const signUpUrl = getI18nPath('/sign-up', locale);
+  const signInUrl = getI18nPath('/login', locale);
+  const signUpUrl = getI18nPath('/register', locale);
   const dashboardUrl = getI18nPath('/dashboard', locale);
 
   return (
@@ -66,44 +63,8 @@ const Header = async () => {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center space-x-4">
-            {userId
-              ? (
-                // Authenticated user actions
-                  <>
-                    <Link href={dashboardUrl}>
-                      <Button variant="secondary" size="md">
-                        {t('dashboard')}
-                      </Button>
-                    </Link>
-                    <SignOutButton>
-                      <Button variant="primary" size="md">
-                        {t('sign_out')}
-                      </Button>
-                    </SignOutButton>
-                  </>
-                )
-              : (
-                // Unauthenticated user actions
-                  <>
-                    <Link href={signInUrl}>
-                      <Button variant="secondary" size="md">
-                        {t('sign_in')}
-                      </Button>
-                    </Link>
-                    <Link href={signUpUrl}>
-                      <Button variant="primary" size="md">
-                        {t('download_plugin')}
-                      </Button>
-                    </Link>
-                  </>
-                )}
-          </div>
-
-          {/* Mobile Menu Button */}
           <HeaderClient
             navigation={navigation}
-            isAuthenticated={!!userId}
             urls={{
               signIn: signInUrl,
               signUp: signUpUrl,

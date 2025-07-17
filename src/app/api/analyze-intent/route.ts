@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server';
 import {generateObject} from 'ai';
 import {z} from 'zod';
-import {AIModel, aiProvider} from '@/libs/AIProvider';
+import {AIModel, aiProvider} from '@/lib/AIProvider';
 
 const intentSchema = z.object({
   intent: z.enum(['memo', 'chat', 'create', 'dangerous', 'other']),

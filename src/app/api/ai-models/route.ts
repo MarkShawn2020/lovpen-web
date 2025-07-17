@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { aiProvider } from '@/libs/AIProvider';
+import { aiProvider } from '@/lib/AIProvider';
 
 export async function GET() {
   try {

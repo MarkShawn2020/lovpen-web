@@ -1,6 +1,6 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import Image from 'next/image';
-import {routing} from '@/libs/I18nRouting';
+import {routing} from '@/lib/I18nRouting';
 
 type IPortfolioDetailProps = {
   params: Promise<{ slug: string; locale: string }>;

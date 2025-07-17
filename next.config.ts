@@ -2,7 +2,7 @@ import type { NextConfig } from 'next';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
 import createNextIntlPlugin from 'next-intl/plugin';
-import './src/libs/Env';
+import '@/lib/Env';
 
 // Define the base Next.js configuration
 const baseConfig: NextConfig = {
@@ -14,7 +14,7 @@ const baseConfig: NextConfig = {
 };
 
 // Initialize the Next-Intl plugin
-let configWithPlugins = createNextIntlPlugin('./src/libs/I18n.ts')(baseConfig);
+let configWithPlugins = createNextIntlPlugin('./src/lib/I18n.ts')(baseConfig);
 
 // Conditionally enable bundle analysis
 if (process.env.ANALYZE === 'true') {
@@ -54,6 +54,9 @@ if (!process.env.NEXT_PUBLIC_SENTRY_DISABLED) {
 
     // Disable Sentry telemetry
     telemetry: false,
+
+    // Disable automatic instrumentation to reduce warnings
+    automaticVercelMonitors: false,
   });
 }
 

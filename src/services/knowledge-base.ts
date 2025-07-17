@@ -1,6 +1,6 @@
 import type {KnowledgeItem, PlatformIntegration, SearchFilters, SearchResult} from '@/types/knowledge-base';
 import {and, desc, eq, ilike, or, sql} from 'drizzle-orm';
-import {db} from '@/libs/DB';
+import {db} from '@/lib/DB';
 import {knowledgeItemsSchema, platformIntegrationsSchema} from '@/models/Schema';
 
 export class KnowledgeBaseService {

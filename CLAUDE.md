@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## **前端设计请严格遵循 @ocs/design-guide.md  **
+
 ## Commands
 
 ### Development
@@ -184,3 +186,8 @@ src/
 - All external integrations are optional and can be disabled via environment variables
 - Storybook is configured for component development and testing
 - The boilerplate follows Next.js 15 and React 19 best practices
+
+## Workflow Tips
+
+- 本地已经开启一个 dev 服务，请不要 build，只要 pnpm lint:fix && pnpm check:types 即可
+```

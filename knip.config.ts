@@ -5,7 +5,7 @@ const config: KnipConfig = {
   ignore: [
     'checkly.config.ts',
     'unlighthouse.config.ts',
-    'src/libs/I18n.ts',
+    'src/lib/I18n.ts',
     'src/types/I18n.ts',
     'tests/**/*.ts',
   ],

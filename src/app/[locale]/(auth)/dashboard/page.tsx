@@ -1,20 +1,10 @@
-import {getTranslations} from 'next-intl/server';
+'use client';
+
 import {Button} from '@/components/lovpen-ui/button';
 import {Card, CardContent, CardHeader} from '@/components/lovpen-ui/card';
+import {withAuthRequired} from '@/components/auth/withAuth';
 
-export async function generateMetadata(props: {
-  params: Promise<{ locale: string }>;
-}) {
-  const {locale} = await props.params;
-  const t = await getTranslations({
-    locale,
-    namespace: 'Dashboard',
-  });
-
-  return {
-    title: t('meta_title'),
-  };
-}
+// 客户端组件不能使用 generateMetadata
 
 // Mock data - in production, this would come from your API/database
 const dashboardData = {
@@ -182,7 +172,7 @@ function QuickActions() {
   );
 }
 
-export default function Dashboard() {
+function Dashboard() {
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -238,3 +228,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+export default withAuthRequired(Dashboard, '/login');
