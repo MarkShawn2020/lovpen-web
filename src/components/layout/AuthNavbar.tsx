@@ -8,7 +8,12 @@ import {Button} from '@/components/lovpen-ui/button';
 import {useAuth} from '@/contexts/AuthContext';
 import {cn} from '@/lib/utils';
 import {BookOpen, LogOut, Settings, User} from 'lucide-react';
-import { NavTabs, NavTabsLink, NavTabsList } from './NavTabs';
+import {
+  AuthNavigationLink,
+  AuthNavigationMenu,
+  AuthNavigationMenuItem,
+  AuthNavigationMenuList
+} from './AuthNavigationMenu';
 
 const AuthNavbar = () => {
   const {user, logout} = useAuth();
@@ -56,25 +61,27 @@ const AuthNavbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center">
-            <NavTabs>
-              <NavTabsList>
+            <AuthNavigationMenu>
+              <AuthNavigationMenuList>
                 {navigation.map((item) => {
                   const IconComponent = item.icon;
                   return (
-                    <NavTabsLink key={item.name} href={item.href}>
-                      {typeof IconComponent === 'string'
-                        ? (
-                          <span className="mr-2">{IconComponent}</span>
-                        )
-                        : (
-                          <IconComponent className="w-4 h-4 mr-2"/>
-                        )}
-                      {item.name}
-                    </NavTabsLink>
+                    <AuthNavigationMenuItem key={item.name}>
+                      <AuthNavigationLink href={item.href}>
+                        {typeof IconComponent === 'string'
+                          ? (
+                            <span className="mr-2">{IconComponent}</span>
+                          )
+                          : (
+                            <IconComponent className="w-4 h-4 mr-2"/>
+                          )}
+                        <span>{item.name}</span>
+                      </AuthNavigationLink>
+                    </AuthNavigationMenuItem>
                   );
                 })}
-              </NavTabsList>
-            </NavTabs>
+              </AuthNavigationMenuList>
+            </AuthNavigationMenu>
           </div>
 
           {/* User Menu */}
