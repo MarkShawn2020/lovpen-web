@@ -2,6 +2,7 @@
 
 import {useEffect, useRef, useState} from 'react';
 import {Button} from '@/components/ui/Button';
+import {VoiceMessageComponent} from './VoiceMessageComponent';
 
 type Message = {
   id: string;
@@ -9,6 +10,8 @@ type Message = {
   role: 'user' | 'assistant';
   timestamp: Date;
   type?: 'text' | 'voice';
+  audioUrl?: string;
+  duration?: number;
 };
 
 type ChatSidebarProps = {
@@ -28,6 +31,7 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
   ]);
 
   const [inputText, setInputText] = useState('');
+  const [voiceText, setVoiceText] = useState('');
   const [inputMode, setInputMode] = useState<'text' | 'voice'>('text');
   const [isRecording, setIsRecording] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -50,24 +54,34 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
     });
   };
 
-  const handleSendMessage = async () => {
-    if (!inputText.trim()) {
+  const handleSendMessage = async (messageType: 'text' | 'voice' = inputMode) => {
+    const content = messageType === 'text' ? inputText.trim() : voiceText.trim();
+    if (!content) {
       return;
     }
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      content: inputText.trim(),
+      content,
       role: 'user',
       timestamp: new Date(),
-      type: inputMode,
+      type: messageType,
+      ...(messageType === 'voice' && {
+        audioUrl: 'mock-audio-url.wav',
+        duration: 15,
+      }),
     };
 
     setMessages(prev => [...prev, userMessage]);
-    setInputText('');
+    if (messageType === 'text') {
+      setInputText('');
+    } else {
+      setVoiceText('');
+      setInputMode('text');
+    }
     setIsTyping(true);
 
-    onMessageSend?.(userMessage.content, inputMode);
+    onMessageSend?.(userMessage.content, messageType);
 
     // Simulate AI response
     setTimeout(() => {
@@ -97,28 +111,52 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
     return '好的，我理解了你的需求。让我来帮你处理这个问题。你还有其他问题吗？';
   };
 
-  const handleVoiceToggle = () => {
-    if (inputMode === 'voice' && isRecording) {
-      // Stop recording
+  const handleVoiceStart = () => {
+    setIsRecording(true);
+    onVoiceStateChange?.(true);
+  };
+
+  const handleVoiceEnd = () => {
+    if (isRecording) {
       setIsRecording(false);
       onVoiceStateChange?.(false);
       // Simulate voice recognition result
-      setInputText('刚才通过语音输入的内容会显示在这里...');
-      setInputMode('text');
-    } else if (inputMode === 'voice') {
-      // Start recording
-      setIsRecording(true);
-      onVoiceStateChange?.(true);
-    } else {
-      // Switch to voice mode
-      setInputMode('voice');
+      const recognizedText = '刚才通过语音输入的内容会显示在这里...';
+      setVoiceText(recognizedText);
+      // Send voice message immediately
+      const voiceMessage: Message = {
+        id: Date.now().toString(),
+        content: recognizedText,
+        role: 'user',
+        timestamp: new Date(),
+        type: 'voice',
+        audioUrl: 'mock-audio-url.wav',
+        duration: 15,
+      };
+      setMessages(prev => [...prev, voiceMessage]);
+      setVoiceText('');
+      setIsTyping(true);
+      onMessageSend?.(recognizedText, 'voice');
+      
+      // Simulate AI response
+      setTimeout(() => {
+        const assistantMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          content: generateMockResponse(recognizedText),
+          role: 'assistant',
+          timestamp: new Date(),
+          type: 'text',
+        };
+        setMessages(prev => [...prev, assistantMessage]);
+        setIsTyping(false);
+      }, 1500);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSendMessage();
+      handleSendMessage('text');
     }
   };
 
@@ -186,9 +224,17 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
                     : 'bg-background-ivory-medium border border-border-default/20'
                 }`}
               >
-                <div className="text-sm leading-relaxed whitespace-pre-wrap">
-                  {message.content}
-                </div>
+                {message.type === 'voice' ? (
+                  <VoiceMessageComponent
+                    audioUrl={message.audioUrl}
+                    transcription={message.content}
+                    duration={message.duration}
+                  />
+                ) : (
+                  <div className="text-sm leading-relaxed whitespace-pre-wrap">
+                    {message.content}
+                  </div>
+                )}
                 <div className="flex items-center justify-between mt-2">
                   <div
                     className={`text-xs ${
@@ -258,84 +304,56 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
             </button>
           </div>
 
-          {inputMode === 'text'
-            ? (
-              <div className="flex u-gap-s items-end">
+          <div className="flex u-gap-s items-center">
+            {/* Voice/Keyboard toggle button */}
+            <button
+              type="button"
+              onClick={() => setInputMode(inputMode === 'text' ? 'voice' : 'text')}
+              className="w-9 h-9 flex items-center justify-center text-text-faded hover:text-text-main hover:bg-background-oat rounded-lg transition-all flex-shrink-0"
+              title={inputMode === 'text' ? '切换到语音输入' : '切换到文字输入'}
+            >
+              {inputMode === 'text' ? '🎙️' : '⌨️'}
+            </button>
+
+            {/* Input area */}
+            <div className="flex-1">
+              {inputMode === 'text' ? (
+                <input
+                  type="text"
+                  value={inputText}
+                  onChange={e => setInputText(e.target.value)}
+                  onKeyDown={handleKeyPress}
+                  placeholder="💬 输入消息..."
+                  className="w-full px-3 py-2 border border-border-default/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm h-9"
+                />
+              ) : (
                 <button
                   type="button"
-                  onClick={() => setInputMode('voice')}
-                  className="p-2 text-text-faded hover:text-text-main hover:bg-background-oat rounded-lg transition-all"
-                  title="切换到语音输入"
+                  onMouseDown={handleVoiceStart}
+                  onMouseUp={handleVoiceEnd}
+                  onMouseLeave={handleVoiceEnd}
+                  onTouchStart={handleVoiceStart}
+                  onTouchEnd={handleVoiceEnd}
+                  className={`w-full px-3 py-2 h-9 rounded-lg text-center text-sm transition-all select-none border ${
+                    isRecording
+                      ? 'bg-red-500/20 border-red-500 text-red-700 animate-pulse'
+                      : 'bg-white border-border-default/20 text-text-main hover:bg-background-oat focus:ring-2 focus:ring-primary focus:border-primary'
+                  }`}
                 >
-                  🎙️
+                  {isRecording ? '松开 结束' : '按住 说话'}
                 </button>
+              )}
+            </div>
 
-                <div className="flex-1 relative">
-                  <input
-                    type="text"
-                    value={inputText}
-                    onChange={e => setInputText(e.target.value)}
-                    onKeyDown={handleKeyPress}
-                    placeholder="💬 输入消息..."
-                    className="w-full px-3 py-2 border border-border-default/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm"
-                  />
-                </div>
-
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={handleSendMessage}
-                  disabled={!inputText.trim()}
-                  className="px-3 py-2 h-auto"
-                >
-                  📤
-                </Button>
-              </div>
-            )
-            : (
-              <div className="flex u-gap-s items-center">
-                <button
-                  type="button"
-                  onClick={() => setInputMode('text')}
-                  className="p-2 text-text-faded hover:text-text-main hover:bg-background-oat rounded-lg transition-all"
-                  title="切换到文字输入"
-                >
-                  📝
-                </button>
-
-                <div className="flex-1 flex items-center u-gap-s">
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm transition-all cursor-pointer ${
-                      isRecording
-                        ? 'bg-red-500/20 border border-red-500 animate-pulse'
-                        : 'bg-primary/20 border border-primary hover:bg-primary/30'
-                    }`}
-                    onClick={handleVoiceToggle}
-                  >
-                    {isRecording ? '🔴' : '🎤'}
-                  </div>
-                  <span className="text-sm text-text-faded">
-                      {isRecording ? '正在录音...' : '点击录音'}
-                    </span>
-                  {inputText && (
-                    <span className="text-xs text-text-main bg-background-ivory-medium px-2 py-1 rounded">
-                        已录制
-                      </span>
-                  )}
-                </div>
-
-                {inputText && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleSendMessage}
-                    className="px-3 py-2 h-auto"
-                  >
-                    📤
-                  </Button>
-                )}
-              </div>
-            )}
+            {/* Plus button for file upload */}
+            <button
+              type="button"
+              className="w-9 h-9 flex items-center justify-center text-text-faded hover:text-text-main hover:bg-background-oat rounded-lg transition-all flex-shrink-0"
+              title="发送文件"
+            >
+              ➕
+            </button>
+          </div>
 
         </div>
       </div>
