@@ -37,9 +37,11 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
     setIsUploading(false);
   };
 
-  const _handleClose = () => {
+  const handleCancel = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (!isUploading) {
       resetModal();
+      onClose();
     }
   };
 
@@ -133,11 +135,13 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
   }, [selectedPlatform]);
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
     const selectedFiles = Array.from(e.target.files || []);
     handleFileSelect(selectedFiles);
   };
 
-  const removeFile = (index: number) => {
+  const removeFile = (index: number, e?: React.MouseEvent) => {
+    e?.stopPropagation();
     if (isUploading) {
       return;
     }
@@ -249,7 +253,10 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
                         ? 'border-primary bg-primary/5'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
-                    onClick={() => setSelectedPlatform(platform.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedPlatform(platform.id);
+                    }}
                   >
                     <div className="flex items-center gap-2">
                       <span className="text-lg">{platform.icon}</span>
@@ -345,7 +352,7 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
                     {!isUploading && fileProgress.status === 'pending' && (
                       <button
                         type="button"
-                        onClick={() => removeFile(index)}
+                        onClick={e => removeFile(index, e)}
                         className="text-red-500 hover:text-red-700 p-1"
                       >
                         ✕
@@ -359,10 +366,16 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={onClose} disabled={isUploading}>
+          <Button 
+            type="button"
+            variant="outline" 
+            onClick={handleCancel} 
+            disabled={isUploading}
+          >
             取消
           </Button>
           <Button
+            type="button"
             onClick={uploadFiles}
             disabled={files.length === 0 || isUploading}
             className="flex items-center gap-2"
