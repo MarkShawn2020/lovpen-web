@@ -1,7 +1,7 @@
 'use client';
 
 import {useState} from 'react';
-import {Button} from '@/components/ui/CustomButton';
+import {Button} from '@/components/ui-old/CustomButton';
 
 type FileNode = {
   id: string;

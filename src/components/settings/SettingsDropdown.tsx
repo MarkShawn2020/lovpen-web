@@ -1,6 +1,6 @@
 'use client';
-import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
-import {Button} from '@/components/ui/CustomButton';
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui-old/avatar';
+import {Button} from '@/components/ui-old/CustomButton';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -15,7 +15,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui-old/dropdown-menu';
 
 type UserSettings = {
   // Global Creation Settings

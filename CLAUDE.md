@@ -13,7 +13,7 @@ npm run dev:spotlight    # Sentry Spotlight for local error monitoring
 
 ### UI Components (shadcn/ui)
 ```bash
-# Standard way to add shadcn/ui components
+# Standard way to add shadcn/ui-old components
 pnpm dlx shadcn add [component-name]
 
 # Examples:

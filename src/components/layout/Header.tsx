@@ -3,9 +3,9 @@ import {auth} from '@clerk/nextjs/server';
 import {getLocale, getTranslations} from 'next-intl/server';
 import Link from 'next/link';
 import {getI18nPath} from '@/utils/Helpers';
-import {Button} from '../ui/CustomButton';
-import {LogoWithText} from '../ui/Logo';
-import {SmartNavLink} from '../ui/SmartNavLink';
+import {Button} from '@/components/ui-old/CustomButton';
+import {LogoWithText} from '@/components/ui-old/Logo';
+import {SmartNavLink} from '@/components/ui-old/SmartNavLink';
 import {Container} from './Container';
 import {HeaderClient} from './HeaderClient';
 

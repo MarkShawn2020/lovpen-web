@@ -11,8 +11,8 @@ import {
 } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import {useState} from 'react';
-import {Button} from '@/components/ui/CustomButton';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/Select';
+import {Button} from '@/components/ui-old/CustomButton';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui-old/Select';
 
 type PreviewPanel = {
   id: string;

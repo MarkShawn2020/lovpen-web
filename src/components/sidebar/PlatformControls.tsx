@@ -1,7 +1,7 @@
 'use client';
 
 import type {Platform, PlatformSettings} from '@/types/sidebar';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/Select';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui-old/Select';
 import {ConditionalSection} from './SmartSidebar';
 
 type PlatformControlsProps = {

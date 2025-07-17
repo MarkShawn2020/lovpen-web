@@ -47,8 +47,8 @@
     }
   },
   "fontFamily": {
-    "sans": ["Fira Code", "ui-sans-serif", "system-ui", "sans-serif"],
-    "serif": ["ui-serif", "Georgia", "Cambria", "\"Times New Roman\"", "Times", "serif"] // (u-font-display-serif, 推断)
+    "sans": ["Fira Code", "ui-old-sans-serif", "system-ui-old", "sans-serif"],
+    "serif": ["ui-old-serif", "Georgia", "Cambria", "\"Times New Roman\"", "Times", "serif"] // (u-font-display-serif, 推断)
   },
   "spacing": {
     "text": "1rem", // (u-mb-text, 1em)

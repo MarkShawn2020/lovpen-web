@@ -3,8 +3,8 @@
 import {SignOutButton} from '@clerk/nextjs';
 import Link from 'next/link';
 import React, {useState} from 'react';
-import {Button} from '../ui/CustomButton';
-import {SmartNavLink} from '../ui/SmartNavLink';
+import {Button} from '@/components/ui-old/CustomButton';
+import {SmartNavLink} from '@/components/ui-old/SmartNavLink';
 
 type HeaderClientProps = {
   navigation: Array<{ name: string; href: string }>;

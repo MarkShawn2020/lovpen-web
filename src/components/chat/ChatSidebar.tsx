@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect, useRef, useState} from 'react';
-import {Button} from '@/components/ui/CustomButton';
+import {Button} from '@/components/ui-old/CustomButton';
 import {VoiceMessageComponent} from './VoiceMessageComponent';
 
 type Message = {
@@ -192,31 +192,19 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
           <h4 className="font-medium text-text-main text-sm flex items-center u-gap-s">
             💬 对话记录
           </h4>
-          <div className="flex items-center u-gap-s">
+          <div className="flex items-center">
             <Button variant="ghost" size="sm" className="text-xs h-7 px-2">
               🗑
             </Button>
-            <button
-              type="button"
-              className="text-xs text-text-faded hover:text-text-main transition-colors p-1 hover:bg-background-oat rounded"
-              title="导出对话"
-            >
+            <Button variant="ghost" size="sm" className="text-xs h-7 px-2" title="导出对话">
               📤
-            </button>
-            <button
-              type="button"
-              className="text-xs text-text-faded hover:text-text-main transition-colors p-1 hover:bg-background-oat rounded"
-              title="搜索对话"
-            >
+            </Button>
+            <Button variant="ghost" size="sm" className="text-xs h-7 px-2" title="搜索对话">
               🔍
-            </button>
-            <button
-              type="button"
-              className="text-xs text-text-faded hover:text-text-main transition-colors p-1 hover:bg-background-oat rounded"
-              title="对话设置"
-            >
+            </Button>
+            <Button variant="ghost" size="sm" className="text-xs h-7 px-2" title="对话设置">
               ⚙️
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -290,39 +278,43 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
         <div className="border-t border-border-default/20 p-3 space-y-2">
           {/* Quick Actions */}
           <div className="flex flex-wrap u-gap-s mt-2">
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setInputText('帮我总结一下选中的文件内容')}
               className="text-xs bg-background-oat text-text-faded px-2 py-1 rounded hover:bg-background-ivory-medium transition-colors"
             >
               📄 总结
-            </button>
-            <button
-              type="button"
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setInputText('基于知识库内容写一篇文章')}
               className="text-xs bg-background-oat text-text-faded px-2 py-1 rounded hover:bg-background-ivory-medium transition-colors"
             >
               ✍️ 写作
-            </button>
-            <button
-              type="button"
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setInputText('优化这段内容的表达')}
               className="text-xs bg-background-oat text-text-faded px-2 py-1 rounded hover:bg-background-ivory-medium transition-colors"
             >
               ✨ 优化
-            </button>
+            </Button>
           </div>
 
           <div className="flex u-gap-s items-center">
             {/* Voice/Keyboard toggle button */}
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => setInputMode(inputMode === 'text' ? 'voice' : 'text')}
               className="w-9 h-9 flex items-center justify-center text-text-faded hover:text-text-main hover:bg-background-oat rounded-lg transition-all flex-shrink-0"
               title={inputMode === 'text' ? '切换到语音输入' : '切换到文字输入'}
             >
               {inputMode === 'text' ? '🎙️' : '⌨️'}
-            </button>
+            </Button>
 
             {/* Input area */}
             <div className="flex-1">
@@ -357,13 +349,14 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
             </div>
 
             {/* Plus button for file upload */}
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="icon"
               className="w-9 h-9 flex items-center justify-center text-text-faded hover:text-text-main hover:bg-background-oat rounded-lg transition-all flex-shrink-0"
               title="发送文件"
             >
               ➕
-            </button>
+            </Button>
           </div>
 
         </div>

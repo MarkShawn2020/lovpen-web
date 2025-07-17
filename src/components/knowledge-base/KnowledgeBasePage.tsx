@@ -8,7 +8,7 @@ import {
   PersistentTabsContent,
   PersistentTabsList,
   PersistentTabsTrigger,
-} from '@/components/ui/PersistentTabs';
+} from '@/components/ui-old/PersistentTabs';
 import {
   useAnalyticsInsights,
   useKnowledgeBaseSearch,

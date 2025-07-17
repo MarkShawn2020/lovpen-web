@@ -5,7 +5,7 @@ import {LogOut, Settings, User} from 'lucide-react';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {Container} from '@/components/layout/Container';
-import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui-old/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +13,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui-old/dropdown-menu';
 
 const navigationItems = [
   {
