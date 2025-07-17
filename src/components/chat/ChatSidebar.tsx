@@ -138,7 +138,7 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
       setVoiceText('');
       setIsTyping(true);
       onMessageSend?.(recognizedText, 'voice');
-      
+
       // Simulate AI response
       setTimeout(() => {
         const assistantMessage: Message = {
@@ -193,7 +193,7 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
             💬 对话记录
           </h4>
           <div className="flex items-center u-gap-s">
-            <Button variant="outline" size="sm" className="text-xs h-7 px-2">
+            <Button variant="ghost" size="sm" className="text-xs h-7 px-2">
               🗑
             </Button>
             <button
