@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect, useRef, useState} from 'react';
-import {Button} from '@/components/ui/Button';
+import {Button} from '@/components/ui/CustomButton';
 import {VoiceMessageComponent} from './VoiceMessageComponent';
 
 type Message = {
@@ -194,7 +194,7 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
           </h4>
           <div className="flex items-center u-gap-s">
             <Button variant="outline" size="sm" className="text-xs h-7 px-2">
-              🗑️ 清空
+              🗑
             </Button>
             <button
               type="button"

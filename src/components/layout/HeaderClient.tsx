@@ -3,7 +3,7 @@
 import {SignOutButton} from '@clerk/nextjs';
 import Link from 'next/link';
 import React, {useState} from 'react';
-import {Button} from '../ui/Button';
+import {Button} from '../ui/CustomButton';
 import {SmartNavLink} from '../ui/SmartNavLink';
 
 type HeaderClientProps = {

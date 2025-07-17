@@ -1,7 +1,7 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import Link from 'next/link';
 import {Container} from '@/components/layout/Container';
-import {Button} from '@/components/ui/Button';
+import {Button} from '@/components/ui/CustomButton';
 import {Card, CardContent, CardHeader, CardIcon} from '@/components/ui/Card';
 import {PlatformShowcase} from '@/components/ui/PlatformShowcase';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/Tabs';

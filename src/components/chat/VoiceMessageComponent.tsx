@@ -1,7 +1,7 @@
 'use client';
 
 import {useState, useRef} from 'react';
-import {Button} from '@/components/ui/Button';
+import {Button} from '@/components/ui/CustomButton';
 
 type VoiceMessageProps = {
   audioUrl?: string;

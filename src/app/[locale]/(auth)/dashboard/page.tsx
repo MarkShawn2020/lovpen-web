@@ -1,5 +1,5 @@
 import {getTranslations} from 'next-intl/server';
-import {Button} from '@/components/ui/Button';
+import {Button} from '@/components/ui/CustomButton';
 import {Card, CardContent, CardHeader} from '@/components/ui/Card';
 
 export async function generateMetadata(props: {

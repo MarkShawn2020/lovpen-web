@@ -3,7 +3,7 @@ import {auth} from '@clerk/nextjs/server';
 import {getLocale, getTranslations} from 'next-intl/server';
 import Link from 'next/link';
 import {getI18nPath} from '@/utils/Helpers';
-import {Button} from '../ui/Button';
+import {Button} from '../ui/CustomButton';
 import {LogoWithText} from '../ui/Logo';
 import {SmartNavLink} from '../ui/SmartNavLink';
 import {Container} from './Container';

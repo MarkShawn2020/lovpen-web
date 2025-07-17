@@ -6,7 +6,6 @@ import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {Container} from '@/components/layout/Container';
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
-import {Button} from '@/components/ui/Button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -99,32 +98,17 @@ export function AuthNavbar() {
 
           {/* Actions */}
           <div className="flex items-center u-gap-s">
-            {isActive('/create') && (
-              <Button
-                variant="primary"
-                size="sm"
-                disabled={true}
-              >
-                发布
-              </Button>
-            )}
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  className="p-1 hover:bg-background-ivory-medium focus-visible:ring-2 focus-visible:ring-primary border-0"
-                  disabled={!isLoaded}
-                  aria-label="User account menu"
-                >
-                  <Avatar className="w-6 h-6">
-                    <AvatarImage src={user?.imageUrl} alt={getUserDisplayName()}/>
-                    <AvatarFallback className="text-xs bg-primary text-white">
-                      {isLoaded ? getUserInitials() : '...'}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
+
+                <Avatar className="w-8 h-8">
+                  <AvatarImage src={user?.imageUrl} alt={getUserDisplayName()}/>
+                  <AvatarFallback className="text-xs bg-primary text-white">
+                    {isLoaded ? getUserInitials() : '...'}
+                  </AvatarFallback>
+                </Avatar>
+
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56 md:w-64">
                 <DropdownMenuLabel className="font-normal">
