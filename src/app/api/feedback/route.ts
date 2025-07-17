@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
 const feedbackSchema = z.object({
-  name: z.string().min(1, '请输入您的姓名'),
-  email: z.string().email('请输入有效的邮箱地址'),
   subject: z.string().min(1, '请输入主题'),
   message: z.string().min(10, '请输入至少10个字符的反馈内容'),
+  userId: z.string().optional(),
+  username: z.string().optional(),
+  email: z.string().email().optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -21,14 +22,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { name, email, subject, message } = validation.data;
+    const { subject, message, userId, username, email } = validation.data;
 
     // 发送邮件的逻辑
     await sendFeedbackEmail({
-      name,
-      email,
       subject,
       message,
+      userId,
+      username,
+      email,
     });
 
     return NextResponse.json({ success: true, message: '反馈提交成功' });
@@ -45,11 +47,12 @@ export async function POST(request: NextRequest) {
 }
 
 // 发送反馈邮件的函数
-async function sendFeedbackEmail({ name, email, subject, message }: {
-  name: string;
-  email: string;
+async function sendFeedbackEmail({ subject, message, userId, username, email }: {
   subject: string;
   message: string;
+  userId?: string;
+  username?: string;
+  email?: string;
 }) {
   // 获取环境变量
   const adminEmail = process.env.ADMIN_EMAIL || 'admin@lovpen.com';
@@ -61,8 +64,9 @@ async function sendFeedbackEmail({ name, email, subject, message }: {
   // 如果没有配置邮件服务，则记录到控制台
   if (!smtpHost || !smtpUser || !smtpPass) {
     console.log('============ 新的反馈提交 ============');
-    console.log('用户姓名:', name);
-    console.log('用户邮箱:', email);
+    console.log('用户ID:', userId || '未知');
+    console.log('用户名:', username || '未知');
+    console.log('用户邮箱:', email || '未知');
     console.log('反馈主题:', subject);
     console.log('反馈内容:', message);
     console.log('提交时间:', new Date().toLocaleString('zh-CN'));
@@ -81,12 +85,13 @@ async function sendFeedbackEmail({ name, email, subject, message }: {
   // 暂时记录到控制台
   console.log('发送邮件:', {
     to: adminEmail,
-    from: email,
+    from: email || 'noreply@lovpen.com',
     subject: `[产品反馈] ${subject}`,
     html: `
       <h2>产品反馈</h2>
-      <p><strong>用户姓名:</strong> ${name}</p>
-      <p><strong>用户邮箱:</strong> ${email}</p>
+      <p><strong>用户ID:</strong> ${userId || '未知'}</p>
+      <p><strong>用户名:</strong> ${username || '未知'}</p>
+      <p><strong>用户邮箱:</strong> ${email || '未知'}</p>
       <p><strong>反馈主题:</strong> ${subject}</p>
       <p><strong>反馈内容:</strong></p>
       <p>${message.replace(/\n/g, '<br>')}</p>

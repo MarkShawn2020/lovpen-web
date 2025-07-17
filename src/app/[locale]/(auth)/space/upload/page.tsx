@@ -184,7 +184,7 @@ export default function UploadPage() {
 
       if (allSuccess) {
         setTimeout(() => {
-          router.push('/dashboard/files');
+          router.push('/space');
         }, 1000);
       }
     } catch (error) {

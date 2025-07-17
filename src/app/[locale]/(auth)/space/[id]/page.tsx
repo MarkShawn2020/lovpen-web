@@ -112,7 +112,7 @@ export default function FileDetailPage({params}: FileDetailPageProps) {
 
     try {
       await fileClient.deleteFile(file.id);
-      router.push('/dashboard/files');
+      router.push('/space');
     } catch (error) {
       console.error('Failed to delete file:', error);
       setError(error instanceof Error ? error.message : 'Failed to delete file');

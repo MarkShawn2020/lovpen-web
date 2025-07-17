@@ -1,205 +1,364 @@
 'use client';
 
-import type {Platform} from '@/types/sidebar';
-import {useState} from 'react';
-import {ChatSidebar} from '@/components/chat/ChatSidebar';
-import {KnowledgeBase} from '@/components/knowledge/KnowledgeBase';
-import {Container} from '@/components/layout/Container';
-import {PreviewSection} from './preview-section';
+import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  Archive,
+  Download,
+  Edit,
+  FileText,
+  Filter,
+  Grid,
+  Image,
+  List,
+  MoreVertical,
+  Music,
+  RefreshCw,
+  Search,
+  Trash2,
+  Upload,
+  Video
+} from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { fileClient } from '@/services/file-client';
+import type {FileItem} from '@/services/file-client';
+import { cn } from '@/lib/utils';
 
-export default function Create() {
-  const [generatedContent, setGeneratedContent] = useState('');
-  const [previewPanels, setPreviewPanels] = useState([
-    {id: 'preview-1', platform: 'wechat', title: '微信公众号预览', isSelected: false},
-  ]);
+export default function FilesPage() {
+  const t = useTranslations('files');
+  const [files, setFiles] = useState<FileItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [selectedFiles, setSelectedFiles] = useState<Set<string>>(new Set());
+  const [filter] = useState<{
+    type?: string;
+    platform?: string;
+  }>({});
 
-  const platforms: Record<string, Platform> = {
-    wechat: {
-      name: '微信',
-      fullName: '微信公众号',
-      color: 'bg-green-500',
-      constraints: {
-        maxCharacters: 2000,
-        supportedFormats: ['text', 'image', 'video'],
-        imageRequirements: {maxSize: '20MB', formats: ['JPG', 'PNG']},
-      },
-    },
-    zhihu: {
-      name: '知乎',
-      fullName: '知乎专栏',
-      color: 'bg-blue-500',
-      constraints: {
-        maxCharacters: 5000,
-        supportedFormats: ['text', 'image', 'code', 'formula'],
-        imageRequirements: {maxSize: '5MB', formats: ['JPG', 'PNG', 'GIF']},
-      },
-    },
-    xiaohongshu: {
-      name: '小红书',
-      fullName: '小红书笔记',
-      color: 'bg-pink-500',
-      constraints: {
-        maxCharacters: 1000,
-        supportedFormats: ['text', 'image', 'hashtag'],
-        imageRequirements: {maxSize: '10MB', formats: ['JPG', 'PNG']},
-      },
-    },
-    twitter: {
-      name: 'Twitter',
-      fullName: 'Twitter动态',
-      color: 'bg-sky-500',
-      constraints: {
-        maxCharacters: 280,
-        supportedFormats: ['text', 'image', 'video', 'link'],
-        imageRequirements: {maxSize: '5MB', formats: ['JPG', 'PNG', 'GIF']},
-      },
-    },
+  // 获取文件列表
+  const fetchFiles = async () => {
+    try {
+      setLoading(true);
+      const response = await fileClient.getFiles({
+        limit: 50,
+        offset: 0,
+        item_type: filter.type,
+        platform: filter.platform,
+      });
+      setFiles(response.items);
+    } catch (error) {
+      console.error('Failed to fetch files:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const addPreviewPanel = (platform: string) => {
-    const newId = `preview-${Date.now()}`;
-    const platformInfo = platforms[platform];
-    if (!platformInfo) {
+  // 搜索文件
+  const searchFiles = async (query: string) => {
+    if (!query.trim()) {
+      fetchFiles();
       return;
     }
 
-    const newPanel = {
-      id: newId,
-      platform,
-      title: `${platformInfo.fullName}预览`,
-      isSelected: false,
-    };
-    setPreviewPanels([...previewPanels, newPanel]);
-  };
-
-  const removePreviewPanel = (panelId: string) => {
-    if (previewPanels.length > 1) {
-      setPreviewPanels(previewPanels.filter(panel => panel.id !== panelId));
+    try {
+      setLoading(true);
+      const response = await fileClient.searchFiles({
+        query,
+        limit: 50,
+        offset: 0,
+        item_type: filter.type,
+        platform: filter.platform,
+      });
+      setFiles(response.items);
+    } catch (error) {
+      console.error('Failed to search files:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const reorderPreviewPanels = (panels: Array<{
-    id: string;
-    platform: string;
-    title: string;
-    isSelected?: boolean;
-  }>) => {
-    setPreviewPanels(panels.map(panel => ({...panel, isSelected: panel.isSelected ?? false})));
+  // 删除文件
+  const deleteFile = async (id: string) => {
+    try {
+      await fileClient.deleteFile(id);
+      setFiles(files.filter(file => file.id !== id));
+    } catch (error) {
+      console.error('Failed to delete file:', error);
+    }
   };
 
-  // 处理面板选择
-  const handlePanelSelect = (panelId: string, isCtrlClick = false) => {
-    let newSelectedPanels: string[] = [];
+  // 批量删除
+  const deleteSelectedFiles = async () => {
+    if (selectedFiles.size === 0) {
+ return;
+}
 
-    if (!isCtrlClick) {
-      // 普通点击：清除其他选择，只选择当前面板
-      newSelectedPanels = [panelId];
-      setPreviewPanels(panels =>
-        panels.map(panel => ({
-          ...panel,
-          isSelected: panel.id === panelId,
-        })),
-      );
+    try {
+      await fileClient.batchDeleteByIds(Array.from(selectedFiles));
+      setFiles(files.filter(file => !selectedFiles.has(file.id)));
+      setSelectedFiles(new Set());
+    } catch (error) {
+      console.error('Failed to delete files:', error);
+    }
+  };
+
+  // 获取文件图标
+  const getFileIcon = (contentType: string) => {
+    if (contentType.startsWith('image/')) {
+ return <Image className="w-4 h-4" />;
+}
+    if (contentType.startsWith('video/')) {
+ return <Video className="w-4 h-4" />;
+}
+    if (contentType.startsWith('audio/')) {
+ return <Music className="w-4 h-4" />;
+}
+    if (contentType.includes('pdf') || contentType.includes('document')) {
+ return <FileText className="w-4 h-4" />;
+}
+    return <Archive className="w-4 h-4" />;
+  };
+
+  // 获取状态颜色
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed': return 'bg-green-100 text-green-800';
+      case 'processing': return 'bg-blue-100 text-blue-800';
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'failed': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  // 切换文件选择
+  const toggleFileSelection = (fileId: string) => {
+    const newSelection = new Set(selectedFiles);
+    if (newSelection.has(fileId)) {
+      newSelection.delete(fileId);
     } else {
-      // Ctrl+点击：切换当前面板选择状态
-      const currentlySelected = previewPanels.filter(p => p.isSelected).map(p => p.id);
-      const isCurrentlySelected = currentlySelected.includes(panelId);
-
-      if (isCurrentlySelected) {
-        newSelectedPanels = currentlySelected.filter(id => id !== panelId);
-      } else {
-        newSelectedPanels = [...currentlySelected, panelId];
-      }
-
-      setPreviewPanels(panels =>
-        panels.map(panel => ({
-          ...panel,
-          isSelected: newSelectedPanels.includes(panel.id),
-        })),
-      );
+      newSelection.add(fileId);
     }
-
-    // Update selected panels state
-    // Note: selectPanels functionality removed as it's no longer needed
+    setSelectedFiles(newSelection);
   };
 
-  // 处理背景点击（清除选择）
-  const handleBackgroundClick = () => {
-    setPreviewPanels(panels =>
-      panels.map(panel => ({...panel, isSelected: false})),
-    );
-    // Clear selection state
-    // Note: selectPanels functionality removed as it's no longer needed
-  };
+  useEffect(() => {
+    fetchFiles();
+  }, [filter]);
 
-  // Handle knowledge base file selection
-  const handleFileSelect = (_file: any) => {
-    // Here you would typically load the file content or trigger some action
-    // File selection logic would be implemented here
-  };
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      searchFiles(searchQuery);
+    }, 300);
 
-  // Handle chat message sending
-  const handleMessageSend = (message: string, _type: 'text' | 'voice') => {
-    // Simulate content generation based on chat message
-    if (message.includes('生成') || message.includes('写')) {
-      setTimeout(() => {
-        setGeneratedContent(`# 基于对话生成的内容
-
-根据你的要求「${message}」，我为你生成了以下内容：
-
-## 主要观点
-
-这是一个基于AI对话生成的示例内容，展示了如何将聊天交互转化为实际的文章内容。
-
-## 详细说明
-
-通过与AI助手的对话，用户可以：
-- 表达创作需求和想法
-- 获得实时的内容建议
-- 快速生成结构化的文章
-
-## 总结
-
-这种对话式的内容创作方式让写作变得更加直观和高效。
-
----
-*本文由 LovPen AI 助手协助生成*`);
-      }, 1500);
-    }
-  };
+    return () => clearTimeout(debounceTimer);
+  }, [searchQuery]);
 
   return (
-    <Container>
-
-      <div className="u-grid-desktop u-gap-l min-h-[calc(100vh-120px)]">
-        {/* 左侧知识库 */}
-        <div className="lg:col-span-3">
-          <KnowledgeBase
-            onFileSelect={handleFileSelect}
-          />
-        </div>
-
-        {/* 中间内容预览区域 */}
-        <div className="lg:col-span-4">
-          <PreviewSection
-            previewPanels={previewPanels}
-            platforms={platforms}
-            generatedContent={generatedContent}
-            addPreviewPanel={addPreviewPanel}
-            removePreviewPanel={removePreviewPanel}
-            reorderPreviewPanels={reorderPreviewPanels}
-            onPanelSelect={handlePanelSelect}
-            onBackgroundClick={handleBackgroundClick}
-          />
-        </div>
-
-        {/* 右侧聊天面板 */}
-        <div className="lg:col-span-5">
-          <ChatSidebar
-            onMessageSend={handleMessageSend}
-          />
-        </div>
+    <div className="p-6 space-y-6 h-full flex flex-col">
+      {/* 页面标题 */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">{t('title')}</h1>
+        <Button>
+          <Upload className="w-4 h-4 mr-2" />
+          {t('upload')}
+        </Button>
       </div>
-    </Container>
+
+      {/* 搜索和过滤器 */}
+      <div className="flex gap-4 items-center">
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <Input
+            placeholder={t('searchPlaceholder')}
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            className="pl-9"
+          />
+        </div>
+
+        <Button variant="outline" size="sm">
+          <Filter className="w-4 h-4 mr-2" />
+          {t('filter')}
+        </Button>
+
+        <div className="flex border rounded-lg">
+          <Button
+            variant={viewMode === 'grid' ? 'default' : 'ghost'}
+            size="sm"
+            onClick={() => setViewMode('grid')}
+          >
+            <Grid className="w-4 h-4" />
+          </Button>
+          <Button
+            variant={viewMode === 'list' ? 'default' : 'ghost'}
+            size="sm"
+            onClick={() => setViewMode('list')}
+          >
+            <List className="w-4 h-4" />
+          </Button>
+        </div>
+
+        <Button variant="outline" size="sm" onClick={fetchFiles}>
+          <RefreshCw className="w-4 h-4" />
+        </Button>
+      </div>
+
+      {/* 批量操作 */}
+      {selectedFiles.size > 0 && (
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">
+                {t('selectedCount', { count: selectedFiles.size })}
+              </span>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={deleteSelectedFiles}>
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  {t('delete')}
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* 文件列表/网格 */}
+      <div className="flex-1 overflow-auto">
+        {loading
+? (
+          <div className="flex justify-center items-center py-12">
+            <RefreshCw className="w-6 h-6 animate-spin" />
+          </div>
+        )
+: (
+          <div className={cn(
+            viewMode === 'grid'
+              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'
+              : 'playground-y-2'
+          )}
+          >
+          {files.map(file => (
+            <Card
+              key={file.id}
+              className={cn(
+                'cursor-pointer hover:shadow-md transition-shadow',
+                selectedFiles.has(file.id) && 'ring-2 ring-blue-500'
+              )}
+              onClick={() => toggleFileSelection(file.id)}
+            >
+              <CardHeader className="pb-2">
+                <div className="flex justify-between items-start">
+                  <div className="flex items-center gap-2">
+                    {getFileIcon(file.content_type)}
+                    <CardTitle className="text-sm truncate">
+                      {file.title || `File ${file.id.slice(0, 8)}`}
+                    </CardTitle>
+                  </div>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm" onClick={e => e.stopPropagation()}>
+                        <MoreVertical className="w-4 h-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem>
+                        <Download className="w-4 h-4 mr-2" />
+                        {t('download')}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Edit className="w-4 h-4 mr-2" />
+                        {t('edit')}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="text-red-600"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteFile(file.id);
+                        }}
+                      >
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        {t('delete')}
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <Badge variant="outline" className="text-xs">
+                      {file.source_platform}
+                    </Badge>
+                    <Badge
+                      variant="outline"
+                      className={cn('text-xs', getStatusColor(file.processing_status))}
+                    >
+                      {file.processing_status}
+                    </Badge>
+                  </div>
+
+                  {file.content && (
+                    <p className="text-sm text-gray-600 line-clamp-2">
+                      {file.content}
+                    </p>
+                  )}
+
+                  <div className="flex justify-between items-center text-xs text-gray-500">
+                    <span>{new Date(file.created_at).toLocaleDateString()}</span>
+                    <span>{file.content_type}</span>
+                  </div>
+
+                  {file.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {file.tags.slice(0, 3).map((tag, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
+                      {file.tags.length > 3 && (
+                        <Badge variant="secondary" className="text-xs">
+                          +
+{file.tags.length - 3}
+                        </Badge>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+          </div>
+        )}
+
+        {/* 空状态 */}
+        {!loading && files.length === 0 && (
+          <div className="text-center py-12">
+            <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              {t('noFiles')}
+            </h3>
+            <p className="text-gray-500 mb-4">
+              {searchQuery
+                ? t('noSearchResults')
+                : t('noFilesDescription')}
+            </p>
+            <Button>
+              <Upload className="w-4 h-4 mr-2" />
+              {t('uploadFirst')}
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
   );
-};
+}

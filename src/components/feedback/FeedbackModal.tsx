@@ -23,11 +23,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/lovpen-ui/button';
-import { Loader2, Send } from 'lucide-react';
+import { Loader2, Send, User } from 'lucide-react';
 
 const feedbackSchema = z.object({
-  name: z.string().min(1, '请输入您的姓名'),
-  email: z.string().email('请输入有效的邮箱地址'),
   subject: z.string().min(1, '请输入主题'),
   message: z.string().min(10, '请输入至少10个字符的反馈内容'),
 });
@@ -46,8 +44,6 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   const form = useForm<FeedbackForm>({
     resolver: zodResolver(feedbackSchema),
     defaultValues: {
-      name: user?.username || '',
-      email: user?.email || '',
       subject: '数据库看板功能建议',
       message: '',
     },
@@ -61,7 +57,12 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          userId: user?.id,
+          username: user?.username,
+          email: user?.email,
+        }),
       });
 
       if (!response.ok) {
@@ -97,34 +98,20 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>姓名</FormLabel>
-                    <FormControl>
-                      <Input placeholder="请输入您的姓名" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>邮箱</FormLabel>
-                    <FormControl>
-                      <Input type="email" placeholder="请输入您的邮箱" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <div className="bg-gray-50 p-4 rounded-md">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <User className="w-4 h-4" />
+                <span>
+用户:
+{user?.username || '未知用户'}
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
+                <span>
+邮箱:
+{user?.email || '未知邮箱'}
+                </span>
+              </div>
             </div>
 
             <FormField

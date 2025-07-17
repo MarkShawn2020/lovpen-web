@@ -40,7 +40,7 @@ export default async function middleware(
     return NextResponse.next();
   }
 
-  // Check if user is authenticated and redirect root to /space
+  // Check if user is authenticated and redirect root to /playground
   const authToken = request.cookies.get('auth_token')?.value;
   const isAuthenticated = !!authToken;
   
@@ -54,8 +54,8 @@ export default async function middleware(
     || request.nextUrl.pathname === `/${locale}`
     || request.nextUrl.pathname === `/${locale}/`
   )) {
-    const spaceUrl = new URL(`/${locale}/space`, request.url);
-    return NextResponse.redirect(spaceUrl);
+    const homeUrl = new URL(`/${locale}/playground`, request.url);
+    return NextResponse.redirect(homeUrl);
   }
 
   // Handle i18n routing

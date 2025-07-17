@@ -142,7 +142,7 @@ const LogoWithText = ({ ref, size = 'md', className, ...props }: LogoWithTextPro
       <div
         ref={ref}
         className={cn(
-          'flex items-center space-x-2 group transition-all duration-200',
+          'flex items-center playground-x-2 group transition-all duration-200',
           'hover:scale-105 hover:opacity-90',
           className,
         )}

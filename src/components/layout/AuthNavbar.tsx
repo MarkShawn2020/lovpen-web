@@ -24,18 +24,18 @@ const AuthNavbar = () => {
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
 
   const navigation = [
-    {name: '工作空间', href: '/space', icon: '🏠'},
-    {name: '知识库', href: '/database', icon: BookOpen},
+    {name: '创作工坊', href: '/playground', icon: '🏠'},
+    {name: '知识库', href: '/space', icon: BookOpen},
     {name: '数据库看板', href: '#', icon: BarChart3, pending: true},
   ];
 
   // 移动端菜单使用的 isActive 函数
   const isActive = (href: string) => {
+    if (href === '/playground') {
+      return pathname === '/playground';
+    }
     if (href === '/space') {
       return pathname === '/space';
-    }
-    if (href === '/dashboard') {
-      return pathname === '/dashboard';
     }
     return pathname.startsWith(href);
   };
@@ -52,12 +52,12 @@ const AuthNavbar = () => {
   };
 
   return (
-    <nav className="bg-background-main border-b border-border-default/20 shrink-0">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <nav className="bg-background-main border-bborder-border-default/20 shrink-0 border-b">
+      <div className="container mx-auto">
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/space" className="flex items-center space-x-2">
+            <Link href="/playground" className="flex items-center space-x-2 no-underline">
               <Image
                 src="/logo.png"
                 alt="Logo"
@@ -65,7 +65,7 @@ const AuthNavbar = () => {
                 height={32}
                 className="w-8 h-8"
               />
-              <span className="text-xl font-semibold text-text-main">LovPen</span>
+              <span className="text-2xl font-semibold text-text-main">LovPen</span>
             </Link>
           </div>
 

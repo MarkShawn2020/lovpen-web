@@ -182,6 +182,40 @@
     gap: var(--spacing-xxl);
   }
 
+  /* Layout Utilities */
+  .u-flex-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .u-flex-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .u-flex-main {
+    flex: 1;
+    display: flex;
+    gap: var(--spacing-l);
+  }
+
+  /* Responsive Layout Utilities */
+  .u-flex-column {
+    flex-direction: column;
+  }
+
+  .u-flex-row {
+    flex-direction: row;
+  }
+
+  @media (max-width: 990px) {
+    .u-flex-main {
+      flex-direction: column;
+    }
+  }
+
   /* Premium Background Patterns */
   .u-bg-subtle-dots {
     background-image: radial-gradient(circle at 2px 2px, rgba(135, 134, 127, 0.08) 1px, transparent 0);

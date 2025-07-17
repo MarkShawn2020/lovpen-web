@@ -172,7 +172,7 @@ export default function SearchPage() {
     if (searchMode === 'ai') {
  params.set('mode', 'ai');
 }
-    router.push(`/dashboard/files/search?${params.toString()}`);
+    router.push(`/space/search?${params.toString()}`);
   };
 
   // 初始化搜索

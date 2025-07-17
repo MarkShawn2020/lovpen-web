@@ -9,10 +9,12 @@ export default async function AuthLayout(props: {
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="u-flex-page bg-gray-50">
       <AuthNavbar />
-      <div className="container mx-auto px-4 py-8">
-        {props.children}
+      <div className="u-flex-content">
+        <div className="container mx-auto py-4 h-full">
+          {props.children}
+        </div>
       </div>
     </div>
   );

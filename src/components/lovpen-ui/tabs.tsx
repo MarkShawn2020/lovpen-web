@@ -48,7 +48,7 @@ const TabsList = ({ ref, className, ...props }: TabsListProps & { ref?: React.Re
     <div
       ref={ref}
       className={cn(
-        'flex space-x-2 border-b border-border-default',
+        'flex playground-x-2 border-b border-border-default',
         className
       )}
       {...props}

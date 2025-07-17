@@ -471,7 +471,7 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                 variant="outline"
                 size="sm"
                 className="text-xs h-7 px-2"
-                onClick={() => window.location.href = '/dashboard/files/upload'}
+                onClick={() => window.location.href = '/space/upload'}
               >
                 ➕ 新建
               </Button>
@@ -479,7 +479,7 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                 variant="outline"
                 size="sm"
                 className="text-xs h-7 px-2"
-                onClick={() => window.location.href = '/dashboard/files'}
+                onClick={() => window.location.href = '/space'}
               >
                 📁 浏览
               </Button>
@@ -572,7 +572,7 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                 type="button"
                 className="text-xs text-text-faded hover:text-text-main transition-colors p-1 hover:bg-background-oat rounded"
                 title="前往完整文件浏览器"
-                onClick={() => window.location.href = '/dashboard/files'}
+                onClick={() => window.location.href = '/space'}
               >
                 📋
               </button>
@@ -618,7 +618,7 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                         variant="outline"
                         size="sm"
                         className="mt-2 text-xs h-7 px-2"
-                        onClick={() => window.location.href = '/dashboard/files/upload'}
+                        onClick={() => window.location.href = '/space/upload'}
                       >
                         ➕ 上传文件
                       </Button>

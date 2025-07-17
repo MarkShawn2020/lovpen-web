@@ -91,8 +91,8 @@ function AuthNavigationLink({
   const pathname = usePathname();
   
   const isActive = (path: string) => {
-    if (path === '/space') {
-      return pathname === '/space';
+    if (path === '/playground') {
+      return pathname === '/playground';
     }
     if (path === '/dashboard') {
       return pathname === '/dashboard';

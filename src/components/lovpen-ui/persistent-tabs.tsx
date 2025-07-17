@@ -145,7 +145,7 @@ const PersistentTabsList = ({ ref, className, children, showHistory = false, his
       <div
         ref={ref}
         className={cn(
-          'flex space-x-2 border-b border-border-default',
+          'flex playground-x-2 border-b border-border-default',
           className,
         )}
         {...props}
@@ -184,7 +184,7 @@ const PersistentTabsTrigger = ({ ref, value, className, children, badge, disable
         disabled={disabled}
         onClick={() => !disabled && setActiveTab(value)}
         className={cn(
-          'relative px-4 py-2 font-medium text-sm transition-colors border-b-2 flex items-center space-x-2',
+          'relative px-4 py-2 font-medium text-sm transition-colors border-b-2 flex items-center playground-x-2',
           isActive
             ? 'text-text-main border-primary'
             : 'text-text-faded border-transparent hover:border-gray-300 hover:text-text-main',
