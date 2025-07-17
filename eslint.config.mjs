@@ -72,6 +72,9 @@ export default antfu(
       'style/object-curly-spacing': 'off',
       'style/jsx-tag-spacing': 'off',
       'style/jsx-curly-brace-presence': 'off',
+      'style/quotes': 'off',
+      'style/comma-dangle': 'off',
+      'style/semi': 'off'
     },
   },
 );
