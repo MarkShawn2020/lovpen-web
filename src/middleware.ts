@@ -40,6 +40,24 @@ export default async function middleware(
     return NextResponse.next();
   }
 
+  // Check if user is authenticated and redirect root to /space
+  const authToken = request.cookies.get('auth_token')?.value;
+  const isAuthenticated = !!authToken;
+  
+  // Get the locale from the pathname
+  const pathSegments = request.nextUrl.pathname.split('/').filter(Boolean);
+  const locale = pathSegments[0] && ['en', 'fr'].includes(pathSegments[0]) ? pathSegments[0] : 'en';
+  
+  // Check if user is accessing root path (with or without locale)
+  if (isAuthenticated && (
+    request.nextUrl.pathname === '/' 
+    || request.nextUrl.pathname === `/${locale}`
+    || request.nextUrl.pathname === `/${locale}/`
+  )) {
+    const spaceUrl = new URL(`/${locale}/space`, request.url);
+    return NextResponse.redirect(spaceUrl);
+  }
+
   // Handle i18n routing
   return handleI18nRouting(request);
 }

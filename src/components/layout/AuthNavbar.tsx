@@ -1,27 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import {useState} from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import {usePathname} from 'next/navigation';
 import Image from 'next/image';
-import { Button } from '@/components/lovpen-ui/button';
-import { useAuth } from '@/contexts/AuthContext';
-import { cn } from '@/lib/utils';
-import { BarChart3, BookOpen, ChevronDown, LogOut, Settings, User } from 'lucide-react';
+import {Button} from '@/components/lovpen-ui/button';
+import {useAuth} from '@/contexts/AuthContext';
+import {cn} from '@/lib/utils';
+import {BookOpen, LogOut, Settings, User} from 'lucide-react';
+import { NavTabs, NavTabsLink, NavTabsList } from './NavTabs';
 
 const AuthNavbar = () => {
-  const { user, logout } = useAuth();
+  const {user, logout} = useAuth();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const navigation = [
-    { name: '知识库', href: '/knowledge-base', icon: BookOpen },
-    { name: '数据分析', href: '/dashboard/analytics', icon: BarChart3 },
-    { name: '文件管理', href: '/dashboard/files', icon: '📁' },
+    {name: '工作空间', href: '/space', icon: '🏠'},
+    {name: '知识库', href: '/database', icon: BookOpen},
   ];
 
+  // 移动端菜单使用的 isActive 函数
   const isActive = (href: string) => {
+    if (href === '/space') {
+      return pathname === '/space';
+    }
     if (href === '/dashboard') {
       return pathname === '/dashboard';
     }
@@ -38,7 +42,7 @@ const AuthNavbar = () => {
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/dashboard" className="flex items-center">
+            <Link href="/space" className="flex items-center space-x-2">
               <Image
                 src="/logo.png"
                 alt="Logo"
@@ -46,35 +50,31 @@ const AuthNavbar = () => {
                 height={32}
                 className="w-8 h-8"
               />
+              <span className="text-xl font-semibold text-text-main">LovPen</span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => {
-              const IconComponent = item.icon;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={cn(
-                    'inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors',
-                    isActive(item.href)
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-text-main hover:text-primary hover:bg-primary/5'
-                  )}
-                >
-                  {typeof IconComponent === 'string'
-? (
-                    <span className="mr-2">{IconComponent}</span>
-                  )
-: (
-                    <IconComponent className="w-4 h-4 mr-2" />
-                  )}
-                  {item.name}
-                </Link>
-              );
-            })}
+          <div className="hidden md:flex items-center">
+            <NavTabs>
+              <NavTabsList>
+                {navigation.map((item) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <NavTabsLink key={item.name} href={item.href}>
+                      {typeof IconComponent === 'string'
+                        ? (
+                          <span className="mr-2">{IconComponent}</span>
+                        )
+                        : (
+                          <IconComponent className="w-4 h-4 mr-2"/>
+                        )}
+                      {item.name}
+                    </NavTabsLink>
+                  );
+                })}
+              </NavTabsList>
+            </NavTabs>
           </div>
 
           {/* User Menu */}
@@ -82,22 +82,25 @@ const AuthNavbar = () => {
             <div className="relative">
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium text-text-main hover:bg-primary/5 transition-colors"
+                className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-text-main hover:bg-primary/5 transition-colors"
               >
-                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-medium">
+                <div
+                  className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-medium"
+                >
                   {user?.username?.[0]?.toUpperCase() || 'U'}
                 </div>
-                <ChevronDown className="w-4 h-4" />
               </button>
-              
+
               {isUserMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-border-default/20 py-1 z-50">
+                <div
+                  className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-border-default/20 py-1 z-50"
+                >
                   <Link
                     href="/dashboard/user-profile"
                     className="flex items-center px-4 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
                     onClick={() => setIsUserMenuOpen(false)}
                   >
-                    <User className="w-4 h-4 mr-2" />
+                    <User className="w-4 h-4 mr-2"/>
                     个人资料
                   </Link>
                   <Link
@@ -105,15 +108,15 @@ const AuthNavbar = () => {
                     className="flex items-center px-4 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
                     onClick={() => setIsUserMenuOpen(false)}
                   >
-                    <Settings className="w-4 h-4 mr-2" />
+                    <Settings className="w-4 h-4 mr-2"/>
                     设置
                   </Link>
-                  <hr className="my-1 border-border-default/20" />
+                  <hr className="my-1 border-border-default/20"/>
                   <button
                     onClick={handleLogout}
                     className="flex items-center w-full px-4 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
                   >
-                    <LogOut className="w-4 h-4 mr-2" />
+                    <LogOut className="w-4 h-4 mr-2"/>
                     退出登录
                   </button>
                 </div>
@@ -167,19 +170,21 @@ const AuthNavbar = () => {
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {typeof IconComponent === 'string'
-? (
-                    <span className="mr-3">{IconComponent}</span>
-                  )
-: (
-                    <IconComponent className="w-5 h-5 mr-3" />
-                  )}
+                    ? (
+                      <span className="mr-3">{IconComponent}</span>
+                    )
+                    : (
+                      <IconComponent className="w-5 h-5 mr-3"/>
+                    )}
                   {item.name}
                 </Link>
               );
             })}
             <div className="border-t border-border-default/20 pt-4">
               <div className="flex items-center px-3 py-2 mb-3">
-                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-medium mr-3">
+                <div
+                  className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-medium mr-3"
+                >
                   {user?.username?.[0]?.toUpperCase() || 'U'}
                 </div>
                 <span className="text-sm text-text-main">
@@ -191,7 +196,7 @@ const AuthNavbar = () => {
                 className="flex items-center px-3 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                <User className="w-4 h-4 mr-2" />
+                <User className="w-4 h-4 mr-2"/>
                 个人资料
               </Link>
               <Link
@@ -199,14 +204,14 @@ const AuthNavbar = () => {
                 className="flex items-center px-3 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                <Settings className="w-4 h-4 mr-2" />
+                <Settings className="w-4 h-4 mr-2"/>
                 设置
               </Link>
               <button
                 onClick={handleLogout}
                 className="flex items-center w-full px-3 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
               >
-                <LogOut className="w-4 h-4 mr-2" />
+                <LogOut className="w-4 h-4 mr-2"/>
                 退出登录
               </button>
             </div>
@@ -217,4 +222,4 @@ const AuthNavbar = () => {
   );
 };
 
-export { AuthNavbar };
+export {AuthNavbar};

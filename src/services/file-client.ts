@@ -68,7 +68,7 @@ export class FileClientService {
     let token = null;
     if (typeof window !== 'undefined') {
       try {
-        const tokensStr = localStorage.getItem('fastapi_auth_tokens');
+        const tokensStr = localStorage.getItem('auth_token');
         if (tokensStr) {
           const tokens = JSON.parse(tokensStr);
           token = tokens.access_token;
