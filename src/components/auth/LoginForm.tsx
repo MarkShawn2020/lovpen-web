@@ -18,7 +18,7 @@ type LoginFormProps = {
   onSuccess?: () => void;
 }
 
-export function LoginForm({ redirectTo = '/dashboard', onSuccess }: LoginFormProps) {
+export function LoginForm({ redirectTo = '/playground', onSuccess }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   
   const { login, error, clearError } = useAuth();

@@ -5,6 +5,7 @@ import {SmartNavLink} from '@/components/lovpen-ui/smart-nav-link';
 import {getI18nPath} from '@/utils/Helpers';
 import {Container} from './Container';
 import {HeaderClient} from './HeaderClient';
+import packageJson from '../../../package.json';
 
 const Header = async () => {
   // 移除Clerk依赖，使用客户端组件处理认证状态
@@ -27,13 +28,17 @@ const Header = async () => {
       <Container>
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center space-x-3">
             <Link
               href="/"
               className="flex items-center no-underline text-text-main hover:text-primary transition-colors"
             >
               <LogoWithText size="md"/>
             </Link>
+            <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full border border-gray-200">
+              v
+{packageJson.version}
+            </span>
           </div>
 
           {/* Desktop Navigation */}

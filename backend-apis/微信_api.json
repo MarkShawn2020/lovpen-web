@@ -404,6 +404,62 @@
   },
   "components": {
     "schemas": {
+      "ApiTokenResponse": {
+        "properties": {
+          "api_token": {
+            "type": "string",
+            "title": "Api Token"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "api_token",
+          "message"
+        ],
+        "title": "ApiTokenResponse"
+      },
+      "WechatCredentials": {
+        "properties": {
+          "cookies": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cookies"
+          },
+          "cookie_string": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cookie String"
+          },
+          "token": {
+            "type": "string",
+            "title": "Token"
+          }
+        },
+        "type": "object",
+        "required": [
+          "token"
+        ],
+        "title": "WechatCredentials"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -449,62 +505,6 @@
           "type"
         ],
         "title": "ValidationError"
-      },
-      "WechatCredentials": {
-        "properties": {
-          "cookies": {
-            "anyOf": [
-              {
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Cookies"
-          },
-          "cookie_string": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Cookie String"
-          },
-          "token": {
-            "type": "string",
-            "title": "Token"
-          }
-        },
-        "type": "object",
-        "required": [
-          "token"
-        ],
-        "title": "WechatCredentials"
-      },
-      "ApiTokenResponse": {
-        "properties": {
-          "api_token": {
-            "type": "string",
-            "title": "Api Token"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
-          }
-        },
-        "type": "object",
-        "required": [
-          "api_token",
-          "message"
-        ],
-        "title": "ApiTokenResponse"
       }
     },
     "responses": {},

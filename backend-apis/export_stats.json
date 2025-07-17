@@ -61,9 +61,9 @@
       "tag": "User",
       "filename": "user_api.json",
       "file_path": "/Users/mark/projects/lovpen-web/backend-apis/user_api.json",
-      "paths_count": 10,
-      "schemas_count": 12,
-      "file_size": 32224
+      "paths_count": 11,
+      "schemas_count": 13,
+      "file_size": 33761
     },
     "User Files": {
       "tag": "User Files",
@@ -125,12 +125,12 @@
   "failed_exports": {},
   "output_directory": "/Users/mark/projects/lovpen-web/backend-apis",
   "format": "json",
-  "generated_at": "2025-07-18T05:04:53.907578",
+  "generated_at": "2025-07-18T05:07:16.302693",
   "summary": {
     "total_exported": 15,
     "total_failed": 0,
-    "total_paths": 99,
-    "total_schemas": 100,
-    "total_file_size": 283534
+    "total_paths": 100,
+    "total_schemas": 101,
+    "total_file_size": 285071
   }
 }

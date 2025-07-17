@@ -7,6 +7,18 @@ export type User = {
   email: string | null;
   phone: string | null;
   full_name: string | null;
+  avatar_url: string | null;
+  bio: string | null;
+  location: string | null;
+  website: string | null;
+  birthday: string | null;
+  gender: string | null;
+  occupation: string | null;
+  company: string | null;
+  social_links: Record<string, string> | null;
+  github_username: string | null;
+  twitter_username: string | null;
+  linkedin_url: string | null;
   credits: number;
   disabled: boolean;
   is_admin: boolean;
@@ -37,6 +49,45 @@ export type UserProfileUpdate = {
   full_name?: string | null;
   email?: string | null;
   phone?: string | null;
+  bio?: string | null;
+  website?: string | null;
+  location?: string | null;
+  birthday?: string | null;
+  gender?: string | null;
+  occupation?: string | null;
+  company?: string | null;
+  social_links?: Record<string, string> | null;
+  github_username?: string | null;
+  twitter_username?: string | null;
+  linkedin_url?: string | null;
+}
+
+export type UserPreferences = {
+  language?: string | null;
+  timezone?: string | null;
+  theme?: string | null;
+}
+
+export type AvatarUpload = {
+  avatar_url?: string | null;
+  avatar_file_id?: string | null;
+}
+
+export type PublicUserProfile = {
+  id: number;
+  username: string;
+  full_name: string | null;
+  avatar_url: string | null;
+  bio: string | null;
+  location: string | null;
+  website: string | null;
+  created_at: string;
+}
+
+export type ProfileCompletion = {
+  completion_percentage: number;
+  missing_fields: string[];
+  suggestions: string[];
 }
 
 export type AuthState = {
@@ -264,6 +315,154 @@ export class FastAPIAuthService {
     this.notifyListeners();
     
     return user;
+  }
+
+  /**
+   * 上传头像文件
+   */
+  async uploadAvatarFile(file: File): Promise<{ file_id: string; url: string }> {
+    if (!this.tokens) {
+      throw new Error('No authentication token');
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${this.baseUrl}/user/avatar/upload`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${this.tokens.access_token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        this.logout();
+        throw new Error('Authentication expired');
+      }
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.detail || `Avatar upload failed: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * 更新头像
+   */
+  async updateAvatar(avatar: AvatarUpload): Promise<User> {
+    if (!this.tokens) {
+      throw new Error('No authentication token');
+    }
+
+    const response = await fetch(`${this.baseUrl}/user/avatar`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${this.tokens.access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(avatar),
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        this.logout();
+        throw new Error('Authentication expired');
+      }
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.detail || `Avatar update failed: ${response.status}`);
+    }
+
+    const user = await response.json();
+    this.user = user;
+    
+    // 保存到本地存储
+    this.saveToStorage();
+    
+    // 通知监听器
+    this.notifyListeners();
+    
+    return user;
+  }
+
+  /**
+   * 获取用户偏好设置
+   */
+  async getUserPreferences(): Promise<UserPreferences> {
+    if (!this.tokens) {
+      throw new Error('No authentication token');
+    }
+
+    const response = await fetch(`${this.baseUrl}/user/preferences`, {
+      headers: {
+        Authorization: `Bearer ${this.tokens.access_token}`,
+      },
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        this.logout();
+        throw new Error('Authentication expired');
+      }
+      throw new Error(`Failed to fetch preferences: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * 更新用户偏好设置
+   */
+  async updateUserPreferences(preferences: UserPreferences): Promise<UserPreferences> {
+    if (!this.tokens) {
+      throw new Error('No authentication token');
+    }
+
+    const response = await fetch(`${this.baseUrl}/user/preferences`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${this.tokens.access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(preferences),
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        this.logout();
+        throw new Error('Authentication expired');
+      }
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.detail || `Update preferences failed: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * 获取资料完整度
+   */
+  async getProfileCompletion(): Promise<ProfileCompletion> {
+    if (!this.tokens) {
+      throw new Error('No authentication token');
+    }
+
+    const response = await fetch(`${this.baseUrl}/user/profile/completion`, {
+      headers: {
+        Authorization: `Bearer ${this.tokens.access_token}`,
+      },
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        this.logout();
+        throw new Error('Authentication expired');
+      }
+      throw new Error(`Failed to fetch profile completion: ${response.status}`);
+    }
+
+    return response.json();
   }
 
   /**

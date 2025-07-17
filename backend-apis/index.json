@@ -57,8 +57,8 @@
       "title": "User API",
       "description": "API endpoints tagged with 'User'",
       "file": "user_api.json",
-      "paths_count": 10,
-      "schemas_count": 12
+      "paths_count": 11,
+      "schemas_count": 13
     },
     "User Files": {
       "title": "User Files API",

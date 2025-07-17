@@ -561,81 +561,103 @@
   },
   "components": {
     "schemas": {
-      "UserStorageQuotaResponse": {
+      "UserFileUpdate": {
         "properties": {
-          "quota_bytes": {
-            "type": "integer",
-            "title": "Quota Bytes"
-          },
-          "used_bytes": {
-            "type": "integer",
-            "title": "Used Bytes"
-          },
-          "available_bytes": {
-            "type": "integer",
-            "title": "Available Bytes"
-          },
-          "usage_percentage": {
-            "type": "number",
-            "title": "Usage Percentage"
-          },
-          "is_vip": {
-            "type": "boolean",
-            "title": "Is Vip"
-          },
-          "vip_quota_bytes": {
+          "filename": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "string"
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Vip Quota Bytes"
+            "title": "Filename"
           },
-          "vip_expires_at": {
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "is_public": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Public"
+          },
+          "parent_id": {
             "anyOf": [
               {
                 "type": "string",
-                "format": "date-time"
+                "format": "uuid"
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Vip Expires At"
+            "title": "Parent Id"
           }
         },
         "type": "object",
-        "required": [
-          "quota_bytes",
-          "used_bytes",
-          "available_bytes",
-          "usage_percentage",
-          "is_vip"
-        ],
-        "title": "UserStorageQuotaResponse",
-        "description": "存储配额响应"
+        "title": "UserFileUpdate",
+        "description": "更新文件请求"
       },
-      "StorageUpgradeRequest": {
+      "HTTPValidationError": {
         "properties": {
-          "vip_quota_bytes": {
-            "type": "integer",
-            "title": "Vip Quota Bytes"
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
           },
-          "duration_months": {
-            "type": "integer",
-            "title": "Duration Months",
-            "default": 12
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
           }
         },
         "type": "object",
         "required": [
-          "vip_quota_bytes"
+          "loc",
+          "msg",
+          "type"
         ],
-        "title": "StorageUpgradeRequest",
-        "description": "存储升级请求"
+        "title": "ValidationError"
       },
       "Body_batch_upload_files_files_batch_upload_post": {
         "properties": {
@@ -658,37 +680,6 @@
           "files"
         ],
         "title": "Body_batch_upload_files_files_batch_upload_post"
-      },
-      "FileOperationResponse": {
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "title": "Success"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
-          },
-          "file_id": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uuid"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "File Id"
-          }
-        },
-        "type": "object",
-        "required": [
-          "success",
-          "message"
-        ],
-        "title": "FileOperationResponse",
-        "description": "文件操作响应"
       },
       "UserFileListResponse": {
         "properties": {
@@ -842,87 +833,6 @@
         ],
         "title": "Body_create_directory_files_directories_post"
       },
-      "HTTPValidationError": {
-        "properties": {
-          "detail": {
-            "items": {
-              "$ref": "#/components/schemas/ValidationError"
-            },
-            "type": "array",
-            "title": "Detail"
-          }
-        },
-        "type": "object",
-        "title": "HTTPValidationError"
-      },
-      "ValidationError": {
-        "properties": {
-          "loc": {
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
-                }
-              ]
-            },
-            "type": "array",
-            "title": "Location"
-          },
-          "msg": {
-            "type": "string",
-            "title": "Message"
-          },
-          "type": {
-            "type": "string",
-            "title": "Error Type"
-          }
-        },
-        "type": "object",
-        "required": [
-          "loc",
-          "msg",
-          "type"
-        ],
-        "title": "ValidationError"
-      },
-      "Body_upload_file_files_upload_post": {
-        "properties": {
-          "file": {
-            "type": "string",
-            "format": "binary",
-            "title": "File"
-          },
-          "parent_id": {
-            "type": "string",
-            "title": "Parent Id",
-            "default": ""
-          },
-          "description": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Description"
-          },
-          "is_public": {
-            "type": "boolean",
-            "title": "Is Public",
-            "default": false
-          }
-        },
-        "type": "object",
-        "required": [
-          "file"
-        ],
-        "title": "Body_upload_file_files_upload_post"
-      },
       "DirectoryCreateResponse": {
         "properties": {
           "directory_id": {
@@ -1022,18 +932,17 @@
         "title": "FileUploadResponse",
         "description": "文件上传响应"
       },
-      "UserFileUpdate": {
+      "Body_upload_file_files_upload_post": {
         "properties": {
-          "filename": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Filename"
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          },
+          "parent_id": {
+            "type": "string",
+            "title": "Parent Id",
+            "default": ""
           },
           "description": {
             "anyOf": [
@@ -1047,32 +956,16 @@
             "title": "Description"
           },
           "is_public": {
-            "anyOf": [
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Is Public"
-          },
-          "parent_id": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uuid"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Parent Id"
+            "type": "boolean",
+            "title": "Is Public",
+            "default": false
           }
         },
         "type": "object",
-        "title": "UserFileUpdate",
-        "description": "更新文件请求"
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_file_files_upload_post"
       },
       "StorageUpgradeResponse": {
         "properties": {
@@ -1109,6 +1002,113 @@
         ],
         "title": "StorageUpgradeResponse",
         "description": "存储升级响应"
+      },
+      "UserStorageQuotaResponse": {
+        "properties": {
+          "quota_bytes": {
+            "type": "integer",
+            "title": "Quota Bytes"
+          },
+          "used_bytes": {
+            "type": "integer",
+            "title": "Used Bytes"
+          },
+          "available_bytes": {
+            "type": "integer",
+            "title": "Available Bytes"
+          },
+          "usage_percentage": {
+            "type": "number",
+            "title": "Usage Percentage"
+          },
+          "is_vip": {
+            "type": "boolean",
+            "title": "Is Vip"
+          },
+          "vip_quota_bytes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vip Quota Bytes"
+          },
+          "vip_expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vip Expires At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "quota_bytes",
+          "used_bytes",
+          "available_bytes",
+          "usage_percentage",
+          "is_vip"
+        ],
+        "title": "UserStorageQuotaResponse",
+        "description": "存储配额响应"
+      },
+      "StorageUpgradeRequest": {
+        "properties": {
+          "vip_quota_bytes": {
+            "type": "integer",
+            "title": "Vip Quota Bytes"
+          },
+          "duration_months": {
+            "type": "integer",
+            "title": "Duration Months",
+            "default": 12
+          }
+        },
+        "type": "object",
+        "required": [
+          "vip_quota_bytes"
+        ],
+        "title": "StorageUpgradeRequest",
+        "description": "存储升级请求"
+      },
+      "FileOperationResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "file_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message"
+        ],
+        "title": "FileOperationResponse",
+        "description": "文件操作响应"
       }
     },
     "responses": {},

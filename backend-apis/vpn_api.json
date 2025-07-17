@@ -188,13 +188,19 @@
   },
   "components": {
     "schemas": {
-      "Provider": {
-        "type": "string",
-        "enum": [
-          "foosber",
-          "biznet"
+      "Body_upload_cache_db_vpn_upload_cache_db_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
         ],
-        "title": "Provider"
+        "title": "Body_upload_cache_db_vpn_upload_cache_db_post"
       },
       "HTTPValidationError": {
         "properties": {
@@ -242,19 +248,13 @@
         ],
         "title": "ValidationError"
       },
-      "Body_upload_cache_db_vpn_upload_cache_db_post": {
-        "properties": {
-          "file": {
-            "type": "string",
-            "format": "binary",
-            "title": "File"
-          }
-        },
-        "type": "object",
-        "required": [
-          "file"
+      "Provider": {
+        "type": "string",
+        "enum": [
+          "foosber",
+          "biznet"
         ],
-        "title": "Body_upload_cache_db_vpn_upload_cache_db_post"
+        "title": "Provider"
       }
     },
     "responses": {},

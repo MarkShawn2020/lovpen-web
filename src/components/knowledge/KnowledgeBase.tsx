@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import {Button} from '@/components/lovpen-ui/button';
 import type {FileItem} from '@/services/file-client-v2';
 import {fileClientV2} from '@/services/file-client-v2';
+import {UploadModal} from './UploadModal';
 
 type FileNode = {
   id: string;
@@ -33,6 +34,7 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
   const [error, setError] = useState<string | null>(null);
   const [files, setFiles] = useState<FileItem[]>([]);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   // 获取平台显示名称
   const getPlatformDisplayName = (platform: string): string => {
@@ -471,7 +473,7 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                 variant="outline"
                 size="sm"
                 className="text-xs h-7 px-2"
-                onClick={() => window.location.href = '/space/upload'}
+                onClick={() => setIsUploadModalOpen(true)}
               >
                 ➕ 新建
               </Button>
@@ -618,7 +620,7 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                         variant="outline"
                         size="sm"
                         className="mt-2 text-xs h-7 px-2"
-                        onClick={() => window.location.href = '/space/upload'}
+                        onClick={() => setIsUploadModalOpen(true)}
                       >
                         ➕ 上传文件
                       </Button>
@@ -633,6 +635,19 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
               )}
         </div>
       </div>
+
+      {/* Upload Modal */}
+      <UploadModal 
+        isOpen={isUploadModalOpen}
+        onClose={() => {
+          setIsUploadModalOpen(false);
+        }}
+        onUploadComplete={(_newItems) => {
+          // 刷新文件列表
+          fetchFiles();
+          setIsUploadModalOpen(false);
+        }}
+      />
 
       {/* Storage Info */}
       <div className="bg-background-main rounded-lg border border-border-default/20 p-3">

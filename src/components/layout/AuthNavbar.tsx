@@ -15,6 +15,7 @@ import {
   AuthNavigationMenuList
 } from './AuthNavigationMenu';
 import { FeedbackModal } from '@/components/feedback/FeedbackModal';
+import packageJson from '../../../package.json';
 
 const AuthNavbar = () => {
   const {user, logout} = useAuth();
@@ -58,7 +59,7 @@ const AuthNavbar = () => {
       <div className="container mx-auto">
         <div className="flex justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center space-x-3">
             <Link href="/playground" className="flex items-center space-x-2 no-underline">
               <Image
                 src="/logo.png"
@@ -69,6 +70,10 @@ const AuthNavbar = () => {
               />
               <span className="text-2xl font-semibold text-text-main">LovPen</span>
             </Link>
+            <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full border border-gray-200">
+              v
+{packageJson.version}
+            </span>
           </div>
 
           {/* Desktop Navigation */}

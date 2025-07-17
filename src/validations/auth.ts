@@ -86,6 +86,76 @@ export const profileSchema = z.object({
     .max(20, '手机号码不能超过20个字符')
     .nullable()
     .optional(),
+  bio: z
+    .string()
+    .max(500, '个人简介不能超过500个字符')
+    .nullable()
+    .optional(),
+  website: z
+    .string()
+    .url('请输入有效的网址')
+    .nullable()
+    .optional(),
+  location: z
+    .string()
+    .max(100, '所在地不能超过100个字符')
+    .nullable()
+    .optional(),
+  birthday: z
+    .string()
+    .nullable()
+    .optional(),
+  gender: z
+    .string()
+    .max(20, '性别不能超过20个字符')
+    .nullable()
+    .optional(),
+  occupation: z
+    .string()
+    .max(100, '职业不能超过100个字符')
+    .nullable()
+    .optional(),
+  company: z
+    .string()
+    .max(100, '公司不能超过100个字符')
+    .nullable()
+    .optional(),
+  github_username: z
+    .string()
+    .max(50, 'GitHub用户名不能超过50个字符')
+    .nullable()
+    .optional(),
+  twitter_username: z
+    .string()
+    .max(50, 'Twitter用户名不能超过50个字符')
+    .nullable()
+    .optional(),
+  linkedin_url: z
+    .string()
+    .url('请输入有效的LinkedIn链接')
+    .nullable()
+    .optional(),
 });
 
 export type ProfileFormData = z.infer<typeof profileSchema>;
+
+// User preferences validation schema
+export const userPreferencesSchema = z.object({
+  language: z
+    .string()
+    .max(10, '语言代码不能超过10个字符')
+    .nullable()
+    .optional(),
+  timezone: z
+    .string()
+    .max(50, '时区不能超过50个字符')
+    .nullable()
+    .optional(),
+  theme: z
+    .string()
+    .max(20, '主题不能超过20个字符')
+    .nullable()
+    .optional(),
+});
+
+export type UserPreferencesFormData = z.infer<typeof userPreferencesSchema>;
