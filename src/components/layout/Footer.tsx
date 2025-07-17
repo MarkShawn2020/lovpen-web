@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import {SafeLink} from '@/components/ui-old/SafeLink';
+import {SafeLink} from '@/components/lovpen-ui/safe-link';
 import {Container} from './Container';
 
 const Footer = () => {

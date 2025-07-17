@@ -8,7 +8,7 @@ import {
   PersistentTabsContent,
   PersistentTabsList,
   PersistentTabsTrigger,
-} from '@/components/ui-old/PersistentTabs';
+} from '@/components/lovpen-ui/persistent-tabs';
 import {
   useAnalyticsInsights,
   useKnowledgeBaseSearch,

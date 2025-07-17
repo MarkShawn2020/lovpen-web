@@ -1,7 +1,7 @@
 'use client';
 
 import type {GlobalSettings} from '@/types/sidebar';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui-old/Select';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {ConditionalSection} from './SmartSidebar';
 
 type GlobalControlsProps = {

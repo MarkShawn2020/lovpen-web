@@ -1,13 +1,12 @@
-import type {ReactNode} from 'react';
 import Link from 'next/link';
-import {cn} from '@/utils/Helpers';
+import * as React from 'react';
+import { cn } from '@/lib/utils';
 
-type SafeLinkProps = {
+export type SafeLinkProps = {
   href: string;
-  children: ReactNode;
-  className?: string;
+  children: React.ReactNode;
   showComingSoon?: boolean;
-};
+} & React.AnchorHTMLAttributes<HTMLAnchorElement>
 
 // Define implemented routes - update this list as routes are implemented
 const IMPLEMENTED_ROUTES = [
@@ -64,13 +63,42 @@ function isRoutePlanned(href: string): boolean {
   return PLANNED_ROUTES.includes(cleanHref) || PLANNED_ROUTES.includes(href);
 }
 
-export function SafeLink({href, children, className, showComingSoon = true}: SafeLinkProps) {
-  const implemented = isRouteImplemented(href);
-  const planned = isRoutePlanned(href);
+const SafeLink = ({ ref, href, children, className, showComingSoon = true, ...props }: SafeLinkProps & { ref?: React.RefObject<HTMLAnchorElement | null> }) => {
+    const implemented = isRouteImplemented(href);
+    const planned = isRoutePlanned(href);
 
-  // Handle hash links (anchors) - these should be treated as "planned" features
-  if (href.startsWith('#')) {
-    if (showComingSoon) {
+    // Handle hash links (anchors) - these should be treated as "planned" features
+    if (href.startsWith('#')) {
+      if (showComingSoon) {
+        return (
+          <span
+            className={cn(
+              'relative cursor-not-allowed opacity-60 text-text-faded group',
+              className,
+            )}
+            title="Coming soon"
+          >
+            {children}
+            <span
+              className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-text-main text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap mb-1"
+            >
+              Coming soon
+            </span>
+          </span>
+        );
+      }
+      return <span className={className}>{children}</span>;
+    }
+
+    if (implemented) {
+      return (
+        <Link href={href} className={className} ref={ref} {...props}>
+          {children}
+        </Link>
+      );
+    }
+
+    if (planned && showComingSoon) {
       return (
         <span
           className={cn(
@@ -88,40 +116,15 @@ export function SafeLink({href, children, className, showComingSoon = true}: Saf
         </span>
       );
     }
-    return <span className={className}>{children}</span>;
-  }
 
-  if (implemented) {
+    // Fallback for external links or unplanned routes
     return (
-      <Link href={href} className={className}>
+      <Link href={href} className={className} ref={ref} {...props}>
         {children}
       </Link>
     );
-  }
+  };
 
-  if (planned && showComingSoon) {
-    return (
-      <span
-        className={cn(
-          'relative cursor-not-allowed opacity-60 text-text-faded group',
-          className,
-        )}
-        title="Coming soon"
-      >
-        {children}
-        <span
-          className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-text-main text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap mb-1"
-        >
-          Coming soon
-        </span>
-      </span>
-    );
-  }
+SafeLink.displayName = 'SafeLink';
 
-  // Fallback for external links or unplanned routes
-  return (
-    <Link href={href} className={className}>
-      {children}
-    </Link>
-  );
-}
+export { SafeLink };

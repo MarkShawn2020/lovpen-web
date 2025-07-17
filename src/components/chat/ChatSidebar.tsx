@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect, useRef, useState} from 'react';
-import {Button} from '@/components/ui-old/CustomButton';
+import {Button} from '@/components/lovpen-ui/button';
 import {VoiceMessageComponent} from './VoiceMessageComponent';
 
 type Message = {
@@ -221,13 +221,15 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
                     : 'bg-background-ivory-medium border border-border-default/20'
                 }`}
               >
-                {message.type === 'voice' ? (
+                {message.type === 'voice'
+? (
                   <VoiceMessageComponent
                     audioUrl={message.audioUrl}
                     transcription={message.content}
                     duration={message.duration}
                   />
-                ) : (
+                )
+: (
                   <div className="text-sm leading-relaxed whitespace-pre-wrap">
                     {message.content}
                   </div>
@@ -318,7 +320,8 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
 
             {/* Input area */}
             <div className="flex-1">
-              {inputMode === 'text' ? (
+              {inputMode === 'text'
+? (
                 <input
                   type="text"
                   value={inputText}
@@ -329,7 +332,8 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
                   placeholder="💬 输入消息..."
                   className="w-full px-3 py-2 border border-border-default/20 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm h-9"
                 />
-              ) : (
+              )
+: (
                 <button
                   type="button"
                   onMouseDown={handleVoiceStart}

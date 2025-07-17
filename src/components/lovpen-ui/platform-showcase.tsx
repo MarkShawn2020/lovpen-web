@@ -1,7 +1,7 @@
-import React from 'react';
-import {cn} from '@/utils/Helpers';
+import * as React from 'react';
+import { cn } from '@/lib/utils';
 
-type Platform = {
+export type Platform = {
   name: string;
   icon: string;
   description: string;
@@ -9,9 +9,7 @@ type Platform = {
   bgColor: string;
 };
 
-type PlatformShowcaseProps = {
-  className?: string;
-};
+export type PlatformShowcaseProps = {} & React.HTMLAttributes<HTMLDivElement>
 
 const platforms: Platform[] = [
   {
@@ -117,7 +115,7 @@ const lovpenCreationSteps = [
 ];
 
 // LovPen 创作流程展示组件
-const LovPenFlowDiagram = () => (
+const FlowDiagram = () => (
   <div className="max-w-7xl mx-auto">
     {/* 流程步骤 */}
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
@@ -130,8 +128,7 @@ const LovPenFlowDiagram = () => (
             >
               <div
                 className="absolute right-0 top-1/2 transform -translate-y-1/2 w-0 h-0 border-l-3 border-l-swatch-cactus border-t-1 border-b-1 border-t-transparent border-b-transparent opacity-60"
-              >
-              </div>
+              />
             </div>
           )}
 
@@ -186,13 +183,11 @@ const LovPenFlowDiagram = () => (
         {/* 脉动动画环 */}
         <div
           className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-swatch-cactus/10 rounded-full animate-pulse"
-        >
-        </div>
+        />
         <div
           className="absolute -inset-8 bg-gradient-to-r from-primary/5 to-swatch-cactus/5 rounded-full animate-pulse"
           style={{animationDelay: '0.5s'}}
-        >
-        </div>
+        />
       </div>
       <h3 className="text-2xl font-bold text-text-main mt-4 mb-2">LovPen 引擎</h3>
       <p className="text-text-faded max-w-md mx-auto">
@@ -201,9 +196,6 @@ const LovPenFlowDiagram = () => (
     </div>
   </div>
 );
-
-// 保留原来的 FlowDiagram 用于向后兼容
-const FlowDiagram = LovPenFlowDiagram;
 
 // 平台卡片组件
 const PlatformCard = ({platform}: { platform: Platform }) => (
@@ -224,32 +216,31 @@ const PlatformCard = ({platform}: { platform: Platform }) => (
   </div>
 );
 
-const PlatformShowcase = ({className}: PlatformShowcaseProps) => {
-  return (
-    <div className={cn('', className)}>
-      {/* Flow Diagram */}
-      <div className="mb-12">
-        <FlowDiagram/>
-      </div>
+const PlatformShowcase = ({ ref, className, ...props }: PlatformShowcaseProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+    return (
+      <div ref={ref} className={cn('', className)} {...props}>
+        {/* Flow Diagram */}
+        <div className="mb-12">
+          <FlowDiagram />
+        </div>
 
-      {/* Platform Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {platforms.map(platform => (
-          <PlatformCard key={platform.name} platform={platform}/>
-        ))}
-      </div>
+        {/* Platform Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {platforms.map(platform => (
+            <PlatformCard key={platform.name} platform={platform}/>
+          ))}
+        </div>
 
-      {/* 更多平台提示 */}
-      <div className="mt-8 text-center">
-        <p className="text-text-faded text-sm">
-          支持20+主流平台，更多平台持续添加中...
-        </p>
+        {/* 更多平台提示 */}
+        <div className="mt-8 text-center">
+          <p className="text-text-faded text-sm">
+            支持20+主流平台，更多平台持续添加中...
+          </p>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
 PlatformShowcase.displayName = 'PlatformShowcase';
 
-export {FlowDiagram, PlatformShowcase};
-export type {Platform};
+export { FlowDiagram, PlatformShowcase };

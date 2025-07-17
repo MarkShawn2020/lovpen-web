@@ -1,6 +1,6 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Container} from '@/components/layout/Container';
-import {SafeLink} from '@/components/ui-old/SafeLink';
+import {SafeLink} from '@/components/lovpen-ui/safe-link';
 
 type IDocsProps = {
   params: Promise<{ locale: string }>;

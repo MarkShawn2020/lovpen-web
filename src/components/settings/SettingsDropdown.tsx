@@ -1,6 +1,6 @@
 'use client';
-import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui-old/avatar';
-import {Button} from '@/components/ui-old/CustomButton';
+import {Button} from '@/components/lovpen-ui/button';
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -15,7 +15,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@/components/ui-old/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 
 type UserSettings = {
   // Global Creation Settings

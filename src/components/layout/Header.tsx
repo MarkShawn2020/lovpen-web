@@ -2,10 +2,10 @@ import {SignOutButton} from '@clerk/nextjs';
 import {auth} from '@clerk/nextjs/server';
 import {getLocale, getTranslations} from 'next-intl/server';
 import Link from 'next/link';
+import {Button} from '@/components/lovpen-ui/button';
+import {LogoWithText} from '@/components/lovpen-ui/logo';
+import {SmartNavLink} from '@/components/lovpen-ui/smart-nav-link';
 import {getI18nPath} from '@/utils/Helpers';
-import {Button} from '@/components/ui-old/CustomButton';
-import {LogoWithText} from '@/components/ui-old/Logo';
-import {SmartNavLink} from '@/components/ui-old/SmartNavLink';
 import {Container} from './Container';
 import {HeaderClient} from './HeaderClient';
 

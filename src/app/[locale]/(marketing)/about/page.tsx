@@ -1,8 +1,8 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import Link from 'next/link';
 import {Container} from '@/components/layout/Container';
-import {Button} from '@/components/ui-old/CustomButton';
-import {SafeLink} from '@/components/ui-old/SafeLink';
+import {Button} from '@/components/lovpen-ui/button';
+import {SafeLink} from '@/components/lovpen-ui/safe-link';
 
 type IAboutProps = {
   params: Promise<{ locale: string }>;

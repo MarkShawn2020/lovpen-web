@@ -11,8 +11,8 @@ import {
 } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import {useState} from 'react';
-import {Button} from '@/components/ui-old/CustomButton';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui-old/Select';
+import {Button} from '@/components/lovpen-ui/button';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 
 type PreviewPanel = {
   id: string;
@@ -308,7 +308,6 @@ export function PreviewSection({
             </div>
           </div>
           <div className="flex items-center u-gap-s">
-
 
             {/* 添加预览面板选择器 */}
             <Select

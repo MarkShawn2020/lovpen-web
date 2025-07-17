@@ -1,11 +1,10 @@
-import React from 'react';
-import {cn} from '@/utils/Helpers';
+import * as React from 'react';
+import { cn } from '@/lib/utils';
 
-type LogoProps = {
+export type LogoProps = {
   variant?: 'full' | 'icon' | 'text';
   size?: 'sm' | 'md' | 'lg';
-  className?: string;
-};
+} & React.HTMLAttributes<HTMLDivElement>
 
 const sizeClasses = {
   sm: 'w-6 h-6',
@@ -13,8 +12,7 @@ const sizeClasses = {
   lg: 'w-12 h-12',
 };
 
-// 钢笔与爱心融合的主 Logo
-const FullLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: string }) => (
+const FullLogo = ({ size, className }: { size: 'sm' | 'md' | 'lg'; className?: string }) => (
   <svg
     viewBox="0 0 40 40"
     className={cn(sizeClasses[size], 'transition-all duration-200', className)}
@@ -22,20 +20,17 @@ const FullLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: str
     xmlns="http://www.w3.org/2000/svg"
   >
     <title>LovPen Logo</title>
-    {/* 爱心形状的笔身 */}
     <path
       d="M20 35c-8-6-15-12-15-20 0-4.5 3.5-8 8-8 2.5 0 4.5 1 6 2.5C20.5 8 22.5 7 25 7c4.5 0 8 3.5 8 8 0 8-7 14-15 20z"
       fill="url(#heartGradient)"
       opacity="0.9"
       className="transition-opacity duration-300"
     />
-    {/* 钢笔笔尖 */}
     <path
       d="M20 7L18 15h4L20 7z"
       fill="currentColor"
       className="text-text-main transition-colors duration-200"
     />
-    {/* 笔尖金属部分 */}
     <ellipse
       cx="20"
       cy="12"
@@ -45,7 +40,6 @@ const FullLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: str
       opacity="0.7"
       className="transition-opacity duration-200"
     />
-    {/* 写作轨迹线条 */}
     <path
       d="M25 25c3-1 6-3 8-6"
       stroke="currentColor"
@@ -61,7 +55,6 @@ const FullLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: str
         repeatCount="indefinite"
       />
     </path>
-
     <defs>
       <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stopColor="#d97757"/>
@@ -71,8 +64,7 @@ const FullLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: str
   </svg>
 );
 
-// 简化的图标版本
-const IconLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: string }) => (
+const IconLogo = ({ size, className }: { size: 'sm' | 'md' | 'lg'; className?: string }) => (
   <svg
     viewBox="0 0 24 24"
     className={cn(sizeClasses[size], 'transition-colors duration-200', className)}
@@ -80,19 +72,16 @@ const IconLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: str
     xmlns="http://www.w3.org/2000/svg"
   >
     <title>LovPen Icon</title>
-    {/* 简化的爱心笔身 */}
     <path
       d="M12 21c-6-4-10-8-10-14 0-3 2-5 5-5 2 0 3 1 4 2 1-1 2-2 4-2 3 0 5 2 5 5 0 6-4 10-10 14z"
       fill="currentColor"
       className="text-primary transition-colors duration-200"
     />
-    {/* 简化笔尖 */}
     <path
       d="M12 3L11 9h2L12 3z"
       fill="currentColor"
       className="text-text-main transition-colors duration-200"
     />
-    {/* 简化写作线条 */}
     <path
       d="M16 16c2-1 3-2 4-3"
       stroke="currentColor"
@@ -112,8 +101,7 @@ const IconLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: str
   </svg>
 );
 
-// 纯文字版本
-const TextLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: string }) => (
+const TextLogo = ({ size, className }: { size: 'sm' | 'md' | 'lg'; className?: string }) => (
   <span className={cn(
     'font-bold tracking-tight',
     size === 'sm' && 'text-lg',
@@ -126,37 +114,50 @@ const TextLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: str
   </span>
 );
 
-const Logo = ({variant = 'full', size = 'md', className}: LogoProps) => {
-  switch (variant) {
-    case 'icon':
-      return <IconLogo size={size} className={className}/>;
-    case 'text':
-      return <TextLogo size={size} className={className}/>;
-    default:
-      return <FullLogo size={size} className={className}/>;
-  }
-};
+const Logo = ({ ref, variant = 'full', size = 'md', className, ...props }: LogoProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+    const renderContent = () => {
+      switch (variant) {
+        case 'icon':
+          return <IconLogo size={size} className={className}/>;
+        case 'text':
+          return <TextLogo size={size} className={className}/>;
+        default:
+          return <FullLogo size={size} className={className}/>;
+      }
+    };
 
-// 组合 Logo（图标 + 文字）
-const LogoWithText = ({size = 'md', className}: Omit<LogoProps, 'variant'>) => {
-  return (
-    <div className={cn(
-      'flex items-center space-x-2 group transition-all duration-200',
-      'hover:scale-105 hover:opacity-90',
-      className,
-    )}
-    >
-      <div className="transition-transform duration-200 group-hover:rotate-3">
-        <Logo variant="icon" size={size}/>
+    return (
+      <div ref={ref} className={cn('', className)} {...props}>
+        {renderContent()}
       </div>
-      <div className="transition-all duration-200 group-hover:tracking-wide">
-        <Logo variant="text" size={size}/>
-      </div>
-    </div>
-  );
-};
+    );
+  };
 
 Logo.displayName = 'Logo';
+
+export type LogoWithTextProps = {} & Omit<LogoProps, 'variant'>
+
+const LogoWithText = ({ ref, size = 'md', className, ...props }: LogoWithTextProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          'flex items-center space-x-2 group transition-all duration-200',
+          'hover:scale-105 hover:opacity-90',
+          className,
+        )}
+        {...props}
+      >
+        <div className="transition-transform duration-200 group-hover:rotate-3">
+          <Logo variant="icon" size={size}/>
+        </div>
+        <div className="transition-all duration-200 group-hover:tracking-wide">
+          <Logo variant="text" size={size}/>
+        </div>
+      </div>
+    );
+  };
+
 LogoWithText.displayName = 'LogoWithText';
 
-export {Logo, type LogoProps, LogoWithText};
+export { Logo, LogoWithText };

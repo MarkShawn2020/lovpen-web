@@ -1,6 +1,6 @@
 import {getTranslations} from 'next-intl/server';
-import {Button} from '@/components/ui-old/CustomButton';
-import {Card, CardContent, CardHeader} from '@/components/ui-old/Card';
+import {Button} from '@/components/lovpen-ui/button';
+import {Card, CardContent, CardHeader} from '@/components/lovpen-ui/card';
 
 export async function generateMetadata(props: {
   params: Promise<{ locale: string }>;

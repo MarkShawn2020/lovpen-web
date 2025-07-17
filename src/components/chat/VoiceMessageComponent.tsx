@@ -1,7 +1,7 @@
 'use client';
 
-import {useState, useRef} from 'react';
-import {Button} from '@/components/ui-old/CustomButton';
+import {useRef, useState} from 'react';
+import {Button} from '@/components/lovpen-ui/button';
 
 type VoiceMessageProps = {
   audioUrl?: string;
@@ -21,7 +21,9 @@ export function VoiceMessageComponent({
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const handlePlayPause = () => {
-    if (!audioRef.current) return;
+    if (!audioRef.current) {
+ return;
+}
 
     if (isPlaying) {
       audioRef.current.pause();
@@ -76,7 +78,10 @@ export function VoiceMessageComponent({
           </div>
 
           <span className="text-xs text-text-faded font-mono">
-            {formatTime(currentTime)} / {formatTime(duration)}
+            {formatTime(currentTime)}
+{' '}
+/
+{formatTime(duration)}
           </span>
 
           <span className="text-lg">🎙️</span>

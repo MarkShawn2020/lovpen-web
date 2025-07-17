@@ -3,8 +3,8 @@
 import {SignOutButton} from '@clerk/nextjs';
 import Link from 'next/link';
 import React, {useState} from 'react';
-import {Button} from '@/components/ui-old/CustomButton';
-import {SmartNavLink} from '@/components/ui-old/SmartNavLink';
+import {Button} from '@/components/lovpen-ui/button';
+import {SmartNavLink} from '@/components/lovpen-ui/smart-nav-link';
 
 type HeaderClientProps = {
   navigation: Array<{ name: string; href: string }>;
