@@ -190,7 +190,7 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
           className="bg-background-ivory-medium px-4 py-2 border-b border-border-default/20 flex items-center justify-between"
         >
           <h4 className="font-medium text-text-main text-sm flex items-center u-gap-s">
-            💬 对话记录
+            💬 Lovpen助手小皮
           </h4>
           <div className="flex items-center">
             <Button variant="ghost" size="sm" className="text-xs h-7 px-2">
