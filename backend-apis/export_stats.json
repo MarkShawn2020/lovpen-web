@@ -1,0 +1,136 @@
+{
+  "total_tags": 15,
+  "exported_apis": {
+    "Account": {
+      "tag": "Account",
+      "filename": "account_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/account_api.json",
+      "paths_count": 9,
+      "schemas_count": 7,
+      "file_size": 21969
+    },
+    "Badminton": {
+      "tag": "Badminton",
+      "filename": "badminton_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/badminton_api.json",
+      "paths_count": 1,
+      "schemas_count": 3,
+      "file_size": 5015
+    },
+    "Knowledge": {
+      "tag": "Knowledge",
+      "filename": "knowledge_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/knowledge_api.json",
+      "paths_count": 28,
+      "schemas_count": 21,
+      "file_size": 60231
+    },
+    "LLM": {
+      "tag": "LLM",
+      "filename": "llm_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/llm_api.json",
+      "paths_count": 4,
+      "schemas_count": 5,
+      "file_size": 12939
+    },
+    "Map": {
+      "tag": "Map",
+      "filename": "map_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/map_api.json",
+      "paths_count": 5,
+      "schemas_count": 3,
+      "file_size": 19625
+    },
+    "OSS": {
+      "tag": "OSS",
+      "filename": "oss_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/oss_api.json",
+      "paths_count": 1,
+      "schemas_count": 3,
+      "file_size": 3346
+    },
+    "Spider": {
+      "tag": "Spider",
+      "filename": "spider_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/spider_api.json",
+      "paths_count": 1,
+      "schemas_count": 6,
+      "file_size": 8834
+    },
+    "User": {
+      "tag": "User",
+      "filename": "user_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/user_api.json",
+      "paths_count": 10,
+      "schemas_count": 12,
+      "file_size": 32224
+    },
+    "User Files": {
+      "tag": "User Files",
+      "filename": "user files_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/user files_api.json",
+      "paths_count": 9,
+      "schemas_count": 14,
+      "file_size": 28586
+    },
+    "VPN": {
+      "tag": "VPN",
+      "filename": "vpn_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/vpn_api.json",
+      "paths_count": 4,
+      "schemas_count": 4,
+      "file_size": 6989
+    },
+    "media": {
+      "tag": "media",
+      "filename": "media_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/media_api.json",
+      "paths_count": 3,
+      "schemas_count": 6,
+      "file_size": 9139
+    },
+    "thoughts": {
+      "tag": "thoughts",
+      "filename": "thoughts_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/thoughts_api.json",
+      "paths_count": 2,
+      "schemas_count": 3,
+      "file_size": 5439
+    },
+    "uni-pusher": {
+      "tag": "uni-pusher",
+      "filename": "uni-pusher_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/uni-pusher_api.json",
+      "paths_count": 9,
+      "schemas_count": 5,
+      "file_size": 36745
+    },
+    "即刻": {
+      "tag": "即刻",
+      "filename": "即刻_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/即刻_api.json",
+      "paths_count": 7,
+      "schemas_count": 4,
+      "file_size": 17444
+    },
+    "微信": {
+      "tag": "微信",
+      "filename": "微信_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/微信_api.json",
+      "paths_count": 6,
+      "schemas_count": 4,
+      "file_size": 15009
+    }
+  },
+  "failed_exports": {},
+  "output_directory": "/Users/mark/projects/lovpen-web/backend-apis",
+  "format": "json",
+  "generated_at": "2025-07-18T05:04:53.907578",
+  "summary": {
+    "total_exported": 15,
+    "total_failed": 0,
+    "total_paths": 99,
+    "total_schemas": 100,
+    "total_file_size": 283534
+  }
+}

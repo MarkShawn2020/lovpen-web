@@ -1,0 +1,113 @@
+{
+  "title": "API Documentation Index",
+  "description": "按标签分类的API文档索引",
+  "generated_at": "",
+  "total_apis": 15,
+  "apis": {
+    "Account": {
+      "title": "Account API",
+      "description": "API endpoints tagged with 'Account'",
+      "file": "account_api.json",
+      "paths_count": 9,
+      "schemas_count": 7
+    },
+    "Badminton": {
+      "title": "Badminton API",
+      "description": "API endpoints tagged with 'Badminton'",
+      "file": "badminton_api.json",
+      "paths_count": 1,
+      "schemas_count": 3
+    },
+    "Knowledge": {
+      "title": "Knowledge API",
+      "description": "API endpoints tagged with 'Knowledge'",
+      "file": "knowledge_api.json",
+      "paths_count": 28,
+      "schemas_count": 21
+    },
+    "LLM": {
+      "title": "LLM API",
+      "description": "API endpoints tagged with 'LLM'",
+      "file": "llm_api.json",
+      "paths_count": 4,
+      "schemas_count": 5
+    },
+    "Map": {
+      "title": "Map API",
+      "description": "API endpoints tagged with 'Map'",
+      "file": "map_api.json",
+      "paths_count": 5,
+      "schemas_count": 3
+    },
+    "OSS": {
+      "title": "OSS API",
+      "description": "API endpoints tagged with 'OSS'",
+      "file": "oss_api.json",
+      "paths_count": 1,
+      "schemas_count": 3
+    },
+    "Spider": {
+      "title": "Spider API",
+      "description": "API endpoints tagged with 'Spider'",
+      "file": "spider_api.json",
+      "paths_count": 1,
+      "schemas_count": 6
+    },
+    "User": {
+      "title": "User API",
+      "description": "API endpoints tagged with 'User'",
+      "file": "user_api.json",
+      "paths_count": 10,
+      "schemas_count": 12
+    },
+    "User Files": {
+      "title": "User Files API",
+      "description": "API endpoints tagged with 'User Files'",
+      "file": "user files_api.json",
+      "paths_count": 9,
+      "schemas_count": 14
+    },
+    "VPN": {
+      "title": "VPN API",
+      "description": "API endpoints tagged with 'VPN'",
+      "file": "vpn_api.json",
+      "paths_count": 4,
+      "schemas_count": 4
+    },
+    "media": {
+      "title": "media API",
+      "description": "API endpoints tagged with 'media'",
+      "file": "media_api.json",
+      "paths_count": 3,
+      "schemas_count": 6
+    },
+    "thoughts": {
+      "title": "thoughts API",
+      "description": "API endpoints tagged with 'thoughts'",
+      "file": "thoughts_api.json",
+      "paths_count": 2,
+      "schemas_count": 3
+    },
+    "uni-pusher": {
+      "title": "uni-pusher API",
+      "description": "API endpoints tagged with 'uni-pusher'",
+      "file": "uni-pusher_api.json",
+      "paths_count": 9,
+      "schemas_count": 5
+    },
+    "即刻": {
+      "title": "即刻 API",
+      "description": "API endpoints tagged with '即刻'",
+      "file": "即刻_api.json",
+      "paths_count": 7,
+      "schemas_count": 4
+    },
+    "微信": {
+      "title": "微信 API",
+      "description": "API endpoints tagged with '微信'",
+      "file": "微信_api.json",
+      "paths_count": 6,
+      "schemas_count": 4
+    }
+  }
+}

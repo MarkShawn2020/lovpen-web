@@ -1,0 +1,362 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Uni Api - Spider API",
+    "description": "聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能 （opensource: https://github.com/cs-magic/uni-api）",
+    "version": "0.5.0"
+  },
+  "servers": [],
+  "paths": {
+    "/spider/parse-url": {
+      "get": {
+        "tags": [
+          "Spider"
+        ],
+        "summary": "Parse Url ",
+        "operationId": "parse_url__spider_parse_url_get",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Url"
+            }
+          },
+          {
+            "name": "summary_model",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "gpt-3.5-turbo",
+                    "gpt-3.5-turbo-16k",
+                    "gpt-3.5-turbo-0301",
+                    "gpt-3.5-turbo-0613",
+                    "gpt-3.5-turbo-1106",
+                    "gpt-3.5-turbo-0125",
+                    "gpt-3.5-turbo-16k-0613",
+                    "gpt-4-0125-preview",
+                    "gpt-4-turbo-preview",
+                    "gpt-4-1106-preview",
+                    "gpt-4-vision-preview",
+                    "gpt-4",
+                    "gpt-4-0314",
+                    "gpt-4-0613",
+                    "gpt-4-32k",
+                    "gpt-4-32k-0314",
+                    "gpt-4-32k-0613",
+                    "moonshot-v1_plain-8k",
+                    "moonshot-v1_plain-32k",
+                    "moonshot-v1_plain-128k",
+                    "glm-3-turbo",
+                    "glm-4",
+                    "abab6-chat",
+                    "abab5.5-chat",
+                    "abab5.5s-chat",
+                    "qwen-turbo",
+                    "qwen-plus",
+                    "qwen-max",
+                    "Baichuan2-Turbo",
+                    "Baichuan2-Turbo-192k",
+                    "Doubao-lite-4k",
+                    "Doubao-lite-32k",
+                    "Doubao-lite-128k",
+                    "Doubao-pro-4k",
+                    "Doubao-pro-32k",
+                    "Doubao-pro-128k",
+                    "claude-3-5-sonnet-20240620"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Summary Model"
+            }
+          },
+          {
+            "name": "md_with_img",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": false,
+              "title": "Md With Img"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ICard"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "ICard": {
+        "properties": {
+          "platformId": {
+            "type": "string",
+            "title": "Platformid"
+          },
+          "platformType": {
+            "type": "string",
+            "enum": [
+              "wxmpArticle",
+              "xhsNote",
+              "bilibiliVideo",
+              "unknown"
+            ],
+            "title": "Platformtype"
+          },
+          "sourceUrl": {
+            "type": "string",
+            "title": "Sourceurl"
+          },
+          "author": {
+            "$ref": "#/components/schemas/IUserBasic"
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Time"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "cover": {
+            "$ref": "#/components/schemas/IImage"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "contentMd": {
+            "type": "string",
+            "title": "Contentmd"
+          },
+          "contentSummary": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ISummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "platformId",
+          "platformType",
+          "sourceUrl",
+          "author",
+          "time",
+          "title",
+          "cover",
+          "description",
+          "contentMd",
+          "contentSummary"
+        ],
+        "title": "ICard"
+      },
+      "IUserBasic": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "avatar": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avatar"
+          }
+        },
+        "type": "object",
+        "title": "IUserBasic"
+      },
+      "IImage": {
+        "properties": {
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width"
+          },
+          "height": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height"
+          }
+        },
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "title": "IImage"
+      },
+      "ISummary": {
+        "properties": {
+          "modelType": {
+            "type": "string",
+            "title": "Modeltype"
+          },
+          "result": {
+            "type": "string",
+            "title": "Result"
+          }
+        },
+        "type": "object",
+        "required": [
+          "modelType",
+          "result"
+        ],
+        "title": "ISummary"
+      }
+    },
+    "responses": {},
+    "parameters": {},
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": {
+      "OAuth2PasswordBearer": {
+        "type": "oauth2",
+        "flows": {
+          "password": {
+            "scopes": {},
+            "tokenUrl": "account/token"
+          }
+        }
+      },
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-WechatMP-Token"
+      }
+    },
+    "links": {},
+    "callbacks": {}
+  },
+  "security": [],
+  "tags": [],
+  "externalDocs": null
+}

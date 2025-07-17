@@ -1,0 +1,1483 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Uni Api - uni-pusher API",
+    "description": "聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能 （opensource: https://github.com/cs-magic/uni-api）",
+    "version": "0.5.0"
+  },
+  "servers": [],
+  "paths": {
+    "/uni-pusher/jike/auth/get-verification-code": {
+      "post": {
+        "tags": [
+          "uni-pusher",
+          "即刻"
+        ],
+        "summary": "Get Verification Code",
+        "operationId": "get_verification_code_uni_pusher_jike_auth_get_verification_code_post",
+        "parameters": [
+          {
+            "name": "phone_number",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Phone Number"
+            }
+          },
+          {
+            "name": "phone_area",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "+86",
+              "title": "Phone Area"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uni-pusher/jike/auth/verify-code": {
+      "post": {
+        "tags": [
+          "uni-pusher",
+          "即刻"
+        ],
+        "summary": "Verify Code",
+        "operationId": "verify_code_uni_pusher_jike_auth_verify_code_post",
+        "parameters": [
+          {
+            "name": "phone_number",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Phone Number"
+            }
+          },
+          {
+            "name": "area_code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": "+86",
+              "title": "Area Code"
+            }
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uni-pusher/jike/auth/refresh-token": {
+      "post": {
+        "tags": [
+          "uni-pusher",
+          "即刻"
+        ],
+        "summary": "Refresh Token",
+        "operationId": "refresh_token_uni_pusher_jike_auth_refresh_token_post",
+        "parameters": [
+          {
+            "name": "refresh_token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Refresh Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uni-pusher/jike/rss/check": {
+      "post": {
+        "tags": [
+          "uni-pusher",
+          "即刻"
+        ],
+        "summary": "Check Rss",
+        "operationId": "check_rss_uni_pusher_jike_rss_check_post",
+        "parameters": [
+          {
+            "name": "custom_cookie",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Custom Cookie"
+            }
+          },
+          {
+            "name": "access_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Access Token"
+            }
+          },
+          {
+            "name": "refresh_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Refresh Token"
+            }
+          },
+          {
+            "name": "fetchRankedUpdate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Fetchrankedupdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uni-pusher/jike/profile": {
+      "get": {
+        "tags": [
+          "uni-pusher",
+          "即刻"
+        ],
+        "summary": "Read Profile",
+        "operationId": "read_profile_uni_pusher_jike_profile_get",
+        "parameters": [
+          {
+            "name": "custom_cookie",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Custom Cookie"
+            }
+          },
+          {
+            "name": "access_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Access Token"
+            }
+          },
+          {
+            "name": "refresh_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Refresh Token"
+            }
+          },
+          {
+            "name": "fetchRankedUpdate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Fetchrankedupdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uni-pusher/jike/search-topics": {
+      "post": {
+        "tags": [
+          "uni-pusher",
+          "即刻"
+        ],
+        "summary": "Search Topics",
+        "operationId": "search_topics_uni_pusher_jike_search_topics_post",
+        "parameters": [
+          {
+            "name": "keywords",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Keywords"
+            }
+          },
+          {
+            "name": "custom_cookie",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Custom Cookie"
+            }
+          },
+          {
+            "name": "access_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Access Token"
+            }
+          },
+          {
+            "name": "refresh_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Refresh Token"
+            }
+          },
+          {
+            "name": "fetchRankedUpdate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Fetchrankedupdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Topic"
+                  },
+                  "title": "Response Search Topics Uni Pusher Jike Search Topics Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uni-pusher/jike/twitter": {
+      "post": {
+        "tags": [
+          "uni-pusher",
+          "即刻"
+        ],
+        "summary": "Push Twitter",
+        "operationId": "push_twitter_uni_pusher_jike_twitter_post",
+        "parameters": [
+          {
+            "name": "custom_cookie",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Custom Cookie"
+            }
+          },
+          {
+            "name": "access_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Access Token"
+            }
+          },
+          {
+            "name": "refresh_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Refresh Token"
+            }
+          },
+          {
+            "name": "fetchRankedUpdate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Fetchrankedupdate"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_push_twitter_uni_pusher_jike_twitter_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uni-pusher/zsxq/content": {
+      "post": {
+        "tags": [
+          "uni-pusher"
+        ],
+        "summary": "Groups 51111828288514 Topics",
+        "description": "Route generated from curl command\nOriginal URL: https://api.zsxq.com/v2/groups/51111828288514/topics\nMethod: POST",
+        "operationId": "groups_51111828288514_topics_uni_pusher_zsxq_content_post",
+        "parameters": [
+          {
+            "name": "custom-cookie",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "",
+              "title": "Custom-Cookie"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "239dc4d1c-0679-f2cc-d21c-d3dcd822013",
+              "title": "X-Request-Id"
+            }
+          },
+          {
+            "name": "x-version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "2.64.0",
+              "title": "X-Version"
+            }
+          },
+          {
+            "name": "x-timestamp",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "1730731549",
+              "title": "X-Timestamp"
+            }
+          },
+          {
+            "name": "x-signature",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "90500d7ba435ab968bf0193996b27ff68e4850c2",
+              "title": "X-Signature"
+            }
+          },
+          {
+            "name": "referer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "https://wx.zsxq.com/",
+              "title": "Referer"
+            }
+          },
+          {
+            "name": "sec-ch-ua-platform",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "",
+              "title": "Sec-Ch-Ua-Platform"
+            }
+          },
+          {
+            "name": "sec-ch-ua",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "",
+              "title": "Sec-Ch-Ua"
+            }
+          },
+          {
+            "name": "user-agent",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
+              "title": "User-Agent"
+            }
+          },
+          {
+            "name": "accept",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "application/json, text/plain, */*",
+              "title": "Accept"
+            }
+          },
+          {
+            "name": "dnt",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "1",
+              "title": "Dnt"
+            }
+          },
+          {
+            "name": "content-type",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "application/json",
+              "title": "Content-Type"
+            }
+          },
+          {
+            "name": "origin",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "https://wx.zsxq.com",
+              "title": "Origin"
+            }
+          },
+          {
+            "name": "sec-ch-ua-mobile",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "?0",
+              "title": "Sec-Ch-Ua-Mobile"
+            }
+          },
+          {
+            "name": "sec-fetch-site",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "same-site",
+              "title": "Sec-Fetch-Site"
+            }
+          },
+          {
+            "name": "sec-fetch-mode",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "cors",
+              "title": "Sec-Fetch-Mode"
+            }
+          },
+          {
+            "name": "sec-fetch-dest",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "empty",
+              "title": "Sec-Fetch-Dest"
+            }
+          },
+          {
+            "name": "accept-language",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "en-US,en;q=0.9",
+              "title": "Accept-Language"
+            }
+          },
+          {
+            "name": "priority",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "u=1, i",
+              "title": "Priority"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Twitter"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Groups 51111828288514 Topics Uni Pusher Zsxq Content Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uni-pusher/zsxq/profile": {
+      "get": {
+        "tags": [
+          "uni-pusher"
+        ],
+        "summary": "Zsxq Profile",
+        "description": "Route generated from curl command\nOriginal URL: https://api.zsxq.com/v3/users/self\nMethod: GET",
+        "operationId": "zsxq_profile_uni_pusher_zsxq_profile_get",
+        "parameters": [
+          {
+            "name": "custom-cookie",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "",
+              "title": "Custom-Cookie"
+            }
+          },
+          {
+            "name": "x-timestamp",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "1730907137",
+              "title": "X-Timestamp"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "dff4f1bc8-eb5f-4724-a28c-0e775b7fde0",
+              "title": "X-Request-Id"
+            }
+          },
+          {
+            "name": "x-signature",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "965d4028443950d8942100b5f66ec350d9be3383",
+              "title": "X-Signature"
+            }
+          },
+          {
+            "name": "x-version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "2.65.0",
+              "title": "X-Version"
+            }
+          },
+          {
+            "name": "sec-ch-ua-platform",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "",
+              "title": "Sec-Ch-Ua-Platform"
+            }
+          },
+          {
+            "name": "sec-ch-ua",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "",
+              "title": "Sec-Ch-Ua"
+            }
+          },
+          {
+            "name": "sec-ch-ua-mobile",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "?0",
+              "title": "Sec-Ch-Ua-Mobile"
+            }
+          },
+          {
+            "name": "user-agent",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
+              "title": "User-Agent"
+            }
+          },
+          {
+            "name": "accept",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "application/json, text/plain, */*",
+              "title": "Accept"
+            }
+          },
+          {
+            "name": "dnt",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "1",
+              "title": "Dnt"
+            }
+          },
+          {
+            "name": "origin",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "https://wx.zsxq.com",
+              "title": "Origin"
+            }
+          },
+          {
+            "name": "sec-fetch-site",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "same-site",
+              "title": "Sec-Fetch-Site"
+            }
+          },
+          {
+            "name": "sec-fetch-mode",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "cors",
+              "title": "Sec-Fetch-Mode"
+            }
+          },
+          {
+            "name": "sec-fetch-dest",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "empty",
+              "title": "Sec-Fetch-Dest"
+            }
+          },
+          {
+            "name": "referer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "https://wx.zsxq.com/",
+              "title": "Referer"
+            }
+          },
+          {
+            "name": "accept-language",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "en-US,en;q=0.9",
+              "title": "Accept-Language"
+            }
+          },
+          {
+            "name": "priority",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "u=1, i",
+              "title": "Priority"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Zsxq Profile Uni Pusher Zsxq Profile Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Topic": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "avatar": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avatar"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title"
+        ],
+        "title": "Topic"
+      },
+      "Body_push_twitter_uni_pusher_jike_twitter_post": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "topic": {
+            "type": "string",
+            "title": "Topic"
+          },
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "images": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Images"
+          }
+        },
+        "type": "object",
+        "title": "Body_push_twitter_uni_pusher_jike_twitter_post"
+      },
+      "Twitter": {
+        "properties": {
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "topic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Topic"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "images": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Images"
+          }
+        },
+        "type": "object",
+        "title": "Twitter"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    },
+    "responses": {},
+    "parameters": {},
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": {
+      "OAuth2PasswordBearer": {
+        "type": "oauth2",
+        "flows": {
+          "password": {
+            "scopes": {},
+            "tokenUrl": "account/token"
+          }
+        }
+      },
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-WechatMP-Token"
+      }
+    },
+    "links": {},
+    "callbacks": {}
+  },
+  "security": [],
+  "tags": [],
+  "externalDocs": null
+}

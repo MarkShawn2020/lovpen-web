@@ -6,7 +6,7 @@ import {
   fastAPIAuthService 
    
 } from '@/services/fastapi-auth-v2';
-import type {AuthState, AuthTokens, LoginRequest, RegisterRequest, User} from '@/services/fastapi-auth-v2';
+import type {AuthState, AuthTokens, LoginRequest, RegisterRequest, User, UserProfileUpdate} from '@/services/fastapi-auth-v2';
 
 type AuthContextType = {
   user: User | null;
@@ -16,6 +16,7 @@ type AuthContextType = {
   login: (request: LoginRequest) => Promise<void>;
   register: (request: RegisterRequest) => Promise<void>;
   logout: () => Promise<void>;
+  updateProfile: (update: UserProfileUpdate) => Promise<void>;
   isAuthenticated: boolean;
   clearError: () => void;
 }
@@ -75,10 +76,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       await fastAPIAuthService.register(request);
       // 注册成功后自动登录
-      await fastAPIAuthService.login({
-        username: request.username,
-        password: request.password,
-      });
+      if (request.password) {
+        await fastAPIAuthService.login({
+          username_or_email: request.username,
+          password: request.password,
+        });
+      }
     } catch (error) {
       setState(prev => ({ 
         ...prev, 
@@ -104,6 +107,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  const updateProfile = async (update: UserProfileUpdate): Promise<void> => {
+    setState(prev => ({ ...prev, loading: true, error: null }));
+    
+    try {
+      await fastAPIAuthService.updateProfile(update);
+    } catch (error) {
+      setState(prev => ({ 
+        ...prev, 
+        loading: false, 
+        error: error instanceof Error ? error.message : 'Update profile failed'
+      }));
+      throw error;
+    }
+  };
+
   const clearError = (): void => {
     setState(prev => ({ ...prev, error: null }));
   };
@@ -116,6 +134,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     login,
     register,
     logout,
+    updateProfile,
     isAuthenticated: fastAPIAuthService.isAuthenticated(),
     clearError,
   };

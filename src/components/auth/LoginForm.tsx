@@ -32,7 +32,7 @@ export function LoginForm({ redirectTo = '/dashboard', onSuccess }: LoginFormPro
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: '',
+      username_or_email: '',
       password: '',
     },
   });
@@ -43,7 +43,7 @@ export function LoginForm({ redirectTo = '/dashboard', onSuccess }: LoginFormPro
 
     try {
       await login({
-        username: data.username,
+        username_or_email: data.username_or_email,
         password: data.password,
       });
 
@@ -76,16 +76,16 @@ export function LoginForm({ redirectTo = '/dashboard', onSuccess }: LoginFormPro
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="username">用户名</Label>
+            <Label htmlFor="username_or_email">用户名或邮箱</Label>
             <Input
-              id="username"
+              id="username_or_email"
               type="text"
-              placeholder="请输入用户名"
-              {...register('username')}
+              placeholder="请输入用户名或邮箱"
+              {...register('username_or_email')}
               disabled={isSubmitting}
             />
-            {errors.username && (
-              <p className="text-sm text-red-500">{errors.username.message}</p>
+            {errors.username_or_email && (
+              <p className="text-sm text-red-500">{errors.username_or_email.message}</p>
             )}
           </div>
 

@@ -1,13 +1,12 @@
 import { z } from 'zod';
 
-// Login form validation schema based on OpenAPI OAuth2PasswordRequestForm
+// Login form validation schema based on OpenAPI LoginRequest
 export const loginSchema = z.object({
-  username: z
+  username_or_email: z
     .string()
-    .min(1, '用户名不能为空')
-    .min(3, '用户名至少需要3个字符')
-    .max(50, '用户名不能超过50个字符')
-    .regex(/^\w+$/, '用户名只能包含字母、数字和下划线'),
+    .min(1, '用户名或邮箱不能为空')
+    .min(3, '用户名或邮箱至少需要3个字符')
+    .max(100, '用户名或邮箱不能超过100个字符'),
   password: z
     .string()
     .min(1, '密码不能为空')
@@ -27,22 +26,33 @@ export const registerSchema = z.object({
     .regex(/^\w+$/, '用户名只能包含字母、数字和下划线'),
   email: z
     .string()
-    .min(1, '邮箱不能为空')
     .email('请输入有效的邮箱地址')
-    .max(100, '邮箱不能超过100个字符'),
+    .max(100, '邮箱不能超过100个字符')
+    .nullable()
+    .optional(),
   password: z
     .string()
-    .min(1, '密码不能为空')
     .min(6, '密码至少需要6个字符')
     .max(100, '密码不能超过100个字符')
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, '密码必须包含大写字母、小写字母和数字'),
+    .nullable()
+    .optional(),
   phone: z
     .string()
-    .optional()
-    .refine(phone => !phone || /^1[3-9]\d{9}$/.test(phone), '请输入有效的手机号码'),
+    .max(20, '手机号码不能超过20个字符')
+    .nullable()
+    .optional(),
   full_name: z
     .string()
     .max(100, '姓名不能超过100个字符')
+    .nullable()
+    .optional(),
+  oauth_provider: z
+    .string()
+    .nullable()
+    .optional(),
+  oauth_id: z
+    .string()
+    .nullable()
     .optional(),
 });
 
@@ -57,3 +67,25 @@ export const oauthLoginSchema = z.object({
 });
 
 export type OAuthLoginData = z.infer<typeof oauthLoginSchema>;
+
+// Profile form validation schema based on OpenAPI UserProfileUpdate
+export const profileSchema = z.object({
+  full_name: z
+    .string()
+    .max(100, '姓名不能超过100个字符')
+    .nullable()
+    .optional(),
+  email: z
+    .string()
+    .email('请输入有效的邮箱地址')
+    .max(100, '邮箱不能超过100个字符')
+    .nullable()
+    .optional(),
+  phone: z
+    .string()
+    .max(20, '手机号码不能超过20个字符')
+    .nullable()
+    .optional(),
+});
+
+export type ProfileFormData = z.infer<typeof profileSchema>;

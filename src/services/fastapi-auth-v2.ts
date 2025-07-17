@@ -9,6 +9,7 @@ export type User = {
   full_name: string | null;
   credits: number;
   disabled: boolean;
+  is_admin: boolean;
   created_at: string;
 }
 
@@ -19,15 +20,23 @@ export type AuthTokens = {
 
 export type RegisterRequest = {
   username: string;
-  email?: string;
-  phone?: string;
-  full_name?: string;
-  password: string;
+  email?: string | null;
+  phone?: string | null;
+  full_name?: string | null;
+  password?: string | null;
+  oauth_provider?: string | null;
+  oauth_id?: string | null;
 }
 
 export type LoginRequest = {
-  username: string;
+  username_or_email: string;
   password: string;
+}
+
+export type UserProfileUpdate = {
+  full_name?: string | null;
+  email?: string | null;
+  phone?: string | null;
 }
 
 export type AuthState = {
@@ -80,17 +89,12 @@ export class FastAPIAuthService {
    * 用户登录
    */
   async login(request: LoginRequest): Promise<AuthTokens> {
-    const formData = new URLSearchParams();
-    formData.append('grant_type', 'password');
-    formData.append('username', request.username);
-    formData.append('password', request.password);
-
-    const response = await fetch(`${this.baseUrl}/account/token`, {
+    const response = await fetch(`${this.baseUrl}/account/login`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
-      body: formData,
+      body: JSON.stringify(request),
     });
 
     if (!response.ok) {
@@ -121,7 +125,7 @@ export class FastAPIAuthService {
       throw new Error('No authentication token');
     }
 
-    const response = await fetch(`${this.baseUrl}/account/me`, {
+    const response = await fetch(`${this.baseUrl}/user/profile`, {
       headers: {
         Authorization: `Bearer ${this.tokens.access_token}`,
       },
@@ -221,6 +225,45 @@ export class FastAPIAuthService {
     return () => {
       this.listeners = this.listeners.filter(listener => listener !== callback);
     };
+  }
+
+  /**
+   * 更新用户profile
+   */
+  async updateProfile(update: UserProfileUpdate): Promise<User> {
+    if (!this.tokens) {
+      throw new Error('No authentication token');
+    }
+
+    const response = await fetch(`${this.baseUrl}/user/profile`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${this.tokens.access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(update),
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        // Token expired or invalid
+        this.logout();
+        throw new Error('Authentication expired');
+      }
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.detail || `Update profile failed: ${response.status}`);
+    }
+
+    const user = await response.json();
+    this.user = user;
+    
+    // 保存到本地存储
+    this.saveToStorage();
+    
+    // 通知监听器
+    this.notifyListeners();
+    
+    return user;
   }
 
   /**

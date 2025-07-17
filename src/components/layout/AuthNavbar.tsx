@@ -2,7 +2,7 @@
 
 import {useState} from 'react';
 import Link from 'next/link';
-import {usePathname} from 'next/navigation';
+import {usePathname, useRouter} from 'next/navigation';
 import Image from 'next/image';
 import {Button} from '@/components/lovpen-ui/button';
 import {useAuth} from '@/contexts/AuthContext';
@@ -19,6 +19,7 @@ import { FeedbackModal } from '@/components/feedback/FeedbackModal';
 const AuthNavbar = () => {
   const {user, logout} = useAuth();
   const pathname = usePathname();
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
@@ -42,6 +43,7 @@ const AuthNavbar = () => {
 
   const handleLogout = async () => {
     await logout();
+    router.push('/');
   };
 
   const handlePendingItemClick = (e: React.MouseEvent, itemName: string) => {
@@ -123,7 +125,7 @@ const AuthNavbar = () => {
                   className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-border-default/20 py-1 z-50"
                 >
                   <Link
-                    href="/dashboard/user-profile"
+                    href="/profile"
                     className="flex items-center px-4 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
                     onClick={() => setIsUserMenuOpen(false)}
                   >
@@ -232,7 +234,7 @@ const AuthNavbar = () => {
                 </span>
               </div>
               <Link
-                href="/dashboard/user-profile"
+                href="/profile"
                 className="flex items-center px-3 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >

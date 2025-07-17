@@ -1,0 +1,499 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Uni Api - LLM API",
+    "description": "聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能 （opensource: https://github.com/cs-magic/uni-api）",
+    "version": "0.5.0"
+  },
+  "servers": [],
+  "paths": {
+    "/llm/base": {
+      "post": {
+        "tags": [
+          "LLM"
+        ],
+        "summary": "Call Llm ",
+        "operationId": "call_llm__llm_base_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ILLMBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/llm/agent": {
+      "post": {
+        "tags": [
+          "LLM"
+        ],
+        "summary": "Call Agent ",
+        "operationId": "call_agent__llm_agent_post",
+        "parameters": [
+          {
+            "name": "stream_delay",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Stream Delay"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_call_agent__llm_agent_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/llm/totem/gen": {
+      "get": {
+        "tags": [
+          "LLM"
+        ],
+        "summary": "Gen Totem",
+        "operationId": "gen_totem_llm_totem_gen_get",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Name"
+            }
+          },
+          {
+            "name": "stream_delay",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "None: 不流；数字: 流间隔（秒）",
+              "title": "Stream Delay"
+            },
+            "description": "None: 不流；数字: 流间隔（秒）"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "string",
+                "png"
+              ],
+              "type": "string",
+              "description": "stream 条件下 format 始终为 string",
+              "default": "png",
+              "title": "Format"
+            },
+            "description": "stream 条件下 format 始终为 string"
+          },
+          {
+            "name": "ppi",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 300,
+              "title": "Ppi"
+            }
+          },
+          {
+            "name": "width",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 320,
+              "title": "Width"
+            }
+          },
+          {
+            "name": "mock",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "启用后将跳过大模型调用，直接用样本数据返回，数据结构与 claude 相同",
+              "default": false,
+              "title": "Mock"
+            },
+            "description": "启用后将跳过大模型调用，直接用样本数据返回，数据结构与 claude 相同"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/llm/openai/list-models": {
+      "get": {
+        "tags": [
+          "LLM"
+        ],
+        "summary": "List Models",
+        "operationId": "list_models_llm_openai_list_models_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "ILLMBody": {
+        "properties": {
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/IMessage"
+            },
+            "type": "array",
+            "title": "Messages"
+          },
+          "model": {
+            "type": "string",
+            "enum": [
+              "gpt-3.5-turbo",
+              "gpt-3.5-turbo-16k",
+              "gpt-3.5-turbo-0301",
+              "gpt-3.5-turbo-0613",
+              "gpt-3.5-turbo-1106",
+              "gpt-3.5-turbo-0125",
+              "gpt-3.5-turbo-16k-0613",
+              "gpt-4-0125-preview",
+              "gpt-4-turbo-preview",
+              "gpt-4-1106-preview",
+              "gpt-4-vision-preview",
+              "gpt-4",
+              "gpt-4-0314",
+              "gpt-4-0613",
+              "gpt-4-32k",
+              "gpt-4-32k-0314",
+              "gpt-4-32k-0613",
+              "moonshot-v1_plain-8k",
+              "moonshot-v1_plain-32k",
+              "moonshot-v1_plain-128k",
+              "glm-3-turbo",
+              "glm-4",
+              "abab6-chat",
+              "abab5.5-chat",
+              "abab5.5s-chat",
+              "qwen-turbo",
+              "qwen-plus",
+              "qwen-max",
+              "Baichuan2-Turbo",
+              "Baichuan2-Turbo-192k",
+              "Doubao-lite-4k",
+              "Doubao-lite-32k",
+              "Doubao-lite-128k",
+              "Doubao-pro-4k",
+              "Doubao-pro-32k",
+              "Doubao-pro-128k",
+              "claude-3-5-sonnet-20240620"
+            ],
+            "title": "Model"
+          },
+          "top_p": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top P"
+          },
+          "temperature": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Temperature"
+          }
+        },
+        "type": "object",
+        "required": [
+          "messages",
+          "model"
+        ],
+        "title": "ILLMBody"
+      },
+      "IMessage": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            ],
+            "title": "Content"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "system",
+              "user",
+              "assistant"
+            ],
+            "title": "Role"
+          }
+        },
+        "type": "object",
+        "required": [
+          "content",
+          "role"
+        ],
+        "title": "IMessage"
+      },
+      "Body_call_agent__llm_agent_post": {
+        "properties": {
+          "input": {
+            "type": "string",
+            "title": "Input"
+          },
+          "agent_type": {
+            "type": "string",
+            "enum": [
+              "default",
+              "summarize-content",
+              "summarize-poem",
+              "totem-gen"
+            ],
+            "title": "Agent Type",
+            "default": "default"
+          },
+          "llm_model_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "gpt-3.5-turbo",
+                  "gpt-3.5-turbo-16k",
+                  "gpt-3.5-turbo-0301",
+                  "gpt-3.5-turbo-0613",
+                  "gpt-3.5-turbo-1106",
+                  "gpt-3.5-turbo-0125",
+                  "gpt-3.5-turbo-16k-0613",
+                  "gpt-4-0125-preview",
+                  "gpt-4-turbo-preview",
+                  "gpt-4-1106-preview",
+                  "gpt-4-vision-preview",
+                  "gpt-4",
+                  "gpt-4-0314",
+                  "gpt-4-0613",
+                  "gpt-4-32k",
+                  "gpt-4-32k-0314",
+                  "gpt-4-32k-0613",
+                  "moonshot-v1_plain-8k",
+                  "moonshot-v1_plain-32k",
+                  "moonshot-v1_plain-128k",
+                  "glm-3-turbo",
+                  "glm-4",
+                  "abab6-chat",
+                  "abab5.5-chat",
+                  "abab5.5s-chat",
+                  "qwen-turbo",
+                  "qwen-plus",
+                  "qwen-max",
+                  "Baichuan2-Turbo",
+                  "Baichuan2-Turbo-192k",
+                  "Doubao-lite-4k",
+                  "Doubao-lite-32k",
+                  "Doubao-lite-128k",
+                  "Doubao-pro-4k",
+                  "Doubao-pro-32k",
+                  "Doubao-pro-128k",
+                  "claude-3-5-sonnet-20240620"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Llm Model Type",
+            "description": "覆盖配置中的model"
+          }
+        },
+        "type": "object",
+        "required": [
+          "input"
+        ],
+        "title": "Body_call_agent__llm_agent_post"
+      }
+    },
+    "responses": {},
+    "parameters": {},
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": {
+      "OAuth2PasswordBearer": {
+        "type": "oauth2",
+        "flows": {
+          "password": {
+            "scopes": {},
+            "tokenUrl": "account/token"
+          }
+        }
+      },
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-WechatMP-Token"
+      }
+    },
+    "links": {},
+    "callbacks": {}
+  },
+  "security": [],
+  "tags": [],
+  "externalDocs": null
+}

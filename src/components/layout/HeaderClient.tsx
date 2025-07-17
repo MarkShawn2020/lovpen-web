@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import React, {useState} from 'react';
+import {useRouter} from 'next/navigation';
 import {Button} from '@/components/lovpen-ui/button';
 import {SmartNavLink} from '@/components/lovpen-ui/smart-nav-link';
 import {useAuth} from '@/contexts/AuthContext';
@@ -24,11 +25,13 @@ type HeaderClientProps = {
 export const HeaderClient = ({navigation, urls, translations}: HeaderClientProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {isAuthenticated, logout, loading} = useAuth();
+  const router = useRouter();
 
   const handleLogout = async () => {
     try {
       await logout();
       setIsMenuOpen(false);
+      router.push('/');
     } catch (error) {
       console.error('Logout error:', error);
     }

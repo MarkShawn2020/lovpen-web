@@ -1,0 +1,537 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Uni Api - 微信 API",
+    "description": "聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能 （opensource: https://github.com/cs-magic/uni-api）",
+    "version": "0.5.0"
+  },
+  "servers": [],
+  "paths": {
+    "/wechat/official-account/search": {
+      "get": {
+        "tags": [
+          "微信"
+        ],
+        "summary": "Search Wechat Official Account",
+        "operationId": "search_wechat_official_account_wechat_official_account_search_get",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Keyword"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wechat/official-account/article/list": {
+      "get": {
+        "tags": [
+          "微信"
+        ],
+        "summary": "List Wechat Official Account Articles",
+        "operationId": "list_wechat_official_account_articles_wechat_official_account_article_list_get",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "wechat_account_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "当指定 name 的时候，id 无效",
+              "title": "Wechat Account Name"
+            },
+            "description": "当指定 name 的时候，id 无效"
+          },
+          {
+            "name": "wechat_account_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Wechat Account Id"
+            }
+          },
+          {
+            "name": "begin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "title": "Begin"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "default": 5,
+              "title": "Count"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wechat/official-account/article/detail": {
+      "get": {
+        "tags": [
+          "微信"
+        ],
+        "summary": "Parse Wechat Official Account Article",
+        "description": "Parse a WeChat article by its ID.\n\nParameters:\n- article_id: The WeChat article ID\n- with_article_html: Include full article HTML in response (only for JSON response)\n- with_content_html: Include content HTML in response (only for JSON response)\n- with_content_md: Include content in Markdown format (only for JSON response)\n- response_type: Type of response to return:\n  - \"json\": Return article data as JSON (default)\n  - \"html\": Return or download article as HTML file\n  - \"markdown\": Return or download article as Markdown file\n- preprocess_images: When True, replace image src placeholders with actual URLs for local viewing\n- download: When True, download the file (for \"html\" and \"markdown\" response types);\n           when False, return text content without downloading",
+        "operationId": "parse_wechat_official_account_article_wechat_official_account_article_detail_get",
+        "parameters": [
+          {
+            "name": "article_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Article Id"
+            }
+          },
+          {
+            "name": "with_article_html",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": false,
+              "title": "With Article Html"
+            }
+          },
+          {
+            "name": "with_content_html",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": false,
+              "title": "With Content Html"
+            }
+          },
+          {
+            "name": "with_content_md",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": true,
+              "title": "With Content Md"
+            }
+          },
+          {
+            "name": "response_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "json",
+                    "html",
+                    "markdown"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "markdown",
+              "title": "Response Type"
+            }
+          },
+          {
+            "name": "preprocess_images",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": true,
+              "title": "Preprocess Images"
+            }
+          },
+          {
+            "name": "download",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": false,
+              "title": "Download"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wechat/official-account/article/arthur/detail": {
+      "get": {
+        "tags": [
+          "微信"
+        ],
+        "summary": "Parse Arthur Article",
+        "operationId": "parse_arthur_article_wechat_official_account_article_arthur_detail_get",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "article_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "EV2gRTeD_6NtDaaANTT7TQ",
+              "title": "Article Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wechat/official-account/auth/set-credentials": {
+      "post": {
+        "tags": [
+          "微信"
+        ],
+        "summary": "Set Wechat Credentials",
+        "description": "Set WeChat credentials (cookies and token) for API calls and get an API token.\n\nTo obtain these credentials:\n1. Visit: https://mp.weixin.qq.com/cgi-bin/appmsg?t=media/appmsg_edit_v2&action=edit&isNew=1&type=77&createType=0\n2. Open browser developer tools (F12 or right-click > Inspect)\n3. Go to Network tab\n4. Find a request to '/cgi-bin/searchbiz?' endpoint\n5. From the request:\n   - Extract the 'token' parameter from the request URL\n   - Copy all cookies from the request headers\n\nYou can provide cookies in two ways:\n- As a dictionary in the 'cookies' field\n- As a raw cookie string in the 'cookie_string' field (the format you'd copy from browser dev tools)\n\nAfter setting credentials, use the returned API token in the X-WechatMP-Token header for all requests.",
+        "operationId": "set_wechat_credentials_wechat_official_account_auth_set_credentials_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WechatCredentials"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiTokenResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wechat/official-account/auth/status": {
+      "get": {
+        "tags": [
+          "微信"
+        ],
+        "summary": "Check Auth Status",
+        "description": "Check if WeChat credentials are set for the given API token.\n\nThis endpoint requires authentication via the X-WechatMP-Token header.",
+        "operationId": "check_auth_status_wechat_official_account_auth_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "WechatCredentials": {
+        "properties": {
+          "cookies": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cookies"
+          },
+          "cookie_string": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cookie String"
+          },
+          "token": {
+            "type": "string",
+            "title": "Token"
+          }
+        },
+        "type": "object",
+        "required": [
+          "token"
+        ],
+        "title": "WechatCredentials"
+      },
+      "ApiTokenResponse": {
+        "properties": {
+          "api_token": {
+            "type": "string",
+            "title": "Api Token"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "api_token",
+          "message"
+        ],
+        "title": "ApiTokenResponse"
+      }
+    },
+    "responses": {},
+    "parameters": {},
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": {
+      "OAuth2PasswordBearer": {
+        "type": "oauth2",
+        "flows": {
+          "password": {
+            "scopes": {},
+            "tokenUrl": "account/token"
+          }
+        }
+      },
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-WechatMP-Token"
+      }
+    },
+    "links": {},
+    "callbacks": {}
+  },
+  "security": [],
+  "tags": [],
+  "externalDocs": null
+}

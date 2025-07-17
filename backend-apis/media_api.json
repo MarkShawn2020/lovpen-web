@@ -1,0 +1,314 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Uni Api - media API",
+    "description": "聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能 （opensource: https://github.com/cs-magic/uni-api）",
+    "version": "0.5.0"
+  },
+  "servers": [],
+  "paths": {
+    "/media/video-to-audio": {
+      "post": {
+        "tags": [
+          "media"
+        ],
+        "summary": "Convert Video To Audio",
+        "description": "Convert a video file to an audio MP3 file.\n\nArgs:\n    video_path: Path to an existing video file on the server\n    video_file: Video file uploaded by the user\n\nReturns:\n    FileResponse: The converted MP3 file",
+        "operationId": "convert_video_to_audio_media_video_to_audio_post",
+        "parameters": [
+          {
+            "name": "video_path",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Video Path"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_convert_video_to_audio_media_video_to_audio_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media/audio-to-srt": {
+      "post": {
+        "tags": [
+          "media"
+        ],
+        "summary": "Convert Audio To Text",
+        "description": "将音频文件转换为 SRT 字幕文件。\n\nArgs:\n    audio_path: 服务器上现有音频文件路径\n    audio_file: 用户上传的音频文件\n    engine: 转写引擎，可选 auto（自动选择）、openai（OpenAI API）、local_ffmpeg（本地模拟）\n    language: 语言代码 (en, zh 等)\n    background_tasks: 清理临时文件的后台任务\n\nReturns:\n    FileResponse: 生成的 SRT 字幕文件",
+        "operationId": "convert_audio_to_text_media_audio_to_srt_post",
+        "parameters": [
+          {
+            "name": "audio_path",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Audio Path"
+            }
+          },
+          {
+            "name": "engine",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/TranscriptionEngine",
+              "default": "auto"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "zh",
+              "title": "Language"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_convert_audio_to_text_media_audio_to_srt_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media/srt-to-markdown": {
+      "post": {
+        "tags": [
+          "media"
+        ],
+        "summary": "Convert Srt To Markdown",
+        "description": "将 SRT 字幕文件转换为适合人类与大模型阅读的 Markdown 内容。\n\nArgs:\n    srt_path: 服务器上现有 SRT 文件路径\n    srt_file: 用户上传的 SRT 文件\n    include_timestamps: 是否在输出中包含时间戳\n    include_numbers: 是否在输出中包含字幕编号\n    paragraph_mode: 是否将字幕合并为连续段落\n    background_tasks: 清理临时文件的后台任务\n\nReturns:\n    FileResponse: 生成的 Markdown 文件",
+        "operationId": "convert_srt_to_markdown_media_srt_to_markdown_post",
+        "parameters": [
+          {
+            "name": "srt_path",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Srt Path"
+            }
+          },
+          {
+            "name": "include_timestamps",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Timestamps"
+            }
+          },
+          {
+            "name": "include_numbers",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Numbers"
+            }
+          },
+          {
+            "name": "paragraph_mode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Paragraph Mode"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_convert_srt_to_markdown_media_srt_to_markdown_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_convert_video_to_audio_media_video_to_audio_post": {
+        "properties": {
+          "video_file": {
+            "type": "string",
+            "format": "binary",
+            "title": "Video File"
+          }
+        },
+        "type": "object",
+        "title": "Body_convert_video_to_audio_media_video_to_audio_post"
+      },
+      "TranscriptionEngine": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "openai",
+          "local_ffmpeg",
+          "tingwu"
+        ],
+        "title": "TranscriptionEngine"
+      },
+      "Body_convert_srt_to_markdown_media_srt_to_markdown_post": {
+        "properties": {
+          "srt_file": {
+            "type": "string",
+            "format": "binary",
+            "title": "Srt File"
+          }
+        },
+        "type": "object",
+        "title": "Body_convert_srt_to_markdown_media_srt_to_markdown_post"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "Body_convert_audio_to_text_media_audio_to_srt_post": {
+        "properties": {
+          "audio_file": {
+            "type": "string",
+            "format": "binary",
+            "title": "Audio File"
+          }
+        },
+        "type": "object",
+        "title": "Body_convert_audio_to_text_media_audio_to_srt_post"
+      }
+    },
+    "responses": {},
+    "parameters": {},
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": {
+      "OAuth2PasswordBearer": {
+        "type": "oauth2",
+        "flows": {
+          "password": {
+            "scopes": {},
+            "tokenUrl": "account/token"
+          }
+        }
+      },
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-WechatMP-Token"
+      }
+    },
+    "links": {},
+    "callbacks": {}
+  },
+  "security": [],
+  "tags": [],
+  "externalDocs": null
+}

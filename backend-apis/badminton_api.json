@@ -1,0 +1,189 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Uni Api - Badminton API",
+    "description": "聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能 （opensource: https://github.com/cs-magic/uni-api）",
+    "version": "0.5.0"
+  },
+  "servers": [],
+  "paths": {
+    "/sport/badminton": {
+      "get": {
+        "tags": [
+          "Badminton"
+        ],
+        "summary": "Get Badminton Status",
+        "operationId": "get_badminton_status_sport_badminton_get",
+        "parameters": [
+          {
+            "name": "gym",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "enum": [
+                "北科大体育馆",
+                "清华大学气膜馆",
+                "清华大学综合体育馆",
+                "清华大学西区体育馆",
+                "人大羽毛球主馆"
+              ],
+              "type": "string",
+              "description": "体育场名称",
+              "title": "Gym"
+            },
+            "description": "体育场名称"
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "description": "查询日期",
+              "title": "Date"
+            },
+            "description": "查询日期"
+          },
+          {
+            "name": "wxkey",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "可选参数，wxkey",
+              "default": "E7E7EB4C8EC1A817B3858271B986FBBA0ECE35796DD6B28992DAB943C20CC2235734D8DD36E20AB6425DAE0E30E8080E00B5149C31AAF8D018D123A07C6050749A515AAC19DB70160859E9EE5FF6DEAE9B334F09023BE6F61BB91363F397FA23EB7BBFA004E489EF26F39A1B23C0FD49",
+              "title": "Wxkey"
+            },
+            "description": "可选参数，wxkey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BadmintonCourtStatus"
+                  },
+                  "title": "Response Get Badminton Status Sport Badminton Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "BadmintonCourtStatus": {
+        "properties": {
+          "start_time": {
+            "type": "string",
+            "title": "Start Time"
+          },
+          "end_time": {
+            "type": "string",
+            "title": "End Time"
+          },
+          "available_count": {
+            "type": "integer",
+            "title": "Available Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "start_time",
+          "end_time",
+          "available_count"
+        ],
+        "title": "BadmintonCourtStatus"
+      }
+    },
+    "responses": {},
+    "parameters": {},
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": {
+      "OAuth2PasswordBearer": {
+        "type": "oauth2",
+        "flows": {
+          "password": {
+            "scopes": {},
+            "tokenUrl": "account/token"
+          }
+        }
+      },
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-WechatMP-Token"
+      }
+    },
+    "links": {},
+    "callbacks": {}
+  },
+  "security": [],
+  "tags": [],
+  "externalDocs": null
+}
