@@ -47,7 +47,7 @@ export function withAuthNotRequired<T extends object>(
   Component: ComponentType<T>,
   redirectTo?: string
 ) {
-  return withAuth(Component, { redirectTo: redirectTo || '/dashboard', requireAuth: false });
+  return withAuth(Component, { redirectTo: redirectTo || '/playground', requireAuth: false });
 }
 
 export default withAuth;

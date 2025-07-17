@@ -278,12 +278,12 @@ export class FastAPIAuthService {
   private saveToStorage(): void {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('auth_token', JSON.stringify(this.tokens));
+        localStorage.setItem('fastapi_auth_token', JSON.stringify(this.tokens));
         localStorage.setItem('fastapi_auth_user', JSON.stringify(this.user));
         
         // 同时保存到cookie供middleware使用
         if (this.tokens) {
-          document.cookie = `auth_token=${this.tokens.access_token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Strict`;
+          document.cookie = `fastapi_auth_token=${this.tokens.access_token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Strict`;
         }
       } catch (error) {
         console.error('Failed to save to storage:', error);
@@ -297,7 +297,7 @@ export class FastAPIAuthService {
   private loadFromStorage(): void {
     if (typeof window !== 'undefined') {
       try {
-        const tokensStr = localStorage.getItem('auth_token');
+        const tokensStr = localStorage.getItem('fastapi_auth_token');
         const userStr = localStorage.getItem('fastapi_auth_user');
         
         if (tokensStr) {
@@ -319,11 +319,11 @@ export class FastAPIAuthService {
    */
   private clearStorage(): void {
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('auth_token');
+      localStorage.removeItem('fastapi_auth_token');
       localStorage.removeItem('fastapi_auth_user');
       
       // 清除cookie
-      document.cookie = 'auth_token=; path=/; max-age=0; SameSite=Strict';
+      document.cookie = 'fastapi_auth_token=; path=/; max-age=0; SameSite=Strict';
     }
   }
 

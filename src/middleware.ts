@@ -41,7 +41,7 @@ export default async function middleware(
   }
 
   // Check if user is authenticated and redirect root to /playground
-  const authToken = request.cookies.get('auth_token')?.value;
+  const authToken = request.cookies.get('fastapi_auth_token')?.value;
   const isAuthenticated = !!authToken;
   
   // Get the locale from the pathname
