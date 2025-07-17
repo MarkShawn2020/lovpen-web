@@ -1,11 +1,11 @@
-import { setRequestLocale } from 'next-intl/server';
-import { Container } from '@/components/layout/Container';
+import {setRequestLocale} from 'next-intl/server';
+import {Container} from '@/components/layout/Container';
 
 export default async function DashboardLayout(props: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await props.params;
+  const {locale} = await props.params;
   setRequestLocale(locale);
 
   return (

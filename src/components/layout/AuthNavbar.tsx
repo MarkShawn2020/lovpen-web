@@ -1,12 +1,12 @@
 'use client';
 
-import { useClerk, useUser } from '@clerk/nextjs';
-import { LogOut, Settings, User } from 'lucide-react';
+import {useClerk, useUser} from '@clerk/nextjs';
+import {LogOut, Settings, User} from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Container } from '@/components/layout/Container';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/Button';
+import {usePathname} from 'next/navigation';
+import {Container} from '@/components/layout/Container';
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
+import {Button} from '@/components/ui/Button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,15 +33,15 @@ const navigationItems = [
 
 export function AuthNavbar() {
   const pathname = usePathname();
-  const { user, isLoaded } = useUser();
-  const { signOut } = useClerk();
+  const {user, isLoaded} = useUser();
+  const {signOut} = useClerk();
 
   const isActive = (href: string) => {
     return pathname.includes(href);
   };
 
   const handleSignOut = async () => {
-    await signOut({ redirectUrl: '/' });
+    await signOut({redirectUrl: '/'});
   };
 
   const getUserDisplayName = () => {
@@ -119,7 +119,7 @@ export function AuthNavbar() {
                   aria-label="User account menu"
                 >
                   <Avatar className="w-6 h-6">
-                    <AvatarImage src={user?.imageUrl} alt={getUserDisplayName()} />
+                    <AvatarImage src={user?.imageUrl} alt={getUserDisplayName()}/>
                     <AvatarFallback className="text-xs bg-primary text-white">
                       {isLoaded ? getUserInitials() : '...'}
                     </AvatarFallback>
@@ -137,25 +137,25 @@ export function AuthNavbar() {
                     </p>
                   </div>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator/>
                 <DropdownMenuItem asChild disabled={!isLoaded}>
                   <Link href="/dashboard/user-profile" className="flex items-center">
-                    <User className="mr-2 h-4 w-4" />
+                    <User className="mr-2 h-4 w-4"/>
                     <span>Profile</span>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem disabled={!isLoaded}>
-                  <Settings className="mr-2 h-4 w-4" />
+                  <Settings className="mr-2 h-4 w-4"/>
                   <span>Settings</span>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator/>
                 <DropdownMenuItem
                   onClick={handleSignOut}
                   variant="destructive"
                   disabled={!isLoaded}
                   className="focus:bg-destructive/10 focus:text-destructive"
                 >
-                  <LogOut className="mr-2 h-4 w-4" />
+                  <LogOut className="mr-2 h-4 w-4"/>
                   <span>Sign out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>

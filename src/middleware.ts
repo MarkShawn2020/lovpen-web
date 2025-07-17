@@ -1,10 +1,10 @@
-import type { NextFetchEvent, NextRequest } from 'next/server';
-import { detectBot } from '@arcjet/next';
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import type {NextFetchEvent, NextRequest} from 'next/server';
+import {NextResponse} from 'next/server';
+import {detectBot} from '@arcjet/next';
+import {clerkMiddleware, createRouteMatcher} from '@clerk/nextjs/server';
 import createMiddleware from 'next-intl/middleware';
-import { NextResponse } from 'next/server';
 import arcjet from '@/libs/Arcjet';
-import { routing } from './libs/I18nRouting';
+import {routing} from './libs/I18nRouting';
 
 const handleI18nRouting = createMiddleware(routing);
 
@@ -37,7 +37,7 @@ export default async function middleware(
     const decision = await aj.protect(request);
 
     if (decision.isDenied()) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+      return NextResponse.json({error: 'Forbidden'}, {status: 403});
     }
   }
 
@@ -59,7 +59,7 @@ export default async function middleware(
     }
 
     // Handle homepage redirect for authenticated users
-    const { userId } = await auth();
+    const {userId} = await auth();
     if (userId) {
       const pathname = req.nextUrl.pathname;
       // Check if user is on root path or localized root path
@@ -68,15 +68,15 @@ export default async function middleware(
       if (isRootPath) {
         // Let i18n routing handle the request first to get proper locale
         const i18nResponse = handleI18nRouting(request);
-        
+
         // If i18n routing returns a redirect, follow it
         if (i18nResponse.status === 307 || i18nResponse.status === 308) {
           const redirectUrl = new URL(i18nResponse.headers.get('location') || '/', req.url);
           // Add /create to the redirected path
-          redirectUrl.pathname = redirectUrl.pathname.replace(/\/$/, '') + '/create';
+          redirectUrl.pathname = `${redirectUrl.pathname.replace(/\/$/, '')}/create`;
           return NextResponse.redirect(redirectUrl);
         }
-        
+
         // For direct access, determine the correct locale path
         const createPath = pathname === '/' ? '/create' : `${pathname}/create`;
         return NextResponse.redirect(new URL(createPath, req.url));

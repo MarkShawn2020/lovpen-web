@@ -29,7 +29,7 @@ if (!process.env.NEXT_PUBLIC_SENTRY_DISABLED) {
     replaysOnErrorSampleRate: 1.0,
 
     // Enable logs to be sent to Sentry
-    _experiments: { enableLogs: true },
+    _experiments: {enableLogs: true},
 
     // Setting this option to true will print useful information to the console while you're setting up Sentry.
     debug: false,

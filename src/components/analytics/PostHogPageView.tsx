@@ -1,8 +1,8 @@
 'use client';
 
-import { usePathname, useSearchParams } from 'next/navigation';
-import { usePostHog } from 'posthog-js/react';
-import { Suspense, useEffect } from 'react';
+import {usePathname, useSearchParams} from 'next/navigation';
+import {usePostHog} from 'posthog-js/react';
+import {Suspense, useEffect} from 'react';
 
 const PostHogPageView = () => {
   const pathname = usePathname();
@@ -17,7 +17,7 @@ const PostHogPageView = () => {
         url = `${url}?${searchParams.toString()}`;
       }
 
-      posthog.capture('$pageview', { $current_url: url });
+      posthog.capture('$pageview', {$current_url: url});
     }
   }, [pathname, searchParams, posthog]);
 
@@ -30,7 +30,7 @@ const PostHogPageView = () => {
 export const SuspendedPostHogPageView = () => {
   return (
     <Suspense fallback={null}>
-      <PostHogPageView />
+      <PostHogPageView/>
     </Suspense>
   );
 };

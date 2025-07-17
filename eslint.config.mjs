@@ -68,6 +68,10 @@ export default antfu(
       'node/prefer-global/process': 'off', // Allow using `process.env`
       'test/padding-around-all': 'error', // Add padding in test files
       'test/prefer-lowercase-title': 'off', // Allow using uppercase titles in test titles
+      'style/indent': 'warn',
+      'style/object-curly-spacing': 'off',
+      'style/jsx-tag-spacing': 'off',
+      'style/jsx-curly-brace-presence': 'off',
     },
   },
 );

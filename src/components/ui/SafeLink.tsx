@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
+import type {ReactNode} from 'react';
 import Link from 'next/link';
-import { cn } from '@/utils/Helpers';
+import {cn} from '@/utils/Helpers';
 
 type SafeLinkProps = {
   href: string;
@@ -64,7 +64,7 @@ function isRoutePlanned(href: string): boolean {
   return PLANNED_ROUTES.includes(cleanHref) || PLANNED_ROUTES.includes(href);
 }
 
-export function SafeLink({ href, children, className, showComingSoon = true }: SafeLinkProps) {
+export function SafeLink({href, children, className, showComingSoon = true}: SafeLinkProps) {
   const implemented = isRouteImplemented(href);
   const planned = isRoutePlanned(href);
 
@@ -80,7 +80,8 @@ export function SafeLink({ href, children, className, showComingSoon = true }: S
           title="Coming soon"
         >
           {children}
-          <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-text-main text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap mb-1">
+          <span
+            className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-text-main text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap mb-1">
             Coming soon
           </span>
         </span>
@@ -107,7 +108,8 @@ export function SafeLink({ href, children, className, showComingSoon = true }: S
         title="Coming soon"
       >
         {children}
-        <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-text-main text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap mb-1">
+        <span
+          className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-text-main text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap mb-1">
           Coming soon
         </span>
       </span>

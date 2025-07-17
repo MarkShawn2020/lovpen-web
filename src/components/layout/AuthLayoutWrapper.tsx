@@ -1,13 +1,13 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-import { AuthNavbar } from './AuthNavbar';
+import {usePathname} from 'next/navigation';
+import {AuthNavbar} from './AuthNavbar';
 
 type AuthLayoutWrapperProps = {
   children: React.ReactNode;
 };
 
-export function AuthLayoutWrapper({ children }: AuthLayoutWrapperProps) {
+export function AuthLayoutWrapper({children}: AuthLayoutWrapperProps) {
   const pathname = usePathname();
 
   // 只有认证页面有自己的布局，不需要我们的导航栏
@@ -19,8 +19,10 @@ export function AuthLayoutWrapper({ children }: AuthLayoutWrapperProps) {
 
   return (
     <div className="min-h-screen bg-background-main">
-      <AuthNavbar />
-      {children}
+      <AuthNavbar/>
+      <div className={'p-2'}>
+        {children}
+      </div>
     </div>
   );
 }

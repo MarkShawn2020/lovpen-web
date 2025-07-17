@@ -1,7 +1,7 @@
 'use client';
 
-import type { GlobalSettings, PlatformSettings, SidebarContext, SidebarMode } from '@/types/sidebar';
-import { useCallback, useState } from 'react';
+import type {GlobalSettings, PlatformSettings, SidebarContext, SidebarMode} from '@/types/sidebar';
+import {useCallback, useState} from 'react';
 
 const defaultGlobalSettings: GlobalSettings = {
   autoImage: true,
@@ -58,13 +58,13 @@ export function useSidebarContext() {
   });
 
   const updateContext = useCallback((updates: Partial<SidebarContext>) => {
-    setSidebarContext(prev => ({ ...prev, ...updates }));
+    setSidebarContext(prev => ({...prev, ...updates}));
   }, []);
 
   const updateGlobalSettings = useCallback((settings: Partial<GlobalSettings>) => {
     setSidebarContext(prev => ({
       ...prev,
-      globalSettings: { ...prev.globalSettings, ...settings },
+      globalSettings: {...prev.globalSettings, ...settings},
     }));
   }, []);
 
@@ -73,7 +73,7 @@ export function useSidebarContext() {
       ...prev,
       platformOverrides: {
         ...prev.platformOverrides,
-        [platform]: { ...prev.platformOverrides[platform], ...settings },
+        [platform]: {...prev.platformOverrides[platform], ...settings},
       },
     }));
   }, []);
@@ -81,8 +81,8 @@ export function useSidebarContext() {
   const selectPanels = useCallback((panelIds: string[]) => {
     const newMode: SidebarMode
       = panelIds.length === 0
-        ? 'global'
-        : panelIds.length === 1 ? 'platform' : 'multi-select';
+      ? 'global'
+      : panelIds.length === 1 ? 'platform' : 'multi-select';
 
     setSidebarContext(prev => ({
       ...prev,
@@ -100,8 +100,8 @@ export function useSidebarContext() {
 
       const newMode: SidebarMode
         = newSelection.length === 0
-          ? 'global'
-          : newSelection.length === 1 ? 'platform' : 'multi-select';
+        ? 'global'
+        : newSelection.length === 1 ? 'platform' : 'multi-select';
 
       return {
         ...prev,

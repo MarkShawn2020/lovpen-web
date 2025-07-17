@@ -1,38 +1,31 @@
 'use client';
 
-import { 
-  useQuery, 
-  useMutation, 
-  useInfiniteQuery, 
-  useQueryClient,
-  type UseQueryOptions,
-  type UseMutationOptions,
-  type UseInfiniteQueryOptions,
-} from '@tanstack/react-query';
-import { useUser } from '@clerk/nextjs';
-import { 
-  uniApiClient, 
-  type UniApiKnowledgeItem, 
-  type UniApiSearchResult,
-  type UniApiSearchFilters,
-  type UniApiAISearchRequest,
-  type UniApiAIReasoningRequest,
-  type UniApiAIReasoningResponse,
-  type UniApiPlatformStatus,
-  type UniApiAnalyticsInsights,
-  type UniApiVectorStats,
+import type {UseInfiniteQueryOptions, UseMutationOptions, UseQueryOptions} from '@tanstack/react-query';
+import {useInfiniteQuery, useMutation, useQuery, useQueryClient,} from '@tanstack/react-query';
+import type {
+  UniApiAIReasoningRequest,
+  UniApiAIReasoningResponse,
+  UniApiAISearchRequest,
+  UniApiAnalyticsInsights,
+  UniApiKnowledgeItem,
+  UniApiPlatformStatus,
+  UniApiSearchFilters,
+  UniApiSearchResult,
+  UniApiVectorStats
 } from '@/services/uni-api-client';
+import {uniApiClient,} from '@/services/uni-api-client';
+import {useUser} from '@clerk/nextjs';
 
 // Query keys for consistent caching
 export const knowledgeBaseKeys = {
   all: ['knowledgeBase'] as const,
   items: () => [...knowledgeBaseKeys.all, 'items'] as const,
   item: (id: string) => [...knowledgeBaseKeys.items(), id] as const,
-  search: (query: string, filters?: UniApiSearchFilters) => 
+  search: (query: string, filters?: UniApiSearchFilters) =>
     [...knowledgeBaseKeys.all, 'search', query, filters] as const,
-  aiSearch: (request: UniApiAISearchRequest) => 
+  aiSearch: (request: UniApiAISearchRequest) =>
     [...knowledgeBaseKeys.all, 'aiSearch', request] as const,
-  aiReasoning: (request: UniApiAIReasoningRequest) => 
+  aiReasoning: (request: UniApiAIReasoningRequest) =>
     [...knowledgeBaseKeys.all, 'aiReasoning', request] as const,
   platforms: () => [...knowledgeBaseKeys.all, 'platforms'] as const,
   analytics: () => [...knowledgeBaseKeys.all, 'analytics'] as const,
@@ -42,13 +35,13 @@ export const knowledgeBaseKeys = {
 // Hook for getting knowledge base items with pagination
 export function useKnowledgeItems(
   filters: UniApiSearchFilters = {},
-  options?: UseInfiniteQueryOptions<UniApiSearchResult>
+  options?: UseInfiniteQueryOptions<UniApiSearchResult>,
 ) {
-  const { user } = useUser();
-  
+  const {user} = useUser();
+
   return useInfiniteQuery({
     queryKey: [...knowledgeBaseKeys.items(), filters],
-    queryFn: async ({ pageParam = 0 }) => {
+    queryFn: async ({pageParam = 0}) => {
       return uniApiClient.getKnowledgeItems(filters, 20, pageParam as number);
     },
     enabled: !!user,
@@ -64,10 +57,10 @@ export function useKnowledgeItems(
 // Hook for getting a single knowledge base item
 export function useKnowledgeItem(
   id: string,
-  options?: UseQueryOptions<UniApiKnowledgeItem>
+  options?: UseQueryOptions<UniApiKnowledgeItem>,
 ) {
-  const { user } = useUser();
-  
+  const {user} = useUser();
+
   return useQuery({
     queryKey: knowledgeBaseKeys.item(id),
     queryFn: () => uniApiClient.getKnowledgeItem(id),
@@ -81,10 +74,10 @@ export function useKnowledgeItem(
 export function useSearchKnowledgeItems(
   query: string,
   filters: UniApiSearchFilters = {},
-  options?: UseQueryOptions<UniApiKnowledgeItem[]>
+  options?: UseQueryOptions<UniApiKnowledgeItem[]>,
 ) {
-  const { user } = useUser();
-  
+  const {user} = useUser();
+
   return useQuery({
     queryKey: knowledgeBaseKeys.search(query, filters),
     queryFn: () => uniApiClient.searchKnowledgeItems(query, filters, 20),
@@ -97,10 +90,10 @@ export function useSearchKnowledgeItems(
 // Hook for AI-powered semantic search
 export function useAISearch(
   request: UniApiAISearchRequest,
-  options?: UseQueryOptions<UniApiKnowledgeItem[]>
+  options?: UseQueryOptions<UniApiKnowledgeItem[]>,
 ) {
-  const { user } = useUser();
-  
+  const {user} = useUser();
+
   return useQuery({
     queryKey: knowledgeBaseKeys.aiSearch(request),
     queryFn: () => uniApiClient.aiSearch(request),
@@ -113,10 +106,10 @@ export function useAISearch(
 // Hook for AI reasoning
 export function useAIReasoning(
   request: UniApiAIReasoningRequest,
-  options?: UseQueryOptions<UniApiAIReasoningResponse>
+  options?: UseQueryOptions<UniApiAIReasoningResponse>,
 ) {
-  const { user } = useUser();
-  
+  const {user} = useUser();
+
   return useQuery({
     queryKey: knowledgeBaseKeys.aiReasoning(request),
     queryFn: () => uniApiClient.aiReasoning(request),
@@ -128,10 +121,10 @@ export function useAIReasoning(
 
 // Hook for platform status
 export function usePlatformStatus(
-  options?: UseQueryOptions<UniApiPlatformStatus[]>
+  options?: UseQueryOptions<UniApiPlatformStatus[]>,
 ) {
-  const { user } = useUser();
-  
+  const {user} = useUser();
+
   return useQuery({
     queryKey: knowledgeBaseKeys.platforms(),
     queryFn: () => uniApiClient.getPlatformStatus(),
@@ -144,10 +137,10 @@ export function usePlatformStatus(
 
 // Hook for analytics insights
 export function useAnalyticsInsights(
-  options?: UseQueryOptions<UniApiAnalyticsInsights>
+  options?: UseQueryOptions<UniApiAnalyticsInsights>,
 ) {
-  const { user } = useUser();
-  
+  const {user} = useUser();
+
   return useQuery({
     queryKey: knowledgeBaseKeys.analytics(),
     queryFn: () => uniApiClient.getKnowledgeInsights(),
@@ -159,10 +152,10 @@ export function useAnalyticsInsights(
 
 // Hook for vector statistics
 export function useVectorStats(
-  options?: UseQueryOptions<UniApiVectorStats>
+  options?: UseQueryOptions<UniApiVectorStats>,
 ) {
-  const { user } = useUser();
-  
+  const {user} = useUser();
+
   return useQuery({
     queryKey: knowledgeBaseKeys.vectorStats(),
     queryFn: () => uniApiClient.getVectorIndexStats(),
@@ -178,21 +171,21 @@ export function useCreateKnowledgeItem(
     UniApiKnowledgeItem,
     Error,
     Omit<UniApiKnowledgeItem, 'id' | 'createdAt' | 'updatedAt'>
-  >
+  >,
 ) {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: (item) => uniApiClient.createKnowledgeItem(item),
+    mutationFn: item => uniApiClient.createKnowledgeItem(item),
     onSuccess: (data) => {
       // Invalidate and refetch items list
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.items() });
-      
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.items()});
+
       // Add the new item to the cache
       queryClient.setQueryData(knowledgeBaseKeys.item(data.id), data);
-      
+
       // Update analytics
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.analytics() });
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.analytics()});
     },
     ...options,
   });
@@ -203,21 +196,21 @@ export function useUpdateKnowledgeItem(
     UniApiKnowledgeItem,
     Error,
     { id: string; updates: Partial<UniApiKnowledgeItem> }
-  >
+  >,
 ) {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: ({ id, updates }) => uniApiClient.updateKnowledgeItem(id, updates),
-    onMutate: (async ({ id, updates }: { id: string; updates: Partial<UniApiKnowledgeItem> }) => {
+    mutationFn: ({id, updates}) => uniApiClient.updateKnowledgeItem(id, updates),
+    onMutate: (async ({id, updates}: { id: string; updates: Partial<UniApiKnowledgeItem> }) => {
       // Cancel any outgoing refetches
-      await queryClient.cancelQueries({ queryKey: knowledgeBaseKeys.item(id) });
-      
+      await queryClient.cancelQueries({queryKey: knowledgeBaseKeys.item(id)});
+
       // Snapshot the previous value
       const previousItem = queryClient.getQueryData<UniApiKnowledgeItem>(
-        knowledgeBaseKeys.item(id)
+        knowledgeBaseKeys.item(id),
       );
-      
+
       // Optimistically update to the new value
       if (previousItem) {
         queryClient.setQueryData(knowledgeBaseKeys.item(id), {
@@ -225,79 +218,79 @@ export function useUpdateKnowledgeItem(
           ...updates,
         });
       }
-      
-      return { previousItem };
+
+      return {previousItem};
     }) as any,
     onError: (_error: any, variables: any, context: any) => {
       // Rollback on error
       if (context?.previousItem) {
         queryClient.setQueryData(
           knowledgeBaseKeys.item(variables.id),
-          context.previousItem
+          context.previousItem,
         );
       }
     },
     onSettled: (_data, _error, variables) => {
       // Refetch the item regardless of success/failure
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.item(variables.id) });
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.item(variables.id)});
     },
     ...options,
   });
 }
 
 export function useDeleteKnowledgeItem(
-  options?: UseMutationOptions<void, Error, string>
+  options?: UseMutationOptions<void, Error, string>,
 ) {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: (id) => uniApiClient.deleteKnowledgeItem(id),
+    mutationFn: id => uniApiClient.deleteKnowledgeItem(id),
     onSuccess: (_data, id) => {
       // Remove the item from cache
-      queryClient.removeQueries({ queryKey: knowledgeBaseKeys.item(id) });
-      
+      queryClient.removeQueries({queryKey: knowledgeBaseKeys.item(id)});
+
       // Invalidate items list
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.items() });
-      
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.items()});
+
       // Update analytics
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.analytics() });
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.analytics()});
     },
     ...options,
   });
 }
 
 export function useUploadKnowledgeItem(
-  options?: UseMutationOptions<UniApiKnowledgeItem, Error, File>
+  options?: UseMutationOptions<UniApiKnowledgeItem, Error, File>,
 ) {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: (file) => uniApiClient.uploadKnowledgeItem(file),
+    mutationFn: file => uniApiClient.uploadKnowledgeItem(file),
     onSuccess: (data) => {
       // Invalidate and refetch items list
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.items() });
-      
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.items()});
+
       // Add the new item to the cache
       queryClient.setQueryData(knowledgeBaseKeys.item(data.id), data);
-      
+
       // Update analytics
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.analytics() });
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.analytics()});
     },
     ...options,
   });
 }
 
 export function useBatchDeleteKnowledgeItems(
-  options?: UseMutationOptions<{ deleted: number }, Error, string[]>
+  options?: UseMutationOptions<{ deleted: number }, Error, string[]>,
 ) {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: (filenames) => uniApiClient.batchDeleteKnowledgeItems(filenames),
+    mutationFn: filenames => uniApiClient.batchDeleteKnowledgeItems(filenames),
     onSuccess: () => {
       // Invalidate all items-related queries
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.items() });
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.analytics() });
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.items()});
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.analytics()});
     },
     ...options,
   });
@@ -309,45 +302,45 @@ export function useSyncPlatform(
     { status: string; message: string },
     Error,
     string
-  >
+  >,
 ) {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: (platform) => uniApiClient.syncPlatform(platform),
+    mutationFn: platform => uniApiClient.syncPlatform(platform),
     onSuccess: () => {
       // Invalidate platform status and items
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.platforms() });
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.items() });
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.analytics() });
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.platforms()});
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.items()});
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.analytics()});
     },
     ...options,
   });
 }
 
 export function usePausePlatformSync(
-  options?: UseMutationOptions<{ status: string }, Error, string>
+  options?: UseMutationOptions<{ status: string }, Error, string>,
 ) {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: (platform) => uniApiClient.pausePlatformSync(platform),
+    mutationFn: platform => uniApiClient.pausePlatformSync(platform),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.platforms() });
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.platforms()});
     },
     ...options,
   });
 }
 
 export function useResumePlatformSync(
-  options?: UseMutationOptions<{ status: string }, Error, string>
+  options?: UseMutationOptions<{ status: string }, Error, string>,
 ) {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: (platform) => uniApiClient.resumePlatformSync(platform),
+    mutationFn: platform => uniApiClient.resumePlatformSync(platform),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.platforms() });
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.platforms()});
     },
     ...options,
   });
@@ -359,28 +352,28 @@ export function useStartVectorization(
     { taskId: string; status: string },
     Error,
     string[] | undefined
-  >
+  >,
 ) {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: (itemIds) => uniApiClient.startVectorization(itemIds),
+    mutationFn: itemIds => uniApiClient.startVectorization(itemIds),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.vectorStats() });
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.vectorStats()});
     },
     ...options,
   });
 }
 
 export function useRebuildVectorIndex(
-  options?: UseMutationOptions<{ status: string; taskId: string }, Error, void>
+  options?: UseMutationOptions<{ status: string; taskId: string }, Error, void>,
 ) {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: () => uniApiClient.rebuildVectorIndex(),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: knowledgeBaseKeys.vectorStats() });
+      queryClient.invalidateQueries({queryKey: knowledgeBaseKeys.vectorStats()});
     },
     ...options,
   });
@@ -388,9 +381,9 @@ export function useRebuildVectorIndex(
 
 // Utility hooks for common operations
 export function useKnowledgeBaseStats() {
-  const { data: insights } = useAnalyticsInsights();
-  const { data: vectorStats } = useVectorStats();
-  
+  const {data: insights} = useAnalyticsInsights();
+  const {data: vectorStats} = useVectorStats();
+
   return {
     totalItems: insights?.totalItems || 0,
     vectorizedItems: vectorStats?.indexedItems || 0,
@@ -403,13 +396,13 @@ export function useKnowledgeBaseStats() {
 export function useKnowledgeBaseSearch(query: string, enableAI = true) {
   const basicSearch = useSearchKnowledgeItems(query);
   const aiSearch = useAISearch(
-    { query, includeRelevanceScore: true },
-    { 
+    {query, includeRelevanceScore: true},
+    {
       enabled: enableAI && !!query.trim(),
-      queryKey: knowledgeBaseKeys.aiSearch({ query, includeRelevanceScore: true })
-    }
+      queryKey: knowledgeBaseKeys.aiSearch({query, includeRelevanceScore: true}),
+    },
   );
-  
+
   return {
     basicResults: basicSearch.data || [],
     aiResults: aiSearch.data || [],

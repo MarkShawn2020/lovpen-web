@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/utils/Helpers';
+import {cn} from '@/utils/Helpers';
 
 type ButtonProps = {
   variant?: 'primary' | 'secondary' | 'outline';
@@ -9,7 +9,16 @@ type ButtonProps = {
   children: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({ ref, className, variant = 'primary', size = 'md', asChild = false, href, children, ...props }: ButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
+const Button = ({
+                  ref,
+                  className,
+                  variant = 'primary',
+                  size = 'md',
+                  asChild = false,
+                  href,
+                  children,
+                  ...props
+                }: ButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
   const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:pointer-events-none';
 
   const variants = {
@@ -57,4 +66,4 @@ const Button = ({ ref, className, variant = 'primary', size = 'md', asChild = fa
 
 Button.displayName = 'Button';
 
-export { Button, type ButtonProps };
+export {Button, type ButtonProps};

@@ -1,16 +1,7 @@
 'use client';
 
-import type {
-  DragEndEvent,
-} from '@dnd-kit/core';
-import {
-  closestCenter,
-  DndContext,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
+import type {DragEndEvent,} from '@dnd-kit/core';
+import {closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors,} from '@dnd-kit/core';
 import {
   arrayMove,
   SortableContext,
@@ -18,10 +9,10 @@ import {
   useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import { useState } from 'react';
-import { Button } from '@/components/ui/Button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import {CSS} from '@dnd-kit/utilities';
+import {useState} from 'react';
+import {Button} from '@/components/ui/Button';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/Select';
 
 type PreviewPanel = {
   id: string;
@@ -49,13 +40,13 @@ type PreviewSectionProps = {
 
 // 可拖拽的预览面板组件
 function DraggablePreviewPanel({
-  panel,
-  platforms,
-  generatedContent,
-  removePreviewPanel,
-  previewPanelsLength,
-  onPanelSelect,
-}: {
+                                 panel,
+                                 platforms,
+                                 generatedContent,
+                                 removePreviewPanel,
+                                 previewPanelsLength,
+                                 onPanelSelect,
+                               }: {
   panel: PreviewPanel;
   platforms: Record<string, Platform>;
   generatedContent: string;
@@ -70,7 +61,7 @@ function DraggablePreviewPanel({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: panel.id });
+  } = useSortable({id: panel.id});
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -140,15 +131,15 @@ function DraggablePreviewPanel({
                 xmlns="http://www.w3.org/2000/svg"
                 className="text-current"
               >
-                <circle cx="2" cy="2" r="1" fill="currentColor" />
-                <circle cx="6" cy="2" r="1" fill="currentColor" />
-                <circle cx="10" cy="2" r="1" fill="currentColor" />
-                <circle cx="2" cy="6" r="1" fill="currentColor" />
-                <circle cx="6" cy="6" r="1" fill="currentColor" />
-                <circle cx="10" cy="6" r="1" fill="currentColor" />
-                <circle cx="2" cy="10" r="1" fill="currentColor" />
-                <circle cx="6" cy="10" r="1" fill="currentColor" />
-                <circle cx="10" cy="10" r="1" fill="currentColor" />
+                <circle cx="2" cy="2" r="1" fill="currentColor"/>
+                <circle cx="6" cy="2" r="1" fill="currentColor"/>
+                <circle cx="10" cy="2" r="1" fill="currentColor"/>
+                <circle cx="2" cy="6" r="1" fill="currentColor"/>
+                <circle cx="6" cy="6" r="1" fill="currentColor"/>
+                <circle cx="10" cy="6" r="1" fill="currentColor"/>
+                <circle cx="2" cy="10" r="1" fill="currentColor"/>
+                <circle cx="6" cy="10" r="1" fill="currentColor"/>
+                <circle cx="10" cy="10" r="1" fill="currentColor"/>
               </svg>
             </button>
             <div className={`w-3 h-3 rounded-full ${platforms[panel.platform]?.color}`}></div>
@@ -188,20 +179,20 @@ function DraggablePreviewPanel({
       <div className="flex-1 p-6">
         {generatedContent
           ? (
-              <div className="bg-background-ivory-medium rounded-md border border-border-default/20 p-6">
+            <div className="bg-background-ivory-medium rounded-md border border-border-default/20 p-6">
                 <pre className="whitespace-pre-wrap font-sans text-text-main leading-relaxed text-sm">
                   {generatedContent}
                 </pre>
-              </div>
-            )
+            </div>
+          )
           : (
-              <div className="h-full flex items-center justify-center text-text-faded">
-                <div className="text-center">
-                  <div className="text-4xl mb-4">📄</div>
-                  <p className="text-sm">等待内容生成</p>
-                </div>
+            <div className="h-full flex items-center justify-center text-text-faded">
+              <div className="text-center">
+                <div className="text-4xl mb-4">📄</div>
+                <p className="text-sm">等待内容生成</p>
               </div>
-            )}
+            </div>
+          )}
       </div>
 
       {/* 单个面板底部操作栏 */}
@@ -235,15 +226,15 @@ function DraggablePreviewPanel({
 }
 
 export function PreviewSection({
-  previewPanels,
-  platforms,
-  generatedContent,
-  addPreviewPanel,
-  removePreviewPanel,
-  reorderPreviewPanels,
-  onPanelSelect,
-  onBackgroundClick,
-}: PreviewSectionProps) {
+                                 previewPanels,
+                                 platforms,
+                                 generatedContent,
+                                 addPreviewPanel,
+                                 removePreviewPanel,
+                                 reorderPreviewPanels,
+                                 onPanelSelect,
+                                 onBackgroundClick,
+                               }: PreviewSectionProps) {
   const [selectValue, setSelectValue] = useState('');
 
   const sensors = useSensors(
@@ -264,7 +255,7 @@ export function PreviewSection({
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
+    const {active, over} = event;
 
     if (active.id !== over?.id) {
       const oldIndex = previewPanels.findIndex(panel => panel.id === active.id);
@@ -323,7 +314,7 @@ export function PreviewSection({
               onValueChange={handleAddPanel}
             >
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="+ 添加预览面板" />
+                <SelectValue placeholder="+ 添加预览面板"/>
               </SelectTrigger>
               <SelectContent>
                 {Object.entries(platforms).map(([id, platform]) => (
@@ -353,27 +344,27 @@ export function PreviewSection({
           >
             {previewPanels.length === 0
               ? (
-                  <div className="h-full flex items-center justify-center text-text-faded">
-                    <div className="text-center">
-                      <div className="text-6xl mb-4">📱</div>
-                      <p className="text-lg font-medium mb-2">还没有预览面板</p>
-                      <p className="text-sm">点击上方「+ 添加预览面板」开始</p>
-                    </div>
+                <div className="h-full flex items-center justify-center text-text-faded">
+                  <div className="text-center">
+                    <div className="text-6xl mb-4">📱</div>
+                    <p className="text-lg font-medium mb-2">还没有预览面板</p>
+                    <p className="text-sm">点击上方「+ 添加预览面板」开始</p>
                   </div>
-                )
+                </div>
+              )
               : (
-                  previewPanels.map(panel => (
-                    <DraggablePreviewPanel
-                      key={panel.id}
-                      panel={panel}
-                      platforms={platforms}
-                      generatedContent={generatedContent}
-                      removePreviewPanel={removePreviewPanel}
-                      previewPanelsLength={previewPanels.length}
-                      onPanelSelect={onPanelSelect}
-                    />
-                  ))
-                )}
+                previewPanels.map(panel => (
+                  <DraggablePreviewPanel
+                    key={panel.id}
+                    panel={panel}
+                    platforms={platforms}
+                    generatedContent={generatedContent}
+                    removePreviewPanel={removePreviewPanel}
+                    previewPanelsLength={previewPanels.length}
+                    onPanelSelect={onPanelSelect}
+                  />
+                ))
+              )}
           </SortableContext>
         </div>
       </DndContext>

@@ -1,9 +1,9 @@
-import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
+import type {NodePgDatabase} from 'drizzle-orm/node-postgres';
+import {drizzle} from 'drizzle-orm/node-postgres';
 import path from 'node:path';
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { migrate } from 'drizzle-orm/node-postgres/migrator';
+import {migrate} from 'drizzle-orm/node-postgres/migrator';
 import * as schema from '@/models/Schema';
-import { Env } from './Env';
+import {Env} from './Env';
 
 // Stores the db connection in the global scope to prevent multiple instances due to hot reloading with Next.js
 const globalForDb = globalThis as unknown as {
@@ -47,4 +47,4 @@ const runMigrations = async () => {
 // Initialize migrations
 runMigrations();
 
-export { db };
+export {db};

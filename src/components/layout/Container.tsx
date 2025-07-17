@@ -1,12 +1,12 @@
 import React from 'react';
-import { cn } from '@/utils/Helpers';
+import {cn} from '@/utils/Helpers';
 
 type ContainerProps = {
   className?: string;
   children: React.ReactNode;
 };
 
-const Container = ({ ref, className, children }: ContainerProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const Container = ({ref, className, children}: ContainerProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   return (
     <div
       ref={ref}
@@ -19,4 +19,4 @@ const Container = ({ ref, className, children }: ContainerProps & { ref?: React.
 
 Container.displayName = 'Container';
 
-export { Container };
+export {Container};

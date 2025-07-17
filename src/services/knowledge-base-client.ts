@@ -1,4 +1,4 @@
-import type { KnowledgeItem, SearchFilters, SearchResult } from '@/types/knowledge-base';
+import type {KnowledgeItem, SearchFilters, SearchResult} from '@/types/knowledge-base';
 
 export class KnowledgeBaseClientService {
   // 获取知识库项目列表

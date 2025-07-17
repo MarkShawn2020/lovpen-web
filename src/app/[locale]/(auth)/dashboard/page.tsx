@@ -1,11 +1,11 @@
-import { getTranslations } from 'next-intl/server';
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import {getTranslations} from 'next-intl/server';
+import {Button} from '@/components/ui/Button';
+import {Card, CardContent, CardHeader} from '@/components/ui/Card';
 
 export async function generateMetadata(props: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await props.params;
+  const {locale} = await props.params;
   const t = await getTranslations({
     locale,
     namespace: 'Dashboard',
@@ -30,15 +30,15 @@ const dashboardData = {
     orders: [120, 90, 180, 150, 240, 310, 400],
   },
   recentActivity: [
-    { id: 1, type: 'order', description: 'New order #12234', time: '2 minutes ago', amount: 234.00 },
-    { id: 2, type: 'user', description: 'New user registration', time: '5 minutes ago' },
-    { id: 3, type: 'payment', description: 'Payment received', time: '10 minutes ago', amount: 1250.00 },
-    { id: 4, type: 'order', description: 'Order #12233 completed', time: '15 minutes ago', amount: 89.99 },
-    { id: 5, type: 'refund', description: 'Refund processed', time: '1 hour ago', amount: 156.00 },
+    {id: 1, type: 'order', description: 'New order #12234', time: '2 minutes ago', amount: 234.00},
+    {id: 2, type: 'user', description: 'New user registration', time: '5 minutes ago'},
+    {id: 3, type: 'payment', description: 'Payment received', time: '10 minutes ago', amount: 1250.00},
+    {id: 4, type: 'order', description: 'Order #12233 completed', time: '15 minutes ago', amount: 89.99},
+    {id: 5, type: 'refund', description: 'Refund processed', time: '1 hour ago', amount: 156.00},
   ],
 };
 
-function StatCard({ title, value, change, icon }: { title: string; value: string; change: string; icon: string }) {
+function StatCard({title, value, change, icon}: { title: string; value: string; change: string; icon: string }) {
   const isPositive = change.startsWith('+');
   return (
     <Card className="p-6">
@@ -59,7 +59,7 @@ function StatCard({ title, value, change, icon }: { title: string; value: string
   );
 }
 
-function SimpleChart({ data, title, color = 'primary' }: { data: number[]; title: string; color?: string }) {
+function SimpleChart({data, title, color = 'primary'}: { data: number[]; title: string; color?: string }) {
   const max = Math.max(...data);
   const colorClasses = {
     primary: 'bg-primary',
@@ -79,7 +79,7 @@ function SimpleChart({ data, title, color = 'primary' }: { data: number[]; title
             <div key={`chart-bar-${title}-${index}`} className="flex-1 flex flex-col items-center">
               <div
                 className={`w-full ${colorClasses[color as keyof typeof colorClasses]} rounded-t opacity-80 hover:opacity-100 transition-opacity`}
-                style={{ height: `${(value / max) * 100}%` }}
+                style={{height: `${(value / max) * 100}%`}}
               />
               <span className="text-xs text-text-faded mt-2">{`Day ${index + 1}`}</span>
             </div>
@@ -93,21 +93,31 @@ function SimpleChart({ data, title, color = 'primary' }: { data: number[]; title
 function ActivityTimeline() {
   const getActivityIcon = (type: string) => {
     switch (type) {
-      case 'order': return '📦';
-      case 'user': return '👤';
-      case 'payment': return '💳';
-      case 'refund': return '💸';
-      default: return '📄';
+      case 'order':
+        return '📦';
+      case 'user':
+        return '👤';
+      case 'payment':
+        return '💳';
+      case 'refund':
+        return '💸';
+      default:
+        return '📄';
     }
   };
 
   const getActivityColor = (type: string) => {
     switch (type) {
-      case 'order': return 'bg-swatch-sky/20 text-swatch-sky';
-      case 'user': return 'bg-swatch-cactus/20 text-swatch-cactus';
-      case 'payment': return 'bg-swatch-fig/20 text-swatch-fig';
-      case 'refund': return 'bg-primary/20 text-primary';
-      default: return 'bg-background-ivory-medium text-text-faded';
+      case 'order':
+        return 'bg-swatch-sky/20 text-swatch-sky';
+      case 'user':
+        return 'bg-swatch-cactus/20 text-swatch-cactus';
+      case 'payment':
+        return 'bg-swatch-fig/20 text-swatch-fig';
+      case 'refund':
+        return 'bg-primary/20 text-primary';
+      default:
+        return 'bg-background-ivory-medium text-text-faded';
     }
   };
 
@@ -143,10 +153,10 @@ function ActivityTimeline() {
 
 function QuickActions() {
   const actions = [
-    { title: 'Create New Order', icon: '➕', variant: 'primary' as const },
-    { title: 'Add User', icon: '👥', variant: 'secondary' as const },
-    { title: 'Generate Report', icon: '📊', variant: 'primary' as const },
-    { title: 'View Analytics', icon: '📈', variant: 'secondary' as const },
+    {title: 'Create New Order', icon: '➕', variant: 'primary' as const},
+    {title: 'Add User', icon: '👥', variant: 'secondary' as const},
+    {title: 'Generate Report', icon: '📊', variant: 'primary' as const},
+    {title: 'View Analytics', icon: '📈', variant: 'secondary' as const},
   ];
 
   return (
@@ -211,18 +221,18 @@ export default function Dashboard() {
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        <SimpleChart data={dashboardData.chartData.revenue} title="Revenue Trend" color="primary" />
-        <SimpleChart data={dashboardData.chartData.users} title="User Growth" color="cactus" />
-        <SimpleChart data={dashboardData.chartData.orders} title="Order Volume" color="fig" />
+        <SimpleChart data={dashboardData.chartData.revenue} title="Revenue Trend" color="primary"/>
+        <SimpleChart data={dashboardData.chartData.users} title="User Growth" color="cactus"/>
+        <SimpleChart data={dashboardData.chartData.orders} title="Order Volume" color="fig"/>
       </div>
 
       {/* Bottom Section */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <div className="xl:col-span-2">
-          <ActivityTimeline />
+          <ActivityTimeline/>
         </div>
         <div>
-          <QuickActions />
+          <QuickActions/>
         </div>
       </div>
     </div>

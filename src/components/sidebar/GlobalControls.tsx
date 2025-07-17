@@ -1,8 +1,8 @@
 'use client';
 
-import type { GlobalSettings } from '@/types/sidebar';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
-import { ConditionalSection } from './SmartSidebar';
+import type {GlobalSettings} from '@/types/sidebar';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/Select';
+import {ConditionalSection} from './SmartSidebar';
 
 type GlobalControlsProps = {
   settings: GlobalSettings;
@@ -12,11 +12,11 @@ type GlobalControlsProps = {
 };
 
 export function GlobalControls({
-  settings,
-  onUpdate,
-  previewPanelsCount,
-  currentMode,
-}: GlobalControlsProps) {
+                                 settings,
+                                 onUpdate,
+                                 previewPanelsCount,
+                                 currentMode,
+                               }: GlobalControlsProps) {
   return (
     <ConditionalSection when="global" currentMode={currentMode}>
       {/* 创作设置 */}
@@ -33,10 +33,10 @@ export function GlobalControls({
             <Select
               value={settings.contentTemplate}
               onValueChange={(value: 'custom' | 'blog' | 'news' | 'tutorial' | 'review') =>
-                onUpdate({ contentTemplate: value })}
+                onUpdate({contentTemplate: value})}
             >
               <SelectTrigger className="w-full">
-                <SelectValue />
+                <SelectValue/>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="blog">博客文章</SelectItem>
@@ -55,10 +55,10 @@ export function GlobalControls({
             <Select
               value={settings.targetAudience}
               onValueChange={(value: 'general' | 'professional' | 'academic' | 'casual') =>
-                onUpdate({ targetAudience: value })}
+                onUpdate({targetAudience: value})}
             >
               <SelectTrigger className="w-full">
-                <SelectValue />
+                <SelectValue/>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="general">普通读者</SelectItem>
@@ -93,7 +93,7 @@ export function GlobalControls({
             <span className="text-sm text-text-main">自动配图</span>
             <button
               type="button"
-              onClick={() => onUpdate({ autoImage: !settings.autoImage })}
+              onClick={() => onUpdate({autoImage: !settings.autoImage})}
               className={`w-10 h-5 rounded-full relative transition-colors ${
                 settings.autoImage ? 'bg-primary' : 'bg-border-default'
               } hover:opacity-90`}
@@ -110,7 +110,7 @@ export function GlobalControls({
             <span className="text-sm text-text-main">SEO优化</span>
             <button
               type="button"
-              onClick={() => onUpdate({ seoOptimization: !settings.seoOptimization })}
+              onClick={() => onUpdate({seoOptimization: !settings.seoOptimization})}
               className={`w-10 h-5 rounded-full relative transition-colors ${
                 settings.seoOptimization ? 'bg-primary' : 'bg-border-default'
               } hover:opacity-90`}
@@ -127,7 +127,7 @@ export function GlobalControls({
             <span className="text-sm text-text-main">定时发布</span>
             <button
               type="button"
-              onClick={() => onUpdate({ scheduledPublishing: !settings.scheduledPublishing })}
+              onClick={() => onUpdate({scheduledPublishing: !settings.scheduledPublishing})}
               className={`w-10 h-5 rounded-full relative transition-colors ${
                 settings.scheduledPublishing ? 'bg-primary' : 'bg-border-default'
               } hover:opacity-90`}
@@ -150,16 +150,20 @@ export function GlobalControls({
 
         <div className="p-6">
           <div className="u-gap-s flex flex-col">
-            <button type="button" className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button type="button"
+                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
               优化标题
             </button>
-            <button type="button" className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button type="button"
+                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
               提取关键词
             </button>
-            <button type="button" className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button type="button"
+                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
               内容分析
             </button>
-            <button type="button" className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button type="button"
+                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
               风格建议
             </button>
           </div>

@@ -1,13 +1,13 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { Container } from '@/components/layout/Container';
-import { SafeLink } from '@/components/ui/SafeLink';
+import {getTranslations, setRequestLocale} from 'next-intl/server';
+import {Container} from '@/components/layout/Container';
+import {SafeLink} from '@/components/ui/SafeLink';
 
 type IDocsProps = {
   params: Promise<{ locale: string }>;
 };
 
 export async function generateMetadata(props: IDocsProps) {
-  const { locale } = await props.params;
+  const {locale} = await props.params;
   const t = await getTranslations({
     locale,
     namespace: 'Docs',
@@ -20,7 +20,7 @@ export async function generateMetadata(props: IDocsProps) {
 }
 
 export default async function Docs(props: IDocsProps) {
-  const { locale } = await props.params;
+  const {locale} = await props.params;
   setRequestLocale(locale);
   const t = await getTranslations({
     locale,

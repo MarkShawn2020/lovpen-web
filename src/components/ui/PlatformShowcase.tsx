@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/utils/Helpers';
+import {cn} from '@/utils/Helpers';
 
 type Platform = {
   name: string;
@@ -125,8 +125,10 @@ const LovPenFlowDiagram = () => (
         <div key={step.step} className="relative">
           {/* 连接线 */}
           {index < lovpenCreationSteps.length - 1 && (
-            <div className="hidden lg:block absolute top-12 left-full w-6 h-0.5 bg-gradient-to-r from-primary to-swatch-cactus opacity-40 z-0">
-              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-0 h-0 border-l-3 border-l-swatch-cactus border-t-1 border-b-1 border-t-transparent border-b-transparent opacity-60"></div>
+            <div
+              className="hidden lg:block absolute top-12 left-full w-6 h-0.5 bg-gradient-to-r from-primary to-swatch-cactus opacity-40 z-0">
+              <div
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 w-0 h-0 border-l-3 border-l-swatch-cactus border-t-1 border-b-1 border-t-transparent border-b-transparent opacity-60"></div>
             </div>
           )}
 
@@ -137,7 +139,8 @@ const LovPenFlowDiagram = () => (
           )}
           >
             {/* 步骤编号 */}
-            <div className="absolute -top-3 -right-3 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
+            <div
+              className="absolute -top-3 -right-3 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
               {step.step}
             </div>
 
@@ -150,7 +153,8 @@ const LovPenFlowDiagram = () => (
               {/* 特性列表 */}
               <div className="space-y-1">
                 {step.features.map((feature, featureIndex) => (
-                  <div key={`${step.step}-feature-${feature}-${featureIndex}`} className="text-xs text-text-main bg-white/60 rounded-full px-3 py-1 inline-block mr-1 mb-1">
+                  <div key={`${step.step}-feature-${feature}-${featureIndex}`}
+                       className="text-xs text-text-main bg-white/60 rounded-full px-3 py-1 inline-block mr-1 mb-1">
                     {feature}
                   </div>
                 ))}
@@ -164,14 +168,18 @@ const LovPenFlowDiagram = () => (
     {/* LovPen 核心展示 */}
     <div className="text-center">
       <div className="relative inline-block">
-        <div className="w-32 h-32 bg-gradient-to-br from-primary/20 to-swatch-cactus/20 rounded-full flex items-center justify-center border-4 border-primary/30 backdrop-blur-sm">
-          <div className="w-20 h-20 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white">
+        <div
+          className="w-32 h-32 bg-gradient-to-br from-primary/20 to-swatch-cactus/20 rounded-full flex items-center justify-center border-4 border-primary/30 backdrop-blur-sm">
+          <div
+            className="w-20 h-20 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white">
             <span className="text-3xl">❤️</span>
           </div>
         </div>
         {/* 脉动动画环 */}
-        <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-swatch-cactus/10 rounded-full animate-pulse"></div>
-        <div className="absolute -inset-8 bg-gradient-to-r from-primary/5 to-swatch-cactus/5 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+        <div
+          className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-swatch-cactus/10 rounded-full animate-pulse"></div>
+        <div className="absolute -inset-8 bg-gradient-to-r from-primary/5 to-swatch-cactus/5 rounded-full animate-pulse"
+             style={{animationDelay: '0.5s'}}></div>
       </div>
       <h3 className="text-2xl font-bold text-text-main mt-4 mb-2">LovPen 引擎</h3>
       <p className="text-text-faded max-w-md mx-auto">
@@ -185,7 +193,7 @@ const LovPenFlowDiagram = () => (
 const FlowDiagram = LovPenFlowDiagram;
 
 // 平台卡片组件
-const PlatformCard = ({ platform }: { platform: Platform }) => (
+const PlatformCard = ({platform}: { platform: Platform }) => (
   <div className={cn(
     'p-6 rounded-2xl border-2 transition-all duration-200 hover:scale-105 hover:shadow-lg',
     platform.bgColor,
@@ -203,18 +211,18 @@ const PlatformCard = ({ platform }: { platform: Platform }) => (
   </div>
 );
 
-const PlatformShowcase = ({ className }: PlatformShowcaseProps) => {
+const PlatformShowcase = ({className}: PlatformShowcaseProps) => {
   return (
     <div className={cn('', className)}>
       {/* Flow Diagram */}
       <div className="mb-12">
-        <FlowDiagram />
+        <FlowDiagram/>
       </div>
 
       {/* Platform Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {platforms.map(platform => (
-          <PlatformCard key={platform.name} platform={platform} />
+          <PlatformCard key={platform.name} platform={platform}/>
         ))}
       </div>
 
@@ -230,5 +238,5 @@ const PlatformShowcase = ({ className }: PlatformShowcaseProps) => {
 
 PlatformShowcase.displayName = 'PlatformShowcase';
 
-export { FlowDiagram, PlatformShowcase };
-export type { Platform };
+export {FlowDiagram, PlatformShowcase};
+export type {Platform};

@@ -1,10 +1,10 @@
 'use client';
 
-import { SignOutButton } from '@clerk/nextjs';
+import {SignOutButton} from '@clerk/nextjs';
 import Link from 'next/link';
-import React, { useState } from 'react';
-import { Button } from '../ui/Button';
-import { SmartNavLink } from '../ui/SmartNavLink';
+import React, {useState} from 'react';
+import {Button} from '../ui/Button';
+import {SmartNavLink} from '../ui/SmartNavLink';
 
 type HeaderClientProps = {
   navigation: Array<{ name: string; href: string }>;
@@ -22,7 +22,7 @@ type HeaderClientProps = {
   };
 };
 
-export const HeaderClient = ({ navigation, isAuthenticated, urls, translations }: HeaderClientProps) => {
+export const HeaderClient = ({navigation, isAuthenticated, urls, translations}: HeaderClientProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -42,21 +42,21 @@ export const HeaderClient = ({ navigation, isAuthenticated, urls, translations }
         >
           {isMenuOpen
             ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              )
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            )
             : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
         </svg>
       </button>
 
@@ -67,59 +67,59 @@ export const HeaderClient = ({ navigation, isAuthenticated, urls, translations }
             {navigation.map(item => (
               item.href === '/features'
                 ? (
-                    <SmartNavLink
-                      key={item.name}
-                      href={item.href}
-                      scrollToId="features"
-                      className="block text-text-main hover:text-primary transition-colors py-2 no-underline"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </SmartNavLink>
-                  )
+                  <SmartNavLink
+                    key={item.name}
+                    href={item.href}
+                    scrollToId="features"
+                    className="block text-text-main hover:text-primary transition-colors py-2 no-underline"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </SmartNavLink>
+                )
                 : (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="block text-text-main hover:text-primary transition-colors py-2 no-underline"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  )
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="block text-text-main hover:text-primary transition-colors py-2 no-underline"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )
             ))}
             <div className="flex flex-col space-y-3 pt-4 border-t border-border-default/20">
               {isAuthenticated
                 ? (
-                    // Authenticated user actions
-                    <>
-                      <Link href={urls.dashboard} onClick={() => setIsMenuOpen(false)}>
-                        <Button variant="secondary" size="md" className="w-full">
-                          {translations.dashboard}
-                        </Button>
-                      </Link>
-                      <SignOutButton>
-                        <Button variant="primary" size="md" className="w-full">
-                          {translations.signOut}
-                        </Button>
-                      </SignOutButton>
-                    </>
-                  )
+                  // Authenticated user actions
+                  <>
+                    <Link href={urls.dashboard} onClick={() => setIsMenuOpen(false)}>
+                      <Button variant="secondary" size="md" className="w-full">
+                        {translations.dashboard}
+                      </Button>
+                    </Link>
+                    <SignOutButton>
+                      <Button variant="primary" size="md" className="w-full">
+                        {translations.signOut}
+                      </Button>
+                    </SignOutButton>
+                  </>
+                )
                 : (
-                    // Unauthenticated user actions
-                    <>
-                      <Link href={urls.signIn} onClick={() => setIsMenuOpen(false)}>
-                        <Button variant="secondary" size="md" className="w-full">
-                          {translations.signIn}
-                        </Button>
-                      </Link>
-                      <Link href={urls.signUp} onClick={() => setIsMenuOpen(false)}>
-                        <Button variant="primary" size="md" className="w-full">
-                          {translations.getStarted}
-                        </Button>
-                      </Link>
-                    </>
-                  )}
+                  // Unauthenticated user actions
+                  <>
+                    <Link href={urls.signIn} onClick={() => setIsMenuOpen(false)}>
+                      <Button variant="secondary" size="md" className="w-full">
+                        {translations.signIn}
+                      </Button>
+                    </Link>
+                    <Link href={urls.signUp} onClick={() => setIsMenuOpen(false)}>
+                      <Button variant="primary" size="md" className="w-full">
+                        {translations.getStarted}
+                      </Button>
+                    </Link>
+                  </>
+                )}
             </div>
           </nav>
         </div>

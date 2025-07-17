@@ -2,17 +2,17 @@ export type ContentType = 'text' | 'document' | 'audio' | 'video' | 'image';
 
 export type SupportedPlatform
   = | 'manual'
-    | 'notion'
-    | 'flomo'
-    | 'wechat-mp'
-    | 'wechat-chat'
-    | 'feishu'
-    | 'dingtalk'
-    | 'obsidian'
-    | 'roam'
-    | 'podcast'
-    | 'youtube'
-    | 'bilibili';
+  | 'notion'
+  | 'flomo'
+  | 'wechat-mp'
+  | 'wechat-chat'
+  | 'feishu'
+  | 'dingtalk'
+  | 'obsidian'
+  | 'roam'
+  | 'podcast'
+  | 'youtube'
+  | 'bilibili';
 
 export type KnowledgeItem = {
   id: string;

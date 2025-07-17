@@ -1,7 +1,7 @@
 'use client';
 
-import type { KnowledgeItem } from '@/types/knowledge-base';
-import { X } from 'lucide-react';
+import type {KnowledgeItem} from '@/types/knowledge-base';
+import {X} from 'lucide-react';
 
 type KnowledgeBaseDetailProps = {
   item: KnowledgeItem;
@@ -10,7 +10,7 @@ type KnowledgeBaseDetailProps = {
   onDelete: (itemId: string) => void;
 };
 
-export function KnowledgeBaseDetail({ item, onClose }: KnowledgeBaseDetailProps) {
+export function KnowledgeBaseDetail({item, onClose}: KnowledgeBaseDetailProps) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
@@ -23,7 +23,7 @@ export function KnowledgeBaseDetail({ item, onClose }: KnowledgeBaseDetailProps)
             onClick={onClose}
             className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded"
           >
-            <X className="h-4 w-4" />
+            <X className="h-4 w-4"/>
           </button>
         </div>
 
@@ -42,18 +42,18 @@ export function KnowledgeBaseDetail({ item, onClose }: KnowledgeBaseDetailProps)
             <div className="flex flex-wrap gap-2">
               {item.tags.length > 0
                 ? (
-                    item.tags.map((tag, index) => (
-                      <span
-                        key={`tag-${tag}-${index}`}
-                        className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
-                      >
+                  item.tags.map((tag, index) => (
+                    <span
+                      key={`tag-${tag}-${index}`}
+                      className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                    >
                         {tag}
                       </span>
-                    ))
-                  )
+                  ))
+                )
                 : (
-                    <span className="text-gray-500 text-sm">暂无标签</span>
-                  )}
+                  <span className="text-gray-500 text-sm">暂无标签</span>
+                )}
             </div>
           </div>
         </div>

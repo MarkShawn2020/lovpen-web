@@ -1,7 +1,7 @@
-import type { KnowledgeItem, PlatformIntegration, SearchFilters, SearchResult } from '@/types/knowledge-base';
-import { and, desc, eq, ilike, or, sql } from 'drizzle-orm';
-import { db } from '@/libs/DB';
-import { knowledgeItemsSchema, platformIntegrationsSchema } from '@/models/Schema';
+import type {KnowledgeItem, PlatformIntegration, SearchFilters, SearchResult} from '@/types/knowledge-base';
+import {and, desc, eq, ilike, or, sql} from 'drizzle-orm';
+import {db} from '@/libs/DB';
+import {knowledgeItemsSchema, platformIntegrationsSchema} from '@/models/Schema';
 
 export class KnowledgeBaseService {
   // 获取知识库项目列表
@@ -44,7 +44,7 @@ export class KnowledgeBaseService {
         .limit(limit)
         .offset(offset),
       db
-        .select({ count: sql<number>`count(*)` })
+        .select({count: sql<number>`count(*)`})
         .from(knowledgeItemsSchema)
         .where(and(...conditions)),
     ]);
@@ -179,7 +179,7 @@ export class KnowledgeBaseService {
   // 获取标签统计
   static async getTagStats(userId: string): Promise<Array<{ tag: string; count: number }>> {
     const items = await db
-      .select({ tags: knowledgeItemsSchema.tags })
+      .select({tags: knowledgeItemsSchema.tags})
       .from(knowledgeItemsSchema)
       .where(eq(knowledgeItemsSchema.userId, userId));
 
@@ -193,7 +193,7 @@ export class KnowledgeBaseService {
     });
 
     return Object.entries(tagCounts)
-      .map(([tag, count]) => ({ tag, count }))
+      .map(([tag, count]) => ({tag, count}))
       .sort((a, b) => b.count - a.count);
   }
 

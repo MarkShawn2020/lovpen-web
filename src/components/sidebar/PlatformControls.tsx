@@ -1,8 +1,8 @@
 'use client';
 
-import type { Platform, PlatformSettings } from '@/types/sidebar';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
-import { ConditionalSection } from './SmartSidebar';
+import type {Platform, PlatformSettings} from '@/types/sidebar';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/Select';
+import {ConditionalSection} from './SmartSidebar';
 
 type PlatformControlsProps = {
   platforms: Record<string, Platform>;
@@ -14,13 +14,13 @@ type PlatformControlsProps = {
 };
 
 export function PlatformControls({
-  platforms,
-  selectedPlatforms,
-  platformSettings,
-  onUpdate,
-  currentMode,
-  generatedContentLength = 0,
-}: PlatformControlsProps) {
+                                   platforms,
+                                   selectedPlatforms,
+                                   platformSettings,
+                                   onUpdate,
+                                   currentMode,
+                                   generatedContentLength = 0,
+                                 }: PlatformControlsProps) {
   if (selectedPlatforms.length === 0) {
     return null;
   }
@@ -65,10 +65,10 @@ export function PlatformControls({
               <Select
                 value={settings.articleLength || 'medium'}
                 onValueChange={(value: 'short' | 'medium' | 'long') =>
-                  onUpdate(platformId, { articleLength: value })}
+                  onUpdate(platformId, {articleLength: value})}
               >
                 <SelectTrigger className="w-full" id="article-length">
-                  <SelectValue />
+                  <SelectValue/>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="short">短文 (300-500字)</SelectItem>
@@ -85,10 +85,10 @@ export function PlatformControls({
               <Select
                 value={settings.writingStyle || 'professional'}
                 onValueChange={(value: 'professional' | 'casual' | 'thoughtful' | 'warm') =>
-                  onUpdate(platformId, { writingStyle: value })}
+                  onUpdate(platformId, {writingStyle: value})}
               >
                 <SelectTrigger className="w-full" id="writing-style">
-                  <SelectValue />
+                  <SelectValue/>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="professional">专业严谨</SelectItem>
@@ -135,10 +135,10 @@ export function PlatformControls({
               <Select
                 value={settings.imageCompression || 'medium'}
                 onValueChange={(value: 'high' | 'medium' | 'low') =>
-                  onUpdate(platformId, { imageCompression: value })}
+                  onUpdate(platformId, {imageCompression: value})}
               >
                 <SelectTrigger className="w-full" id="image-compression">
-                  <SelectValue />
+                  <SelectValue/>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="high">高压缩 (适合移动端)</SelectItem>
@@ -156,10 +156,10 @@ export function PlatformControls({
               <Select
                 value={settings.linkHandling || 'preserve'}
                 onValueChange={(value: 'preserve' | 'convert-to-text' | 'footnote') =>
-                  onUpdate(platformId, { linkHandling: value })}
+                  onUpdate(platformId, {linkHandling: value})}
               >
                 <SelectTrigger className="w-full" id="link-handling">
-                  <SelectValue />
+                  <SelectValue/>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="preserve">保持链接</SelectItem>
@@ -179,7 +179,7 @@ export function PlatformControls({
                       <span className="text-sm text-text-main">使用标签</span>
                       <button
                         type="button"
-                        onClick={() => onUpdate(platformId, { useHashtags: !settings.useHashtags })}
+                        onClick={() => onUpdate(platformId, {useHashtags: !settings.useHashtags})}
                         className={`w-10 h-5 rounded-full relative transition-colors ${
                           settings.useHashtags ? 'bg-primary' : 'bg-border-default'
                         } hover:opacity-90`}
@@ -197,7 +197,7 @@ export function PlatformControls({
                       <span className="text-sm text-text-main">包含行动号召</span>
                       <button
                         type="button"
-                        onClick={() => onUpdate(platformId, { includeCallToAction: !settings.includeCallToAction })}
+                        onClick={() => onUpdate(platformId, {includeCallToAction: !settings.includeCallToAction})}
                         className={`w-10 h-5 rounded-full relative transition-colors ${
                           settings.includeCallToAction ? 'bg-primary' : 'bg-border-default'
                         } hover:opacity-90`}
@@ -244,18 +244,22 @@ export function PlatformControls({
           </div>
 
           <div className="p-6 u-gap-s flex flex-col">
-            <button type="button" className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button type="button"
+                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
               🔄 重新生成内容
             </button>
-            <button type="button" className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button type="button"
+                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
               ✂️ 智能裁剪字数
             </button>
-            <button type="button" className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button type="button"
+                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
               🎨 应用
               {platform.name}
               模板
             </button>
-            <button type="button" className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button type="button"
+                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
               📤 导出到
               {platform.name}
             </button>
@@ -293,7 +297,8 @@ export function PlatformControls({
                     return null;
                   }
                   return (
-                    <div key={platformId} className="flex items-center u-gap-xs bg-background-ivory-medium px-2 py-1 rounded text-xs">
+                    <div key={platformId}
+                         className="flex items-center u-gap-xs bg-background-ivory-medium px-2 py-1 rounded text-xs">
                       <div className={`w-2 h-2 rounded-full ${platform.color}`}></div>
                       <span>{platform.name}</span>
                     </div>
@@ -304,13 +309,16 @@ export function PlatformControls({
 
             {/* 快速操作 */}
             <div className="u-gap-s flex flex-col">
-              <button type="button" className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+              <button type="button"
+                      className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
                 🔄 重新生成全部
               </button>
-              <button type="button" className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+              <button type="button"
+                      className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
                 📤 导出全部
               </button>
-              <button type="button" className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+              <button type="button"
+                      className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
                 🗑️ 移除全部
               </button>
             </div>
@@ -331,12 +339,12 @@ export function PlatformControls({
               <Select
                 onValueChange={(value: 'short' | 'medium' | 'long') => {
                   selectedPlatforms.forEach((platformId) => {
-                    onUpdate(platformId, { articleLength: value });
+                    onUpdate(platformId, {articleLength: value});
                   });
                 }}
               >
                 <SelectTrigger className="w-full" id="multi-article-length">
-                  <SelectValue placeholder="选择文章长度" />
+                  <SelectValue placeholder="选择文章长度"/>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="short">短文 (300-500字)</SelectItem>
@@ -353,12 +361,12 @@ export function PlatformControls({
               <Select
                 onValueChange={(value: 'professional' | 'casual' | 'thoughtful' | 'warm') => {
                   selectedPlatforms.forEach((platformId) => {
-                    onUpdate(platformId, { writingStyle: value });
+                    onUpdate(platformId, {writingStyle: value});
                   });
                 }}
               >
                 <SelectTrigger className="w-full" id="multi-writing-style">
-                  <SelectValue placeholder="选择写作风格" />
+                  <SelectValue placeholder="选择写作风格"/>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="professional">专业严谨</SelectItem>
@@ -376,12 +384,12 @@ export function PlatformControls({
               <Select
                 onValueChange={(value: 'high' | 'medium' | 'low') => {
                   selectedPlatforms.forEach((platformId) => {
-                    onUpdate(platformId, { imageCompression: value });
+                    onUpdate(platformId, {imageCompression: value});
                   });
                 }}
               >
                 <SelectTrigger className="w-full" id="multi-image-compression">
-                  <SelectValue placeholder="选择压缩级别" />
+                  <SelectValue placeholder="选择压缩级别"/>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="high">高压缩</SelectItem>
@@ -398,12 +406,12 @@ export function PlatformControls({
               <Select
                 onValueChange={(value: 'preserve' | 'convert-to-text' | 'footnote') => {
                   selectedPlatforms.forEach((platformId) => {
-                    onUpdate(platformId, { linkHandling: value });
+                    onUpdate(platformId, {linkHandling: value});
                   });
                 }}
               >
                 <SelectTrigger className="w-full" id="multi-link-handling">
-                  <SelectValue placeholder="选择链接处理" />
+                  <SelectValue placeholder="选择链接处理"/>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="preserve">保持链接</SelectItem>

@@ -1,14 +1,14 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import {getTranslations, setRequestLocale} from 'next-intl/server';
 import Link from 'next/link';
-import { Container } from '@/components/layout/Container';
-import { Button } from '@/components/ui/Button';
+import {Container} from '@/components/layout/Container';
+import {Button} from '@/components/ui/Button';
 
 type IPricingProps = {
   params: Promise<{ locale: string }>;
 };
 
 export async function generateMetadata(props: IPricingProps) {
-  const { locale } = await props.params;
+  const {locale} = await props.params;
   const t = await getTranslations({
     locale,
     namespace: 'Pricing',
@@ -21,7 +21,7 @@ export async function generateMetadata(props: IPricingProps) {
 }
 
 export default async function Pricing(props: IPricingProps) {
-  const { locale } = await props.params;
+  const {locale} = await props.params;
   setRequestLocale(locale);
   const t = await getTranslations({
     locale,
@@ -42,7 +42,8 @@ export default async function Pricing(props: IPricingProps) {
 
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {/* Free Plan */}
-          <div className="bg-background-ivory-light p-8 rounded-lg border-2 border-transparent max-w-sm mx-auto md:max-w-none">
+          <div
+            className="bg-background-ivory-light p-8 rounded-lg border-2 border-transparent max-w-sm mx-auto md:max-w-none">
             <div className="text-center mb-6">
               <h3 className="text-2xl font-semibold text-text-main mb-2">
                 {t('free_plan_name')}
@@ -80,7 +81,8 @@ export default async function Pricing(props: IPricingProps) {
           </div>
 
           {/* Pro Plan */}
-          <div className="bg-background-ivory-light p-8 rounded-lg border-2 border-primary relative max-w-sm mx-auto md:max-w-none">
+          <div
+            className="bg-background-ivory-light p-8 rounded-lg border-2 border-primary relative max-w-sm mx-auto md:max-w-none">
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
               <span className="bg-primary text-white px-4 py-1 rounded-full text-sm font-medium">
                 {t('popular_badge')}
@@ -127,7 +129,8 @@ export default async function Pricing(props: IPricingProps) {
           </div>
 
           {/* Enterprise Plan */}
-          <div className="bg-background-ivory-light p-8 rounded-lg border-2 border-transparent max-w-sm mx-auto md:max-w-none">
+          <div
+            className="bg-background-ivory-light p-8 rounded-lg border-2 border-transparent max-w-sm mx-auto md:max-w-none">
             <div className="text-center mb-6">
               <h3 className="text-2xl font-semibold text-text-main mb-2">
                 {t('enterprise_plan_name')}

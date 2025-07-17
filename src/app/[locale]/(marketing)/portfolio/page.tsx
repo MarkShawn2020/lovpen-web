@@ -1,4 +1,4 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import {getTranslations, setRequestLocale} from 'next-intl/server';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -7,7 +7,7 @@ type IPortfolioProps = {
 };
 
 export async function generateMetadata(props: IPortfolioProps) {
-  const { locale } = await props.params;
+  const {locale} = await props.params;
   const t = await getTranslations({
     locale,
     namespace: 'Portfolio',
@@ -20,7 +20,7 @@ export async function generateMetadata(props: IPortfolioProps) {
 }
 
 export default async function Portfolio(props: IPortfolioProps) {
-  const { locale } = await props.params;
+  const {locale} = await props.params;
   setRequestLocale(locale);
   const t = await getTranslations({
     locale,
@@ -32,13 +32,13 @@ export default async function Portfolio(props: IPortfolioProps) {
       <p>{t('presentation')}</p>
 
       <div className="grid grid-cols-1 justify-items-start gap-3 md:grid-cols-2 xl:grid-cols-3">
-        {Array.from(Array.from({ length: 6 }).keys()).map(elt => (
+        {Array.from(Array.from({length: 6}).keys()).map(elt => (
           <Link
             className="hover:text-blue-700"
             key={elt}
             href={`/portfolio/${elt}`}
           >
-            {t('portfolio_name', { name: elt })}
+            {t('portfolio_name', {name: elt})}
           </Link>
         ))}
       </div>

@@ -1,4 +1,4 @@
-import type { ContentMetadata, ContentType, ProcessedContent } from '@/types/knowledge-base';
+import type {ContentMetadata, ContentType, ProcessedContent} from '@/types/knowledge-base';
 
 export type ContentProcessor = {
   process: (rawContent: any, metadata?: Partial<ContentMetadata>) => Promise<ProcessedContent>;

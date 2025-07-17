@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/utils/Helpers';
+import {cn} from '@/utils/Helpers';
 
 type CardProps = {
   className?: string;
@@ -21,7 +21,7 @@ type CardIconProps = {
   children: React.ReactNode;
 };
 
-const Card = ({ ref, className, children }: CardProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const Card = ({ref, className, children}: CardProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   return (
     <div
       ref={ref}
@@ -35,7 +35,7 @@ const Card = ({ ref, className, children }: CardProps & { ref?: React.RefObject<
   );
 };
 
-const CardIcon = ({ ref, className, children }: CardIconProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const CardIcon = ({ref, className, children}: CardIconProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   return (
     <div
       ref={ref}
@@ -46,7 +46,7 @@ const CardIcon = ({ ref, className, children }: CardIconProps & { ref?: React.Re
   );
 };
 
-const CardHeader = ({ ref, className, children }: CardHeaderProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const CardHeader = ({ref, className, children}: CardHeaderProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   return (
     <div
       ref={ref}
@@ -57,7 +57,9 @@ const CardHeader = ({ ref, className, children }: CardHeaderProps & { ref?: Reac
   );
 };
 
-const CardContent = ({ ref, className, children }: CardContentProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const CardContent = ({ref, className, children}: CardContentProps & {
+  ref?: React.RefObject<HTMLDivElement | null>
+}) => {
   return (
     <div
       ref={ref}
@@ -73,4 +75,4 @@ CardIcon.displayName = 'CardIcon';
 CardHeader.displayName = 'CardHeader';
 CardContent.displayName = 'CardContent';
 
-export { Card, CardContent, CardHeader, CardIcon };
+export {Card, CardContent, CardHeader, CardIcon};

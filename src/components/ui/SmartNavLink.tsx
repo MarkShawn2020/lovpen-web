@@ -1,8 +1,8 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import type {ReactNode} from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import {usePathname} from 'next/navigation';
 
 type SmartNavLinkProps = {
   href: string;
@@ -12,7 +12,7 @@ type SmartNavLinkProps = {
   onClick?: () => void;
 };
 
-export function SmartNavLink({ href, scrollToId, children, className, onClick }: SmartNavLinkProps) {
+export function SmartNavLink({href, scrollToId, children, className, onClick}: SmartNavLinkProps) {
   const pathname = usePathname();
 
   const handleClick = (e: React.MouseEvent) => {

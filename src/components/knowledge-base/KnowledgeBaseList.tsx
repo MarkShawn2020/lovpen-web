@@ -1,6 +1,6 @@
 'use client';
 
-import type { KnowledgeItem } from '@/types/knowledge-base';
+import type {KnowledgeItem} from '@/types/knowledge-base';
 
 type KnowledgeBaseListProps = {
   items: KnowledgeItem[];
@@ -8,7 +8,7 @@ type KnowledgeBaseListProps = {
   selectedItemId?: string;
 };
 
-export function KnowledgeBaseList({ items, onItemSelect, selectedItemId }: KnowledgeBaseListProps) {
+export function KnowledgeBaseList({items, onItemSelect, selectedItemId}: KnowledgeBaseListProps) {
   if (items.length === 0) {
     return (
       <div className="text-center py-12 text-gray-500">

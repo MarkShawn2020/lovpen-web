@@ -1,24 +1,24 @@
 'use client';
 
-import React, { createContext, use, useMemo, useEffect } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { cn } from '@/utils/Helpers';
-import { usePersistentState } from '@/components/providers/ReactQueryProvider';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
+import React, {createContext, use, useEffect, useMemo} from 'react';
+import {usePersistentState} from '@/components/providers/ReactQueryProvider';
+import {cn} from '@/utils/Helpers';
 
 // Types for persistent tabs
-interface TabState {
+type TabState = {
   activeTab: string;
   tabHistory: string[];
   lastAccessed: Record<string, number>;
-}
+};
 
-interface PersistentTabsContextValue {
+type PersistentTabsContextValue = {
   activeTab: string;
   setActiveTab: (value: string) => void;
   tabHistory: string[];
   getTabAccessTime: (tabId: string) => number;
   isTabRecentlyAccessed: (tabId: string, withinMinutes?: number) => boolean;
-}
+};
 
 const PersistentTabsContext = createContext<PersistentTabsContextValue | undefined>(undefined);
 
@@ -34,9 +34,9 @@ const usePersistentTabsContext = () => {
 function useInternalTabState(tabsId: string, defaultValue: string) {
   const queryClient = useQueryClient();
   const storageKey = `tabs_${tabsId}`;
-  
+
   // Use React Query to manage tab state with persistence
-  const { data: tabState, isLoading } = useQuery({
+  const {data: tabState, isLoading} = useQuery({
     queryKey: ['tabState', tabsId],
     queryFn: async (): Promise<TabState> => {
       // Try to get from localStorage first
@@ -48,19 +48,19 @@ function useInternalTabState(tabsId: string, defaultValue: string) {
             return {
               activeTab: parsed.activeTab || defaultValue,
               tabHistory: parsed.tabHistory || [defaultValue],
-              lastAccessed: parsed.lastAccessed || { [defaultValue]: Date.now() },
+              lastAccessed: parsed.lastAccessed || {[defaultValue]: Date.now()},
             };
           } catch (error) {
             console.error('Failed to parse saved tab state:', error);
           }
         }
       }
-      
+
       // Return default state
       return {
         activeTab: defaultValue,
         tabHistory: [defaultValue],
-        lastAccessed: { [defaultValue]: Date.now() },
+        lastAccessed: {[defaultValue]: Date.now()},
       };
     },
     staleTime: Infinity, // Never consider stale
@@ -71,14 +71,14 @@ function useInternalTabState(tabsId: string, defaultValue: string) {
     const currentState = tabState || {
       activeTab: defaultValue,
       tabHistory: [defaultValue],
-      lastAccessed: { [defaultValue]: Date.now() },
+      lastAccessed: {[defaultValue]: Date.now()},
     };
-    
-    const updatedState = { ...currentState, ...newState };
-    
+
+    const updatedState = {...currentState, ...newState};
+
     // Update React Query cache
     queryClient.setQueryData(['tabState', tabsId], updatedState);
-    
+
     // Persist to localStorage
     if (typeof window !== 'undefined') {
       localStorage.setItem(storageKey, JSON.stringify(updatedState));
@@ -89,15 +89,15 @@ function useInternalTabState(tabsId: string, defaultValue: string) {
     const currentState = tabState || {
       activeTab: defaultValue,
       tabHistory: [defaultValue],
-      lastAccessed: { [defaultValue]: Date.now() },
+      lastAccessed: {[defaultValue]: Date.now()},
     };
-    
+
     const newHistory = [tabId, ...currentState.tabHistory.filter(id => id !== tabId)].slice(0, 10);
     const newLastAccessed = {
       ...currentState.lastAccessed,
       [tabId]: Date.now(),
     };
-    
+
     updateTabState({
       activeTab: tabId,
       tabHistory: newHistory,
@@ -125,48 +125,48 @@ function useInternalTabState(tabsId: string, defaultValue: string) {
 }
 
 // Enhanced Tabs component with persistence
-interface PersistentTabsProps {
+type PersistentTabsProps = {
   id: string; // Unique identifier for persistence
   defaultValue: string;
   className?: string;
   children: React.ReactNode;
   onTabChange?: (tabId: string) => void;
   restoreOnMount?: boolean;
-}
+};
 
-interface PersistentTabsListProps {
+type PersistentTabsListProps = {
   className?: string;
   children: React.ReactNode;
   showHistory?: boolean;
   historyLimit?: number;
-}
+};
 
-interface PersistentTabsTriggerProps {
+type PersistentTabsTriggerProps = {
   value: string;
   className?: string;
   children: React.ReactNode;
   badge?: React.ReactNode;
   disabled?: boolean;
-}
+};
 
-interface PersistentTabsContentProps {
+type PersistentTabsContentProps = {
   value: string;
   className?: string;
   children: React.ReactNode;
   lazy?: boolean;
-}
+};
 
-const PersistentTabs = ({ 
-  id, 
-  defaultValue, 
-  className, 
-  children, 
-  onTabChange,
-  restoreOnMount: _restoreOnMount = true,
-  ref 
-}: PersistentTabsProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const PersistentTabs = ({
+                          id,
+                          defaultValue,
+                          className,
+                          children,
+                          onTabChange,
+                          restoreOnMount: _restoreOnMount = true,
+                          ref,
+                        }: PersistentTabsProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const tabState = useInternalTabState(id, defaultValue);
-  
+
   useEffect(() => {
     if (tabState.isLoaded && onTabChange) {
       onTabChange(tabState.activeTab);
@@ -199,15 +199,15 @@ const PersistentTabs = ({
   );
 };
 
-const PersistentTabsList = ({ 
-  className, 
-  children, 
-  showHistory = false, 
-  historyLimit = 5,
-  ref 
-}: PersistentTabsListProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-  const { tabHistory } = usePersistentTabsContext();
-  
+const PersistentTabsList = ({
+                              className,
+                              children,
+                              showHistory = false,
+                              historyLimit = 5,
+                              ref,
+                            }: PersistentTabsListProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+  const {tabHistory} = usePersistentTabsContext();
+
   return (
     <div
       ref={ref}
@@ -220,7 +220,7 @@ const PersistentTabsList = ({
       {showHistory && tabHistory.length > 1 && (
         <div className="flex items-center space-x-1 ml-4 text-xs text-gray-500">
           <span>Recent:</span>
-          {tabHistory.slice(1, historyLimit + 1).map((tabId) => (
+          {tabHistory.slice(1, historyLimit + 1).map(tabId => (
             <span key={tabId} className="px-2 py-1 bg-gray-100 rounded">
               {tabId}
             </span>
@@ -231,15 +231,15 @@ const PersistentTabsList = ({
   );
 };
 
-const PersistentTabsTrigger = ({ 
-  value, 
-  className, 
-  children, 
-  badge,
-  disabled = false,
-  ref 
-}: PersistentTabsTriggerProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
-  const { activeTab, setActiveTab, isTabRecentlyAccessed } = usePersistentTabsContext();
+const PersistentTabsTrigger = ({
+                                 value,
+                                 className,
+                                 children,
+                                 badge,
+                                 disabled = false,
+                                 ref,
+                               }: PersistentTabsTriggerProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
+  const {activeTab, setActiveTab, isTabRecentlyAccessed} = usePersistentTabsContext();
   const isActive = activeTab === value;
   const isRecent = isTabRecentlyAccessed(value);
 
@@ -268,14 +268,14 @@ const PersistentTabsTrigger = ({
   );
 };
 
-const PersistentTabsContent = ({ 
-  value, 
-  className, 
-  children, 
-  lazy = false,
-  ref 
-}: PersistentTabsContentProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-  const { activeTab, getTabAccessTime } = usePersistentTabsContext();
+const PersistentTabsContent = ({
+                                 value,
+                                 className,
+                                 children,
+                                 lazy = false,
+                                 ref,
+                               }: PersistentTabsContentProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+  const {activeTab, getTabAccessTime} = usePersistentTabsContext();
   const isActive = activeTab === value;
   const hasBeenAccessed = getTabAccessTime(value) > 0;
 
@@ -301,16 +301,20 @@ const PersistentTabsContent = ({
 };
 
 // Additional utility component for tab analytics
-const TabAnalytics = ({ tabId }: { tabId: string }) => {
-  const { getTabAccessTime, isTabRecentlyAccessed } = usePersistentTabsContext();
+const TabAnalytics = ({tabId}: { tabId: string }) => {
+  const {getTabAccessTime, isTabRecentlyAccessed} = usePersistentTabsContext();
   const accessTime = getTabAccessTime(tabId);
   const isRecent = isTabRecentlyAccessed(tabId);
 
-  if (accessTime === 0) return null;
+  if (accessTime === 0) {
+    return null;
+  }
 
   return (
     <div className="text-xs text-gray-500">
-      Last accessed: {new Date(accessTime).toLocaleString()}
+      Last accessed:
+      {' '}
+      {new Date(accessTime).toLocaleString()}
       {isRecent && <span className="ml-2 text-blue-500">• Recent</span>}
     </div>
   );
@@ -323,13 +327,13 @@ PersistentTabsTrigger.displayName = 'PersistentTabsTrigger';
 PersistentTabsContent.displayName = 'PersistentTabsContent';
 TabAnalytics.displayName = 'TabAnalytics';
 
-export { 
-  PersistentTabs, 
-  PersistentTabsContent, 
-  PersistentTabsList, 
+export {
+  PersistentTabs,
+  PersistentTabsContent,
+  PersistentTabsList,
   PersistentTabsTrigger,
   TabAnalytics,
-  usePersistentTabsContext 
+  usePersistentTabsContext,
 };
 
 // Hook for external tab state management
@@ -339,8 +343,8 @@ export function useTabState(tabsId: string, defaultValue: string) {
     {
       activeTab: defaultValue,
       tabHistory: [defaultValue],
-      lastAccessed: { [defaultValue]: Date.now() },
-    }
+      lastAccessed: {[defaultValue]: Date.now()},
+    },
   );
 
   const setActiveTab = (tabId: string) => {
@@ -349,7 +353,7 @@ export function useTabState(tabsId: string, defaultValue: string) {
       ...state.lastAccessed,
       [tabId]: Date.now(),
     };
-    
+
     setState({
       activeTab: tabId,
       tabHistory: newHistory,

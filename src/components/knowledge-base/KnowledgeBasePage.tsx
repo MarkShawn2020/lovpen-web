@@ -1,18 +1,23 @@
 'use client';
 
-import type { UniApiSearchFilters } from '@/services/uni-api-client';
-import { useState } from 'react';
-import { Container } from '@/components/layout/Container';
-import { PersistentTabs, PersistentTabsList, PersistentTabsTrigger, PersistentTabsContent } from '@/components/ui/PersistentTabs';
-import { 
-  useKnowledgeItems, 
-  useKnowledgeBaseSearch, 
-  useAnalyticsInsights, 
-  usePlatformStatus,
+import type {UniApiSearchFilters} from '@/services/uni-api-client';
+import {useState} from 'react';
+import {Container} from '@/components/layout/Container';
+import {
+  PersistentTabs,
+  PersistentTabsContent,
+  PersistentTabsList,
+  PersistentTabsTrigger
+} from '@/components/ui/PersistentTabs';
+import {
+  useAnalyticsInsights,
+  useKnowledgeBaseSearch,
   useKnowledgeBaseStats,
-  useUploadKnowledgeItem
+  useKnowledgeItems,
+  usePlatformStatus,
+  useUploadKnowledgeItem,
 } from '@/hooks/useKnowledgeBase';
-import { withUniApiAuth } from '@/services/auth-integration';
+import {withUniApiAuth} from '@/services/auth-integration';
 
 function KnowledgeBasePageContent() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -44,7 +49,6 @@ function KnowledgeBasePageContent() {
     setSearchQuery(query);
   };
 
-
   const isLoading = knowledgeItems.isLoading || analytics.isLoading || stats.isLoading;
 
   if (isLoading) {
@@ -62,17 +66,35 @@ function KnowledgeBasePageContent() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">知识库</h1>
           <div className="flex items-center space-x-6 text-sm text-gray-600">
-            <span>共 {stats.totalItems} 个项目</span>
-            <span>已向量化 {stats.vectorizedItems} 个</span>
-            <span>待处理 {stats.pendingItems} 个</span>
+            <span>
+              共
+              {stats.totalItems}
+              {' '}
+              个项目
+            </span>
+            <span>
+              已向量化
+              {stats.vectorizedItems}
+              {' '}
+              个
+            </span>
+            <span>
+              待处理
+              {stats.pendingItems}
+              {' '}
+              个
+            </span>
             <span className={`px-2 py-1 rounded text-xs ${
-              stats.indexHealth === 'healthy' 
-                ? 'bg-green-100 text-green-800' 
+              stats.indexHealth === 'healthy'
+                ? 'bg-green-100 text-green-800'
                 : stats.indexHealth === 'degraded'
-                ? 'bg-yellow-100 text-yellow-800'
-                : 'bg-red-100 text-red-800'
-            }`}>
-              索引状态: {stats.indexHealth}
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-red-100 text-red-800'
+            }`}
+            >
+              索引状态:
+              {' '}
+              {stats.indexHealth}
             </span>
           </div>
         </div>
@@ -85,7 +107,7 @@ function KnowledgeBasePageContent() {
                 type="text"
                 placeholder="搜索知识库..."
                 value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
+                onChange={e => handleSearch(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
@@ -115,7 +137,9 @@ function KnowledgeBasePageContent() {
         {uploadFile && (
           <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <p className="text-sm text-yellow-800">
-              准备上传文件: {uploadFile.name}
+              准备上传文件:
+              {' '}
+              {uploadFile.name}
             </p>
             <div className="mt-2 flex space-x-2">
               <button
@@ -162,13 +186,13 @@ function KnowledgeBasePageContent() {
           </PersistentTabsList>
 
           <PersistentTabsContent value="items">
-            <KnowledgeItemsList 
+            <KnowledgeItemsList
               items={knowledgeItems}
             />
           </PersistentTabsContent>
 
           <PersistentTabsContent value="search">
-            <SearchResults 
+            <SearchResults
               query={searchQuery}
               basicResults={searchResults.basicResults}
               aiResults={searchResults.aiResults}
@@ -177,14 +201,14 @@ function KnowledgeBasePageContent() {
           </PersistentTabsContent>
 
           <PersistentTabsContent value="platforms">
-            <PlatformSync 
+            <PlatformSync
               platforms={platformStatus.data || []}
               isLoading={platformStatus.isLoading}
             />
           </PersistentTabsContent>
 
           <PersistentTabsContent value="analytics">
-            <AnalyticsView 
+            <AnalyticsView
               insights={analytics.data}
               isLoading={analytics.isLoading}
             />
@@ -196,7 +220,7 @@ function KnowledgeBasePageContent() {
 }
 
 // Placeholder components for the tab contents
-function KnowledgeItemsList({ items }: any) {
+function KnowledgeItemsList({items}: any) {
   return (
     <div className="space-y-4">
       {items.data?.pages.map((page: any, pageIndex: number) => (
@@ -206,15 +230,24 @@ function KnowledgeItemsList({ items }: any) {
               <h3 className="font-medium">{item.title || 'Untitled'}</h3>
               <p className="text-sm text-gray-600 truncate">{item.content}</p>
               <div className="flex items-center justify-between mt-2 text-xs text-gray-500">
-                <span>来源: {item.sourcePlatform}</span>
-                <span>类型: {item.contentType}</span>
-                <span>状态: {item.processingStatus}</span>
+                <span>
+                  来源:
+                  {item.sourcePlatform}
+                </span>
+                <span>
+                  类型:
+                  {item.contentType}
+                </span>
+                <span>
+                  状态:
+                  {item.processingStatus}
+                </span>
               </div>
             </div>
           ))}
         </div>
       ))}
-      
+
       {items.hasNextPage && (
         <button
           onClick={() => items.fetchNextPage()}
@@ -228,7 +261,7 @@ function KnowledgeItemsList({ items }: any) {
   );
 }
 
-function SearchResults({ query, basicResults, aiResults, isLoading }: any) {
+function SearchResults({query, basicResults, aiResults, isLoading}: any) {
   if (!query) {
     return (
       <div className="text-center py-8 text-gray-500">
@@ -248,7 +281,11 @@ function SearchResults({ query, basicResults, aiResults, isLoading }: any) {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="font-medium mb-3">基础搜索结果 ({basicResults.length})</h3>
+        <h3 className="font-medium mb-3">
+          基础搜索结果 (
+          {basicResults.length}
+          )
+        </h3>
         <div className="space-y-2">
           {basicResults.map((item: any) => (
             <div key={item.id} className="p-3 border rounded">
@@ -260,7 +297,11 @@ function SearchResults({ query, basicResults, aiResults, isLoading }: any) {
       </div>
 
       <div>
-        <h3 className="font-medium mb-3">AI 搜索结果 ({aiResults.length})</h3>
+        <h3 className="font-medium mb-3">
+          AI 搜索结果 (
+          {aiResults.length}
+          )
+        </h3>
         <div className="space-y-2">
           {aiResults.map((item: any) => (
             <div key={item.id} className="p-3 border rounded bg-blue-50">
@@ -274,7 +315,7 @@ function SearchResults({ query, basicResults, aiResults, isLoading }: any) {
   );
 }
 
-function PlatformSync({ platforms, isLoading }: any) {
+function PlatformSync({platforms, isLoading}: any) {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-8">
@@ -291,22 +332,27 @@ function PlatformSync({ platforms, isLoading }: any) {
             <div>
               <h3 className="font-medium">{platform.platform}</h3>
               <p className="text-sm text-gray-600">
-                状态: {platform.isConnected ? '已连接' : '未连接'}
+                状态:
+                {' '}
+                {platform.isConnected ? '已连接' : '未连接'}
               </p>
             </div>
             <div className="text-right">
               <div className={`px-2 py-1 rounded text-xs ${
-                platform.status === 'active' 
+                platform.status === 'active'
                   ? 'bg-green-100 text-green-800'
                   : platform.status === 'paused'
-                  ? 'bg-yellow-100 text-yellow-800'
-                  : 'bg-red-100 text-red-800'
-              }`}>
+                    ? 'bg-yellow-100 text-yellow-800'
+                    : 'bg-red-100 text-red-800'
+              }`}
+              >
                 {platform.status}
               </div>
               {platform.lastSync && (
                 <p className="text-xs text-gray-500 mt-1">
-                  上次同步: {new Date(platform.lastSync).toLocaleString()}
+                  上次同步:
+                  {' '}
+                  {new Date(platform.lastSync).toLocaleString()}
                 </p>
               )}
             </div>
@@ -317,7 +363,7 @@ function PlatformSync({ platforms, isLoading }: any) {
   );
 }
 
-function AnalyticsView({ insights, isLoading }: any) {
+function AnalyticsView({insights, isLoading}: any) {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-8">
@@ -343,7 +389,11 @@ function AnalyticsView({ insights, isLoading }: any) {
         </div>
         <div className="p-4 border rounded-lg">
           <h3 className="font-medium text-gray-600">近期活动</h3>
-          <p className="text-sm">{insights?.recentActivity?.length || 0} 项</p>
+          <p className="text-sm">
+            {insights?.recentActivity?.length || 0}
+            {' '}
+            项
+          </p>
         </div>
       </div>
     </div>

@@ -1,15 +1,15 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import {getTranslations, setRequestLocale} from 'next-intl/server';
 import Link from 'next/link';
-import { Container } from '@/components/layout/Container';
-import { Button } from '@/components/ui/Button';
-import { SafeLink } from '@/components/ui/SafeLink';
+import {Container} from '@/components/layout/Container';
+import {Button} from '@/components/ui/Button';
+import {SafeLink} from '@/components/ui/SafeLink';
 
 type IAboutProps = {
   params: Promise<{ locale: string }>;
 };
 
 export async function generateMetadata(props: IAboutProps) {
-  const { locale } = await props.params;
+  const {locale} = await props.params;
   const t = await getTranslations({
     locale,
     namespace: 'About',
@@ -22,7 +22,7 @@ export async function generateMetadata(props: IAboutProps) {
 }
 
 export default async function About(props: IAboutProps) {
-  const { locale } = await props.params;
+  const {locale} = await props.params;
   setRequestLocale(locale);
   const t = await getTranslations({
     locale,
@@ -52,7 +52,8 @@ export default async function About(props: IAboutProps) {
           </p>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+              <div
+                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
                 💡
               </div>
               <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -63,7 +64,8 @@ export default async function About(props: IAboutProps) {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+              <div
+                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
                 🤝
               </div>
               <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -74,7 +76,8 @@ export default async function About(props: IAboutProps) {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+              <div
+                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
                 🌍
               </div>
               <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -147,7 +150,8 @@ export default async function About(props: IAboutProps) {
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+              <div
+                className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
                 👨‍💻
               </div>
               <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -161,7 +165,8 @@ export default async function About(props: IAboutProps) {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+              <div
+                className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
                 🎨
               </div>
               <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -175,7 +180,8 @@ export default async function About(props: IAboutProps) {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+              <div
+                className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
                 📊
               </div>
               <h3 className="text-xl font-semibold text-text-main mb-2">

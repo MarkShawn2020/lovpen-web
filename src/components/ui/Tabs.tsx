@@ -1,7 +1,7 @@
 'use client';
 
-import React, { createContext, use, useMemo, useState } from 'react';
-import { cn } from '@/utils/Helpers';
+import React, {createContext, use, useMemo, useState} from 'react';
+import {cn} from '@/utils/Helpers';
 
 type TabsContextValue = {
   activeTab: string;
@@ -41,7 +41,9 @@ type TabsContentProps = {
   children: React.ReactNode;
 };
 
-const Tabs = ({ ref, defaultValue, className, children }: TabsProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const Tabs = ({ref, defaultValue, className, children}: TabsProps & {
+  ref?: React.RefObject<HTMLDivElement | null>
+}) => {
   const [activeTab, setActiveTab] = useState(defaultValue);
 
   const contextValue = useMemo(() => ({
@@ -58,7 +60,7 @@ const Tabs = ({ ref, defaultValue, className, children }: TabsProps & { ref?: Re
   );
 };
 
-const TabsList = ({ ref, className, children }: TabsListProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const TabsList = ({ref, className, children}: TabsListProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   return (
     <div
       ref={ref}
@@ -72,8 +74,10 @@ const TabsList = ({ ref, className, children }: TabsListProps & { ref?: React.Re
   );
 };
 
-const TabsTrigger = ({ ref, value, className, children }: TabsTriggerProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
-  const { activeTab, setActiveTab } = useTabsContext();
+const TabsTrigger = ({ref, value, className, children}: TabsTriggerProps & {
+  ref?: React.RefObject<HTMLButtonElement | null>
+}) => {
+  const {activeTab, setActiveTab} = useTabsContext();
   const isActive = activeTab === value;
 
   return (
@@ -94,8 +98,10 @@ const TabsTrigger = ({ ref, value, className, children }: TabsTriggerProps & { r
   );
 };
 
-const TabsContent = ({ ref, value, className, children }: TabsContentProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
-  const { activeTab } = useTabsContext();
+const TabsContent = ({ref, value, className, children}: TabsContentProps & {
+  ref?: React.RefObject<HTMLDivElement | null>
+}) => {
+  const {activeTab} = useTabsContext();
 
   if (activeTab !== value) {
     return null;
@@ -116,4 +122,4 @@ TabsList.displayName = 'TabsList';
 TabsTrigger.displayName = 'TabsTrigger';
 TabsContent.displayName = 'TabsContent';
 
-export { Tabs, TabsContent, TabsList, TabsTrigger };
+export {Tabs, TabsContent, TabsList, TabsTrigger};

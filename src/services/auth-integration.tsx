@@ -1,10 +1,10 @@
 'use client';
 
-import { useAuth, useUser } from '@clerk/nextjs';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {useAuth, useUser} from '@clerk/nextjs';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
 // Types for authentication
-interface UniApiUserProfile {
+type UniApiUserProfile = {
   id: string;
   email: string;
   name?: string;
@@ -12,14 +12,14 @@ interface UniApiUserProfile {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
-}
+};
 
-interface TokenExchangeResponse {
+type TokenExchangeResponse = {
   accessToken: string;
   refreshToken: string;
   expiresIn: number;
   user: UniApiUserProfile;
-}
+};
 
 export class AuthIntegrationService {
   private static instance: AuthIntegrationService;
@@ -44,6 +44,114 @@ export class AuthIntegrationService {
       AuthIntegrationService.instance = new AuthIntegrationService(baseUrl);
     }
     return AuthIntegrationService.instance;
+  }
+
+  public isTokenValid(): boolean {
+    const {accessToken, expiresAt} = this.tokenStorage;
+    if (!accessToken || !expiresAt) {
+      return false;
+    }
+
+    // Check if token expires within the next 5 minutes
+    const bufferTime = 5 * 60 * 1000;
+    return Date.now() < (expiresAt - bufferTime);
+  }
+
+  public async exchangeClerkTokenForUniApiToken(
+    clerkToken: string,
+    clerkUserId: string,
+  ): Promise<TokenExchangeResponse> {
+    const response = await fetch(`${this.baseUrl}/account/clerk-auth`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        clerkToken,
+        clerkUserId,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Token exchange failed: ${response.status}`);
+    }
+
+    const data: TokenExchangeResponse = await response.json();
+
+    // Store the new token
+    this.tokenStorage = {
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+      expiresAt: Date.now() + (data.expiresIn * 1000),
+    };
+
+    this.saveTokenToStorage();
+    return data;
+  }
+
+  public async refreshAccessToken(): Promise<string> {
+    const {refreshToken} = this.tokenStorage;
+
+    if (!refreshToken) {
+      throw new Error('No refresh token available');
+    }
+
+    const response = await fetch(`${this.baseUrl}/account/refresh-token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        refreshToken,
+      }),
+    });
+
+    if (!response.ok) {
+      this.clearTokenStorage();
+      throw new Error(`Token refresh failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // Update stored token
+    this.tokenStorage = {
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken || refreshToken,
+      expiresAt: Date.now() + (data.expiresIn * 1000),
+    };
+
+    this.saveTokenToStorage();
+    return data.accessToken;
+  }
+
+  public async getValidAccessToken(): Promise<string | null> {
+    if (this.isTokenValid()) {
+      return this.tokenStorage.accessToken;
+    }
+
+    try {
+      return await this.refreshAccessToken();
+    } catch (error) {
+      console.error('Failed to refresh access token:', error);
+      this.clearTokenStorage();
+      return null;
+    }
+  }
+
+  public async getAuthHeaders(): Promise<Record<string, string>> {
+    const token = await this.getValidAccessToken();
+
+    if (!token) {
+      return {};
+    }
+
+    return {
+      Authorization: `Bearer ${token}`,
+    };
+  }
+
+  public clearAuth() {
+    this.clearTokenStorage();
   }
 
   private loadTokenFromStorage() {
@@ -77,126 +185,22 @@ export class AuthIntegrationService {
       localStorage.removeItem('uni-api-auth');
     }
   }
-
-  public isTokenValid(): boolean {
-    const { accessToken, expiresAt } = this.tokenStorage;
-    if (!accessToken || !expiresAt) return false;
-    
-    // Check if token expires within the next 5 minutes
-    const bufferTime = 5 * 60 * 1000;
-    return Date.now() < (expiresAt - bufferTime);
-  }
-
-  public async exchangeClerkTokenForUniApiToken(
-    clerkToken: string,
-    clerkUserId: string
-  ): Promise<TokenExchangeResponse> {
-    const response = await fetch(`${this.baseUrl}/account/clerk-auth`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        clerkToken,
-        clerkUserId,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Token exchange failed: ${response.status}`);
-    }
-
-    const data: TokenExchangeResponse = await response.json();
-    
-    // Store the new token
-    this.tokenStorage = {
-      accessToken: data.accessToken,
-      refreshToken: data.refreshToken,
-      expiresAt: Date.now() + (data.expiresIn * 1000),
-    };
-    
-    this.saveTokenToStorage();
-    return data;
-  }
-
-  public async refreshAccessToken(): Promise<string> {
-    const { refreshToken } = this.tokenStorage;
-    
-    if (!refreshToken) {
-      throw new Error('No refresh token available');
-    }
-
-    const response = await fetch(`${this.baseUrl}/account/refresh-token`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        refreshToken,
-      }),
-    });
-
-    if (!response.ok) {
-      this.clearTokenStorage();
-      throw new Error(`Token refresh failed: ${response.status}`);
-    }
-
-    const data = await response.json();
-    
-    // Update stored token
-    this.tokenStorage = {
-      accessToken: data.accessToken,
-      refreshToken: data.refreshToken || refreshToken,
-      expiresAt: Date.now() + (data.expiresIn * 1000),
-    };
-    
-    this.saveTokenToStorage();
-    return data.accessToken;
-  }
-
-  public async getValidAccessToken(): Promise<string | null> {
-    if (this.isTokenValid()) {
-      return this.tokenStorage.accessToken;
-    }
-
-    try {
-      return await this.refreshAccessToken();
-    } catch (error) {
-      console.error('Failed to refresh access token:', error);
-      this.clearTokenStorage();
-      return null;
-    }
-  }
-
-  public async getAuthHeaders(): Promise<Record<string, string>> {
-    const token = await this.getValidAccessToken();
-    
-    if (!token) {
-      return {};
-    }
-
-    return {
-      Authorization: `Bearer ${token}`,
-    };
-  }
-
-  public clearAuth() {
-    this.clearTokenStorage();
-  }
 }
 
 // React hooks for authentication
 export function useUniApiAuth() {
-  const { getToken, userId } = useAuth();
-  const { user } = useUser();
+  const {getToken, userId} = useAuth();
+  const {user} = useUser();
   const queryClient = useQueryClient();
   const authService = AuthIntegrationService.getInstance();
 
   // Query for getting uni-api token
-  const { data: authToken, isLoading: isAuthLoading } = useQuery({
+  const {data: authToken, isLoading: isAuthLoading} = useQuery({
     queryKey: ['uniApiAuth', userId],
     queryFn: async () => {
-      if (!user || !userId) return null;
+      if (!user || !userId) {
+        return null;
+      }
 
       // Check if we have a valid token
       if (authService.isTokenValid()) {
@@ -205,12 +209,14 @@ export function useUniApiAuth() {
 
       // Get Clerk token
       const clerkToken = await getToken();
-      if (!clerkToken) return null;
+      if (!clerkToken) {
+        return null;
+      }
 
       // Exchange for uni-api token
       const response = await authService.exchangeClerkTokenForUniApiToken(
         clerkToken,
-        userId
+        userId,
       );
 
       return response.accessToken;
@@ -224,10 +230,14 @@ export function useUniApiAuth() {
   // Mutation for token exchange
   const exchangeTokenMutation = useMutation({
     mutationFn: async () => {
-      if (!user || !userId) throw new Error('User not authenticated');
+      if (!user || !userId) {
+        throw new Error('User not authenticated');
+      }
 
       const clerkToken = await getToken();
-      if (!clerkToken) throw new Error('No Clerk token available');
+      if (!clerkToken) {
+        throw new Error('No Clerk token available');
+      }
 
       return authService.exchangeClerkTokenForUniApiToken(clerkToken, userId);
     },
@@ -249,7 +259,7 @@ export function useUniApiAuth() {
     onError: (error) => {
       console.error('Token refresh failed:', error);
       authService.clearAuth();
-      queryClient.removeQueries({ queryKey: ['uniApiAuth', userId] });
+      queryClient.removeQueries({queryKey: ['uniApiAuth', userId]});
     },
   });
 
@@ -271,7 +281,7 @@ export function useUniApiAuth() {
   // Function to clear authentication
   const clearAuth = () => {
     authService.clearAuth();
-    queryClient.removeQueries({ queryKey: ['uniApiAuth', userId] });
+    queryClient.removeQueries({queryKey: ['uniApiAuth', userId]});
   };
 
   return {
@@ -289,8 +299,8 @@ export function useUniApiAuth() {
 
 // Hook for uni-api user profile
 export function useUniApiUserProfile() {
-  const { user } = useUser();
-  const { authToken, getAuthHeaders } = useUniApiAuth();
+  const {user} = useUser();
+  const {authToken, getAuthHeaders} = useUniApiAuth();
 
   return useQuery({
     queryKey: ['uniApiUserProfile', user?.id],
@@ -317,7 +327,7 @@ export function useUniApiUserProfile() {
 // Hook for checking uni-api user credits
 export function useUniApiUserCredits() {
   const profile = useUniApiUserProfile();
-  
+
   return {
     credits: profile.data?.credits || 0,
     isLoading: profile.isLoading,
@@ -328,11 +338,11 @@ export function useUniApiUserCredits() {
 
 // Higher-order component for protecting routes that require uni-api authentication
 export function withUniApiAuth<P extends object>(
-  Component: React.ComponentType<P>
+  Component: React.ComponentType<P>,
 ) {
   return function AuthenticatedComponent(props: P) {
-    const { isAuthenticated, isAuthLoading, exchangeToken } = useUniApiAuth();
-    const { user } = useUser();
+    const {isAuthenticated, isAuthLoading, exchangeToken} = useUniApiAuth();
+    const {user} = useUser();
 
     if (!user) {
       return (

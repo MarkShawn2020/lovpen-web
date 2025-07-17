@@ -1,7 +1,7 @@
-import { AuthIntegrationService } from './auth-integration';
+import {AuthIntegrationService} from './auth-integration';
 
 // Types based on uni-api OpenAPI spec
-export interface UniApiKnowledgeItem {
+export type UniApiKnowledgeItem = {
   id: string;
   title?: string;
   content?: string;
@@ -16,16 +16,16 @@ export interface UniApiKnowledgeItem {
   updatedAt: string;
   processingStatus: 'pending' | 'processing' | 'completed' | 'failed';
   userId: string;
-}
+};
 
-export interface UniApiSearchResult {
+export type UniApiSearchResult = {
   items: UniApiKnowledgeItem[];
   total: number;
   hasMore: boolean;
   nextCursor?: string;
-}
+};
 
-export interface UniApiSearchFilters {
+export type UniApiSearchFilters = {
   platforms?: string[];
   contentTypes?: string[];
   processingStatus?: string[];
@@ -33,38 +33,38 @@ export interface UniApiSearchFilters {
     start?: string;
     end?: string;
   };
-}
+};
 
-export interface UniApiAISearchRequest {
+export type UniApiAISearchRequest = {
   query: string;
   limit?: number;
   filters?: UniApiSearchFilters;
   includeRelevanceScore?: boolean;
-}
+};
 
-export interface UniApiAIReasoningRequest {
+export type UniApiAIReasoningRequest = {
   query: string;
   contextItems?: string[];
   maxTokens?: number;
   temperature?: number;
-}
+};
 
-export interface UniApiAIReasoningResponse {
+export type UniApiAIReasoningResponse = {
   reasoning: string;
   sourceItems: string[];
   confidence: number;
   tokensUsed: number;
-}
+};
 
-export interface UniApiPlatformStatus {
+export type UniApiPlatformStatus = {
   platform: string;
   isConnected: boolean;
   lastSync?: string;
   status: 'active' | 'paused' | 'error';
   syncSettings: Record<string, any>;
-}
+};
 
-export interface UniApiAnalyticsInsights {
+export type UniApiAnalyticsInsights = {
   totalItems: number;
   recentActivity: {
     date: string;
@@ -78,15 +78,15 @@ export interface UniApiAnalyticsInsights {
     platform: string;
     count: number;
   }[];
-}
+};
 
-export interface UniApiVectorStats {
+export type UniApiVectorStats = {
   totalVectors: number;
   indexedItems: number;
   pendingItems: number;
   lastIndexTime?: string;
   indexHealth: 'healthy' | 'degraded' | 'error';
-}
+};
 
 export class UniApiClient {
   private baseUrl: string;
@@ -97,37 +97,11 @@ export class UniApiClient {
     this.authService = AuthIntegrationService.getInstance(baseUrl);
   }
 
-  private async request<T>(
-    endpoint: string,
-    options: RequestInit = {}
-  ): Promise<T> {
-    const url = `${this.baseUrl}${endpoint}`;
-    const authHeaders = await this.authService.getAuthHeaders();
-    
-    const response = await fetch(url, {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        ...authHeaders,
-        ...options.headers,
-      },
-    });
-
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
-      throw new Error(`API request failed: ${response.status} ${response.statusText}`, {
-        cause: error,
-      });
-    }
-
-    return response.json();
-  }
-
   // Knowledge Items API
   async getKnowledgeItems(
     filters: UniApiSearchFilters = {},
     limit = 20,
-    offset = 0
+    offset = 0,
   ): Promise<UniApiSearchResult> {
     const params = new URLSearchParams({
       limit: limit.toString(),
@@ -152,7 +126,7 @@ export class UniApiClient {
   }
 
   async createKnowledgeItem(
-    item: Omit<UniApiKnowledgeItem, 'id' | 'createdAt' | 'updatedAt'>
+    item: Omit<UniApiKnowledgeItem, 'id' | 'createdAt' | 'updatedAt'>,
   ): Promise<UniApiKnowledgeItem> {
     return this.request<UniApiKnowledgeItem>('/knowledge/items/', {
       method: 'POST',
@@ -162,7 +136,7 @@ export class UniApiClient {
 
   async updateKnowledgeItem(
     id: string,
-    updates: Partial<UniApiKnowledgeItem>
+    updates: Partial<UniApiKnowledgeItem>,
   ): Promise<UniApiKnowledgeItem> {
     return this.request<UniApiKnowledgeItem>(`/knowledge/items/${id}`, {
       method: 'PUT',
@@ -179,14 +153,14 @@ export class UniApiClient {
   async batchDeleteKnowledgeItems(filenames: string[]): Promise<{ deleted: number }> {
     return this.request<{ deleted: number }>('/knowledge/items/batch-delete', {
       method: 'POST',
-      body: JSON.stringify({ filenames }),
+      body: JSON.stringify({filenames}),
     });
   }
 
   async uploadKnowledgeItem(file: File): Promise<UniApiKnowledgeItem> {
     const formData = new FormData();
     formData.append('file', file);
-    
+
     const url = `${this.baseUrl}/knowledge/items/upload`;
     const authHeaders = await this.authService.getAuthHeaders();
 
@@ -212,7 +186,7 @@ export class UniApiClient {
   async searchKnowledgeItems(
     query: string,
     filters: UniApiSearchFilters = {},
-    limit = 10
+    limit = 10,
   ): Promise<UniApiKnowledgeItem[]> {
     const params = new URLSearchParams({
       q: query,
@@ -251,7 +225,7 @@ export class UniApiClient {
   }> {
     return this.request('/knowledge/ai/connections', {
       method: 'POST',
-      body: JSON.stringify({ itemIds }),
+      body: JSON.stringify({itemIds}),
     });
   }
 
@@ -333,7 +307,7 @@ export class UniApiClient {
   async startVectorization(itemIds?: string[]): Promise<{ taskId: string; status: string }> {
     return this.request('/knowledge/vector/vectorize', {
       method: 'POST',
-      body: JSON.stringify({ itemIds }),
+      body: JSON.stringify({itemIds}),
     });
   }
 
@@ -379,6 +353,32 @@ export class UniApiClient {
     }>;
   }> {
     return this.request('/knowledge/vector/search/performance');
+  }
+
+  private async request<T>(
+    endpoint: string,
+    options: RequestInit = {},
+  ): Promise<T> {
+    const url = `${this.baseUrl}${endpoint}`;
+    const authHeaders = await this.authService.getAuthHeaders();
+
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...authHeaders,
+        ...options.headers,
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      throw new Error(`API request failed: ${response.status} ${response.statusText}`, {
+        cause: error,
+      });
+    }
+
+    return response.json();
   }
 }
 

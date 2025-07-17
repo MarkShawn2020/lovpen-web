@@ -1,15 +1,15 @@
 'use client';
 
-import type { KnowledgeItem } from '@/types/knowledge-base';
-import { X } from 'lucide-react';
-import { useState } from 'react';
+import type {KnowledgeItem} from '@/types/knowledge-base';
+import {X} from 'lucide-react';
+import {useState} from 'react';
 
 type KnowledgeBaseUploadProps = {
   onClose: () => void;
   onComplete: (items: KnowledgeItem[]) => void;
 };
 
-export function KnowledgeBaseUpload({ onClose, onComplete }: KnowledgeBaseUploadProps) {
+export function KnowledgeBaseUpload({onClose, onComplete}: KnowledgeBaseUploadProps) {
   const [textContent, setTextContent] = useState('');
   const [textTitle, setTextTitle] = useState('');
 
@@ -30,7 +30,7 @@ export function KnowledgeBaseUpload({ onClose, onComplete }: KnowledgeBaseUpload
             onClick={onClose}
             className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded"
           >
-            <X className="h-4 w-4" />
+            <X className="h-4 w-4"/>
           </button>
         </div>
 

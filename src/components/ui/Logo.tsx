@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/utils/Helpers';
+import {cn} from '@/utils/Helpers';
 
 type LogoProps = {
   variant?: 'full' | 'icon' | 'text';
@@ -14,7 +14,7 @@ const sizeClasses = {
 };
 
 // 钢笔与爱心融合的主 Logo
-const FullLogo = ({ size, className }: { size: 'sm' | 'md' | 'lg'; className?: string }) => (
+const FullLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: string }) => (
   <svg
     viewBox="0 0 40 40"
     className={cn(sizeClasses[size], 'transition-all duration-200', className)}
@@ -64,15 +64,15 @@ const FullLogo = ({ size, className }: { size: 'sm' | 'md' | 'lg'; className?: s
 
     <defs>
       <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#d97757" />
-        <stop offset="100%" stopColor="#cc785c" />
+        <stop offset="0%" stopColor="#d97757"/>
+        <stop offset="100%" stopColor="#cc785c"/>
       </linearGradient>
     </defs>
   </svg>
 );
 
 // 简化的图标版本
-const IconLogo = ({ size, className }: { size: 'sm' | 'md' | 'lg'; className?: string }) => (
+const IconLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: string }) => (
   <svg
     viewBox="0 0 24 24"
     className={cn(sizeClasses[size], 'transition-colors duration-200', className)}
@@ -113,7 +113,7 @@ const IconLogo = ({ size, className }: { size: 'sm' | 'md' | 'lg'; className?: s
 );
 
 // 纯文字版本
-const TextLogo = ({ size, className }: { size: 'sm' | 'md' | 'lg'; className?: string }) => (
+const TextLogo = ({size, className}: { size: 'sm' | 'md' | 'lg'; className?: string }) => (
   <span className={cn(
     'font-bold tracking-tight',
     size === 'sm' && 'text-lg',
@@ -126,19 +126,19 @@ const TextLogo = ({ size, className }: { size: 'sm' | 'md' | 'lg'; className?: s
   </span>
 );
 
-const Logo = ({ variant = 'full', size = 'md', className }: LogoProps) => {
+const Logo = ({variant = 'full', size = 'md', className}: LogoProps) => {
   switch (variant) {
     case 'icon':
-      return <IconLogo size={size} className={className} />;
+      return <IconLogo size={size} className={className}/>;
     case 'text':
-      return <TextLogo size={size} className={className} />;
+      return <TextLogo size={size} className={className}/>;
     default:
-      return <FullLogo size={size} className={className} />;
+      return <FullLogo size={size} className={className}/>;
   }
 };
 
 // 组合 Logo（图标 + 文字）
-const LogoWithText = ({ size = 'md', className }: Omit<LogoProps, 'variant'>) => {
+const LogoWithText = ({size = 'md', className}: Omit<LogoProps, 'variant'>) => {
   return (
     <div className={cn(
       'flex items-center space-x-2 group transition-all duration-200',
@@ -147,10 +147,10 @@ const LogoWithText = ({ size = 'md', className }: Omit<LogoProps, 'variant'>) =>
     )}
     >
       <div className="transition-transform duration-200 group-hover:rotate-3">
-        <Logo variant="icon" size={size} />
+        <Logo variant="icon" size={size}/>
       </div>
       <div className="transition-all duration-200 group-hover:tracking-wide">
-        <Logo variant="text" size={size} />
+        <Logo variant="text" size={size}/>
       </div>
     </div>
   );
@@ -159,4 +159,4 @@ const LogoWithText = ({ size = 'md', className }: Omit<LogoProps, 'variant'>) =>
 Logo.displayName = 'Logo';
 LogoWithText.displayName = 'LogoWithText';
 
-export { Logo, type LogoProps, LogoWithText };
+export {Logo, type LogoProps, LogoWithText};

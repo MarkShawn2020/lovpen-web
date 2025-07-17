@@ -1,13 +1,13 @@
-import type { Metadata } from 'next';
-import { ClerkProvider } from '@clerk/nextjs';
-import { hasLocale, NextIntlClientProvider } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
-import { Fira_Code, Inter } from 'next/font/google';
-import { notFound } from 'next/navigation';
-import { PostHogProvider } from '@/components/analytics/PostHogProvider';
-import { ReactQueryProvider } from '@/components/providers/ReactQueryProvider';
-import { routing } from '@/libs/I18nRouting';
-import { ClerkLocalizations } from '@/utils/AppConfig';
+import type {Metadata} from 'next';
+import {ClerkProvider} from '@clerk/nextjs';
+import {hasLocale, NextIntlClientProvider} from 'next-intl';
+import {setRequestLocale} from 'next-intl/server';
+import {Fira_Code, Inter} from 'next/font/google';
+import {notFound} from 'next/navigation';
+import {PostHogProvider} from '@/components/analytics/PostHogProvider';
+import {ReactQueryProvider} from '@/components/providers/ReactQueryProvider';
+import {routing} from '@/libs/I18nRouting';
+import {ClerkLocalizations} from '@/utils/AppConfig';
 import '@/styles/global.css';
 
 const inter = Inter({
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 };
 
 export function generateStaticParams() {
-  return routing.locales.map(locale => ({ locale }));
+  return routing.locales.map(locale => ({locale}));
 }
 
 export default async function RootLayout(props: {
@@ -56,7 +56,7 @@ export default async function RootLayout(props: {
   params: Promise<{ locale: string }>;
 }) {
   const params = await props.params;
-  const { locale } = params;
+  const {locale} = params;
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();
@@ -79,27 +79,27 @@ export default async function RootLayout(props: {
 
   return (
     <html lang={locale} className={`${inter.variable} ${firaCode.variable}`}>
-      <body className="font-sans antialiased">
-        <ClerkProvider
-          localization={clerkLocale}
-          signInUrl={signInUrl}
-          signUpUrl={signUpUrl}
-          signInFallbackRedirectUrl={dashboardUrl}
-          signUpFallbackRedirectUrl={dashboardUrl}
-          afterSignOutUrl={afterSignOutUrl}
-          appearance={{
-            cssLayerName: 'clerk',
-          }}
-        >
-          <NextIntlClientProvider>
-            <ReactQueryProvider>
-              <PostHogProvider>
-                {props.children}
-              </PostHogProvider>
-            </ReactQueryProvider>
-          </NextIntlClientProvider>
-        </ClerkProvider>
-      </body>
+    <body className="font-sans antialiased">
+    <ClerkProvider
+      localization={clerkLocale}
+      signInUrl={signInUrl}
+      signUpUrl={signUpUrl}
+      signInFallbackRedirectUrl={dashboardUrl}
+      signUpFallbackRedirectUrl={dashboardUrl}
+      afterSignOutUrl={afterSignOutUrl}
+      appearance={{
+        cssLayerName: 'clerk',
+      }}
+    >
+      <NextIntlClientProvider>
+        <ReactQueryProvider>
+          <PostHogProvider>
+            {props.children}
+          </PostHogProvider>
+        </ReactQueryProvider>
+      </NextIntlClientProvider>
+    </ClerkProvider>
+    </body>
     </html>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus } from 'lucide-react';
+import {Plus} from 'lucide-react';
 
 type KnowledgeBaseHeaderProps = {
   searchQuery: string;
@@ -10,9 +10,9 @@ type KnowledgeBaseHeaderProps = {
 };
 
 export function KnowledgeBaseHeader({
-  onUploadClick,
-  totalItems,
-}: KnowledgeBaseHeaderProps) {
+                                      onUploadClick,
+                                      totalItems,
+                                    }: KnowledgeBaseHeaderProps) {
   return (
     <div className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 py-4">
@@ -34,7 +34,7 @@ export function KnowledgeBaseHeader({
               onClick={onUploadClick}
               className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-4 w-4"/>
               添加内容
             </button>
           </div>

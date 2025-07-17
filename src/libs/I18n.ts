@@ -1,6 +1,6 @@
-import { hasLocale } from 'next-intl';
-import { getRequestConfig } from 'next-intl/server';
-import { routing } from './I18nRouting';
+import {hasLocale} from 'next-intl';
+import {getRequestConfig} from 'next-intl/server';
+import {routing} from './I18nRouting';
 
 // NextJS Boilerplate uses Crowdin as the localization software.
 // As a developer, you only need to take care of the English (or another default language) version.
@@ -12,7 +12,7 @@ import { routing } from './I18nRouting';
 // 2. Run manually the workflow on GitHub Actions
 // 3. Every 24 hours at 5am, the workflow will run automatically
 
-export default getRequestConfig(async ({ requestLocale }) => {
+export default getRequestConfig(async ({requestLocale}) => {
   // Typically corresponds to the `[locale]` segment
   const requested = await requestLocale;
   const locale = hasLocale(routing.locales, requested)

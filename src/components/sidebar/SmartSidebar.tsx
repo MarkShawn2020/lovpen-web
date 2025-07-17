@@ -1,7 +1,7 @@
 'use client';
 
-import type { ReactNode } from 'react';
-import type { SidebarContext, SidebarMode } from '@/types/sidebar';
+import type {ReactNode} from 'react';
+import type {SidebarContext, SidebarMode} from '@/types/sidebar';
 
 type SmartSidebarProps = {
   context: SidebarContext;
@@ -15,20 +15,20 @@ type ConditionalSectionProps = {
   children: ReactNode;
 };
 
-function ConditionalSection({ when, currentMode, children }: ConditionalSectionProps) {
+function ConditionalSection({when, currentMode, children}: ConditionalSectionProps) {
   if (when === 'always' || when === currentMode) {
     return <>{children}</>;
   }
   return null;
 }
 
-export function SmartSidebar({ context, onContextChange, children }: SmartSidebarProps) {
+export function SmartSidebar({context, onContextChange, children}: SmartSidebarProps) {
   const handleModeSwitch = (mode: SidebarMode) => {
     if (mode === 'global') {
       // 切换到全局模式时，清除所有选择
-      onContextChange({ mode: 'global', selectedPanels: [] });
+      onContextChange({mode: 'global', selectedPanels: []});
     } else {
-      onContextChange({ mode });
+      onContextChange({mode});
     }
   };
 
@@ -96,4 +96,4 @@ export function SmartSidebar({ context, onContextChange, children }: SmartSideba
 }
 
 // 导出条件渲染组件供子组件使用
-export { ConditionalSection };
+export {ConditionalSection};

@@ -1,23 +1,23 @@
 // Comprehensive type definitions for uni-api responses
 
 // Base types
-export interface BaseResponse {
+export type BaseResponse = {
   success: boolean;
   message?: string;
   timestamp: string;
-}
+};
 
-export interface PaginatedResponse<T> {
+export type PaginatedResponse<T> = {
   items: T[];
   total: number;
   page: number;
   size: number;
   hasMore: boolean;
   nextCursor?: string;
-}
+};
 
 // Knowledge Base types
-export interface KnowledgeItem {
+export type KnowledgeItem = {
   id: string;
   title?: string;
   content?: string;
@@ -53,9 +53,9 @@ export interface KnowledgeItem {
   isArchived?: boolean;
   isFavorite?: boolean;
   customFields?: Record<string, any>;
-}
+};
 
-export interface SearchFilters {
+export type SearchFilters = {
   platforms?: string[];
   contentTypes?: string[];
   processingStatus?: string[];
@@ -79,9 +79,9 @@ export interface SearchFilters {
   hasEmbedding?: boolean;
   sortBy?: 'createdAt' | 'updatedAt' | 'title' | 'wordCount' | 'accessCount';
   sortOrder?: 'asc' | 'desc';
-}
+};
 
-export interface SearchResult extends PaginatedResponse<KnowledgeItem> {
+export type SearchResult = {
   query?: string;
   filters?: SearchFilters;
   searchTime: number;
@@ -92,10 +92,10 @@ export interface SearchResult extends PaginatedResponse<KnowledgeItem> {
     tags: Array<{ name: string; count: number }>;
     categories: Array<{ name: string; count: number }>;
   };
-}
+} & PaginatedResponse<KnowledgeItem>;
 
 // AI Search types
-export interface AISearchRequest {
+export type AISearchRequest = {
   query: string;
   limit?: number;
   offset?: number;
@@ -107,9 +107,9 @@ export interface AISearchRequest {
   rerank?: boolean;
   temperature?: number;
   maxTokens?: number;
-}
+};
 
-export interface AISearchResult {
+export type AISearchResult = {
   id: string;
   item: KnowledgeItem;
   relevanceScore: number;
@@ -123,9 +123,9 @@ export interface AISearchResult {
   semanticSimilarity: number;
   keywordMatches: string[];
   contextualRelevance: number;
-}
+};
 
-export interface AISearchResponse {
+export type AISearchResponse = {
   results: AISearchResult[];
   query: string;
   totalResults: number;
@@ -134,10 +134,10 @@ export interface AISearchResponse {
   parameters: AISearchRequest;
   suggestions?: string[];
   relatedQueries?: string[];
-}
+};
 
 // AI Reasoning types
-export interface AIReasoningRequest {
+export type AIReasoningRequest = {
   query: string;
   contextItems?: string[];
   maxTokens?: number;
@@ -146,9 +146,9 @@ export interface AIReasoningRequest {
   includeSourceCitations?: boolean;
   reasoningMode?: 'analytical' | 'creative' | 'factual' | 'comparative';
   outputFormat?: 'text' | 'structured' | 'bullets' | 'summary';
-}
+};
 
-export interface AIReasoningResponse {
+export type AIReasoningResponse = {
   reasoning: string;
   sourceItems: Array<{
     id: string;
@@ -174,10 +174,10 @@ export interface AIReasoningResponse {
     }>;
     conclusions: string[];
   };
-}
+};
 
 // Platform Integration types
-export interface PlatformIntegration {
+export type PlatformIntegration = {
   id: string;
   userId: string;
   platformType: 'wechat' | 'flomo' | 'feishu' | 'notion' | 'obsidian' | 'logseq';
@@ -219,9 +219,9 @@ export interface PlatformIntegration {
   };
   createdAt: string;
   updatedAt: string;
-}
+};
 
-export interface PlatformSyncResult {
+export type PlatformSyncResult = {
   status: 'success' | 'partial' | 'failed';
   message: string;
   itemsProcessed: number;
@@ -235,10 +235,10 @@ export interface PlatformSyncResult {
   }>;
   duration: number;
   nextSyncAt?: string;
-}
+};
 
 // Analytics types
-export interface AnalyticsInsights {
+export type AnalyticsInsights = {
   totalItems: number;
   totalSizeBytes: number;
   averageWordCount: number;
@@ -302,9 +302,9 @@ export interface AnalyticsInsights {
       usage: number;
     }>;
   };
-}
+};
 
-export interface UsageAnalytics {
+export type UsageAnalytics = {
   period: {
     start: string;
     end: string;
@@ -340,10 +340,10 @@ export interface UsageAnalytics {
     bandwidthUsed: number;
     computeTime: number;
   };
-}
+};
 
 // Vector and Embedding types
-export interface VectorStats {
+export type VectorStats = {
   totalVectors: number;
   indexedItems: number;
   pendingItems: number;
@@ -369,9 +369,9 @@ export interface VectorStats {
     memoryUsage: number;
     diskUsage: number;
   };
-}
+};
 
-export interface VectorizationTask {
+export type VectorizationTask = {
   id: string;
   status: 'pending' | 'processing' | 'completed' | 'failed';
   progress: number;
@@ -398,10 +398,10 @@ export interface VectorizationTask {
     avgProcessingTime: number;
     memoryUsage: number;
   };
-}
+};
 
 // Network and Connection types
-export interface KnowledgeNetwork {
+export type KnowledgeNetwork = {
   nodes: Array<{
     id: string;
     title: string;
@@ -435,9 +435,9 @@ export interface KnowledgeNetwork {
     modularity: number;
     clusterCount: number;
   };
-}
+};
 
-export interface TopicAnalysis {
+export type TopicAnalysis = {
   topics: Array<{
     id: string;
     name: string;
@@ -474,33 +474,33 @@ export interface TopicAnalysis {
     alpha: number;
     beta: number;
   };
-}
+};
 
 // Error types
-export interface APIError {
+export type APIError = {
   code: string;
   message: string;
   details?: any;
   timestamp: string;
   requestId?: string;
   path?: string;
-}
+};
 
-export interface ValidationError {
+export type ValidationError = {
   field: string;
   message: string;
   code: string;
   value?: any;
-}
+};
 
-export interface ErrorResponse {
+export type ErrorResponse = {
   success: false;
   error: APIError;
   validationErrors?: ValidationError[];
-}
+};
 
 // Batch operations
-export interface BatchOperation<T> {
+export type BatchOperation<T> = {
   id: string;
   type: 'create' | 'update' | 'delete' | 'vectorize';
   items: T[];
@@ -515,7 +515,7 @@ export interface BatchOperation<T> {
   startTime: string;
   endTime?: string;
   estimatedDuration?: number;
-}
+};
 
 // Export utility types
 export type CreateKnowledgeItem = Omit<KnowledgeItem, 'id' | 'createdAt' | 'updatedAt' | 'userId'>;
@@ -529,10 +529,10 @@ export type ReasoningMode = AIReasoningRequest['reasoningMode'];
 export type OutputFormat = AIReasoningRequest['outputFormat'];
 
 // Event types for real-time updates
-export interface KnowledgeBaseEvent {
+export type KnowledgeBaseEvent = {
   type: 'item_created' | 'item_updated' | 'item_deleted' | 'sync_started' | 'sync_completed' | 'vectorization_completed';
   timestamp: string;
   userId: string;
   data: any;
   metadata?: Record<string, any>;
-}
+};
