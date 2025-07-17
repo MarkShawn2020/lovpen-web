@@ -1,7 +1,6 @@
 'use client';
 
 import type {UseInfiniteQueryOptions, UseMutationOptions, UseQueryOptions} from '@tanstack/react-query';
-import {useInfiniteQuery, useMutation, useQuery, useQueryClient,} from '@tanstack/react-query';
 import type {
   UniApiAIReasoningRequest,
   UniApiAIReasoningResponse,
@@ -11,10 +10,11 @@ import type {
   UniApiPlatformStatus,
   UniApiSearchFilters,
   UniApiSearchResult,
-  UniApiVectorStats
+  UniApiVectorStats,
 } from '@/services/uni-api-client';
-import {uniApiClient,} from '@/services/uni-api-client';
 import {useUser} from '@clerk/nextjs';
+import {useInfiniteQuery, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {uniApiClient} from '@/services/uni-api-client';
 
 // Query keys for consistent caching
 export const knowledgeBaseKeys = {

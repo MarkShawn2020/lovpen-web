@@ -12,11 +12,11 @@ type GlobalControlsProps = {
 };
 
 export function GlobalControls({
-                                 settings,
-                                 onUpdate,
-                                 previewPanelsCount,
-                                 currentMode,
-                               }: GlobalControlsProps) {
+  settings,
+  onUpdate,
+  previewPanelsCount,
+  currentMode,
+}: GlobalControlsProps) {
   return (
     <ConditionalSection when="global" currentMode={currentMode}>
       {/* 创作设置 */}
@@ -150,20 +150,28 @@ export function GlobalControls({
 
         <div className="p-6">
           <div className="u-gap-s flex flex-col">
-            <button type="button"
-                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button
+              type="button"
+              className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors"
+            >
               优化标题
             </button>
-            <button type="button"
-                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button
+              type="button"
+              className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors"
+            >
               提取关键词
             </button>
-            <button type="button"
-                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button
+              type="button"
+              className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors"
+            >
               内容分析
             </button>
-            <button type="button"
-                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button
+              type="button"
+              className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors"
+            >
               风格建议
             </button>
           </div>

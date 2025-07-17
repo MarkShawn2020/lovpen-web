@@ -58,7 +58,7 @@ const CardHeader = ({ref, className, children}: CardHeaderProps & { ref?: React.
 };
 
 const CardContent = ({ref, className, children}: CardContentProps & {
-  ref?: React.RefObject<HTMLDivElement | null>
+  ref?: React.RefObject<HTMLDivElement | null>;
 }) => {
   return (
     <div

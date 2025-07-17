@@ -65,7 +65,8 @@ export default async function Index(props: IIndexProps) {
     <>
       {/* Hero Section */}
       <section
-        className="w-full py-16 lg:py-24 bg-gradient-to-b from-background-main to-background-ivory-medium u-bg-layered-subtle relative overflow-hidden">
+        className="w-full py-16 lg:py-24 bg-gradient-to-b from-background-main to-background-ivory-medium u-bg-layered-subtle relative overflow-hidden"
+      >
         <Container>
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="u-display-xl mb-6 text-text-main">
@@ -94,7 +95,8 @@ export default async function Index(props: IIndexProps) {
                   <div className="absolute left-0 top-1/2 transform -translate-y-1/2 space-y-4">
                     <div
                       className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 border border-white/20 shadow-lg hover:scale-105 transition-transform animate-pulse"
-                      style={{animationDelay: '0s'}}>
+                      style={{animationDelay: '0s'}}
+                    >
                       <div className="flex items-center space-x-3">
                         <span className="text-2xl">💭</span>
                         <div className="text-sm">
@@ -105,7 +107,8 @@ export default async function Index(props: IIndexProps) {
                     </div>
                     <div
                       className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 border border-white/20 shadow-lg hover:scale-105 transition-transform animate-pulse"
-                      style={{animationDelay: '1s'}}>
+                      style={{animationDelay: '1s'}}
+                    >
                       <div className="flex items-center space-x-3">
                         <span className="text-2xl">📊</span>
                         <div className="text-sm">
@@ -116,7 +119,8 @@ export default async function Index(props: IIndexProps) {
                     </div>
                     <div
                       className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 border border-white/20 shadow-lg hover:scale-105 transition-transform animate-pulse"
-                      style={{animationDelay: '2s'}}>
+                      style={{animationDelay: '2s'}}
+                    >
                       <div className="flex items-center space-x-3">
                         <span className="text-2xl">🎤</span>
                         <div className="text-sm">
@@ -131,19 +135,25 @@ export default async function Index(props: IIndexProps) {
                   <div className="absolute left-32 top-1/2 transform -translate-y-1/2">
                     <div className="flex items-center">
                       <div
-                        className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full relative overflow-hidden">
+                        className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full relative overflow-hidden"
+                      >
                         <div
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-pulse"></div>
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-pulse"
+                        >
+                        </div>
                       </div>
                       <div
-                        className="w-0 h-0 border-l-8 border-l-purple-500 border-t-4 border-b-4 border-t-transparent border-b-transparent"></div>
+                        className="w-0 h-0 border-l-8 border-l-purple-500 border-t-4 border-b-4 border-t-transparent border-b-transparent"
+                      >
+                      </div>
                     </div>
                   </div>
 
                   {/* LovPen 引擎 - 中心 */}
                   <div className="relative z-10">
                     <div
-                      className="w-40 h-40 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center shadow-2xl border-4 border-white/30">
+                      className="w-40 h-40 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center shadow-2xl border-4 border-white/30"
+                    >
                       <div className="text-center text-white">
                         <div className="text-4xl mb-2">❤️</div>
                         <div className="text-sm font-bold">LovPen</div>
@@ -152,20 +162,29 @@ export default async function Index(props: IIndexProps) {
                     </div>
                     {/* 脉动效果 */}
                     <div
-                      className="absolute inset-0 bg-gradient-to-br from-primary/20 to-swatch-cactus/20 rounded-full animate-ping"></div>
+                      className="absolute inset-0 bg-gradient-to-br from-primary/20 to-swatch-cactus/20 rounded-full animate-ping"
+                    >
+                    </div>
                     <div
-                      className="absolute -inset-4 bg-gradient-to-br from-primary/10 to-swatch-cactus/10 rounded-full animate-pulse"></div>
+                      className="absolute -inset-4 bg-gradient-to-br from-primary/10 to-swatch-cactus/10 rounded-full animate-pulse"
+                    >
+                    </div>
                   </div>
 
                   {/* 流动线条 - 引擎到输出 */}
                   <div className="absolute right-32 top-1/2 transform -translate-y-1/2">
                     <div className="flex items-center">
                       <div
-                        className="w-0 h-0 border-r-8 border-r-green-500 border-t-4 border-b-4 border-t-transparent border-b-transparent"></div>
+                        className="w-0 h-0 border-r-8 border-r-green-500 border-t-4 border-b-4 border-t-transparent border-b-transparent"
+                      >
+                      </div>
                       <div
-                        className="w-24 h-1 bg-gradient-to-r from-green-500 to-cyan-400 rounded-full relative overflow-hidden">
+                        className="w-24 h-1 bg-gradient-to-r from-green-500 to-cyan-400 rounded-full relative overflow-hidden"
+                      >
                         <div
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-pulse"></div>
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-pulse"
+                        >
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -173,7 +192,8 @@ export default async function Index(props: IIndexProps) {
                   {/* 输出平台 - 右侧 */}
                   <div className="absolute right-0 top-1/2 transform -translate-y-1/2 space-y-4">
                     <div
-                      className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 border border-white/20 shadow-lg hover:scale-105 transition-transform">
+                      className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 border border-white/20 shadow-lg hover:scale-105 transition-transform"
+                    >
                       <div className="flex items-center space-x-3">
                         <span className="text-2xl">📱</span>
                         <div className="text-sm">
@@ -183,7 +203,8 @@ export default async function Index(props: IIndexProps) {
                       </div>
                     </div>
                     <div
-                      className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 border border-white/20 shadow-lg hover:scale-105 transition-transform">
+                      className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 border border-white/20 shadow-lg hover:scale-105 transition-transform"
+                    >
                       <div className="flex items-center space-x-3">
                         <span className="text-2xl">🎓</span>
                         <div className="text-sm">
@@ -193,7 +214,8 @@ export default async function Index(props: IIndexProps) {
                       </div>
                     </div>
                     <div
-                      className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 border border-white/20 shadow-lg hover:scale-105 transition-transform">
+                      className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 border border-white/20 shadow-lg hover:scale-105 transition-transform"
+                    >
                       <div className="flex items-center space-x-3">
                         <span className="text-2xl">🌐</span>
                         <div className="text-sm">
@@ -207,11 +229,14 @@ export default async function Index(props: IIndexProps) {
                   {/* 闭环反馈线 */}
                   <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
                     <div
-                      className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 shadow-lg">
+                      className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 shadow-lg"
+                    >
                       <span className="text-lg">📊</span>
                       <span className="text-sm text-gray-700">数据反馈优化</span>
                       <div
-                        className="w-6 h-6 border-2 border-gray-400 border-t-primary rounded-full animate-spin"></div>
+                        className="w-6 h-6 border-2 border-gray-400 border-t-primary rounded-full animate-spin"
+                      >
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -361,7 +386,8 @@ export default async function Index(props: IIndexProps) {
 
       {/* CTA Section */}
       <section
-        className="w-full py-16 lg:py-24 bg-gradient-to-r from-primary/10 to-swatch-cactus/10 u-bg-organic-noise relative">
+        className="w-full py-16 lg:py-24 bg-gradient-to-r from-primary/10 to-swatch-cactus/10 u-bg-organic-noise relative"
+      >
         <Container>
           <div className="text-center">
             <h2 className="u-display-m text-text-main mb-6">{t('cta_title')}</h2>
@@ -381,7 +407,8 @@ export default async function Index(props: IIndexProps) {
 
             {/* Trust indicators */}
             <div
-              className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm text-text-faded max-w-4xl mx-auto">
+              className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm text-text-faded max-w-4xl mx-auto"
+            >
               <div className="flex items-center space-x-2 justify-center md:justify-start">
                 <span className="text-green-600 text-lg">✨</span>
                 <span>专业级美丽图文</span>

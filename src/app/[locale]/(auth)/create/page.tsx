@@ -171,28 +171,34 @@ export default function Create() {
   return (
     <Container>
 
-      <div className="u-grid-desktop u-gap-l min-h-[calc(100vh-200px)]">
+      <div className="u-grid-desktop u-gap-l min-h-[calc(100vh-120px)]">
         {/* 左侧知识库 */}
-        <KnowledgeBase
-          onFileSelect={handleFileSelect}
-        />
+        <div className="lg:col-span-3">
+          <KnowledgeBase
+            onFileSelect={handleFileSelect}
+          />
+        </div>
 
         {/* 中间内容预览区域 */}
-        <PreviewSection
-          previewPanels={previewPanels}
-          platforms={platforms}
-          generatedContent={generatedContent}
-          addPreviewPanel={addPreviewPanel}
-          removePreviewPanel={removePreviewPanel}
-          reorderPreviewPanels={reorderPreviewPanels}
-          onPanelSelect={handlePanelSelect}
-          onBackgroundClick={handleBackgroundClick}
-        />
+        <div className="lg:col-span-4">
+          <PreviewSection
+            previewPanels={previewPanels}
+            platforms={platforms}
+            generatedContent={generatedContent}
+            addPreviewPanel={addPreviewPanel}
+            removePreviewPanel={removePreviewPanel}
+            reorderPreviewPanels={reorderPreviewPanels}
+            onPanelSelect={handlePanelSelect}
+            onBackgroundClick={handleBackgroundClick}
+          />
+        </div>
 
         {/* 右侧聊天面板 */}
-        <ChatSidebar
-          onMessageSend={handleMessageSend}
-        />
+        <div className="lg:col-span-5">
+          <ChatSidebar
+            onMessageSend={handleMessageSend}
+          />
+        </div>
       </div>
     </Container>
   );

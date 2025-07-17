@@ -157,14 +157,14 @@ type PersistentTabsContentProps = {
 };
 
 const PersistentTabs = ({
-                          id,
-                          defaultValue,
-                          className,
-                          children,
-                          onTabChange,
-                          restoreOnMount: _restoreOnMount = true,
-                          ref,
-                        }: PersistentTabsProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+  id,
+  defaultValue,
+  className,
+  children,
+  onTabChange,
+  restoreOnMount: _restoreOnMount = true,
+  ref,
+}: PersistentTabsProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const tabState = useInternalTabState(id, defaultValue);
 
   useEffect(() => {
@@ -200,12 +200,12 @@ const PersistentTabs = ({
 };
 
 const PersistentTabsList = ({
-                              className,
-                              children,
-                              showHistory = false,
-                              historyLimit = 5,
-                              ref,
-                            }: PersistentTabsListProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+  className,
+  children,
+  showHistory = false,
+  historyLimit = 5,
+  ref,
+}: PersistentTabsListProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const {tabHistory} = usePersistentTabsContext();
 
   return (
@@ -232,13 +232,13 @@ const PersistentTabsList = ({
 };
 
 const PersistentTabsTrigger = ({
-                                 value,
-                                 className,
-                                 children,
-                                 badge,
-                                 disabled = false,
-                                 ref,
-                               }: PersistentTabsTriggerProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
+  value,
+  className,
+  children,
+  badge,
+  disabled = false,
+  ref,
+}: PersistentTabsTriggerProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
   const {activeTab, setActiveTab, isTabRecentlyAccessed} = usePersistentTabsContext();
   const isActive = activeTab === value;
   const isRecent = isTabRecentlyAccessed(value);
@@ -269,12 +269,12 @@ const PersistentTabsTrigger = ({
 };
 
 const PersistentTabsContent = ({
-                                 value,
-                                 className,
-                                 children,
-                                 lazy = false,
-                                 ref,
-                               }: PersistentTabsContentProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+  value,
+  className,
+  children,
+  lazy = false,
+  ref,
+}: PersistentTabsContentProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const {activeTab, getTabAccessTime} = usePersistentTabsContext();
   const isActive = activeTab === value;
   const hasBeenAccessed = getTabAccessTime(value) > 0;

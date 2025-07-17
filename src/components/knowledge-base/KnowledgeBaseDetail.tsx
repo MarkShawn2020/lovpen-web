@@ -42,18 +42,18 @@ export function KnowledgeBaseDetail({item, onClose}: KnowledgeBaseDetailProps) {
             <div className="flex flex-wrap gap-2">
               {item.tags.length > 0
                 ? (
-                  item.tags.map((tag, index) => (
-                    <span
-                      key={`tag-${tag}-${index}`}
-                      className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
-                    >
+                    item.tags.map((tag, index) => (
+                      <span
+                        key={`tag-${tag}-${index}`}
+                        className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                      >
                         {tag}
                       </span>
-                  ))
-                )
+                    ))
+                  )
                 : (
-                  <span className="text-gray-500 text-sm">暂无标签</span>
-                )}
+                    <span className="text-gray-500 text-sm">暂无标签</span>
+                  )}
             </div>
           </div>
         </div>

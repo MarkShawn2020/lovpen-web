@@ -79,27 +79,27 @@ export default async function RootLayout(props: {
 
   return (
     <html lang={locale} className={`${inter.variable} ${firaCode.variable}`}>
-    <body className="font-sans antialiased">
-    <ClerkProvider
-      localization={clerkLocale}
-      signInUrl={signInUrl}
-      signUpUrl={signUpUrl}
-      signInFallbackRedirectUrl={dashboardUrl}
-      signUpFallbackRedirectUrl={dashboardUrl}
-      afterSignOutUrl={afterSignOutUrl}
-      appearance={{
-        cssLayerName: 'clerk',
-      }}
-    >
-      <NextIntlClientProvider>
-        <ReactQueryProvider>
-          <PostHogProvider>
-            {props.children}
-          </PostHogProvider>
-        </ReactQueryProvider>
-      </NextIntlClientProvider>
-    </ClerkProvider>
-    </body>
+      <body className="font-sans antialiased">
+        <ClerkProvider
+          localization={clerkLocale}
+          signInUrl={signInUrl}
+          signUpUrl={signUpUrl}
+          signInFallbackRedirectUrl={dashboardUrl}
+          signUpFallbackRedirectUrl={dashboardUrl}
+          afterSignOutUrl={afterSignOutUrl}
+          appearance={{
+            cssLayerName: 'clerk',
+          }}
+        >
+          <NextIntlClientProvider>
+            <ReactQueryProvider>
+              <PostHogProvider>
+                {props.children}
+              </PostHogProvider>
+            </ReactQueryProvider>
+          </NextIntlClientProvider>
+        </ClerkProvider>
+      </body>
     </html>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
-import type {DragEndEvent,} from '@dnd-kit/core';
-import {closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors,} from '@dnd-kit/core';
+import type {DragEndEvent} from '@dnd-kit/core';
+import {closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors} from '@dnd-kit/core';
 import {
   arrayMove,
   SortableContext,
@@ -40,13 +40,13 @@ type PreviewSectionProps = {
 
 // 可拖拽的预览面板组件
 function DraggablePreviewPanel({
-                                 panel,
-                                 platforms,
-                                 generatedContent,
-                                 removePreviewPanel,
-                                 previewPanelsLength,
-                                 onPanelSelect,
-                               }: {
+  panel,
+  platforms,
+  generatedContent,
+  removePreviewPanel,
+  previewPanelsLength,
+  onPanelSelect,
+}: {
   panel: PreviewPanel;
   platforms: Record<string, Platform>;
   generatedContent: string;
@@ -179,20 +179,20 @@ function DraggablePreviewPanel({
       <div className="flex-1 p-6">
         {generatedContent
           ? (
-            <div className="bg-background-ivory-medium rounded-md border border-border-default/20 p-6">
+              <div className="bg-background-ivory-medium rounded-md border border-border-default/20 p-6">
                 <pre className="whitespace-pre-wrap font-sans text-text-main leading-relaxed text-sm">
                   {generatedContent}
                 </pre>
-            </div>
-          )
-          : (
-            <div className="h-full flex items-center justify-center text-text-faded">
-              <div className="text-center">
-                <div className="text-4xl mb-4">📄</div>
-                <p className="text-sm">等待内容生成</p>
               </div>
-            </div>
-          )}
+            )
+          : (
+              <div className="h-full flex items-center justify-center text-text-faded">
+                <div className="text-center">
+                  <div className="text-4xl mb-4">📄</div>
+                  <p className="text-sm">等待内容生成</p>
+                </div>
+              </div>
+            )}
       </div>
 
       {/* 单个面板底部操作栏 */}
@@ -226,15 +226,15 @@ function DraggablePreviewPanel({
 }
 
 export function PreviewSection({
-                                 previewPanels,
-                                 platforms,
-                                 generatedContent,
-                                 addPreviewPanel,
-                                 removePreviewPanel,
-                                 reorderPreviewPanels,
-                                 onPanelSelect,
-                                 onBackgroundClick,
-                               }: PreviewSectionProps) {
+  previewPanels,
+  platforms,
+  generatedContent,
+  addPreviewPanel,
+  removePreviewPanel,
+  reorderPreviewPanels,
+  onPanelSelect,
+  onBackgroundClick,
+}: PreviewSectionProps) {
   const [selectValue, setSelectValue] = useState('');
 
   const sensors = useSensors(
@@ -344,27 +344,27 @@ export function PreviewSection({
           >
             {previewPanels.length === 0
               ? (
-                <div className="h-full flex items-center justify-center text-text-faded">
-                  <div className="text-center">
-                    <div className="text-6xl mb-4">📱</div>
-                    <p className="text-lg font-medium mb-2">还没有预览面板</p>
-                    <p className="text-sm">点击上方「+ 添加预览面板」开始</p>
+                  <div className="h-full flex items-center justify-center text-text-faded">
+                    <div className="text-center">
+                      <div className="text-6xl mb-4">📱</div>
+                      <p className="text-lg font-medium mb-2">还没有预览面板</p>
+                      <p className="text-sm">点击上方「+ 添加预览面板」开始</p>
+                    </div>
                   </div>
-                </div>
-              )
+                )
               : (
-                previewPanels.map(panel => (
-                  <DraggablePreviewPanel
-                    key={panel.id}
-                    panel={panel}
-                    platforms={platforms}
-                    generatedContent={generatedContent}
-                    removePreviewPanel={removePreviewPanel}
-                    previewPanelsLength={previewPanels.length}
-                    onPanelSelect={onPanelSelect}
-                  />
-                ))
-              )}
+                  previewPanels.map(panel => (
+                    <DraggablePreviewPanel
+                      key={panel.id}
+                      panel={panel}
+                      platforms={platforms}
+                      generatedContent={generatedContent}
+                      removePreviewPanel={removePreviewPanel}
+                      previewPanelsLength={previewPanels.length}
+                      onPanelSelect={onPanelSelect}
+                    />
+                  ))
+                )}
           </SortableContext>
         </div>
       </DndContext>

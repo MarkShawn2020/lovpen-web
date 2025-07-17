@@ -42,7 +42,7 @@ type TabsContentProps = {
 };
 
 const Tabs = ({ref, defaultValue, className, children}: TabsProps & {
-  ref?: React.RefObject<HTMLDivElement | null>
+  ref?: React.RefObject<HTMLDivElement | null>;
 }) => {
   const [activeTab, setActiveTab] = useState(defaultValue);
 
@@ -75,7 +75,7 @@ const TabsList = ({ref, className, children}: TabsListProps & { ref?: React.RefO
 };
 
 const TabsTrigger = ({ref, value, className, children}: TabsTriggerProps & {
-  ref?: React.RefObject<HTMLButtonElement | null>
+  ref?: React.RefObject<HTMLButtonElement | null>;
 }) => {
   const {activeTab, setActiveTab} = useTabsContext();
   const isActive = activeTab === value;
@@ -99,7 +99,7 @@ const TabsTrigger = ({ref, value, className, children}: TabsTriggerProps & {
 };
 
 const TabsContent = ({ref, value, className, children}: TabsContentProps & {
-  ref?: React.RefObject<HTMLDivElement | null>
+  ref?: React.RefObject<HTMLDivElement | null>;
 }) => {
   const {activeTab} = useTabsContext();
 

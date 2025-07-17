@@ -10,15 +10,15 @@ type ButtonProps = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button = ({
-                  ref,
-                  className,
-                  variant = 'primary',
-                  size = 'md',
-                  asChild = false,
-                  href,
-                  children,
-                  ...props
-                }: ButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
+  ref,
+  className,
+  variant = 'primary',
+  size = 'md',
+  asChild = false,
+  href,
+  children,
+  ...props
+}: ButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
   const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:pointer-events-none';
 
   const variants = {

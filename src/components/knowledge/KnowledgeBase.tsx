@@ -238,48 +238,49 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
   );
 
   return (
-    <div className="lg:col-span-3 flex flex-col u-gap-m h-full">
+    <div className="flex flex-col u-gap-m h-full">
       {/* Knowledge Base Header */}
       <div className="bg-background-main rounded-lg border border-border-default/20 overflow-hidden">
-        <div className="bg-background-ivory-medium px-6 py-4 border-b border-border-default/20">
+        <div className="bg-background-ivory-medium px-4 py-3 border-b border-border-default/20">
           <div className="flex items-center justify-between">
-            <h3 className="font-medium text-text-main">知识库</h3>
+            <h3 className="font-medium text-text-main text-sm flex items-center u-gap-s">
+              📚 知识库
+            </h3>
             <div className="flex items-center u-gap-s">
-              <Button variant="outline" size="sm" className="text-xs">
-                + 新建
+              <Button variant="outline" size="sm" className="text-xs h-7 px-2">
+                ➕ 新建
               </Button>
-              <Button variant="outline" size="sm" className="text-xs">
-                导入
+              <Button variant="outline" size="sm" className="text-xs h-7 px-2">
+                📁 导入
               </Button>
             </div>
           </div>
         </div>
 
         {/* Search */}
-        <div className="p-4 border-b border-border-default/20">
+        <div className="p-3 border-b border-border-default/20">
           <div className="relative">
             <input
               type="text"
-              placeholder="搜索文件和文件夹..."
-              className="w-full pl-8 pr-4 py-2 border border-border-default/20 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm"
+              placeholder="🔍 搜索文件和文件夹..."
+              className="w-full px-3 py-2 border border-border-default/20 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
             />
-            <span className="absolute left-2.5 top-2.5 text-text-faded text-sm">🔍</span>
           </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="p-4 border-b border-border-default/20">
+        <div className="p-3 border-b border-border-default/20">
           <div className="flex flex-wrap u-gap-s">
-            <Button variant="outline" size="sm" className="text-xs">
-              📅 今日笔记
+            <Button variant="outline" size="sm" className="text-xs h-7 px-2">
+              📅 今日
             </Button>
-            <Button variant="outline" size="sm" className="text-xs">
+            <Button variant="outline" size="sm" className="text-xs h-7 px-2">
               ⭐ 收藏
             </Button>
-            <Button variant="outline" size="sm" className="text-xs">
-              🕒 最近修改
+            <Button variant="outline" size="sm" className="text-xs h-7 px-2">
+              🕒 最近
             </Button>
           </div>
         </div>
@@ -287,20 +288,22 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
 
       {/* File Tree */}
       <div className="bg-background-main rounded-lg border border-border-default/20 flex-1 overflow-hidden">
-        <div className="bg-background-ivory-medium px-6 py-3 border-b border-border-default/20">
+        <div className="bg-background-ivory-medium px-4 py-2 border-b border-border-default/20">
           <div className="flex items-center justify-between">
-            <h4 className="font-medium text-text-main text-sm">文件浏览器</h4>
+            <h4 className="font-medium text-text-main text-sm flex items-center u-gap-s">
+              📁 文件浏览器
+            </h4>
             <div className="flex items-center u-gap-s">
               <button
                 type="button"
-                className="text-xs text-text-faded hover:text-text-main transition-colors"
+                className="text-xs text-text-faded hover:text-text-main transition-colors p-1 hover:bg-background-oat rounded"
                 title="列表视图"
               >
                 📋
               </button>
               <button
                 type="button"
-                className="text-xs text-text-faded hover:text-text-main transition-colors"
+                className="text-xs text-text-faded hover:text-text-main transition-colors p-1 hover:bg-background-oat rounded"
                 title="网格视图"
               >
                 ⊞
@@ -312,32 +315,34 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
         <div className="h-full overflow-auto">
           {filteredNodes.length === 0
             ? (
-              <div className="flex items-center justify-center h-32 text-text-faded">
-                <div className="text-center">
-                  <div className="text-2xl mb-2">📁</div>
-                  <p className="text-sm">
-                    {searchTerm ? '未找到匹配的文件' : '知识库为空'}
-                  </p>
-                  {!searchTerm && (
-                    <Button variant="outline" size="sm" className="mt-2 text-xs">
-                      开始创建
-                    </Button>
-                  )}
+                <div className="flex items-center justify-center h-32 text-text-faded">
+                  <div className="text-center">
+                    <div className="text-2xl mb-2">📁</div>
+                    <p className="text-sm">
+                      {searchTerm ? '🔍 未找到匹配的文件' : '📚 知识库为空'}
+                    </p>
+                    {!searchTerm && (
+                      <Button variant="outline" size="sm" className="mt-2 text-xs h-7 px-2">
+                        ➕ 开始创建
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            )
+              )
             : (
-              <div className="pb-4">
-                {renderFileTree(filteredNodes)}
-              </div>
-            )}
+                <div className="pb-4">
+                  {renderFileTree(filteredNodes)}
+                </div>
+              )}
         </div>
       </div>
 
       {/* Storage Info */}
-      <div className="bg-background-main rounded-lg border border-border-default/20 p-4">
+      <div className="bg-background-main rounded-lg border border-border-default/20 p-3">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-text-faded">存储使用</span>
+          <span className="text-sm text-text-faded flex items-center u-gap-s">
+            💾 存储使用
+          </span>
           <span className="text-sm text-text-main">2.3GB / 10GB</span>
         </div>
         <div className="w-full bg-background-ivory-medium rounded-full h-2">

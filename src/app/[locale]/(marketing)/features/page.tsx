@@ -41,7 +41,8 @@ export default async function Features(props: IFeaturesProps) {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="bg-background-ivory-light p-6 rounded-lg">
             <div
-              className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4">
+              className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4"
+            >
               ⚡
             </div>
             <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -54,7 +55,8 @@ export default async function Features(props: IFeaturesProps) {
 
           <div className="bg-background-ivory-light p-6 rounded-lg">
             <div
-              className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4">
+              className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4"
+            >
               🎯
             </div>
             <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -67,7 +69,8 @@ export default async function Features(props: IFeaturesProps) {
 
           <div className="bg-background-ivory-light p-6 rounded-lg">
             <div
-              className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4">
+              className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4"
+            >
               🔄
             </div>
             <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -80,7 +83,8 @@ export default async function Features(props: IFeaturesProps) {
 
           <div className="bg-background-ivory-light p-6 rounded-lg">
             <div
-              className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4">
+              className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4"
+            >
               🎨
             </div>
             <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -93,7 +97,8 @@ export default async function Features(props: IFeaturesProps) {
 
           <div className="bg-background-ivory-light p-6 rounded-lg">
             <div
-              className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4">
+              className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4"
+            >
               🌐
             </div>
             <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -106,7 +111,8 @@ export default async function Features(props: IFeaturesProps) {
 
           <div className="bg-background-ivory-light p-6 rounded-lg">
             <div
-              className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4">
+              className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4"
+            >
               💡
             </div>
             <h3 className="text-xl font-semibold text-text-main mb-2">

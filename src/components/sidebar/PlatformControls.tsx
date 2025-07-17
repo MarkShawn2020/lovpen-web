@@ -14,13 +14,13 @@ type PlatformControlsProps = {
 };
 
 export function PlatformControls({
-                                   platforms,
-                                   selectedPlatforms,
-                                   platformSettings,
-                                   onUpdate,
-                                   currentMode,
-                                   generatedContentLength = 0,
-                                 }: PlatformControlsProps) {
+  platforms,
+  selectedPlatforms,
+  platformSettings,
+  onUpdate,
+  currentMode,
+  generatedContentLength = 0,
+}: PlatformControlsProps) {
   if (selectedPlatforms.length === 0) {
     return null;
   }
@@ -244,22 +244,30 @@ export function PlatformControls({
           </div>
 
           <div className="p-6 u-gap-s flex flex-col">
-            <button type="button"
-                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button
+              type="button"
+              className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors"
+            >
               🔄 重新生成内容
             </button>
-            <button type="button"
-                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button
+              type="button"
+              className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors"
+            >
               ✂️ 智能裁剪字数
             </button>
-            <button type="button"
-                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button
+              type="button"
+              className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors"
+            >
               🎨 应用
               {platform.name}
               模板
             </button>
-            <button type="button"
-                    className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+            <button
+              type="button"
+              className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors"
+            >
               📤 导出到
               {platform.name}
             </button>
@@ -297,8 +305,10 @@ export function PlatformControls({
                     return null;
                   }
                   return (
-                    <div key={platformId}
-                         className="flex items-center u-gap-xs bg-background-ivory-medium px-2 py-1 rounded text-xs">
+                    <div
+                      key={platformId}
+                      className="flex items-center u-gap-xs bg-background-ivory-medium px-2 py-1 rounded text-xs"
+                    >
                       <div className={`w-2 h-2 rounded-full ${platform.color}`}></div>
                       <span>{platform.name}</span>
                     </div>
@@ -309,16 +319,22 @@ export function PlatformControls({
 
             {/* 快速操作 */}
             <div className="u-gap-s flex flex-col">
-              <button type="button"
-                      className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+              <button
+                type="button"
+                className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors"
+              >
                 🔄 重新生成全部
               </button>
-              <button type="button"
-                      className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+              <button
+                type="button"
+                className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors"
+              >
                 📤 导出全部
               </button>
-              <button type="button"
-                      className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors">
+              <button
+                type="button"
+                className="w-full text-left p-3 text-sm text-text-main hover:bg-background-ivory-medium rounded-md transition-colors"
+              >
                 🗑️ 移除全部
               </button>
             </div>

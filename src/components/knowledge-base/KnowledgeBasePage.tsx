@@ -7,7 +7,7 @@ import {
   PersistentTabs,
   PersistentTabsContent,
   PersistentTabsList,
-  PersistentTabsTrigger
+  PersistentTabsTrigger,
 } from '@/components/ui/PersistentTabs';
 import {
   useAnalyticsInsights,

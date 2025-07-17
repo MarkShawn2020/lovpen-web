@@ -10,9 +10,9 @@ type KnowledgeBaseHeaderProps = {
 };
 
 export function KnowledgeBaseHeader({
-                                      onUploadClick,
-                                      totalItems,
-                                    }: KnowledgeBaseHeaderProps) {
+  onUploadClick,
+  totalItems,
+}: KnowledgeBaseHeaderProps) {
   return (
     <div className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 py-4">

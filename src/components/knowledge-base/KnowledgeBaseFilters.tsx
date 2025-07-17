@@ -8,9 +8,9 @@ type KnowledgeBaseFiltersProps = {
 };
 
 export function KnowledgeBaseFilters({
-                                       filters: _filters,
-                                       onFiltersChange: _onFiltersChange
-                                     }: KnowledgeBaseFiltersProps) {
+  filters: _filters,
+  onFiltersChange: _onFiltersChange,
+}: KnowledgeBaseFiltersProps) {
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4">
       <h3 className="font-medium text-gray-900 mb-4">筛选器</h3>

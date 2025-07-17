@@ -53,7 +53,8 @@ export default async function About(props: IAboutProps) {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div
-                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
+              >
                 💡
               </div>
               <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -65,7 +66,8 @@ export default async function About(props: IAboutProps) {
             </div>
             <div className="text-center">
               <div
-                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
+              >
                 🤝
               </div>
               <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -77,7 +79,8 @@ export default async function About(props: IAboutProps) {
             </div>
             <div className="text-center">
               <div
-                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
+              >
                 🌍
               </div>
               <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -151,7 +154,8 @@ export default async function About(props: IAboutProps) {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div
-                className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
+              >
                 👨‍💻
               </div>
               <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -166,7 +170,8 @@ export default async function About(props: IAboutProps) {
             </div>
             <div className="text-center">
               <div
-                className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
+              >
                 🎨
               </div>
               <h3 className="text-xl font-semibold text-text-main mb-2">
@@ -181,7 +186,8 @@ export default async function About(props: IAboutProps) {
             </div>
             <div className="text-center">
               <div
-                className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
+              >
                 📊
               </div>
               <h3 className="text-xl font-semibold text-text-main mb-2">

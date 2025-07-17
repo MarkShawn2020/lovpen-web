@@ -81,8 +81,8 @@ export function useSidebarContext() {
   const selectPanels = useCallback((panelIds: string[]) => {
     const newMode: SidebarMode
       = panelIds.length === 0
-      ? 'global'
-      : panelIds.length === 1 ? 'platform' : 'multi-select';
+        ? 'global'
+        : panelIds.length === 1 ? 'platform' : 'multi-select';
 
     setSidebarContext(prev => ({
       ...prev,
@@ -100,8 +100,8 @@ export function useSidebarContext() {
 
       const newMode: SidebarMode
         = newSelection.length === 0
-        ? 'global'
-        : newSelection.length === 1 ? 'platform' : 'multi-select';
+          ? 'global'
+          : newSelection.length === 1 ? 'platform' : 'multi-select';
 
       return {
         ...prev,

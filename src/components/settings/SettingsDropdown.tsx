@@ -50,12 +50,12 @@ type SettingsDropdownProps = {
 };
 
 export function SettingsDropdown({
-                                   userSettings,
-                                   onSettingsChange,
-                                   userAvatar,
-                                   userName = '用户',
-                                   userEmail = 'user@example.com',
-                                 }: SettingsDropdownProps) {
+  userSettings,
+  onSettingsChange,
+  userAvatar,
+  userName = '用户',
+  userEmail = 'user@example.com',
+}: SettingsDropdownProps) {
   const handleSettingChange = (key: keyof UserSettings, value: any) => {
     onSettingsChange({[key]: value});
   };

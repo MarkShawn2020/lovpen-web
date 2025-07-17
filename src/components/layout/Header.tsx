@@ -31,8 +31,10 @@ const Header = async () => {
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/"
-                  className="flex items-center no-underline text-text-main hover:text-primary transition-colors">
+            <Link
+              href="/"
+              className="flex items-center no-underline text-text-main hover:text-primary transition-colors"
+            >
               <LogoWithText size="md"/>
             </Link>
           </div>
@@ -42,24 +44,24 @@ const Header = async () => {
             {navigation.map(item => (
               item.href === '/features'
                 ? (
-                  <SmartNavLink
-                    key={item.name}
-                    href={item.href}
-                    scrollToId="features"
-                    className="text-text-main hover:text-primary transition-colors no-underline"
-                  >
-                    {item.name}
-                  </SmartNavLink>
-                )
+                    <SmartNavLink
+                      key={item.name}
+                      href={item.href}
+                      scrollToId="features"
+                      className="text-text-main hover:text-primary transition-colors no-underline"
+                    >
+                      {item.name}
+                    </SmartNavLink>
+                  )
                 : (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="text-text-main hover:text-primary transition-colors no-underline"
-                  >
-                    {item.name}
-                  </Link>
-                )
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="text-text-main hover:text-primary transition-colors no-underline"
+                    >
+                      {item.name}
+                    </Link>
+                  )
             ))}
           </nav>
 
@@ -68,34 +70,34 @@ const Header = async () => {
             {userId
               ? (
                 // Authenticated user actions
-                <>
-                  <Link href={dashboardUrl}>
-                    <Button variant="secondary" size="md">
-                      {t('dashboard')}
-                    </Button>
-                  </Link>
-                  <SignOutButton>
-                    <Button variant="primary" size="md">
-                      {t('sign_out')}
-                    </Button>
-                  </SignOutButton>
-                </>
-              )
+                  <>
+                    <Link href={dashboardUrl}>
+                      <Button variant="secondary" size="md">
+                        {t('dashboard')}
+                      </Button>
+                    </Link>
+                    <SignOutButton>
+                      <Button variant="primary" size="md">
+                        {t('sign_out')}
+                      </Button>
+                    </SignOutButton>
+                  </>
+                )
               : (
                 // Unauthenticated user actions
-                <>
-                  <Link href={signInUrl}>
-                    <Button variant="secondary" size="md">
-                      {t('sign_in')}
-                    </Button>
-                  </Link>
-                  <Link href={signUpUrl}>
-                    <Button variant="primary" size="md">
-                      {t('download_plugin')}
-                    </Button>
-                  </Link>
-                </>
-              )}
+                  <>
+                    <Link href={signInUrl}>
+                      <Button variant="secondary" size="md">
+                        {t('sign_in')}
+                      </Button>
+                    </Link>
+                    <Link href={signUpUrl}>
+                      <Button variant="primary" size="md">
+                        {t('download_plugin')}
+                      </Button>
+                    </Link>
+                  </>
+                )}
           </div>
 
           {/* Mobile Menu Button */}
