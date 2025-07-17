@@ -55,6 +55,19 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
     });
   };
 
+  const generateMockResponse = (userInput: string): string => {
+    if (userInput.includes('知识库') || userInput.includes('文件')) {
+      return '我看到你想了解知识库功能。你可以在左侧浏览你的文件，我能帮你分析这些内容并生成相关文章。需要我帮你整理某个特定文件的内容吗？';
+    }
+    if (userInput.includes('写作') || userInput.includes('文章')) {
+      return '我很乐意帮你写作！你想写什么类型的文章？我可以基于你的知识库内容来生成博客文章、技术文档、或者其他形式的内容。';
+    }
+    if (userInput.includes('语音') || userInput.includes('录音')) {
+      return '语音输入功能已经启用！你可以点击麦克风按钮开始语音输入，我会将你的语音转换为文字并进行回复。';
+    }
+    return '好的，我理解了你的需求。让我来帮你处理这个问题。你还有其他问题吗？';
+  };
+
   const handleSendMessage = async (messageType: 'text' | 'voice' = inputMode) => {
     const content = messageType === 'text' ? inputText.trim() : voiceText.trim();
     if (!content) {
@@ -97,19 +110,6 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
       setMessages(prev => [...prev, assistantMessage]);
       setIsTyping(false);
     }, 1500);
-  };
-
-  const generateMockResponse = (userInput: string): string => {
-    if (userInput.includes('知识库') || userInput.includes('文件')) {
-      return '我看到你想了解知识库功能。你可以在左侧浏览你的文件，我能帮你分析这些内容并生成相关文章。需要我帮你整理某个特定文件的内容吗？';
-    }
-    if (userInput.includes('写作') || userInput.includes('文章')) {
-      return '我很乐意帮你写作！你想写什么类型的文章？我可以基于你的知识库内容来生成博客文章、技术文档、或者其他形式的内容。';
-    }
-    if (userInput.includes('语音') || userInput.includes('录音')) {
-      return '语音输入功能已经启用！你可以点击麦克风按钮开始语音输入，我会将你的语音转换为文字并进行回复。';
-    }
-    return '好的，我理解了你的需求。让我来帮你处理这个问题。你还有其他问题吗？';
   };
 
   const handleVoiceStart = () => {

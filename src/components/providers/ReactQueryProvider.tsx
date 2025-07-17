@@ -87,7 +87,7 @@ export function ReactQueryProvider({children}: ReactQueryProviderProps) {
         }}
         onSuccess={() => {
           // Cache has been restored
-          console.log('React Query cache restored successfully');
+          console.warn('React Query cache restored successfully');
         }}
         onError={() => {
           // Handle cache restoration error

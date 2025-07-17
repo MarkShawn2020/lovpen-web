@@ -105,7 +105,7 @@ export type PersistentTabsProps = {
   restoreOnMount?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>
 
-const PersistentTabs = ({ ref, id, defaultValue, className, children, onTabChange, restoreOnMount = true, ...props }: PersistentTabsProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const PersistentTabs = ({ ref, id, defaultValue, className, children, onTabChange, restoreOnMount: _restoreOnMount = true, ...props }: PersistentTabsProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const tabState = useInternalTabState(id, defaultValue);
 
     React.useEffect(() => {

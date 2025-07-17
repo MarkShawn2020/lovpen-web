@@ -94,7 +94,9 @@ export function VoiceMessageComponent({
             onTimeUpdate={handleTimeUpdate}
             onEnded={handleEnded}
             preload="metadata"
-          />
+          >
+            <track kind="captions" srcLang="zh" label="Chinese captions" />
+          </audio>
         )}
       </div>
 
