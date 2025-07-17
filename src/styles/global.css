@@ -186,7 +186,7 @@
   .u-flex-page {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
   }
 
   .u-flex-content {
@@ -199,21 +199,42 @@
     flex: 1;
     display: flex;
     gap: var(--spacing-l);
+    min-height: 0; /* 确保 flex 子元素能够收缩 */
+  }
+
+  /* Column Layout Utilities */
+  .u-flex-column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .u-flex-column-item {
+    flex: 1;
+    min-height: 0; /* 允许内容滚动 */
   }
 
   /* Responsive Layout Utilities */
-  .u-flex-column {
-    flex-direction: column;
-  }
-
-  .u-flex-row {
-    flex-direction: row;
-  }
-
   @media (max-width: 990px) {
     .u-flex-main {
       flex-direction: column;
+      gap: var(--spacing-m);
     }
+
+    .u-flex-main > * {
+      width: 100% !important;
+      height: auto;
+      min-height: 300px; /* 小屏幕上每列最小高度 */
+    }
+  }
+
+  /* Height Utilities */
+  .u-full-height {
+    height: 100%;
+  }
+
+  .u-min-height-0 {
+    min-height: 0;
   }
 
   /* Premium Background Patterns */

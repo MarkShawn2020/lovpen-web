@@ -11,10 +11,8 @@ export default async function AuthLayout(props: {
   return (
     <div className="u-flex-page bg-gray-50">
       <AuthNavbar />
-      <div className="u-flex-content">
-        <div className="container mx-auto py-4 h-full">
-          {props.children}
-        </div>
+      <div className="u-flex-content u-container py-4">
+        {props.children}
       </div>
     </div>
   );

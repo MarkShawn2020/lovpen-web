@@ -169,17 +169,24 @@ export default function Create() {
   };
 
   return (
-    <Container>
-      <div className="u-flex-main">
-        {/* 左侧知识库 */}
-        <div className="w-full lg:w-1/4 min-w-0">
+    <Container fullHeight>
+      <div className="u-flex-main h-full">
+        {/* 知识库 */}
+        <div className="w-full lg:w-1/4 min-w-0 h-full flex flex-col">
           <KnowledgeBase
             onFileSelect={handleFileSelect}
           />
         </div>
 
-        {/* 中间内容预览区域 */}
-        <div className="w-full lg:w-1/3 min-w-0">
+        {/* 聊天面板 */}
+        <div className="w-full lg:w-5/12 min-w-0 h-full flex flex-col">
+          <ChatSidebar
+            onMessageSend={handleMessageSend}
+          />
+        </div>
+
+        {/* 预览区域 */}
+        <div className="w-full lg:w-1/3 min-w-0 h-full flex flex-col">
           <PreviewSection
             previewPanels={previewPanels}
             platforms={platforms}
@@ -189,13 +196,6 @@ export default function Create() {
             reorderPreviewPanels={reorderPreviewPanels}
             onPanelSelect={handlePanelSelect}
             onBackgroundClick={handleBackgroundClick}
-          />
-        </div>
-
-        {/* 右侧聊天面板 */}
-        <div className="w-full lg:w-5/12 min-w-0">
-          <ChatSidebar
-            onMessageSend={handleMessageSend}
           />
         </div>
       </div>

@@ -4,13 +4,18 @@ import {cn} from '@/utils/Helpers';
 type ContainerProps = {
   className?: string;
   children: React.ReactNode;
+  fullHeight?: boolean;
 };
 
-const Container = ({ref, className, children}: ContainerProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+const Container = ({ref, className, children, fullHeight = false}: ContainerProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   return (
     <div
       ref={ref}
-      className={cn('u-container', className)}
+      className={cn(
+        'u-container',
+        fullHeight && 'h-full flex flex-col',
+        className
+      )}
     >
       {children}
     </div>
