@@ -33,6 +33,8 @@
     "test:lighthouse": "run-p start lighthouse --race"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^1.2.12",
+    "@ai-sdk/openai": "^1.3.23",
     "@arcjet/next": "^1.0.0-beta.8",
     "@clerk/localizations": "^3.18.0",
     "@clerk/nextjs": "^6.24.0",
@@ -77,6 +79,7 @@
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-query-devtools": "^5.83.0",
     "@tanstack/react-query-persist-client": "^5.83.0",
+    "ai": "^4.3.19",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -102,7 +105,7 @@
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
     "vite": "^7.0.4",
-    "zod": "^4.0.2"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.16.2",

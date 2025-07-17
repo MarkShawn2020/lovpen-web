@@ -3,6 +3,8 @@ import {z} from 'zod';
 
 export const Env = createEnv({
   server: {
+    OPENROUTER_API_KEY: z.string().min(1),
+    ANTHROPIC_API_KEY: z.string().min(1).optional(),
     ARCJET_KEY: z.string().startsWith('ajkey_').optional(),
     CLERK_SECRET_KEY: z.string().min(1),
     DATABASE_URL: z.string().min(1),
@@ -19,6 +21,8 @@ export const Env = createEnv({
   },
   // You need to destructure all the keys manually
   runtimeEnv: {
+    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY,
+    ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
     ARCJET_KEY: process.env.ARCJET_KEY,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     DATABASE_URL: process.env.DATABASE_URL,

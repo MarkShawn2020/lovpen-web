@@ -4,6 +4,20 @@ import {useEffect, useRef, useState} from 'react';
 import {Button} from '@/components/lovpen-ui/button';
 import {VoiceMessageComponent} from './VoiceMessageComponent';
 
+type IntentType = 'memo' | 'chat' | 'create' | 'dangerous' | 'other';
+
+type IntentAnalysis = {
+  intent: IntentType;
+  confidence: number;
+  reason: string;
+  response: string;
+  action?: {
+    type: 'save_memo' | 'none';
+    params?: Record<string, any>;
+  };
+  suggestions?: string[];
+};
+
 type Message = {
   id: string;
   content: string;
@@ -12,6 +26,10 @@ type Message = {
   type?: 'text' | 'voice';
   audioUrl?: string;
   duration?: number;
+  intent?: IntentAnalysis;
+  isAnalyzing?: boolean;
+  isStreaming?: boolean;
+  streamComplete?: boolean;
 };
 
 type ChatSidebarProps = {
@@ -34,7 +52,6 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
   const [voiceText, setVoiceText] = useState('');
   const [inputMode, setInputMode] = useState<'text' | 'voice'>('text');
   const [isRecording, setIsRecording] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
   const [isComposing, setIsComposing] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -55,17 +72,231 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
     });
   };
 
-  const generateMockResponse = (userInput: string): string => {
-    if (userInput.includes('知识库') || userInput.includes('文件')) {
-      return '我看到你想了解知识库功能。你可以在左侧浏览你的文件，我能帮你分析这些内容并生成相关文章。需要我帮你整理某个特定文件的内容吗？';
+  const analyzeIntent = async (
+    userMessage: string,
+    chatHistory: Message[]
+  ): Promise<IntentAnalysis> => {
+    try {
+      const response = await fetch('/api/analyze-intent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userMessage,
+          chatHistory: chatHistory.slice(-5).map(msg => ({
+            role: msg.role,
+            content: msg.content
+          }))
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('API调用失败');
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('意图分析失败:', error);
+      return {
+        intent: 'other',
+        confidence: 50,
+        reason: '分析失败，默认为其他类型',
+        response: '好的，我来帮助你。',
+      };
     }
-    if (userInput.includes('写作') || userInput.includes('文章')) {
-      return '我很乐意帮你写作！你想写什么类型的文章？我可以基于你的知识库内容来生成博客文章、技术文档、或者其他形式的内容。';
+  };
+
+  const saveMemoToFileSystem = async (content: string) => {
+    try {
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const fileName = `memo-${timestamp}.txt`;
+
+      const response = await fetch('/api/save-memo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          content,
+          fileName,
+          path: 'memo',
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('保存备忘录失败');
+      }
+
+      return fileName;
+    } catch (error) {
+      console.error('保存备忘录失败:', error);
+      throw error;
     }
-    if (userInput.includes('语音') || userInput.includes('录音')) {
-      return '语音输入功能已经启用！你可以点击麦克风按钮开始语音输入，我会将你的语音转换为文字并进行回复。';
+  };
+
+  const handleStreamResponse = async (
+    userMessage: string,
+    intentAnalysis: IntentAnalysis,
+    messageId: string
+  ): Promise<void> => {
+    try {
+      // 创建初始的助手消息
+      const assistantMessage: Message = {
+        id: messageId,
+        content: '',
+        role: 'assistant',
+        timestamp: new Date(),
+        type: 'text',
+        isStreaming: true,
+        streamComplete: false,
+      };
+
+      setMessages(prev => [...prev, assistantMessage]);
+
+      // 处理特殊操作（如保存备忘录）
+      let memoInfo = '';
+      if (intentAnalysis.action?.type === 'save_memo') {
+        try {
+          const fileName = await saveMemoToFileSystem(userMessage);
+          memoInfo = `\n\n📁 已保存到文件：${fileName}`;
+        } catch (error) {
+          console.error('保存备忘录失败:', error);
+          memoInfo = '\n\n❌ 保存备忘录时出现错误。';
+        }
+      }
+
+      // 调用流式API
+      const response = await fetch('/api/chat-stream', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userMessage,
+          chatHistory: messages.slice(-5).map(msg => ({
+            role: msg.role,
+            content: msg.content
+          })),
+          intentAnalysis,
+          modelType: 'claude-3.5-sonnet-openrouter' // 可以从状态获取
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`流式API错误: ${response.status}`);
+      }
+
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error('无法读取响应流');
+      }
+
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let fullContent = '';
+
+      try {
+        while (true) {
+          const {done, value} = await reader.read();
+          if (done) {
+ break;
+}
+
+          buffer += decoder.decode(value, {stream: true});
+
+          // 处理完整的行
+          while (true) {
+            const lineEnd = buffer.indexOf('\n');
+            if (lineEnd === -1) {
+ break;
+}
+
+            const line = buffer.slice(0, lineEnd).trim();
+            buffer = buffer.slice(lineEnd + 1);
+
+            if (line.startsWith('data: ')) {
+              const data = line.slice(6);
+              if (data === '[DONE]') {
+                // 流完成，添加备忘录信息（如果有）
+                setMessages(prev => prev.map(msg =>
+                  msg.id === messageId
+                    ? {
+                        ...msg,
+                        content: fullContent + memoInfo,
+                        isStreaming: false,
+                        streamComplete: true
+                      }
+                    : msg
+                ));
+                return;
+              }
+
+              try {
+                const parsed = JSON.parse(data);
+
+                if (parsed.error) {
+                  // 处理错误
+                  setMessages(prev => prev.map(msg =>
+                    msg.id === messageId
+                      ? {
+                          ...msg,
+                          content: parsed.error,
+                          isStreaming: false,
+                          streamComplete: true
+                        }
+                      : msg
+                  ));
+                  return;
+                }
+
+                if (parsed.content) {
+                  fullContent += parsed.content;
+
+                  // 实时更新消息内容
+                  setMessages(prev => prev.map(msg =>
+                    msg.id === messageId
+                      ? {...msg, content: fullContent}
+                      : msg
+                  ));
+                }
+              } catch {
+                // 忽略无效JSON
+              }
+            }
+          }
+        }
+      } finally {
+        reader.releaseLock();
+      }
+
+      // 如果到这里还没有完成，标记为完成
+      setMessages(prev => prev.map(msg =>
+        msg.id === messageId
+          ? {
+              ...msg,
+              content: fullContent + memoInfo,
+              isStreaming: false,
+              streamComplete: true
+            }
+          : msg
+      ));
+    } catch (error) {
+      console.error('流式响应处理错误:', error);
+
+      // 显示错误消息
+      setMessages(prev => prev.map(msg =>
+        msg.id === messageId
+          ? {
+              ...msg,
+              content: '抱歉，生成响应时出现了错误，请稍后重试。',
+              isStreaming: false,
+              streamComplete: true
+            }
+          : msg
+      ));
     }
-    return '好的，我理解了你的需求。让我来帮你处理这个问题。你还有其他问题吗？';
   };
 
   const handleSendMessage = async (messageType: 'text' | 'voice' = inputMode) => {
@@ -80,6 +311,7 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
       role: 'user',
       timestamp: new Date(),
       type: messageType,
+      isAnalyzing: true,
       ...(messageType === 'voice' && {
         audioUrl: 'mock-audio-url.wav',
         duration: 15,
@@ -93,23 +325,51 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
       setVoiceText('');
       setInputMode('text');
     }
-    setIsTyping(true);
 
     onMessageSend?.(userMessage.content, messageType);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const assistantMessage: Message = {
+    try {
+      // 第一步：意图分析（快速）
+      console.log('🔍 开始意图分析...');
+      const intentAnalysis = await analyzeIntent(userMessage.content, messages);
+
+      setMessages(prev => prev.map(msg =>
+        msg.id === userMessage.id
+          ? { ...msg, intent: intentAnalysis, isAnalyzing: false }
+          : msg
+      ));
+
+      console.log(`✅ 意图分析完成: ${intentAnalysis.intent} (${intentAnalysis.confidence}%)`);
+
+      // 第二步：流式响应生成
+      console.log('🌊 开始流式响应生成...');
+      const assistantMessageId = (Date.now() + 1).toString();
+      await handleStreamResponse(
+        userMessage.content,
+        intentAnalysis,
+        assistantMessageId
+      );
+
+      console.log('✅ 流式响应完成');
+    } catch (error) {
+      console.error('处理消息时出错:', error);
+
+      setMessages(prev => prev.map(msg =>
+        msg.id === userMessage.id
+          ? { ...msg, isAnalyzing: false }
+          : msg
+      ));
+
+      const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: generateMockResponse(userMessage.content),
+        content: '抱歉，处理你的消息时出现了错误。请稍后重试。',
         role: 'assistant',
         timestamp: new Date(),
         type: 'text',
       };
 
-      setMessages(prev => [...prev, assistantMessage]);
-      setIsTyping(false);
-    }, 1500);
+      setMessages(prev => [...prev, errorMessage]);
+    }
   };
 
   const handleVoiceStart = () => {
@@ -117,14 +377,14 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
     onVoiceStateChange?.(true);
   };
 
-  const handleVoiceEnd = () => {
+  const handleVoiceEnd = async () => {
     if (isRecording) {
       setIsRecording(false);
       onVoiceStateChange?.(false);
-      // Simulate voice recognition result
+
       const recognizedText = '刚才通过语音输入的内容会显示在这里...';
       setVoiceText(recognizedText);
-      // Send voice message immediately
+
       const voiceMessage: Message = {
         id: Date.now().toString(),
         content: recognizedText,
@@ -133,24 +393,47 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
         type: 'voice',
         audioUrl: 'mock-audio-url.wav',
         duration: 15,
+        isAnalyzing: true,
       };
+
       setMessages(prev => [...prev, voiceMessage]);
       setVoiceText('');
-      setIsTyping(true);
       onMessageSend?.(recognizedText, 'voice');
 
-      // Simulate AI response
-      setTimeout(() => {
-        const assistantMessage: Message = {
+      try {
+        const intentAnalysis = await analyzeIntent(recognizedText, messages);
+
+        setMessages(prev => prev.map(msg =>
+          msg.id === voiceMessage.id
+            ? { ...msg, intent: intentAnalysis, isAnalyzing: false }
+            : msg
+        ));
+
+        const assistantMessageId = (Date.now() + 1).toString();
+        await handleStreamResponse(
+          recognizedText,
+          intentAnalysis,
+          assistantMessageId
+        );
+      } catch (error) {
+        console.error('处理语音消息时出错:', error);
+
+        setMessages(prev => prev.map(msg =>
+          msg.id === voiceMessage.id
+            ? { ...msg, isAnalyzing: false }
+            : msg
+        ));
+
+        const errorMessage: Message = {
           id: (Date.now() + 1).toString(),
-          content: generateMockResponse(recognizedText),
+          content: '抱歉，处理你的语音消息时出现了错误。请稍后重试。',
           role: 'assistant',
           timestamp: new Date(),
           type: 'text',
         };
-        setMessages(prev => [...prev, assistantMessage]);
-        setIsTyping(false);
-      }, 1500);
+
+        setMessages(prev => [...prev, errorMessage]);
+      }
     }
   };
 
@@ -182,12 +465,11 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
 
   return (
     <div className="flex flex-col u-gap-m h-full">
-
       <div
         className="bg-background-main rounded-lg border border-border-default/20 flex-1 flex flex-col overflow-hidden"
       >
         <div
-          className="bg-background-ivory-medium px-4 py-2 border-b border-border-default/20 flex items-center justify-between"
+          className="bg-background-ivory-medium px-4 py-2 border-b border-border-default/20 flex items-center justify-between flex-shrink-0"
         >
           <h4 className="font-medium text-text-main text-sm flex items-center u-gap-s">
             💬 Lovpen助手小皮
@@ -202,13 +484,27 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
             <Button variant="ghost" size="sm" className="text-xs h-7 px-2" title="搜索对话">
               🔍
             </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs h-7 px-2"
+              title="复制全部聊天记录"
+              onClick={() => {
+                const allMessages = messages.map(msg =>
+                  `[${msg.role === 'user' ? '用户' : '助手'}] ${formatTime(msg.timestamp)}: ${msg.content}`
+                ).join('\n\n');
+                navigator.clipboard.writeText(allMessages);
+              }}
+            >
+              📋
+            </Button>
             <Button variant="ghost" size="sm" className="text-xs h-7 px-2" title="对话设置">
               ⚙️
             </Button>
           </div>
         </div>
 
-        <div className="flex-1 overflow-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
           {messages.map(message => (
             <div
               key={message.id}
@@ -232,8 +528,57 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
 : (
                   <div className="text-sm leading-relaxed whitespace-pre-wrap">
                     {message.content}
+                    {/* 流式输出时显示闪烁光标 */}
+                    {message.isStreaming && (
+                      <span className="inline-block w-1.5 h-4 ml-1 bg-current animate-pulse">|</span>
+                    )}
                   </div>
                 )}
+
+                {message.isAnalyzing && (
+                  <div className="mt-2 flex items-center u-gap-s">
+                    <div className="flex space-x-1">
+                      <div className="w-1 h-1 bg-white/70 rounded-full animate-bounce"></div>
+                      <div
+                        className="w-1 h-1 bg-white/70 rounded-full animate-bounce"
+                        style={{animationDelay: '0.1s'}}
+                      >
+                      </div>
+                      <div
+                        className="w-1 h-1 bg-white/70 rounded-full animate-bounce"
+                        style={{animationDelay: '0.2s'}}
+                      >
+                      </div>
+                    </div>
+                    <span className="text-xs text-white/70">小皮正在思考...</span>
+                  </div>
+                )}
+
+                {message.intent && !message.isAnalyzing && (
+                  <div className="mt-2 flex items-center u-gap-s">
+                    <div className="flex items-center u-gap-xs">
+                      <span className="text-xs">
+                        {message.intent.intent === 'memo' && '📝'}
+                        {message.intent.intent === 'chat' && '💬'}
+                        {message.intent.intent === 'create' && '✍️'}
+                        {message.intent.intent === 'dangerous' && '⚠️'}
+                        {message.intent.intent === 'other' && '🤔'}
+                      </span>
+                      <span className="text-xs text-white/70">
+                        {message.intent.intent === 'memo' && '备忘录'}
+                        {message.intent.intent === 'chat' && '闲聊'}
+                        {message.intent.intent === 'create' && '创作'}
+                        {message.intent.intent === 'dangerous' && '敏感'}
+                        {message.intent.intent === 'other' && '其他'}
+                      </span>
+                    </div>
+                    <div className="text-xs text-white/50">
+                      {message.intent.confidence}
+%
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-center justify-between mt-2">
                   <div
                     className={`text-xs ${
@@ -250,34 +595,11 @@ export function ChatSidebar({onMessageSend, onVoiceStateChange}: ChatSidebarProp
             </div>
           ))}
 
-          {isTyping && (
-            <div className="flex justify-start">
-              <div className="bg-background-ivory-medium border border-border-default/20 rounded-lg p-3">
-                <div className="flex items-center u-gap-s">
-                  <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-text-faded rounded-full animate-bounce"></div>
-                    <div
-                      className="w-2 h-2 bg-text-faded rounded-full animate-bounce"
-                      style={{animationDelay: '0.1s'}}
-                    >
-                    </div>
-                    <div
-                      className="w-2 h-2 bg-text-faded rounded-full animate-bounce"
-                      style={{animationDelay: '0.2s'}}
-                    >
-                    </div>
-                  </div>
-                  <span className="text-xs text-text-faded">AI 正在思考...</span>
-                </div>
-              </div>
-            </div>
-          )}
-
           <div ref={messagesEndRef}/>
         </div>
 
         {/* Input Area */}
-        <div className="border-t border-border-default/20 p-3 space-y-2">
+        <div className="border-t border-border-default/20 p-3 space-y-2 flex-shrink-0">
           {/* Quick Actions */}
           <div className="flex flex-wrap u-gap-s mt-2">
             <Button

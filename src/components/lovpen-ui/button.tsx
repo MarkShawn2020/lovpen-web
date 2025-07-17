@@ -34,20 +34,38 @@ export type ButtonProps = {
   href?: string;
 } & React.ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof buttonVariants>
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, href, ...props }, ref) => {
-    const Comp = asChild ? Slot : href ? 'a' : 'button';
+const Button = ({ ref, className, variant, size, asChild = false, href, ...props }: ButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
+    if (asChild) {
+      return (
+        <Slot
+          className={cn(buttonVariants({ variant, size, className }))}
+          {...props}
+          ref={ref}
+        />
+      );
+    }
+
+    if (href) {
+      return (
+        <a
+          className={cn(buttonVariants({ variant, size, className }))}
+          href={href}
+          {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+        >
+          {props.children}
+        </a>
+      );
+    }
 
     return (
-      <Comp
+      <button
+        type="button"
         className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...(href ? { href } : {})}
         {...props}
+        ref={ref}
       />
     );
-  }
-);
+  };
 
 Button.displayName = 'Button';
 

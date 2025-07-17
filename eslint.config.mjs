@@ -27,6 +27,7 @@ export default antfu(
     // Ignored paths
     ignores: [
       'migrations/**/*',
+      'docs/**/*.md',
     ],
   },
   // --- Next.js Specific Rules ---
@@ -74,7 +75,11 @@ export default antfu(
       'style/jsx-curly-brace-presence': 'off',
       'style/quotes': 'off',
       'style/comma-dangle': 'off',
-      'style/semi': 'off'
+      'style/semi': 'off',
+      'perfectionist/sort-imports': 'off',
+      'ts/consistent-type-imports': 'off',
+      'no-console': 'off',
+      'ts/ban-ts-comment': 'off'
     },
   },
 );
