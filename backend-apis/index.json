@@ -64,7 +64,7 @@
       "title": "User Files API",
       "description": "API endpoints tagged with 'User Files'",
       "file": "user files_api.json",
-      "paths_count": 9,
+      "paths_count": 13,
       "schemas_count": 14
     },
     "VPN": {

@@ -336,7 +336,7 @@
           "User Files"
         ],
         "summary": "Download File",
-        "description": "下载文件",
+        "description": "下载文件 - 支持公开文件访问和管理员权限",
         "operationId": "download_file_files__file_id__download_get",
         "security": [
           {
@@ -557,107 +557,305 @@
           }
         ]
       }
+    },
+    "/files/admin/users/{user_id}/files": {
+      "get": {
+        "tags": [
+          "User Files"
+        ],
+        "summary": "Admin List User Files",
+        "description": "管理员查看指定用户的文件",
+        "operationId": "admin_list_user_files_files_admin_users__user_id__files_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "User Id"
+            }
+          },
+          {
+            "name": "parent_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Parent Id"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 50,
+              "title": "Page Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserFileListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/files/admin/users/{user_id}/files/{file_id}": {
+      "delete": {
+        "tags": [
+          "User Files"
+        ],
+        "summary": "Admin Delete User File",
+        "description": "管理员删除指定用户的文件",
+        "operationId": "admin_delete_user_file_files_admin_users__user_id__files__file_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "User Id"
+            }
+          },
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "File Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileOperationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/files/public/{file_id}": {
+      "get": {
+        "tags": [
+          "User Files"
+        ],
+        "summary": "Get Public File Info",
+        "description": "获取公开文件信息（无需认证）",
+        "operationId": "get_public_file_info_files_public__file_id__get",
+        "parameters": [
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "File Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserFileResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/files/public": {
+      "get": {
+        "tags": [
+          "User Files"
+        ],
+        "summary": "List Public Files",
+        "description": "列出所有公开文件（无需认证）",
+        "operationId": "list_public_files_files_public_get",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 50,
+              "title": "Page Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserFileListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "UserFileUpdate": {
+      "StorageUpgradeResponse": {
         "properties": {
-          "filename": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Filename"
+          "success": {
+            "type": "boolean",
+            "title": "Success"
           },
-          "description": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Description"
-          },
-          "is_public": {
-            "anyOf": [
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Is Public"
-          },
-          "parent_id": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uuid"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Parent Id"
-          }
-        },
-        "type": "object",
-        "title": "UserFileUpdate",
-        "description": "更新文件请求"
-      },
-      "HTTPValidationError": {
-        "properties": {
-          "detail": {
-            "items": {
-              "$ref": "#/components/schemas/ValidationError"
-            },
-            "type": "array",
-            "title": "Detail"
-          }
-        },
-        "type": "object",
-        "title": "HTTPValidationError"
-      },
-      "ValidationError": {
-        "properties": {
-          "loc": {
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
-                }
-              ]
-            },
-            "type": "array",
-            "title": "Location"
-          },
-          "msg": {
+          "message": {
             "type": "string",
             "title": "Message"
           },
-          "type": {
-            "type": "string",
-            "title": "Error Type"
+          "new_quota_bytes": {
+            "type": "integer",
+            "title": "New Quota Bytes"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
           }
         },
         "type": "object",
         "required": [
-          "loc",
-          "msg",
-          "type"
+          "success",
+          "message",
+          "new_quota_bytes"
         ],
-        "title": "ValidationError"
+        "title": "StorageUpgradeResponse",
+        "description": "存储升级响应"
+      },
+      "StorageUpgradeRequest": {
+        "properties": {
+          "vip_quota_bytes": {
+            "type": "integer",
+            "title": "Vip Quota Bytes"
+          },
+          "duration_months": {
+            "type": "integer",
+            "title": "Duration Months",
+            "default": 12
+          }
+        },
+        "type": "object",
+        "required": [
+          "vip_quota_bytes"
+        ],
+        "title": "StorageUpgradeRequest",
+        "description": "存储升级请求"
       },
       "Body_batch_upload_files_files_batch_upload_post": {
         "properties": {
@@ -681,42 +879,53 @@
         ],
         "title": "Body_batch_upload_files_files_batch_upload_post"
       },
-      "UserFileListResponse": {
+      "DirectoryCreateResponse": {
         "properties": {
-          "files": {
-            "items": {
-              "$ref": "#/components/schemas/UserFileResponse"
-            },
-            "type": "array",
-            "title": "Files"
+          "directory_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Directory Id"
           },
-          "total": {
-            "type": "integer",
-            "title": "Total"
+          "directory_name": {
+            "type": "string",
+            "title": "Directory Name"
           },
-          "page": {
-            "type": "integer",
-            "title": "Page"
+          "parent_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Id"
           },
-          "page_size": {
-            "type": "integer",
-            "title": "Page Size"
+          "success": {
+            "type": "boolean",
+            "title": "Success"
           },
-          "total_pages": {
-            "type": "integer",
-            "title": "Total Pages"
+          "message": {
+            "type": "string",
+            "title": "Message"
           }
         },
         "type": "object",
         "required": [
-          "files",
-          "total",
-          "page",
-          "page_size",
-          "total_pages"
+          "directory_name",
+          "success",
+          "message"
         ],
-        "title": "UserFileListResponse",
-        "description": "文件列表响应"
+        "title": "DirectoryCreateResponse",
+        "description": "目录创建响应"
       },
       "UserFileResponse": {
         "properties": {
@@ -815,6 +1024,43 @@
         "title": "UserFileResponse",
         "description": "文件响应"
       },
+      "UserFileListResponse": {
+        "properties": {
+          "files": {
+            "items": {
+              "$ref": "#/components/schemas/UserFileResponse"
+            },
+            "type": "array",
+            "title": "Files"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "page_size": {
+            "type": "integer",
+            "title": "Page Size"
+          },
+          "total_pages": {
+            "type": "integer",
+            "title": "Total Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "files",
+          "total",
+          "page",
+          "page_size",
+          "total_pages"
+        ],
+        "title": "UserFileListResponse",
+        "description": "文件列表响应"
+      },
       "Body_create_directory_files_directories_post": {
         "properties": {
           "directory_name": {
@@ -833,53 +1079,40 @@
         ],
         "title": "Body_create_directory_files_directories_post"
       },
-      "DirectoryCreateResponse": {
+      "Body_upload_file_files_upload_post": {
         "properties": {
-          "directory_id": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uuid"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Directory Id"
-          },
-          "directory_name": {
+          "file": {
             "type": "string",
-            "title": "Directory Name"
+            "format": "binary",
+            "title": "File"
           },
           "parent_id": {
+            "type": "string",
+            "title": "Parent Id",
+            "default": ""
+          },
+          "description": {
             "anyOf": [
               {
-                "type": "string",
-                "format": "uuid"
+                "type": "string"
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Parent Id"
+            "title": "Description"
           },
-          "success": {
+          "is_public": {
             "type": "boolean",
-            "title": "Success"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
+            "title": "Is Public",
+            "default": false
           }
         },
         "type": "object",
         "required": [
-          "directory_name",
-          "success",
-          "message"
+          "file"
         ],
-        "title": "DirectoryCreateResponse",
-        "description": "目录创建响应"
+        "title": "Body_upload_file_files_upload_post"
       },
       "FileUploadResponse": {
         "properties": {
@@ -932,42 +1165,7 @@
         "title": "FileUploadResponse",
         "description": "文件上传响应"
       },
-      "Body_upload_file_files_upload_post": {
-        "properties": {
-          "file": {
-            "type": "string",
-            "format": "binary",
-            "title": "File"
-          },
-          "parent_id": {
-            "type": "string",
-            "title": "Parent Id",
-            "default": ""
-          },
-          "description": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Description"
-          },
-          "is_public": {
-            "type": "boolean",
-            "title": "Is Public",
-            "default": false
-          }
-        },
-        "type": "object",
-        "required": [
-          "file"
-        ],
-        "title": "Body_upload_file_files_upload_post"
-      },
-      "StorageUpgradeResponse": {
+      "FileOperationResponse": {
         "properties": {
           "success": {
             "type": "boolean",
@@ -977,31 +1175,26 @@
             "type": "string",
             "title": "Message"
           },
-          "new_quota_bytes": {
-            "type": "integer",
-            "title": "New Quota Bytes"
-          },
-          "expires_at": {
+          "file_id": {
             "anyOf": [
               {
                 "type": "string",
-                "format": "date-time"
+                "format": "uuid"
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Expires At"
+            "title": "File Id"
           }
         },
         "type": "object",
         "required": [
           "success",
-          "message",
-          "new_quota_bytes"
+          "message"
         ],
-        "title": "StorageUpgradeResponse",
-        "description": "存储升级响应"
+        "title": "FileOperationResponse",
+        "description": "文件操作响应"
       },
       "UserStorageQuotaResponse": {
         "properties": {
@@ -1060,36 +1253,88 @@
         "title": "UserStorageQuotaResponse",
         "description": "存储配额响应"
       },
-      "StorageUpgradeRequest": {
+      "HTTPValidationError": {
         "properties": {
-          "vip_quota_bytes": {
-            "type": "integer",
-            "title": "Vip Quota Bytes"
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
           },
-          "duration_months": {
-            "type": "integer",
-            "title": "Duration Months",
-            "default": 12
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
           }
         },
         "type": "object",
         "required": [
-          "vip_quota_bytes"
+          "loc",
+          "msg",
+          "type"
         ],
-        "title": "StorageUpgradeRequest",
-        "description": "存储升级请求"
+        "title": "ValidationError"
       },
-      "FileOperationResponse": {
+      "UserFileUpdate": {
         "properties": {
-          "success": {
-            "type": "boolean",
-            "title": "Success"
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename"
           },
-          "message": {
-            "type": "string",
-            "title": "Message"
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
           },
-          "file_id": {
+          "is_public": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Public"
+          },
+          "parent_id": {
             "anyOf": [
               {
                 "type": "string",
@@ -1099,16 +1344,12 @@
                 "type": "null"
               }
             ],
-            "title": "File Id"
+            "title": "Parent Id"
           }
         },
         "type": "object",
-        "required": [
-          "success",
-          "message"
-        ],
-        "title": "FileOperationResponse",
-        "description": "文件操作响应"
+        "title": "UserFileUpdate",
+        "description": "更新文件请求"
       }
     },
     "responses": {},

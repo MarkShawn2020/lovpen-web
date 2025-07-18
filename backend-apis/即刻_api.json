@@ -568,79 +568,6 @@
   },
   "components": {
     "schemas": {
-      "Body_push_twitter_uni_pusher_jike_twitter_post": {
-        "properties": {
-          "text": {
-            "type": "string",
-            "title": "Text"
-          },
-          "topic": {
-            "type": "string",
-            "title": "Topic"
-          },
-          "location": {
-            "type": "string",
-            "title": "Location"
-          },
-          "images": {
-            "anyOf": [
-              {
-                "items": {
-                  "type": "string",
-                  "format": "binary"
-                },
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Images"
-          }
-        },
-        "type": "object",
-        "title": "Body_push_twitter_uni_pusher_jike_twitter_post"
-      },
-      "Topic": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "title": "Id"
-          },
-          "title": {
-            "type": "string",
-            "title": "Title"
-          },
-          "avatar": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Avatar"
-          },
-          "description": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Description"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "title"
-        ],
-        "title": "Topic"
-      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -686,6 +613,79 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "Topic": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "avatar": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avatar"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title"
+        ],
+        "title": "Topic"
+      },
+      "Body_push_twitter_uni_pusher_jike_twitter_post": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "topic": {
+            "type": "string",
+            "title": "Topic"
+          },
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "images": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Images"
+          }
+        },
+        "type": "object",
+        "title": "Body_push_twitter_uni_pusher_jike_twitter_post"
       }
     },
     "responses": {},

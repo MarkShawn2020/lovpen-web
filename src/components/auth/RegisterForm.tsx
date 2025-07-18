@@ -15,7 +15,7 @@ type RegisterFormProps = {
   onSuccess?: () => void;
 }
 
-export function RegisterForm({ redirectTo = '/dashboard', onSuccess }: RegisterFormProps) {
+export function RegisterForm({ redirectTo = '/playground', onSuccess }: RegisterFormProps) {
   const [formData, setFormData] = useState({
     username: '',
     email: '',

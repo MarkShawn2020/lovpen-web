@@ -19,7 +19,7 @@ backend-apis/
 ├── oss_api.json         # OSS API (1 个端点)
 ├── spider_api.json      # Spider API (1 个端点)
 ├── user_api.json        # User API (11 个端点)
-├── user files_api.json  # User Files API (9 个端点)
+├── user files_api.json  # User Files API (13 个端点)
 ├── vpn_api.json         # VPN API (4 个端点)
 ├── media_api.json       # media API (3 个端点)
 ├── thoughts_api.json    # thoughts API (2 个端点)
@@ -80,9 +80,9 @@ backend-apis/
 
 ### User Files API
 - **文件**: `user files_api.json`
-- **端点数量**: 9
+- **端点数量**: 13
 - **Schema数量**: 14
-- **文件大小**: 28586 bytes
+- **文件大小**: 34938 bytes
 
 ### VPN API
 - **文件**: `vpn_api.json`
@@ -128,13 +128,13 @@ backend-apis/
 
 ## 生成信息
 
-- **生成时间**: 2025-07-18T05:07:16.302693
+- **生成时间**: 2025-07-18T05:54:39.734827
 - **总API数量**: 15
 - **成功导出**: 15
 - **失败导出**: 0
 
 ## 统计信息
 
-- **总端点数**: 100
+- **总端点数**: 104
 - **总Schema数**: 101
-- **总文件大小**: 285071 bytes
+- **总文件大小**: 291423 bytes

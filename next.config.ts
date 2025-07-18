@@ -11,6 +11,13 @@ const baseConfig: NextConfig = {
   },
   poweredByHeader: false,
   reactStrictMode: true,
+  webpack: (config) => {
+    // Suppress OpenTelemetry warnings from Sentry
+    config.ignoreWarnings = [
+      { message: /Critical dependency: the request of a dependency is an expression/ },
+    ];
+    return config;
+  },
 };
 
 // Initialize the Next-Intl plugin

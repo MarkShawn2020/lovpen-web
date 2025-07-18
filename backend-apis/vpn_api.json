@@ -188,20 +188,6 @@
   },
   "components": {
     "schemas": {
-      "Body_upload_cache_db_vpn_upload_cache_db_post": {
-        "properties": {
-          "file": {
-            "type": "string",
-            "format": "binary",
-            "title": "File"
-          }
-        },
-        "type": "object",
-        "required": [
-          "file"
-        ],
-        "title": "Body_upload_cache_db_vpn_upload_cache_db_post"
-      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -255,6 +241,20 @@
           "biznet"
         ],
         "title": "Provider"
+      },
+      "Body_upload_cache_db_vpn_upload_cache_db_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_cache_db_vpn_upload_cache_db_post"
       }
     },
     "responses": {},

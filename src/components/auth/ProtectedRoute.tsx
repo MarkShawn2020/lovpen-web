@@ -25,7 +25,7 @@ export function ProtectedRoute({
         router.push(redirectTo);
       } else if (!requireAuth && isAuthenticated) {
         // 如果已认证但访问不需要认证的页面（如登录页），重定向到仪表板
-        router.push('/dashboard');
+        router.push('/playground');
       }
     }
   }, [isAuthenticated, loading, requireAuth, router, redirectTo]);

@@ -1,11 +1,13 @@
 'use client';
 
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Button} from '@/components/lovpen-ui/button';
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from '@/components/ui/dialog';
 import {Progress} from '@/components/ui/progress';
 import type {FileItem} from '@/services/file-client-v2';
 import {fileClientV2} from '@/services/file-client-v2';
+import {fastAPIAuthService} from '@/services/fastapi-auth-v2';
+import type {AuthState} from '@/services/fastapi-auth-v2';
 import type {SupportedPlatform} from '@/types/knowledge-base';
 import {PLATFORM_CONFIGS} from '@/types/knowledge-base';
 
@@ -28,8 +30,22 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
   const [files, setFiles] = useState<FileUploadProgress[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [authState, setAuthState] = useState<AuthState>({
+    user: null,
+    tokens: null,
+    loading: true,
+    error: null,
+  });
 
   const platformConfig = PLATFORM_CONFIGS[selectedPlatform];
+
+  // 订阅认证状态
+  useEffect(() => {
+    const unsubscribe = fastAPIAuthService.subscribe(setAuthState);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const resetModal = () => {
     setFiles([]);
@@ -154,6 +170,10 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
       return;
     }
 
+    if (!authState.user) {
+      return;
+    }
+
     setIsUploading(true);
     const uploadedItems: FileItem[] = [];
 
@@ -238,6 +258,15 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
           </DialogTitle>
         </DialogHeader>
 
+        {!authState.user && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+            <div className="flex items-center gap-2 text-yellow-800">
+              <span>⚠️</span>
+              <span className="text-sm">请先登录以上传文件</span>
+            </div>
+          </div>
+        )}
+
         <div className="space-y-4">
           {/* 平台选择 */}
           <div>
@@ -275,7 +304,7 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
           <div>
             <label htmlFor="file-upload" className="block text-sm font-medium mb-2">选择文件</label>
             <div
-              className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+              className={`relative border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
                 isDragging
                   ? 'border-primary bg-primary/5'
                   : 'border-gray-300 hover:border-gray-400'
@@ -377,7 +406,7 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
           <Button
             type="button"
             onClick={uploadFiles}
-            disabled={files.length === 0 || isUploading}
+            disabled={files.length === 0 || isUploading || !authState.user}
             className="flex items-center gap-2"
           >
             {isUploading

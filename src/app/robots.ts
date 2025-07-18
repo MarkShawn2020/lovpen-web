@@ -6,7 +6,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/dashboard/',
+      // todo: add extra dirs, or using sub dir
+      disallow: '/playground/',
     },
     sitemap: `${getBaseUrl()}/sitemap.xml`,
   };

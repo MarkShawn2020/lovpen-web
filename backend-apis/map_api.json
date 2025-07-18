@@ -649,30 +649,6 @@
   },
   "components": {
     "schemas": {
-      "GeocoderResponse": {
-        "properties": {
-          "status": {
-            "type": "integer",
-            "title": "Status"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
-          },
-          "result": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Result"
-          }
-        },
-        "type": "object",
-        "required": [
-          "status",
-          "message",
-          "result"
-        ],
-        "title": "GeocoderResponse"
-      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -718,6 +694,30 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "GeocoderResponse": {
+        "properties": {
+          "status": {
+            "type": "integer",
+            "title": "Status"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "result": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Result"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "result"
+        ],
+        "title": "GeocoderResponse"
       }
     },
     "responses": {},

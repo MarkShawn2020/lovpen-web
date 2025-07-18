@@ -4,6 +4,8 @@ import {useEffect, useState} from 'react';
 import {Button} from '@/components/lovpen-ui/button';
 import type {FileItem} from '@/services/file-client-v2';
 import {fileClientV2} from '@/services/file-client-v2';
+import {fastAPIAuthService} from '@/services/fastapi-auth-v2';
+import type {AuthState} from '@/services/fastapi-auth-v2';
 import {UploadModal} from './UploadModal';
 
 type FileNode = {
@@ -35,6 +37,12 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
   const [files, setFiles] = useState<FileItem[]>([]);
   const [isInitialized, setIsInitialized] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [authState, setAuthState] = useState<AuthState>({
+    user: null,
+    tokens: null,
+    loading: true,
+    error: null,
+  });
 
   // 获取平台显示名称
   const getPlatformDisplayName = (platform: string): string => {
@@ -142,6 +150,12 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
 
   // 获取文件数据
   const fetchFiles = async () => {
+    if (!authState.user) {
+      setError('请先登录以访问知识库');
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -156,7 +170,14 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
       setKnowledgeBase(treeData);
     } catch (err) {
       console.error('Failed to fetch files:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load files');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load files';
+      
+      // 如果是认证错误，显示登录提示
+      if (errorMessage.includes('authenticated') || errorMessage.includes('401')) {
+        setError('认证已过期，请重新登录');
+      } else {
+        setError(errorMessage);
+      }
     } finally {
       setLoading(false);
     }
@@ -166,6 +187,12 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
   const searchFiles = async (query: string) => {
     if (!query.trim()) {
       // 不要在这里调用fetchFiles，会导致重复调用
+      return;
+    }
+
+    if (!authState.user) {
+      setError('请先登录以访问知识库');
+      setLoading(false);
       return;
     }
 
@@ -184,19 +211,47 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
       setKnowledgeBase(treeData);
     } catch (err) {
       console.error('Search failed:', err);
-      setError(err instanceof Error ? err.message : 'Search failed');
+      const errorMessage = err instanceof Error ? err.message : 'Search failed';
+      
+      // 如果是认证错误，显示登录提示
+      if (errorMessage.includes('authenticated') || errorMessage.includes('401')) {
+        setError('认证已过期，请重新登录');
+      } else {
+        setError(errorMessage);
+      }
     } finally {
       setLoading(false);
     }
   };
 
+  // 初始化认证服务
+  useEffect(() => {
+    const initialize = async () => {
+      try {
+        await fastAPIAuthService.initialize();
+      } catch (error) {
+        console.error('Failed to initialize auth service:', error);
+      }
+    };
+
+    initialize();
+
+    // 订阅认证状态变化
+    const unsubscribe = fastAPIAuthService.subscribe(setAuthState);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   // 初始加载
   useEffect(() => {
-    if (!isInitialized) {
-      fetchFiles();
+    if (!isInitialized && !authState.loading) {
+      if (authState.user) {
+        fetchFiles();
+      }
       setIsInitialized(true);
     }
-  }, [isInitialized]);
+  }, [isInitialized, authState.loading, authState.user]);
 
   // 搜索防抖
   useEffect(() => {
@@ -219,13 +274,25 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
 
   // 删除文件
   const deleteFile = async (fileId: string) => {
+    if (!authState.user) {
+      setError('请先登录以访问知识库');
+      return;
+    }
+
     try {
       await fileClientV2.deleteFile(fileId);
       // 重新获取文件列表
       fetchFiles();
     } catch (error) {
       console.error('Failed to delete file:', error);
-      setError(error instanceof Error ? error.message : 'Failed to delete file');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete file';
+      
+      // 如果是认证错误，显示登录提示
+      if (errorMessage.includes('authenticated') || errorMessage.includes('401')) {
+        setError('认证已过期，请重新登录');
+      } else {
+        setError(errorMessage);
+      }
     }
   };
 
@@ -459,6 +526,34 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
 
   const filteredNodes = filterNodes(knowledgeBase, searchTerm);
 
+  // 显示登录界面
+  if (authState.loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full">
+        <div className="text-2xl mb-4">🔄</div>
+        <p className="text-text-faded">正在加载...</p>
+      </div>
+    );
+  }
+
+  if (!authState.user) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full">
+        <div className="text-6xl mb-4">🔐</div>
+        <h3 className="text-xl font-medium text-text-main mb-2">需要登录</h3>
+        <p className="text-text-faded mb-4">请先登录以访问知识库</p>
+        <Button
+          onClick={() => {
+            window.location.href = '/login';
+          }}
+          className="px-6 py-2"
+        >
+          前往登录
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col u-gap-m h-full">
       {/* Knowledge Base Header */}
@@ -473,7 +568,10 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                 variant="outline"
                 size="sm"
                 className="text-xs h-7 px-2"
-                onClick={() => setIsUploadModalOpen(true)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsUploadModalOpen(true);
+                }}
               >
                 ➕ 新建
               </Button>
@@ -481,7 +579,10 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                 variant="outline"
                 size="sm"
                 className="text-xs h-7 px-2"
-                onClick={() => window.location.href = '/space'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.location.href = '/space';
+                }}
               >
                 📁 浏览
               </Button>
@@ -498,6 +599,7 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
               className="w-full px-3 py-2 border border-border-default/20 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
+              onClick={e => e.stopPropagation()}
             />
           </div>
         </div>
@@ -509,7 +611,8 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
               variant="outline"
               size="sm"
               className="text-xs h-7 px-2"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 const today = new Date().toISOString().split('T')[0];
                 const todayFiles = files.filter(file =>
                   file.created_at?.startsWith(today || '') ?? false
@@ -524,7 +627,8 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
               variant="outline"
               size="sm"
               className="text-xs h-7 px-2"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 const recentFiles = files
                   .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
                   .slice(0, 20);
@@ -538,7 +642,10 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
               variant="outline"
               size="sm"
               className="text-xs h-7 px-2"
-              onClick={fetchFiles}
+              onClick={(e) => {
+                e.stopPropagation();
+                fetchFiles();
+              }}
             >
               🔄 刷新
             </Button>
@@ -566,7 +673,10 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                 type="button"
                 className="text-xs text-text-faded hover:text-text-main transition-colors p-1 hover:bg-background-oat rounded"
                 title="刷新"
-                onClick={fetchFiles}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  fetchFiles();
+                }}
               >
                 🔄
               </button>
@@ -574,7 +684,10 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                 type="button"
                 className="text-xs text-text-faded hover:text-text-main transition-colors p-1 hover:bg-background-oat rounded"
                 title="前往完整文件浏览器"
-                onClick={() => window.location.href = '/space'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.location.href = '/space';
+                }}
               >
                 📋
               </button>
@@ -591,7 +704,10 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
               <button
                 type="button"
                 className="ml-2 underline"
-                onClick={fetchFiles}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  fetchFiles();
+                }}
               >
                 重试
               </button>
@@ -620,7 +736,10 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                         variant="outline"
                         size="sm"
                         className="mt-2 text-xs h-7 px-2"
-                        onClick={() => setIsUploadModalOpen(true)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsUploadModalOpen(true);
+                        }}
                       >
                         ➕ 上传文件
                       </Button>

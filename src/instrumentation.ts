@@ -9,6 +9,8 @@ const sentryOptions: Sentry.NodeOptions | Sentry.EdgeOptions = {
 
   integrations: [
     Sentry.consoleLoggingIntegration(),
+    // 明确禁用自动数据库仪器化来减少警告
+    // 如需数据库监控，可手动启用特定集成
   ],
 
   // Adds request headers and IP for users, for more info visit

@@ -1,13 +1,13 @@
 'use client';
 
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Link from 'next/link';
 import {usePathname, useRouter} from 'next/navigation';
 import Image from 'next/image';
 import {Button} from '@/components/lovpen-ui/button';
 import {useAuth} from '@/contexts/AuthContext';
 import {cn} from '@/lib/utils';
-import {BarChart3, BookOpen, LogOut, Settings, User} from 'lucide-react';
+import {BarChart3, BookOpen, Calendar, LogOut, Settings, User} from 'lucide-react';
 import {
   AuthNavigationLink,
   AuthNavigationMenu,
@@ -24,10 +24,28 @@ const AuthNavbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    if (isUserMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isUserMenuOpen]);
 
   const navigation = [
     {name: '创作工坊', href: '/playground', icon: '🏠'},
     {name: '知识库', href: '/space', icon: BookOpen},
+    {name: '选题排期', href: '/topic-schedule', icon: Calendar},
     {name: '数据库看板', href: '#', icon: BarChart3, pending: true},
   ];
 
@@ -38,6 +56,9 @@ const AuthNavbar = () => {
     }
     if (href === '/space') {
       return pathname === '/space';
+    }
+    if (href === '/topic-schedule') {
+      return pathname === '/topic-schedule';
     }
     return pathname.startsWith(href);
   };
@@ -112,7 +133,7 @@ const AuthNavbar = () => {
 
           {/* User Menu */}
           <div className="hidden md:flex items-center space-x-4">
-            <div className="relative">
+            <div className="relative" ref={userMenuRef}>
               <button
                 type="button"
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
@@ -138,7 +159,7 @@ const AuthNavbar = () => {
                     个人资料
                   </Link>
                   <Link
-                    href="/dashboard/settings"
+                    href="/settings"
                     className="flex items-center px-4 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
                     onClick={() => setIsUserMenuOpen(false)}
                   >
@@ -247,7 +268,7 @@ const AuthNavbar = () => {
                 个人资料
               </Link>
               <Link
-                href="/dashboard/settings"
+                href="/settings"
                 className="flex items-center px-3 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
