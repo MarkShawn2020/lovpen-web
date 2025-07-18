@@ -14,8 +14,8 @@ const LandingNavbar = async () => {
 
   const navigation = [
     {name: t('architecture'), href: '/architecture', scrollToId: 'architecture'},
-    {name: t('workflow'), href: '/workflow', scrollToId: 'workflow'},
     {name: t('features'), href: '/features', scrollToId: 'features'},
+    {name: t('workflow'), href: '/workflow', scrollToId: 'workflow'},
     {name: t('cases'), href: '/cases', scrollToId: 'cases'},
     {name: t('pricing'), href: '/pricing', scrollToId: 'pricing'},
     {name: t('about'), href: '/about', scrollToId: 'about'},
