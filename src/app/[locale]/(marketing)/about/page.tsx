@@ -147,63 +147,6 @@ export default async function About(props: IAboutProps) {
           </div>
         </div>
 
-        {/* Team Section */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-semibold text-text-main mb-8 text-center">
-            {t('team_title')}
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div
-                className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
-              >
-                👨‍💻
-              </div>
-              <h3 className="text-xl font-semibold text-text-main mb-2">
-                {t('team_member_1_name')}
-              </h3>
-              <p className="text-text-faded mb-2">
-                {t('team_member_1_role')}
-              </p>
-              <p className="text-sm text-text-faded">
-                {t('team_member_1_description')}
-              </p>
-            </div>
-            <div className="text-center">
-              <div
-                className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
-              >
-                🎨
-              </div>
-              <h3 className="text-xl font-semibold text-text-main mb-2">
-                {t('team_member_2_name')}
-              </h3>
-              <p className="text-text-faded mb-2">
-                {t('team_member_2_role')}
-              </p>
-              <p className="text-sm text-text-faded">
-                {t('team_member_2_description')}
-              </p>
-            </div>
-            <div className="text-center">
-              <div
-                className="w-24 h-24 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
-              >
-                📊
-              </div>
-              <h3 className="text-xl font-semibold text-text-main mb-2">
-                {t('team_member_3_name')}
-              </h3>
-              <p className="text-text-faded mb-2">
-                {t('team_member_3_role')}
-              </p>
-              <p className="text-sm text-text-faded">
-                {t('team_member_3_description')}
-              </p>
-            </div>
-          </div>
-        </div>
-
         {/* Contact Section */}
         <div className="text-center bg-primary/10 border border-primary/20 rounded-lg p-8">
           <h2 className="text-3xl font-semibold text-text-main mb-4">
