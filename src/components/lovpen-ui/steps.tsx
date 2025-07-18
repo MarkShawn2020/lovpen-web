@@ -77,51 +77,65 @@ const Steps = () => (
 
           {/* 步骤卡片 */}
           <div className={cn(
-            'relative bg-white border-2 transition-all duration-300 hover:scale-105 hover:shadow-lg z-10',
-            'rounded-xl lg:rounded-2xl p-4 lg:p-6',
+            'relative bg-white border-2 transition-all duration-300 hover:scale-105 hover:shadow-lg z-10 group',
+            'rounded-xl lg:rounded-2xl px-8 py-6 lg:px-10 lg:py-8',
             step.color,
           )}
           >
-            {/* 桌面端步骤编号 */}
-            <div
-              className="hidden lg:block absolute -top-3 -right-3 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg"
-            >
+            {/* 桌面端序号 - 右上角始终强调 */}
+            <div className="hidden lg:flex absolute -top-3 -right-3 w-8 h-8 bg-primary text-white rounded-full items-center justify-center text-sm font-medium shadow-sm z-20">
               {step.step}
             </div>
 
-            {/* 单列时的酷炫大号序号 */}
-            <div
-              className="lg:hidden absolute -top-2 -right-2 w-16 h-16 bg-gradient-to-br from-primary/20 to-swatch-cactus/20 rounded-full flex items-center justify-center backdrop-blur-sm border-2 border-primary/30"
-            >
-              <div
-                className="w-12 h-12 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white font-black text-lg shadow-xl"
-              >
-                {step.step}
-              </div>
-              {/* 脉动动画环 */}
-              <div
-                className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-swatch-cactus/20 rounded-full animate-pulse"
-                style={{animationDelay: `${step.step * 0.2}s`, animationDuration: '2s'}}
-              />
+            {/* 移动端序号 - 居中低调，hover时强调 */}
+            <div className="lg:hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-text-faded/20 text-text-faded rounded-full flex items-center justify-center text-xs font-medium z-20 transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:scale-110 group-hover:shadow-lg">
+              {step.step}
             </div>
 
-            {/* 主要内容 */}
-            <div className="text-center lg:text-center text-left lg:block flex items-center lg:items-start">
-              <div className="text-3xl lg:text-4xl mb-0 lg:mb-3 mr-4 lg:mr-0 flex-shrink-0">{step.icon}</div>
-              <div className="flex-1">
-                <h3 className="font-bold text-base lg:text-lg text-text-main mb-1 lg:mb-2">{step.title}</h3>
-                <p className="text-xs lg:text-sm text-text-faded mb-2 lg:mb-4">{step.description}</p>
-
-                {/* 特性列表 */}
-                <div className="space-y-0 lg:space-y-1">
+            {/* 主要内容 - 紧凑设计 */}
+            <div className="lg:text-center">
+              {/* 桌面端布局 */}
+              <div className="hidden lg:block text-center">
+                <div className="text-4xl mb-2">{step.icon}</div>
+                <h3 className="font-bold text-lg text-text-main mb-1">{step.title}</h3>
+                <p className="text-sm text-text-faded mb-3">{step.description}</p>
+                <div className="space-y-1">
                   {step.features.map((feature, featureIndex) => (
                     <div
                       key={`${step.step}-feature-${feature}-${featureIndex}`}
-                      className="text-xs text-text-main bg-white/60 rounded-full px-2 lg:px-3 py-1 inline-block mr-1 mb-1"
+                      className="text-xs text-text-main bg-white/60 rounded-full px-3 py-1 inline-block mr-1 mb-1"
                     >
                       {feature}
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* 移动端布局 - 两半居中 */}
+              <div className="lg:hidden flex">
+                {/* 左半部分 - 图标和文字 */}
+                <div className="flex-1 flex items-center justify-center">
+                  <div className="flex items-center gap-3">
+                    <div className="text-3xl flex-shrink-0">{step.icon}</div>
+                    <div className="text-left">
+                      <h3 className="font-bold text-base text-text-main mb-1">{step.title}</h3>
+                      <p className="text-sm text-text-faded">{step.description}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* 右半部分 - 标签 */}
+                <div className="flex-1 flex flex-col items-center justify-center">
+                  <div className="flex flex-col gap-1 items-center">
+                    {step.features.map((feature, featureIndex) => (
+                      <div
+                        key={`${step.step}-feature-${feature}-${featureIndex}`}
+                        className="text-xs text-text-main bg-white/60 rounded-full px-3 py-1 text-center whitespace-nowrap"
+                      >
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
