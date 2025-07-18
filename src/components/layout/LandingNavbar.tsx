@@ -13,7 +13,6 @@ const LandingNavbar = async () => {
   const t = await getTranslations('Header');
 
   const navigation = [
-    {name: t('architecture'), href: '/architecture', scrollToId: 'architecture'},
     {name: t('workflow'), href: '/workflow', scrollToId: 'workflow'},
     {name: t('features'), href: '/features', scrollToId: 'features'},
     {name: t('cases'), href: '/cases', scrollToId: 'cases'},

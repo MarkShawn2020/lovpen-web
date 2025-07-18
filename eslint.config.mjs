@@ -82,6 +82,7 @@ export default antfu(
       'ts/ban-ts-comment': 'off',
       'style/no-trailing-spaces': 'off',
       'antfu/consistent-list-newline': 'off',
+      'style/spaced-comment': 'off',
     },
   },
 );

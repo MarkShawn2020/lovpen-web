@@ -1,6 +1,5 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import Hero from "@/app/[locale]/(marketing)/hero/page";
-import Architecture from "@/app/[locale]/(marketing)/architecture/page";
 import Workflow from "@/app/[locale]/(marketing)/workflow/page";
 import FeaturesHome from "@/app/[locale]/(marketing)/features-home/page";
 import Cases from "@/app/[locale]/(marketing)/cases/page";
@@ -34,8 +33,8 @@ export default async function Index(props: IIndexProps) {
       {/* Hero Section */}
       <Hero params={props.params}/>
 
-      {/* Architecture Section */}
-      <Architecture params={props.params}/>
+      {/* Architecture Section (add later) */}
+      {/*<Architecture params={props.params}/>*/}
 
       {/* Workflow Section */}
       <Workflow params={props.params}/>
