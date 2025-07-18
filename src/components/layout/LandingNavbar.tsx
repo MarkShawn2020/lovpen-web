@@ -34,7 +34,7 @@ const LandingNavbar = async () => {
               href="/"
               className="flex items-center no-underline text-text-main hover:text-primary transition-colors"
             >
-              <LogoWithText size="md" className="text-brand-gradient"/>
+              <LogoWithText size="md" className="text-brand-primary"/>
             </Link>
             <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full border border-gray-200">
               v

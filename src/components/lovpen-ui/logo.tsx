@@ -38,6 +38,14 @@ const HorizontalLogo = ({ size, className, color }: { size: LogoSize; className?
   const { width, height } = sizeConfigs.horizontal[size];
   const gradientId = `logo-gradient-${Math.random().toString(36).substr(2, 9)}`;
   const isGradient = className?.includes('text-brand-gradient');
+  const isBrandPrimary = className?.includes('text-brand-primary');
+  
+  let fillColor = color || 'currentColor';
+  if (isGradient) {
+    fillColor = `url(#${gradientId})`;
+  } else if (isBrandPrimary) {
+    fillColor = '#d97757';
+  }
   
   return (
     <svg
@@ -45,7 +53,7 @@ const HorizontalLogo = ({ size, className, color }: { size: LogoSize; className?
       height={height}
       viewBox="635 459 649 128"
       className={cn('transition-all duration-200', className)}
-      fill={isGradient ? `url(#${gradientId})` : (color || 'currentColor')}
+      fill={fillColor}
     >
       {isGradient && (
         <defs>
@@ -75,6 +83,14 @@ const VerticalLogo = ({ size, className, color }: { size: LogoSize; className?: 
   const { width, height } = sizeConfigs.vertical[size];
   const gradientId = `logo-gradient-${Math.random().toString(36).substr(2, 9)}`;
   const isGradient = className?.includes('text-brand-gradient');
+  const isBrandPrimary = className?.includes('text-brand-primary');
+  
+  let fillColor = color || 'currentColor';
+  if (isGradient) {
+    fillColor = `url(#${gradientId})`;
+  } else if (isBrandPrimary) {
+    fillColor = '#d97757';
+  }
   
   return (
     <svg
@@ -82,7 +98,7 @@ const VerticalLogo = ({ size, className, color }: { size: LogoSize; className?: 
       height={height}
       viewBox="730 402 509 287"
       className={cn('transition-all duration-200', className)}
-      fill={isGradient ? `url(#${gradientId})` : (color || 'currentColor')}
+      fill={fillColor}
     >
       {isGradient && (
         <defs>
@@ -114,6 +130,14 @@ const PureLogo = ({ size, className, color }: { size: LogoSize; className?: stri
   const { width, height } = sizeConfigs.pure[size];
   const gradientId = `logo-gradient-${Math.random().toString(36).substr(2, 9)}`;
   const isGradient = className?.includes('text-brand-gradient');
+  const isBrandPrimary = className?.includes('text-brand-primary');
+  
+  let fillColor = color || 'currentColor';
+  if (isGradient) {
+    fillColor = `url(#${gradientId})`;
+  } else if (isBrandPrimary) {
+    fillColor = '#d97757';
+  }
   
   return (
     <svg
@@ -121,7 +145,7 @@ const PureLogo = ({ size, className, color }: { size: LogoSize; className?: stri
       height={height}
       viewBox="818 385 284 310"
       className={cn('transition-all duration-200', className)}
-      fill={isGradient ? `url(#${gradientId})` : (color || 'currentColor')}
+      fill={fillColor}
     >
       {isGradient && (
         <defs>

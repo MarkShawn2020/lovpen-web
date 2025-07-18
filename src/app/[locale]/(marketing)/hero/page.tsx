@@ -47,7 +47,7 @@ export default async function Hero(props: IHeroProps) {
           {/* 品牌展示 */}
           <div className="text-center mb-16 max-w-4xl">
             <div className="mb-8">
-              <Logo variant="horizontal" size="xl" className="mb-8 text-brand-gradient" />
+              <Logo variant="horizontal" size="xl" className="mb-8 text-brand-primary" />
             </div>
             
             {/* 主标题 */}

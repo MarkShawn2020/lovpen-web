@@ -74,7 +74,7 @@ const AuthNavbar = () => {
               <Logo
                 variant="horizontal"
                 size="md"
-                className="text-brand-gradient"
+                className="text-brand-primary"
               />
             </Link>
             <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full border border-gray-200">
