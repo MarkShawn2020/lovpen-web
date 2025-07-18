@@ -1,6 +1,5 @@
 // LovPen 创作流程步骤
 import {cn} from "@/lib/utils";
-import {Logo} from "@/components/lovpen-ui/logo";
 import * as React from "react";
 
 const steps = [
@@ -63,7 +62,7 @@ const Steps = () => (
                   className="absolute right-0 top-1/2 transform -translate-y-1/2 w-0 h-0 border-l-3 border-l-swatch-cactus border-t-1 border-b-1 border-t-transparent border-b-transparent opacity-60"
                 />
               </div>
-              
+
               {/* 移动端垂直连接线 */}
               <div
                 className="lg:hidden absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-4 bg-gradient-to-b from-primary to-swatch-cactus opacity-40 z-0"
@@ -83,12 +82,16 @@ const Steps = () => (
           )}
           >
             {/* 桌面端序号 - 右上角始终强调 */}
-            <div className="hidden lg:flex absolute -top-3 -right-3 w-8 h-8 bg-primary text-white rounded-full items-center justify-center text-sm font-medium shadow-sm z-20">
+            <div
+              className="hidden lg:flex absolute -top-3 -right-3 w-8 h-8 bg-primary text-white rounded-full items-center justify-center text-sm font-medium shadow-sm z-20"
+            >
               {step.step}
             </div>
 
             {/* 移动端序号 - 居中低调，hover时强调 */}
-            <div className="lg:hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-text-faded/20 text-text-faded rounded-full flex items-center justify-center text-xs font-medium z-20 transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:scale-110 group-hover:shadow-lg">
+            <div
+              className="lg:hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-text-faded/20 text-text-faded rounded-full flex items-center justify-center text-xs font-medium z-20 transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:scale-110 group-hover:shadow-lg"
+            >
               {step.step}
             </div>
 
@@ -99,7 +102,7 @@ const Steps = () => (
                 <div className="text-4xl mb-2">{step.icon}</div>
                 <h3 className="font-bold text-lg text-text-main mb-1">{step.title}</h3>
                 <p className="text-sm text-text-faded mb-3">{step.description}</p>
-                <div className="space-y-1">
+                <div className="flex flex-col space-y-1">
                   {step.features.map((feature, featureIndex) => (
                     <div
                       key={`${step.step}-feature-${feature}-${featureIndex}`}
@@ -123,7 +126,7 @@ const Steps = () => (
                     </div>
                   </div>
                 </div>
-                
+
                 {/* 右半部分 - 标签 */}
                 <div className="flex-1 flex flex-col items-center justify-center">
                   <div className="flex flex-col gap-1 items-center">
@@ -142,37 +145,6 @@ const Steps = () => (
           </div>
         </div>
       ))}
-    </div>
-
-    {/* LovPen 核心展示 */}
-    <div className="text-center">
-      <div className="relative inline-block">
-        <div
-          className="w-32 h-32 bg-gradient-to-br from-primary/20 to-swatch-cactus/20 rounded-full flex items-center justify-center border-4 border-primary/30 backdrop-blur-sm"
-        >
-          <div
-            className="w-20 h-20 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white"
-          >
-            <Logo
-              variant="pure"
-              size="md"
-              color="white"
-            />
-          </div>
-        </div>
-        {/* 脉动动画环 */}
-        <div
-          className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-swatch-cactus/10 rounded-full animate-pulse"
-        />
-        <div
-          className="absolute -inset-8 bg-gradient-to-r from-primary/5 to-swatch-cactus/5 rounded-full animate-pulse"
-          style={{animationDelay: '0.5s'}}
-        />
-      </div>
-      <h3 className="u-display-m text-text-main mt-4 mb-2">LovPen 引擎</h3>
-      <p className="u-paragraph-l text-text-faded max-w-md mx-auto">
-        智能整合碎片化思考，生成专业级美丽图文，为28+平台量身定制值得信赖的优质内容
-      </p>
     </div>
   </div>
 );

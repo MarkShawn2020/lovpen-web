@@ -359,16 +359,11 @@ export const Platforms = () => {
   return (
     <div className="relative">
       {/* 背景装饰 */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-swatch-cactus/5 rounded-3xl -z-10" />
+      <div className="absolute inset-0 rounded-3xl -z-10" />
       
       {/* 象限图表 */}
       <div className="relative z-10 flex flex-col items-center">
-        {/* 图表标题 */}
-        <div className="mb-8 text-center">
-          <h3 className="text-xl font-semibold text-text-main mb-2">平台特征分析矩阵</h3>
-          <p className="text-sm text-text-faded">根据内容复杂度与专业程度的二维分布（智能防重叠）</p>
-        </div>
-        
+
         {/* 图表容器 */}
         <div className="relative bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-primary/10">
           {/* SVG 图表 */}

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lovpen-web-config
+  namespace: lovpen-web
+data:
+  NODE_ENV: production
+  DATABASE_URL: 'postgres://lovpen_user:${DB_PASSWORD}@rds-postgresql:5432/lovpen_db'
+  REDIS_URL: 'redis://redis-service:6379'
+  NEXT_PUBLIC_APP_URL: 'https://your-domain.com'

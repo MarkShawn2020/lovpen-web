@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lovpen-web-app
+  namespace: lovpen-web
+  labels:
+    app: lovpen-web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lovpen-web
+  template:
+    metadata:
+      labels:
+        app: lovpen-web
+    spec:
+      containers:
+        - name: lovpen-web
+          image: registry.ap-southeast-1.aliyuncs.com/lovpen-web/app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: lovpen-web-config
+                  key: NODE_ENV
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: lovpen-web-config
+                  key: DATABASE_URL
+            - name: REDIS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: lovpen-web-config
+                  key: REDIS_URL
+            - name: NEXT_PUBLIC_APP_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: lovpen-web-config
+                  key: NEXT_PUBLIC_APP_URL
+            - name: CLERK_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lovpen-web-secrets
+                  key: CLERK_SECRET_KEY
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: lovpen-web-secrets
+                  key: DB_PASSWORD
+            - name: NEXTAUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: lovpen-web-secrets
+                  key: NEXTAUTH_SECRET
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: lovpen-web-secrets
+                  key: SENTRY_DSN
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: acr-secret

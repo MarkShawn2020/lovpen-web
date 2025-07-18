@@ -11,6 +11,7 @@ const baseConfig: NextConfig = {
   },
   poweredByHeader: false,
   reactStrictMode: true,
+  output: 'standalone',
   webpack: (config) => {
     // Suppress OpenTelemetry warnings from Sentry
     config.ignoreWarnings = [
