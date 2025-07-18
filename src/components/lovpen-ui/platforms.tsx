@@ -7,42 +7,19 @@ export type Platform = {
   description: string;
   color: string;
   bgColor: string;
+  contentComplexity: number; // 0-100: 文本 → 图文 → 视频
+  seriousness: number; // 0-100: 娱乐化 → 专业化
 };
 const platforms: Platform[] = [
-  {
-    name: '微信公众号',
-    icon: '📱',
-    description: '专业排版，完美呈现',
-    color: 'text-emerald-600',
-    bgColor: 'from-emerald-50 to-emerald-100 border-emerald-200/50',
-  },
+  // 专业文本平台
   {
     name: '知乎',
     icon: '🎓',
     description: '学术风格，知识分享',
     color: 'text-blue-600',
     bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
-  },
-  {
-    name: '小红书',
-    icon: '🌸',
-    description: '生活美学，精致展示',
-    color: 'text-pink-600',
-    bgColor: 'from-pink-50 to-pink-100 border-pink-200/50',
-  },
-  {
-    name: 'Twitter/X',
-    icon: '🐦',
-    description: '国际传播，实时动态',
-    color: 'text-sky-600',
-    bgColor: 'from-sky-50 to-sky-100 border-sky-200/50',
-  },
-  {
-    name: 'LinkedIn',
-    icon: '💼',
-    description: '商务社交，职场洞察',
-    color: 'text-indigo-600',
-    bgColor: 'from-indigo-50 to-indigo-100 border-indigo-200/50',
+    contentComplexity: 25,
+    seriousness: 85,
   },
   {
     name: 'Medium',
@@ -50,111 +27,17 @@ const platforms: Platform[] = [
     description: '深度思考，优质内容',
     color: 'text-gray-600',
     bgColor: 'from-gray-50 to-gray-100 border-gray-200/50',
+    contentComplexity: 20,
+    seriousness: 90,
   },
   {
-    name: 'Bilibili',
-    icon: '📺',
-    description: '年轻社区，创意表达',
-    color: 'text-cyan-600',
-    bgColor: 'from-cyan-50 to-cyan-100 border-cyan-200/50',
-  },
-  {
-    name: '今日头条',
-    icon: '📰',
-    description: '大众传媒，热点追踪',
-    color: 'text-red-600',
-    bgColor: 'from-red-50 to-red-100 border-red-200/50',
-  },
-  {
-    name: '抖音',
-    icon: '🎵',
-    description: '短视频，爆款制造',
-    color: 'text-slate-700',
-    bgColor: 'from-slate-50 to-slate-100 border-slate-200/50',
-  },
-  {
-    name: '快手',
-    icon: '⚡',
-    description: '真实记录，生活分享',
-    color: 'text-yellow-600',
-    bgColor: 'from-yellow-50 to-yellow-100 border-yellow-200/50',
-  },
-  {
-    name: '微博',
-    icon: '🔥',
-    description: '热点传播，社交话题',
-    color: 'text-orange-600',
-    bgColor: 'from-orange-50 to-orange-100 border-orange-200/50',
-  },
-  {
-    name: '豆瓣',
-    icon: '📚',
-    description: '文艺青年，品味生活',
-    color: 'text-green-600',
-    bgColor: 'from-green-50 to-green-100 border-green-200/50',
-  },
-  {
-    name: 'YouTube',
-    icon: '🎬',
-    description: '全球视频，创意无限',
-    color: 'text-red-600',
-    bgColor: 'from-red-50 to-red-100 border-red-200/50',
-  },
-  {
-    name: 'Instagram',
-    icon: '📸',
-    description: '视觉故事，美感分享',
-    color: 'text-purple-600',
-    bgColor: 'from-purple-50 to-purple-100 border-purple-200/50',
-  },
-  {
-    name: 'TikTok',
-    icon: '🎭',
-    description: '创意短视频，全球流行',
-    color: 'text-pink-600',
-    bgColor: 'from-pink-50 to-pink-100 border-pink-200/50',
-  },
-  {
-    name: 'Facebook',
-    icon: '👥',
-    description: '社交网络，连接世界',
-    color: 'text-blue-600',
-    bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
-  },
-  {
-    name: 'Reddit',
-    icon: '🗣️',
-    description: '社区讨论，深度交流',
-    color: 'text-orange-600',
-    bgColor: 'from-orange-50 to-orange-100 border-orange-200/50',
-  },
-  {
-    name: 'Telegram',
-    icon: '✈️',
-    description: '私密通讯，频道传播',
-    color: 'text-sky-600',
-    bgColor: 'from-sky-50 to-sky-100 border-sky-200/50',
-  },
-  {
-    name: 'Discord',
-    icon: '🎮',
-    description: '社群聊天，兴趣交流',
+    name: 'LinkedIn',
+    icon: '💼',
+    description: '商务社交，职场洞察',
     color: 'text-indigo-600',
     bgColor: 'from-indigo-50 to-indigo-100 border-indigo-200/50',
-  },
-  {
-    name: 'Substack',
-    icon: '💌',
-    description: '邮件订阅，深度写作',
-    color: 'text-amber-600',
-    bgColor: 'from-amber-50 to-amber-100 border-amber-200/50',
-  },
-  {
-    name: 'Notion',
-    icon: '📋',
-    description: '知识管理，协作文档',
-    color: 'text-gray-600',
-    bgColor: 'from-gray-50 to-gray-100 border-gray-200/50',
+    contentComplexity: 30,
+    seriousness: 95,
   },
   {
     name: 'CSDN',
@@ -162,6 +45,8 @@ const platforms: Platform[] = [
     description: '技术博客，开发者社区',
     color: 'text-red-600',
     bgColor: 'from-red-50 to-red-100 border-red-200/50',
+    contentComplexity: 25,
+    seriousness: 90,
   },
   {
     name: '掘金',
@@ -169,20 +54,28 @@ const platforms: Platform[] = [
     description: '技术分享，前沿资讯',
     color: 'text-blue-600',
     bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
+    contentComplexity: 30,
+    seriousness: 85,
+  },
+  
+  // 专业图文平台
+  {
+    name: '微信公众号',
+    icon: '📱',
+    description: '专业排版，完美呈现',
+    color: 'text-emerald-600',
+    bgColor: 'from-emerald-50 to-emerald-100 border-emerald-200/50',
+    contentComplexity: 55,
+    seriousness: 75,
   },
   {
-    name: '简书',
-    icon: '🖋️',
-    description: '优质创作，文字社区',
-    color: 'text-green-600',
-    bgColor: 'from-green-50 to-green-100 border-green-200/50',
-  },
-  {
-    name: '即刻',
-    icon: '⚡',
-    description: '即时分享，兴趣社区',
-    color: 'text-yellow-600',
-    bgColor: 'from-yellow-50 to-yellow-100 border-yellow-200/50',
+    name: '今日头条',
+    icon: '📰',
+    description: '大众传媒，热点追踪',
+    color: 'text-red-600',
+    bgColor: 'from-red-50 to-red-100 border-red-200/50',
+    contentComplexity: 50,
+    seriousness: 70,
   },
   {
     name: '百家号',
@@ -190,6 +83,8 @@ const platforms: Platform[] = [
     description: '智能推荐，内容分发',
     color: 'text-blue-600',
     bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
+    contentComplexity: 45,
+    seriousness: 65,
   },
   {
     name: '企鹅号',
@@ -197,6 +92,8 @@ const platforms: Platform[] = [
     description: '腾讯生态，流量扶持',
     color: 'text-cyan-600',
     bgColor: 'from-cyan-50 to-cyan-100 border-cyan-200/50',
+    contentComplexity: 50,
+    seriousness: 60,
   },
   {
     name: '大鱼号',
@@ -204,43 +101,220 @@ const platforms: Platform[] = [
     description: '阿里生态，商业变现',
     color: 'text-orange-600',
     bgColor: 'from-orange-50 to-orange-100 border-orange-200/50',
+    contentComplexity: 48,
+    seriousness: 65,
+  },
+  
+  // 专业视频平台
+  {
+    name: 'YouTube',
+    icon: '🎬',
+    description: '全球视频，创意无限',
+    color: 'text-red-600',
+    bgColor: 'from-red-50 to-red-100 border-red-200/50',
+    contentComplexity: 85,
+    seriousness: 70,
+  },
+  {
+    name: 'Bilibili',
+    icon: '📺',
+    description: '年轻社区，创意表达',
+    color: 'text-cyan-600',
+    bgColor: 'from-cyan-50 to-cyan-100 border-cyan-200/50',
+    contentComplexity: 80,
+    seriousness: 60,
+  },
+  
+  // 娱乐文本平台
+  {
+    name: '简书',
+    icon: '🖋️',
+    description: '优质创作，文字社区',
+    color: 'text-green-600',
+    bgColor: 'from-green-50 to-green-100 border-green-200/50',
+    contentComplexity: 20,
+    seriousness: 55,
+  },
+  {
+    name: '豆瓣',
+    icon: '📚',
+    description: '文艺青年，品味生活',
+    color: 'text-green-600',
+    bgColor: 'from-green-50 to-green-100 border-green-200/50',
+    contentComplexity: 25,
+    seriousness: 50,
+  },
+  {
+    name: 'Twitter/X',
+    icon: '🐦',
+    description: '国际传播，实时动态',
+    color: 'text-sky-600',
+    bgColor: 'from-sky-50 to-sky-100 border-sky-200/50',
+    contentComplexity: 15,
+    seriousness: 45,
+  },
+  {
+    name: '微博',
+    icon: '🔥',
+    description: '热点传播，社交话题',
+    color: 'text-orange-600',
+    bgColor: 'from-orange-50 to-orange-100 border-orange-200/50',
+    contentComplexity: 20,
+    seriousness: 35,
+  },
+  {
+    name: '即刻',
+    icon: '⚡',
+    description: '即时分享，兴趣社区',
+    color: 'text-yellow-600',
+    bgColor: 'from-yellow-50 to-yellow-100 border-yellow-200/50',
+    contentComplexity: 15,
+    seriousness: 30,
+  },
+  
+  // 娱乐图文平台
+  {
+    name: '小红书',
+    icon: '🌸',
+    description: '生活美学，精致展示',
+    color: 'text-pink-600',
+    bgColor: 'from-pink-50 to-pink-100 border-pink-200/50',
+    contentComplexity: 65,
+    seriousness: 35,
+  },
+  {
+    name: 'Instagram',
+    icon: '📸',
+    description: '视觉故事，美感分享',
+    color: 'text-purple-600',
+    bgColor: 'from-purple-50 to-purple-100 border-purple-200/50',
+    contentComplexity: 70,
+    seriousness: 40,
+  },
+  {
+    name: 'Facebook',
+    icon: '👥',
+    description: '社交网络，连接世界',
+    color: 'text-blue-600',
+    bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
+    contentComplexity: 60,
+    seriousness: 45,
+  },
+  
+  // 娱乐视频平台
+  {
+    name: '抖音',
+    icon: '🎵',
+    description: '短视频，爆款制造',
+    color: 'text-slate-700',
+    bgColor: 'from-slate-50 to-slate-100 border-slate-200/50',
+    contentComplexity: 90,
+    seriousness: 25,
+  },
+  {
+    name: '快手',
+    icon: '⚡',
+    description: '真实记录，生活分享',
+    color: 'text-yellow-600',
+    bgColor: 'from-yellow-50 to-yellow-100 border-yellow-200/50',
+    contentComplexity: 85,
+    seriousness: 30,
+  },
+  {
+    name: 'TikTok',
+    icon: '🎭',
+    description: '创意短视频，全球流行',
+    color: 'text-pink-600',
+    bgColor: 'from-pink-50 to-pink-100 border-pink-200/50',
+    contentComplexity: 95,
+    seriousness: 20,
+  },
+  
+  // 社区交流平台
+  {
+    name: 'Reddit',
+    icon: '🗣️',
+    description: '社区讨论，深度交流',
+    color: 'text-orange-600',
+    bgColor: 'from-orange-50 to-orange-100 border-orange-200/50',
+    contentComplexity: 35,
+    seriousness: 65,
+  },
+  {
+    name: 'Discord',
+    icon: '🎮',
+    description: '社群聊天，兴趣交流',
+    color: 'text-indigo-600',
+    bgColor: 'from-indigo-50 to-indigo-100 border-indigo-200/50',
+    contentComplexity: 40,
+    seriousness: 40,
+  },
+  {
+    name: 'Telegram',
+    icon: '✈️',
+    description: '私密通讯，频道传播',
+    color: 'text-sky-600',
+    bgColor: 'from-sky-50 to-sky-100 border-sky-200/50',
+    contentComplexity: 45,
+    seriousness: 55,
+  },
+  
+  // 专业工具平台
+  {
+    name: 'Substack',
+    icon: '💌',
+    description: '邮件订阅，深度写作',
+    color: 'text-amber-600',
+    bgColor: 'from-amber-50 to-amber-100 border-amber-200/50',
+    contentComplexity: 35,
+    seriousness: 80,
+  },
+  {
+    name: 'Notion',
+    icon: '📋',
+    description: '知识管理，协作文档',
+    color: 'text-gray-600',
+    bgColor: 'from-gray-50 to-gray-100 border-gray-200/50',
+    contentComplexity: 40,
+    seriousness: 85,
   },
 ];
 // 平台卡片组件
-const PlatformCard = ({platform}: { platform: Platform }) => (
-  <div className={cn(
-    'relative p-5 rounded-2xl border border-solid backdrop-blur-sm bg-gradient-to-br',
-    'transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-black/5',
-    'group cursor-pointer overflow-hidden',
-    platform.bgColor,
-  )}
+const PlatformCard = ({platform, style}: { platform: Platform; style?: React.CSSProperties }) => (
+  <div 
+    className={cn(
+      'absolute transform -translate-x-1/2 -translate-y-1/2',
+      'w-24 h-24 rounded-xl border border-solid backdrop-blur-sm bg-gradient-to-br',
+      'transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-black/10 hover:z-30',
+      'group cursor-pointer overflow-hidden',
+      platform.bgColor,
+    )}
+    style={style}
   >
     {/* 悬停发光效果 */}
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
     
     {/* 内容区域 */}
-    <div className="relative z-10 text-center">
-      {/* 图标容器 */}
-      <div className="relative mb-3">
-        <div className="text-3xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-          {platform.icon}
-        </div>
-        {/* 图标发光效果 */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-swatch-cactus/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    <div className="relative z-10 h-full flex flex-col items-center justify-center p-2">
+      {/* 图标 */}
+      <div className="text-2xl mb-1 transform group-hover:scale-110 transition-all duration-300">
+        {platform.icon}
       </div>
       
       {/* 平台名称 */}
       <h3 className={cn(
-        'font-semibold text-sm mb-1.5 transition-colors duration-200',
+        'font-medium text-xs text-center leading-tight transition-colors duration-200',
         'group-hover:text-primary',
         platform.color
       )}
       >
         {platform.name}
       </h3>
-      
-      {/* 描述文字 */}
-      <p className="text-xs text-text-faded/80 line-clamp-2 leading-relaxed">
+    </div>
+    
+    {/* 悬停时显示的详细信息 */}
+    <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-48 p-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-40">
+      <p className="text-xs text-text-faded text-center">
         {platform.description}
       </p>
     </div>
@@ -250,26 +324,116 @@ const PlatformCard = ({platform}: { platform: Platform }) => (
   </div>
 );
 export const Platforms = () => {
+  const chartWidth = 800;
+  const chartHeight = 600;
+  const padding = 100;
+  
   return (
     <div className="relative">
       {/* 背景装饰 */}
       <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-swatch-cactus/5 rounded-3xl -z-10" />
       
-      {/* 平台网格 */}
-      <div className="relative z-10">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 lg:gap-5">
-          {platforms.map((platform, index) => (
-            <div
-              key={platform.name}
-              className="animate-in fade-in-50 slide-in-from-bottom-4"
-              style={{
-                animationDelay: `${index * 50}ms`,
-                animationFillMode: 'both',
-              }}
-            >
-              <PlatformCard platform={platform} />
-            </div>
-          ))}
+      {/* 象限图表 */}
+      <div className="relative z-10 flex flex-col items-center">
+        {/* 图表标题 */}
+        <div className="mb-8 text-center">
+          <h3 className="text-xl font-semibold text-text-main mb-2">平台特征分析矩阵</h3>
+          <p className="text-sm text-text-faded">根据内容复杂度与专业程度的二维分布</p>
+        </div>
+        
+        {/* 图表容器 */}
+        <div className="relative bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-primary/10">
+          {/* SVG 图表 */}
+          <svg width={chartWidth} height={chartHeight} className="overflow-visible">
+            {/* 背景象限 */}
+            <defs>
+              <linearGradient id="quadrant1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#dbeafe" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#bfdbfe" stopOpacity="0.1" />
+              </linearGradient>
+              <linearGradient id="quadrant2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#dcfce7" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#bbf7d0" stopOpacity="0.1" />
+              </linearGradient>
+              <linearGradient id="quadrant3" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#fef3c7" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#fde68a" stopOpacity="0.1" />
+              </linearGradient>
+              <linearGradient id="quadrant4" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#fce7f3" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#fbcfe8" stopOpacity="0.1" />
+              </linearGradient>
+            </defs>
+            
+            {/* 象限背景 */}
+            <rect x={padding} y={padding} width={(chartWidth - 2 * padding) / 2} height={(chartHeight - 2 * padding) / 2} fill="url(#quadrant1)" rx="8" />
+            <rect x={padding + (chartWidth - 2 * padding) / 2} y={padding} width={(chartWidth - 2 * padding) / 2} height={(chartHeight - 2 * padding) / 2} fill="url(#quadrant2)" rx="8" />
+            <rect x={padding} y={padding + (chartHeight - 2 * padding) / 2} width={(chartWidth - 2 * padding) / 2} height={(chartHeight - 2 * padding) / 2} fill="url(#quadrant3)" rx="8" />
+            <rect x={padding + (chartWidth - 2 * padding) / 2} y={padding + (chartHeight - 2 * padding) / 2} width={(chartWidth - 2 * padding) / 2} height={(chartHeight - 2 * padding) / 2} fill="url(#quadrant4)" rx="8" />
+            
+            {/* 网格线 */}
+            <defs>
+              <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#e5e7eb" strokeWidth="0.5" opacity="0.3" />
+              </pattern>
+            </defs>
+            <rect x={padding} y={padding} width={chartWidth - 2 * padding} height={chartHeight - 2 * padding} fill="url(#grid)" />
+            
+            {/* 坐标轴 */}
+            <line x1={padding} y1={chartHeight - padding} x2={chartWidth - padding} y2={chartHeight - padding} stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />
+            <line x1={padding} y1={chartHeight - padding} x2={padding} y2={padding} stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />
+            
+            {/* 箭头标记 */}
+            <defs>
+              <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#374151" />
+              </marker>
+            </defs>
+            
+            {/* 中心分割线 */}
+            <line x1={padding + (chartWidth - 2 * padding) / 2} y1={padding} x2={padding + (chartWidth - 2 * padding) / 2} y2={chartHeight - padding} stroke="#9ca3af" strokeWidth="1" strokeDasharray="5,5" opacity="0.5" />
+            <line x1={padding} y1={padding + (chartHeight - 2 * padding) / 2} x2={chartWidth - padding} y2={padding + (chartHeight - 2 * padding) / 2} stroke="#9ca3af" strokeWidth="1" strokeDasharray="5,5" opacity="0.5" />
+          </svg>
+          
+          {/* 平台卡片 */}
+          {platforms.map((platform, index) => {
+            const x = padding + (platform.contentComplexity / 100) * (chartWidth - 2 * padding);
+            const y = chartHeight - padding - (platform.seriousness / 100) * (chartHeight - 2 * padding);
+            
+            return (
+              <PlatformCard
+                key={platform.name}
+                platform={platform}
+                style={{
+                  left: `${x}px`,
+                  top: `${y}px`,
+                  animationDelay: `${index * 50}ms`,
+                }}
+              />
+            );
+          })}
+          
+          {/* 坐标轴标签 */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm font-medium text-text-main">
+            内容复杂度 →
+          </div>
+          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 -rotate-90 text-sm font-medium text-text-main">
+            专业程度 →
+          </div>
+          
+          {/* 象限标签 */}
+          <div className="absolute top-6 left-6 text-xs font-medium text-blue-600 bg-blue-50/80 px-2 py-1 rounded">
+            专业文本
+          </div>
+          <div className="absolute top-6 right-6 text-xs font-medium text-green-600 bg-green-50/80 px-2 py-1 rounded">
+            专业多媒体
+          </div>
+          <div className="absolute bottom-6 left-6 text-xs font-medium text-yellow-600 bg-yellow-50/80 px-2 py-1 rounded">
+            娱乐文本
+          </div>
+          <div className="absolute bottom-6 right-6 text-xs font-medium text-pink-600 bg-pink-50/80 px-2 py-1 rounded">
+            娱乐多媒体
+          </div>
         </div>
       </div>
 
@@ -278,7 +442,7 @@ export const Platforms = () => {
         <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/80 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg">
           <div className="w-2 h-2 bg-gradient-to-r from-primary to-swatch-cactus rounded-full animate-pulse" />
           <p className="text-text-faded text-sm font-medium">
-            支持28+主流平台，更多平台持续添加中...
+            支持28+主流平台，智能分析选择最佳发布策略
           </p>
           <div className="w-2 h-2 bg-gradient-to-r from-swatch-cactus to-primary rounded-full animate-pulse" style={{animationDelay: '0.5s'}} />
         </div>
