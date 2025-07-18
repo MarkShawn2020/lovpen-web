@@ -80,7 +80,8 @@ export default antfu(
       'ts/consistent-type-imports': 'off',
       'no-console': 'off',
       'ts/ban-ts-comment': 'off',
-      'style/no-trailing-spaces': 'off'
+      'style/no-trailing-spaces': 'off',
+      'antfu/consistent-list-newline': 'off',
     },
   },
 );
