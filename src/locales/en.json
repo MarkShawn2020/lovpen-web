@@ -9,6 +9,8 @@
   },
   "Header": {
     "features": "Features",
+    "architecture": "Architecture",
+    "workflow": "Workflow",
     "cases": "Cases",
     "pricing": "Pricing",
     "about": "About",
@@ -434,5 +436,38 @@
       "wechat": "WeChat",
       "feishu": "Feishu"
     }
+  },
+  "Architecture": {
+    "meta_title": "Architecture - LovPen",
+    "meta_description": "Learn about LovPen's intelligent creation architecture, from idea input to content distribution workflow.",
+    "hero_title": "LovPen Intelligent Creation Architecture",
+    "hero_subtitle": "From idea to publication, LovPen intelligent creation workflow explained",
+    "flow_title": "Intelligent Creation Flow",
+    "flow_subtitle": "End-to-end automation makes creation simpler",
+    "input_section_title": "Input Sources",
+    "output_section_title": "Output Platforms",
+    "engine_title": "LovPen Engine",
+    "feedback_title": "Data Feedback Optimization",
+    "flow_input_idea": "Inspiration Flash",
+    "flow_input_idea_desc": "Suddenly thought of...",
+    "flow_input_report": "Work Report",
+    "flow_input_report_desc": "Data analysis documents",
+    "flow_input_voice": "Voice Memo",
+    "flow_input_voice_desc": "Record ideas anytime",
+    "flow_output_wechat": "WeChat Official",
+    "flow_output_wechat_desc": "Professional layout",
+    "flow_output_social": "Zhihu/Xiaohongshu",
+    "flow_output_social_desc": "Beautiful graphics",
+    "flow_output_platforms": "20+ Platforms",
+    "flow_output_platforms_desc": "One-click distribution",
+    "flow_feedback": "Data feedback optimization",
+    "flow_description_1": "Daily inspiration flows through LovPen's intelligent processing",
+    "flow_description_2": "Creating beautiful content that flows to major platforms with closed-loop optimization"
+  },
+  "Workflow": {
+    "meta_title": "Workflow - LovPen",
+    "meta_description": "Learn about LovPen's intelligent creation workflow, from AI processing to platform distribution.",
+    "ai_process_title": "LovPen Intelligent Creation Process",
+    "ai_process_subtitle": "From idea to publication, LovPen assists you throughout"
   }
 }

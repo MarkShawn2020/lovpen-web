@@ -1,6 +1,6 @@
 import {setRequestLocale} from 'next-intl/server';
 import {Footer} from '@/components/layout/Footer';
-import {Header} from '@/components/layout/Header';
+import {LandingNavbar} from '@/components/layout/LandingNavbar';
 import {NotificationBanner} from '@/components/NotificationBanner';
 
 export default async function Layout(props: {
@@ -14,7 +14,7 @@ export default async function Layout(props: {
     <>
       <NotificationBanner/>
       <div className="min-h-screen flex flex-col">
-        <Header/>
+        <LandingNavbar/>
         <main className="flex-grow">
           {props.children}
         </main>

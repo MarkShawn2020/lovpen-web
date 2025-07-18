@@ -3,9 +3,9 @@ import Link from 'next/link';
 import {Container} from '@/components/layout/Container';
 import {Button} from '@/components/lovpen-ui/button';
 import {Card, CardContent, CardHeader, CardIcon} from '@/components/lovpen-ui/card';
-import {PlatformShowcase} from '@/components/lovpen-ui/platform-showcase';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/lovpen-ui/tabs';
-import {LovpenFlowSystem} from "@/app/[locale]/(marketing)/lovpenFlowSystem";
+import Architecture from "@/app/[locale]/(marketing)/architecture/page";
+import Workflow from "@/app/[locale]/(marketing)/workflow/page";
 
 type IIndexProps = {
   params: Promise<{ locale: string }>;
@@ -85,25 +85,14 @@ export default async function Index(props: IIndexProps) {
             </div>
 
             {/* LovPen Flow System */}
-            <LovpenFlowSystem/>
+            <Architecture params={props.params}/>
 
           </div>
         </Container>
       </section>
 
       {/* AI Process & Platform Support Section */}
-      <section className="w-full py-16 lg:py-24 u-bg-ivory-medium u-bg-premium-texture relative">
-        <Container>
-          <div className="text-center mb-16">
-            <h2 className="u-display-m mb-4 text-text-main">{t('ai_process_title')}</h2>
-            <p className="u-paragraph-l text-text-faded max-w-3xl mx-auto">
-              {t('ai_process_subtitle')}
-            </p>
-          </div>
-
-          <PlatformShowcase/>
-        </Container>
-      </section>
+      <Workflow params={props.params}/>
 
       {/* Features Section */}
       <section id="features" className="w-full py-16 lg:py-24 bg-white u-bg-subtle-waves relative">

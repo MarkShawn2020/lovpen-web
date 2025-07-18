@@ -9,6 +9,8 @@
   },
   "Header": {
     "features": "Fonctionnalités",
+    "architecture": "Architecture",
+    "workflow": "Flux de travail",
     "cases": "Cas d'usage",
     "pricing": "Tarifs",
     "about": "À propos",
@@ -428,5 +430,38 @@
       "wechat": "WeChat",
       "feishu": "Feishu"
     }
+  },
+  "Architecture": {
+    "meta_title": "Architecture - LovPen",
+    "meta_description": "Découvrez l'architecture de création intelligente de LovPen, du flux d'entrée des idées à la distribution de contenu.",
+    "hero_title": "Architecture de création intelligente LovPen",
+    "hero_subtitle": "De l'idée à la publication, le flux de création intelligent LovPen expliqué",
+    "flow_title": "Flux de création intelligent",
+    "flow_subtitle": "Automatisation de bout en bout pour simplifier la création",
+    "input_section_title": "Sources d'entrée",
+    "output_section_title": "Plateformes de sortie",
+    "engine_title": "Moteur LovPen",
+    "feedback_title": "Optimisation par retour de données",
+    "flow_input_idea": "Éclair d'inspiration",
+    "flow_input_idea_desc": "J'ai soudain pensé à...",
+    "flow_input_report": "Rapport de travail",
+    "flow_input_report_desc": "Documents d'analyse de données",
+    "flow_input_voice": "Mémo vocal",
+    "flow_input_voice_desc": "Enregistrer des idées à tout moment",
+    "flow_output_wechat": "WeChat Officiel",
+    "flow_output_wechat_desc": "Mise en page professionnelle",
+    "flow_output_social": "Zhihu/Xiaohongshu",
+    "flow_output_social_desc": "Graphiques magnifiques",
+    "flow_output_platforms": "20+ Plateformes",
+    "flow_output_platforms_desc": "Distribution en un clic",
+    "flow_feedback": "Optimisation par retour de données",
+    "flow_description_1": "L'inspiration quotidienne circule à travers le traitement intelligent de LovPen",
+    "flow_description_2": "Créer du contenu magnifique qui circule vers les principales plateformes avec optimisation en boucle fermée"
+  },
+  "Workflow": {
+    "meta_title": "Flux de travail - LovPen",
+    "meta_description": "Découvrez le flux de travail de création intelligente de LovPen, du traitement IA à la distribution sur les plateformes.",
+    "ai_process_title": "Processus de création intelligent LovPen",
+    "ai_process_subtitle": "De l'idée à la publication, LovPen vous assiste à chaque étape"
   }
 }

@@ -7,12 +7,14 @@ import {Container} from './Container';
 import {HeaderClient} from './HeaderClient';
 import packageJson from '../../../package.json';
 
-const Header = async () => {
+const LandingNavbar = async () => {
   // 移除Clerk依赖，使用客户端组件处理认证状态
   const locale = await getLocale();
   const t = await getTranslations('Header');
 
   const navigation = [
+    {name: t('architecture'), href: '/architecture', scrollToId: 'architecture'},
+    {name: t('workflow'), href: '/workflow', scrollToId: 'workflow'},
     {name: t('features'), href: '/features', scrollToId: 'features'},
     {name: t('cases'), href: '/cases', scrollToId: 'cases'},
     {name: t('pricing'), href: '/pricing', scrollToId: 'pricing'},
@@ -77,4 +79,4 @@ const Header = async () => {
   );
 };
 
-export {Header};
+export {LandingNavbar};

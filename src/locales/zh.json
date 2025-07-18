@@ -9,6 +9,8 @@
   },
   "Header": {
     "features": "功能特性",
+    "architecture": "架构设计",
+    "workflow": "工作流程",
     "cases": "使用案例", 
     "pricing": "价格方案",
     "about": "关于我们",
@@ -171,5 +173,38 @@
     "meta_title": "作品详情",
     "meta_description": "查看作品详情",
     "header": "作品集"
+  },
+  "Architecture": {
+    "meta_title": "架构设计 - LovPen",
+    "meta_description": "了解 LovPen 的智能创作架构，从想法输入到内容分发的完整流程。",
+    "hero_title": "LovPen 智能创作架构",
+    "hero_subtitle": "从想法到发布，LovPen 智能创作流程详解",
+    "flow_title": "智能创作流程",
+    "flow_subtitle": "全流程自动化，让创作更简单",
+    "input_section_title": "输入来源",
+    "output_section_title": "输出平台",
+    "engine_title": "LovPen 引擎",
+    "feedback_title": "数据反馈优化",
+    "flow_input_idea": "灵感闪现",
+    "flow_input_idea_desc": "今天突然想到...",
+    "flow_input_report": "工作报告",
+    "flow_input_report_desc": "数据分析文档",
+    "flow_input_voice": "语音备忘",
+    "flow_input_voice_desc": "随时记录想法",
+    "flow_output_wechat": "微信公众号",
+    "flow_output_wechat_desc": "专业排版",
+    "flow_output_social": "知乎/小红书",
+    "flow_output_social_desc": "精美图文",
+    "flow_output_platforms": "20+平台",
+    "flow_output_platforms_desc": "一键分发",
+    "flow_feedback": "数据反馈优化",
+    "flow_description_1": "每天的灵感流动，经过 LovPen 智能处理",
+    "flow_description_2": "形成精美内容，流向各大平台，数据闭环优化"
+  },
+  "Workflow": {
+    "meta_title": "工作流程 - LovPen",
+    "meta_description": "了解 LovPen 的智能创作流程，从 AI 处理到平台分发的完整流程。",
+    "ai_process_title": "LovPen 智能创作流程",
+    "ai_process_subtitle": "从想法到发布，LovPen 全程协助"
   }
 }
