@@ -18,6 +18,13 @@
       "paths_count": 1,
       "schemas_count": 3
     },
+    "Files": {
+      "title": "Files API",
+      "description": "API endpoints tagged with 'Files'",
+      "file": "files_api.json",
+      "paths_count": 13,
+      "schemas_count": 14
+    },
     "Knowledge": {
       "title": "Knowledge API",
       "description": "API endpoints tagged with 'Knowledge'",
@@ -59,13 +66,6 @@
       "file": "user_api.json",
       "paths_count": 11,
       "schemas_count": 13
-    },
-    "User Files": {
-      "title": "User Files API",
-      "description": "API endpoints tagged with 'User Files'",
-      "file": "user files_api.json",
-      "paths_count": 13,
-      "schemas_count": 14
     },
     "VPN": {
       "title": "VPN API",

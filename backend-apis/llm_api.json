@@ -231,51 +231,80 @@
   },
   "components": {
     "schemas": {
-      "HTTPValidationError": {
+      "Body_call_agent__llm_agent_post": {
         "properties": {
-          "detail": {
-            "items": {
-              "$ref": "#/components/schemas/ValidationError"
-            },
-            "type": "array",
-            "title": "Detail"
-          }
-        },
-        "type": "object",
-        "title": "HTTPValidationError"
-      },
-      "ValidationError": {
-        "properties": {
-          "loc": {
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
-                }
-              ]
-            },
-            "type": "array",
-            "title": "Location"
-          },
-          "msg": {
+          "input": {
             "type": "string",
-            "title": "Message"
+            "title": "Input"
           },
-          "type": {
+          "agent_type": {
             "type": "string",
-            "title": "Error Type"
+            "enum": [
+              "default",
+              "summarize-content",
+              "summarize-poem",
+              "totem-gen"
+            ],
+            "title": "Agent Type",
+            "default": "default"
+          },
+          "llm_model_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "gpt-3.5-turbo",
+                  "gpt-3.5-turbo-16k",
+                  "gpt-3.5-turbo-0301",
+                  "gpt-3.5-turbo-0613",
+                  "gpt-3.5-turbo-1106",
+                  "gpt-3.5-turbo-0125",
+                  "gpt-3.5-turbo-16k-0613",
+                  "gpt-4-0125-preview",
+                  "gpt-4-turbo-preview",
+                  "gpt-4-1106-preview",
+                  "gpt-4-vision-preview",
+                  "gpt-4",
+                  "gpt-4-0314",
+                  "gpt-4-0613",
+                  "gpt-4-32k",
+                  "gpt-4-32k-0314",
+                  "gpt-4-32k-0613",
+                  "moonshot-v1_plain-8k",
+                  "moonshot-v1_plain-32k",
+                  "moonshot-v1_plain-128k",
+                  "glm-3-turbo",
+                  "glm-4",
+                  "abab6-chat",
+                  "abab5.5-chat",
+                  "abab5.5s-chat",
+                  "qwen-turbo",
+                  "qwen-plus",
+                  "qwen-max",
+                  "Baichuan2-Turbo",
+                  "Baichuan2-Turbo-192k",
+                  "Doubao-lite-4k",
+                  "Doubao-lite-32k",
+                  "Doubao-lite-128k",
+                  "Doubao-pro-4k",
+                  "Doubao-pro-32k",
+                  "Doubao-pro-128k",
+                  "claude-3-5-sonnet-20240620"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Llm Model Type",
+            "description": "覆盖配置中的model"
           }
         },
         "type": "object",
         "required": [
-          "loc",
-          "msg",
-          "type"
+          "input"
         ],
-        "title": "ValidationError"
+        "title": "Body_call_agent__llm_agent_post"
       },
       "ILLMBody": {
         "properties": {
@@ -393,80 +422,51 @@
         ],
         "title": "IMessage"
       },
-      "Body_call_agent__llm_agent_post": {
+      "HTTPValidationError": {
         "properties": {
-          "input": {
-            "type": "string",
-            "title": "Input"
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
           },
-          "agent_type": {
+          "msg": {
             "type": "string",
-            "enum": [
-              "default",
-              "summarize-content",
-              "summarize-poem",
-              "totem-gen"
-            ],
-            "title": "Agent Type",
-            "default": "default"
+            "title": "Message"
           },
-          "llm_model_type": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "gpt-3.5-turbo",
-                  "gpt-3.5-turbo-16k",
-                  "gpt-3.5-turbo-0301",
-                  "gpt-3.5-turbo-0613",
-                  "gpt-3.5-turbo-1106",
-                  "gpt-3.5-turbo-0125",
-                  "gpt-3.5-turbo-16k-0613",
-                  "gpt-4-0125-preview",
-                  "gpt-4-turbo-preview",
-                  "gpt-4-1106-preview",
-                  "gpt-4-vision-preview",
-                  "gpt-4",
-                  "gpt-4-0314",
-                  "gpt-4-0613",
-                  "gpt-4-32k",
-                  "gpt-4-32k-0314",
-                  "gpt-4-32k-0613",
-                  "moonshot-v1_plain-8k",
-                  "moonshot-v1_plain-32k",
-                  "moonshot-v1_plain-128k",
-                  "glm-3-turbo",
-                  "glm-4",
-                  "abab6-chat",
-                  "abab5.5-chat",
-                  "abab5.5s-chat",
-                  "qwen-turbo",
-                  "qwen-plus",
-                  "qwen-max",
-                  "Baichuan2-Turbo",
-                  "Baichuan2-Turbo-192k",
-                  "Doubao-lite-4k",
-                  "Doubao-lite-32k",
-                  "Doubao-lite-128k",
-                  "Doubao-pro-4k",
-                  "Doubao-pro-32k",
-                  "Doubao-pro-128k",
-                  "claude-3-5-sonnet-20240620"
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Llm Model Type",
-            "description": "覆盖配置中的model"
+          "type": {
+            "type": "string",
+            "title": "Error Type"
           }
         },
         "type": "object",
         "required": [
-          "input"
+          "loc",
+          "msg",
+          "type"
         ],
-        "title": "Body_call_agent__llm_agent_post"
+        "title": "ValidationError"
       }
     },
     "responses": {},

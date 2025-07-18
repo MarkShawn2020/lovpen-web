@@ -421,6 +421,161 @@
         ],
         "title": "LoginRequest"
       },
+      "Token": {
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "title": "Access Token"
+          },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "access_token",
+          "token_type"
+        ],
+        "title": "Token"
+      },
+      "UserCreate": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "full_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Full Name"
+          },
+          "password": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Password"
+          },
+          "oauth_provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Oauth Provider"
+          },
+          "oauth_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Oauth Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "username"
+        ],
+        "title": "UserCreate"
+      },
+      "Body_login_for_access_token_account_token_post": {
+        "properties": {
+          "grant_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "password"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Grant Type"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          },
+          "scope": {
+            "type": "string",
+            "title": "Scope",
+            "default": ""
+          },
+          "client_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Client Id"
+          },
+          "client_secret": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Client Secret"
+          }
+        },
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "title": "Body_login_for_access_token_account_token_post"
+      },
       "UserResponse": {
         "properties": {
           "username": {
@@ -691,86 +846,6 @@
         ],
         "title": "UserResponse"
       },
-      "UserCreate": {
-        "properties": {
-          "username": {
-            "type": "string",
-            "title": "Username"
-          },
-          "email": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "email"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Email"
-          },
-          "phone": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Phone"
-          },
-          "full_name": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Full Name"
-          },
-          "password": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Password"
-          },
-          "oauth_provider": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Oauth Provider"
-          },
-          "oauth_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Oauth Id"
-          }
-        },
-        "type": "object",
-        "required": [
-          "username"
-        ],
-        "title": "UserCreate"
-      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -816,81 +891,6 @@
           "type"
         ],
         "title": "ValidationError"
-      },
-      "Token": {
-        "properties": {
-          "access_token": {
-            "type": "string",
-            "title": "Access Token"
-          },
-          "token_type": {
-            "type": "string",
-            "title": "Token Type"
-          }
-        },
-        "type": "object",
-        "required": [
-          "access_token",
-          "token_type"
-        ],
-        "title": "Token"
-      },
-      "Body_login_for_access_token_account_token_post": {
-        "properties": {
-          "grant_type": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "password"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Grant Type"
-          },
-          "username": {
-            "type": "string",
-            "title": "Username"
-          },
-          "password": {
-            "type": "string",
-            "title": "Password"
-          },
-          "scope": {
-            "type": "string",
-            "title": "Scope",
-            "default": ""
-          },
-          "client_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Client Id"
-          },
-          "client_secret": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Client Secret"
-          }
-        },
-        "type": "object",
-        "required": [
-          "username",
-          "password"
-        ],
-        "title": "Body_login_for_access_token_account_token_post"
       }
     },
     "responses": {},

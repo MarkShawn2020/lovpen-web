@@ -1424,452 +1424,6 @@
   },
   "components": {
     "schemas": {
-      "KnowledgeItemUpdate": {
-        "properties": {
-          "title": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Title"
-          },
-          "content": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Content"
-          },
-          "item_metadata": {
-            "anyOf": [
-              {
-                "additionalProperties": true,
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Item Metadata"
-          }
-        },
-        "type": "object",
-        "title": "KnowledgeItemUpdate"
-      },
-      "IndexStats": {
-        "properties": {
-          "total_documents": {
-            "type": "integer",
-            "title": "Total Documents"
-          },
-          "vectorized_documents": {
-            "type": "integer",
-            "title": "Vectorized Documents"
-          },
-          "total_chunks": {
-            "type": "integer",
-            "title": "Total Chunks"
-          },
-          "index_size_mb": {
-            "type": "number",
-            "title": "Index Size Mb"
-          },
-          "last_updated": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Last Updated"
-          }
-        },
-        "type": "object",
-        "required": [
-          "total_documents",
-          "vectorized_documents",
-          "total_chunks",
-          "index_size_mb"
-        ],
-        "title": "IndexStats",
-        "description": "索引统计"
-      },
-      "HTTPValidationError": {
-        "properties": {
-          "detail": {
-            "items": {
-              "$ref": "#/components/schemas/ValidationError"
-            },
-            "type": "array",
-            "title": "Detail"
-          }
-        },
-        "type": "object",
-        "title": "HTTPValidationError"
-      },
-      "ValidationError": {
-        "properties": {
-          "loc": {
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
-                }
-              ]
-            },
-            "type": "array",
-            "title": "Location"
-          },
-          "msg": {
-            "type": "string",
-            "title": "Message"
-          },
-          "type": {
-            "type": "string",
-            "title": "Error Type"
-          }
-        },
-        "type": "object",
-        "required": [
-          "loc",
-          "msg",
-          "type"
-        ],
-        "title": "ValidationError"
-      },
-      "BatchDeleteResponse": {
-        "properties": {
-          "matched_count": {
-            "type": "integer",
-            "title": "Matched Count",
-            "description": "匹配到的文件数量"
-          },
-          "deleted_count": {
-            "type": "integer",
-            "title": "Deleted Count",
-            "description": "实际删除的文件数量"
-          },
-          "dry_run": {
-            "type": "boolean",
-            "title": "Dry Run",
-            "description": "是否为预览模式"
-          },
-          "matched_files": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "type": "array",
-            "title": "Matched Files",
-            "description": "匹配的文件列表"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message",
-            "description": "操作结果消息"
-          }
-        },
-        "type": "object",
-        "required": [
-          "matched_count",
-          "deleted_count",
-          "dry_run",
-          "matched_files",
-          "message"
-        ],
-        "title": "BatchDeleteResponse",
-        "description": "批量删除响应模型"
-      },
-      "PlatformStatus": {
-        "properties": {
-          "platform": {
-            "type": "string",
-            "title": "Platform"
-          },
-          "status": {
-            "type": "string",
-            "title": "Status"
-          },
-          "last_sync": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Last Sync"
-          },
-          "items_count": {
-            "type": "integer",
-            "title": "Items Count"
-          },
-          "error_message": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Error Message"
-          }
-        },
-        "type": "object",
-        "required": [
-          "platform",
-          "status",
-          "items_count"
-        ],
-        "title": "PlatformStatus"
-      },
-      "KnowledgeInsight": {
-        "properties": {
-          "type": {
-            "type": "string",
-            "title": "Type"
-          },
-          "title": {
-            "type": "string",
-            "title": "Title"
-          },
-          "description": {
-            "type": "string",
-            "title": "Description"
-          },
-          "data": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Data"
-          },
-          "generated_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Generated At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "type",
-          "title",
-          "description",
-          "data",
-          "generated_at"
-        ],
-        "title": "KnowledgeInsight"
-      },
-      "VectorizationStatus": {
-        "properties": {
-          "status": {
-            "type": "string",
-            "title": "Status"
-          },
-          "progress": {
-            "type": "number",
-            "title": "Progress"
-          },
-          "processed_count": {
-            "type": "integer",
-            "title": "Processed Count"
-          },
-          "total_count": {
-            "type": "integer",
-            "title": "Total Count"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
-          },
-          "started_at": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Started At"
-          },
-          "completed_at": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Completed At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "status",
-          "progress",
-          "processed_count",
-          "total_count",
-          "message"
-        ],
-        "title": "VectorizationStatus",
-        "description": "向量化状态"
-      },
-      "Body_upload_knowledge_item_knowledge_items_upload_post": {
-        "properties": {
-          "file": {
-            "type": "string",
-            "format": "binary",
-            "title": "File"
-          },
-          "tags": {
-            "anyOf": [
-              {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Tags"
-          }
-        },
-        "type": "object",
-        "required": [
-          "file"
-        ],
-        "title": "Body_upload_knowledge_item_knowledge_items_upload_post"
-      },
-      "VectorizationRequest": {
-        "properties": {
-          "item_ids": {
-            "anyOf": [
-              {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Item Ids"
-          },
-          "force_reindex": {
-            "type": "boolean",
-            "title": "Force Reindex",
-            "default": false
-          },
-          "batch_size": {
-            "type": "integer",
-            "title": "Batch Size",
-            "default": 10
-          }
-        },
-        "type": "object",
-        "title": "VectorizationRequest",
-        "description": "向量化请求"
-      },
-      "KnowledgeItemCreate": {
-        "properties": {
-          "title": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Title"
-          },
-          "content": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Content"
-          },
-          "item_type": {
-            "$ref": "#/components/schemas/ItemType"
-          },
-          "platform": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Platform"
-          },
-          "platform_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Platform Id"
-          },
-          "item_metadata": {
-            "anyOf": [
-              {
-                "additionalProperties": true,
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Item Metadata"
-          }
-        },
-        "type": "object",
-        "required": [
-          "item_type"
-        ],
-        "title": "KnowledgeItemCreate"
-      },
-      "ItemType": {
-        "type": "string",
-        "enum": [
-          "text",
-          "image",
-          "video",
-          "audio",
-          "document",
-          "message",
-          "note",
-          "page"
-        ],
-        "title": "ItemType"
-      },
       "BatchDeleteRequest": {
         "properties": {
           "filename_pattern": {
@@ -1896,191 +1450,6 @@
         ],
         "title": "BatchDeleteRequest",
         "description": "批量删除请求模型"
-      },
-      "PlatformSyncRequest": {
-        "properties": {
-          "platform": {
-            "type": "string",
-            "title": "Platform"
-          },
-          "auth_token": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Auth Token"
-          },
-          "config": {
-            "anyOf": [
-              {
-                "additionalProperties": true,
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Config"
-          },
-          "sync_type": {
-            "type": "string",
-            "title": "Sync Type",
-            "default": "incremental"
-          }
-        },
-        "type": "object",
-        "required": [
-          "platform"
-        ],
-        "title": "PlatformSyncRequest"
-      },
-      "AISearchRequest": {
-        "properties": {
-          "query": {
-            "type": "string",
-            "title": "Query"
-          },
-          "search_type": {
-            "type": "string",
-            "title": "Search Type",
-            "default": "hybrid"
-          },
-          "include_modalities": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Include Modalities",
-            "default": [
-              "text",
-              "image",
-              "video"
-            ]
-          },
-          "limit": {
-            "type": "integer",
-            "title": "Limit",
-            "default": 10
-          },
-          "include_reasoning": {
-            "type": "boolean",
-            "title": "Include Reasoning",
-            "default": false
-          }
-        },
-        "type": "object",
-        "required": [
-          "query"
-        ],
-        "title": "AISearchRequest"
-      },
-      "AdvancedSearchResponse": {
-        "properties": {
-          "query_info": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Query Info"
-          },
-          "results": {
-            "items": {
-              "$ref": "#/components/schemas/AISearchResult"
-            },
-            "type": "array",
-            "title": "Results"
-          },
-          "total": {
-            "type": "integer",
-            "title": "Total"
-          },
-          "search_type": {
-            "type": "string",
-            "title": "Search Type"
-          },
-          "metadata": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Metadata"
-          }
-        },
-        "type": "object",
-        "required": [
-          "query_info",
-          "results",
-          "total",
-          "search_type",
-          "metadata"
-        ],
-        "title": "AdvancedSearchResponse"
-      },
-      "AISearchResult": {
-        "properties": {
-          "item_id": {
-            "type": "string",
-            "title": "Item Id"
-          },
-          "title": {
-            "type": "string",
-            "title": "Title"
-          },
-          "content_preview": {
-            "type": "string",
-            "title": "Content Preview"
-          },
-          "relevance_score": {
-            "type": "number",
-            "title": "Relevance Score"
-          },
-          "item_type": {
-            "type": "string",
-            "title": "Item Type"
-          },
-          "platform": {
-            "type": "string",
-            "title": "Platform"
-          },
-          "metadata": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Metadata"
-          },
-          "highlight": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Highlight"
-          },
-          "reasoning": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Reasoning"
-          }
-        },
-        "type": "object",
-        "required": [
-          "item_id",
-          "title",
-          "content_preview",
-          "relevance_score",
-          "item_type",
-          "platform",
-          "metadata"
-        ],
-        "title": "AISearchResult"
       },
       "SearchResponse": {
         "properties": {
@@ -2187,6 +1556,88 @@
         ],
         "title": "KnowledgeItemSearchResponse"
       },
+      "ItemType": {
+        "type": "string",
+        "enum": [
+          "text",
+          "image",
+          "video",
+          "audio",
+          "document",
+          "message",
+          "note",
+          "page"
+        ],
+        "title": "ItemType"
+      },
+      "KnowledgeItemCreate": {
+        "properties": {
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "content": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content"
+          },
+          "item_type": {
+            "$ref": "#/components/schemas/ItemType"
+          },
+          "platform": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Platform"
+          },
+          "platform_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Platform Id"
+          },
+          "item_metadata": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Metadata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item_type"
+        ],
+        "title": "KnowledgeItemCreate"
+      },
       "ReasoningRequest": {
         "properties": {
           "query": {
@@ -2218,6 +1669,241 @@
           "query"
         ],
         "title": "ReasoningRequest"
+      },
+      "PlatformStatus": {
+        "properties": {
+          "platform": {
+            "type": "string",
+            "title": "Platform"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "last_sync": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Sync"
+          },
+          "items_count": {
+            "type": "integer",
+            "title": "Items Count"
+          },
+          "error_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "platform",
+          "status",
+          "items_count"
+        ],
+        "title": "PlatformStatus"
+      },
+      "AISearchRequest": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "title": "Query"
+          },
+          "search_type": {
+            "type": "string",
+            "title": "Search Type",
+            "default": "hybrid"
+          },
+          "include_modalities": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Include Modalities",
+            "default": [
+              "text",
+              "image",
+              "video"
+            ]
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit",
+            "default": 10
+          },
+          "include_reasoning": {
+            "type": "boolean",
+            "title": "Include Reasoning",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "query"
+        ],
+        "title": "AISearchRequest"
+      },
+      "KnowledgeInsight": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "data": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Data"
+          },
+          "generated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Generated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "title",
+          "description",
+          "data",
+          "generated_at"
+        ],
+        "title": "KnowledgeInsight"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "Body_upload_knowledge_item_knowledge_items_upload_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_knowledge_item_knowledge_items_upload_post"
+      },
+      "PlatformSyncRequest": {
+        "properties": {
+          "platform": {
+            "type": "string",
+            "title": "Platform"
+          },
+          "auth_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Auth Token"
+          },
+          "config": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Config"
+          },
+          "sync_type": {
+            "type": "string",
+            "title": "Sync Type",
+            "default": "incremental"
+          }
+        },
+        "type": "object",
+        "required": [
+          "platform"
+        ],
+        "title": "PlatformSyncRequest"
       },
       "KnowledgeItemResponse": {
         "properties": {
@@ -2315,6 +2001,320 @@
           "updated_at"
         ],
         "title": "KnowledgeItemResponse"
+      },
+      "VectorizationRequest": {
+        "properties": {
+          "item_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Ids"
+          },
+          "force_reindex": {
+            "type": "boolean",
+            "title": "Force Reindex",
+            "default": false
+          },
+          "batch_size": {
+            "type": "integer",
+            "title": "Batch Size",
+            "default": 10
+          }
+        },
+        "type": "object",
+        "title": "VectorizationRequest",
+        "description": "向量化请求"
+      },
+      "VectorizationStatus": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "progress": {
+            "type": "number",
+            "title": "Progress"
+          },
+          "processed_count": {
+            "type": "integer",
+            "title": "Processed Count"
+          },
+          "total_count": {
+            "type": "integer",
+            "title": "Total Count"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "progress",
+          "processed_count",
+          "total_count",
+          "message"
+        ],
+        "title": "VectorizationStatus",
+        "description": "向量化状态"
+      },
+      "IndexStats": {
+        "properties": {
+          "total_documents": {
+            "type": "integer",
+            "title": "Total Documents"
+          },
+          "vectorized_documents": {
+            "type": "integer",
+            "title": "Vectorized Documents"
+          },
+          "total_chunks": {
+            "type": "integer",
+            "title": "Total Chunks"
+          },
+          "index_size_mb": {
+            "type": "number",
+            "title": "Index Size Mb"
+          },
+          "last_updated": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Updated"
+          }
+        },
+        "type": "object",
+        "required": [
+          "total_documents",
+          "vectorized_documents",
+          "total_chunks",
+          "index_size_mb"
+        ],
+        "title": "IndexStats",
+        "description": "索引统计"
+      },
+      "AdvancedSearchResponse": {
+        "properties": {
+          "query_info": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Query Info"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/AISearchResult"
+            },
+            "type": "array",
+            "title": "Results"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "search_type": {
+            "type": "string",
+            "title": "Search Type"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metadata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "query_info",
+          "results",
+          "total",
+          "search_type",
+          "metadata"
+        ],
+        "title": "AdvancedSearchResponse"
+      },
+      "AISearchResult": {
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "title": "Item Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "content_preview": {
+            "type": "string",
+            "title": "Content Preview"
+          },
+          "relevance_score": {
+            "type": "number",
+            "title": "Relevance Score"
+          },
+          "item_type": {
+            "type": "string",
+            "title": "Item Type"
+          },
+          "platform": {
+            "type": "string",
+            "title": "Platform"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metadata"
+          },
+          "highlight": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Highlight"
+          },
+          "reasoning": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reasoning"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item_id",
+          "title",
+          "content_preview",
+          "relevance_score",
+          "item_type",
+          "platform",
+          "metadata"
+        ],
+        "title": "AISearchResult"
+      },
+      "BatchDeleteResponse": {
+        "properties": {
+          "matched_count": {
+            "type": "integer",
+            "title": "Matched Count",
+            "description": "匹配到的文件数量"
+          },
+          "deleted_count": {
+            "type": "integer",
+            "title": "Deleted Count",
+            "description": "实际删除的文件数量"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "description": "是否为预览模式"
+          },
+          "matched_files": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Matched Files",
+            "description": "匹配的文件列表"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "操作结果消息"
+          }
+        },
+        "type": "object",
+        "required": [
+          "matched_count",
+          "deleted_count",
+          "dry_run",
+          "matched_files",
+          "message"
+        ],
+        "title": "BatchDeleteResponse",
+        "description": "批量删除响应模型"
+      },
+      "KnowledgeItemUpdate": {
+        "properties": {
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "content": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content"
+          },
+          "item_metadata": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Metadata"
+          }
+        },
+        "type": "object",
+        "title": "KnowledgeItemUpdate"
       }
     },
     "responses": {},

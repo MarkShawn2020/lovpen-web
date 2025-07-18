@@ -17,6 +17,14 @@
       "schemas_count": 3,
       "file_size": 5015
     },
+    "Files": {
+      "tag": "Files",
+      "filename": "files_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/files_api.json",
+      "paths_count": 13,
+      "schemas_count": 14,
+      "file_size": 34858
+    },
     "Knowledge": {
       "tag": "Knowledge",
       "filename": "knowledge_api.json",
@@ -64,14 +72,6 @@
       "paths_count": 11,
       "schemas_count": 13,
       "file_size": 33761
-    },
-    "User Files": {
-      "tag": "User Files",
-      "filename": "user files_api.json",
-      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/user files_api.json",
-      "paths_count": 13,
-      "schemas_count": 14,
-      "file_size": 34938
     },
     "VPN": {
       "tag": "VPN",
@@ -125,12 +125,12 @@
   "failed_exports": {},
   "output_directory": "/Users/mark/projects/lovpen-web/backend-apis",
   "format": "json",
-  "generated_at": "2025-07-18T05:54:39.734827",
+  "generated_at": "2025-07-18T09:48:48.904655",
   "summary": {
     "total_exported": 15,
     "total_failed": 0,
     "total_paths": 104,
     "total_schemas": 101,
-    "total_file_size": 291423
+    "total_file_size": 291343
   }
 }

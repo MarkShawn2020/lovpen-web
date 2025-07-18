@@ -194,27 +194,6 @@
   },
   "components": {
     "schemas": {
-      "Body_convert_video_to_audio_media_video_to_audio_post": {
-        "properties": {
-          "video_file": {
-            "type": "string",
-            "format": "binary",
-            "title": "Video File"
-          }
-        },
-        "type": "object",
-        "title": "Body_convert_video_to_audio_media_video_to_audio_post"
-      },
-      "TranscriptionEngine": {
-        "type": "string",
-        "enum": [
-          "auto",
-          "openai",
-          "local_ffmpeg",
-          "tingwu"
-        ],
-        "title": "TranscriptionEngine"
-      },
       "Body_convert_audio_to_text_media_audio_to_srt_post": {
         "properties": {
           "audio_file": {
@@ -226,6 +205,16 @@
         "type": "object",
         "title": "Body_convert_audio_to_text_media_audio_to_srt_post"
       },
+      "TranscriptionEngine": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "openai",
+          "local_ffmpeg",
+          "tingwu"
+        ],
+        "title": "TranscriptionEngine"
+      },
       "Body_convert_srt_to_markdown_media_srt_to_markdown_post": {
         "properties": {
           "srt_file": {
@@ -236,6 +225,17 @@
         },
         "type": "object",
         "title": "Body_convert_srt_to_markdown_media_srt_to_markdown_post"
+      },
+      "Body_convert_video_to_audio_media_video_to_audio_post": {
+        "properties": {
+          "video_file": {
+            "type": "string",
+            "format": "binary",
+            "title": "Video File"
+          }
+        },
+        "type": "object",
+        "title": "Body_convert_video_to_audio_media_video_to_audio_post"
       },
       "HTTPValidationError": {
         "properties": {

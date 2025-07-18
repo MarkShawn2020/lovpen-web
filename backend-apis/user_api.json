@@ -488,51 +488,78 @@
   },
   "components": {
     "schemas": {
-      "HTTPValidationError": {
+      "UserStatsResponse": {
         "properties": {
-          "detail": {
-            "items": {
-              "$ref": "#/components/schemas/ValidationError"
-            },
-            "type": "array",
-            "title": "Detail"
-          }
-        },
-        "type": "object",
-        "title": "HTTPValidationError"
-      },
-      "ValidationError": {
-        "properties": {
-          "loc": {
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
-                }
-              ]
-            },
-            "type": "array",
-            "title": "Location"
+          "user_id": {
+            "type": "integer",
+            "title": "User Id"
           },
-          "msg": {
+          "username": {
             "type": "string",
-            "title": "Message"
+            "title": "Username"
           },
-          "type": {
+          "current_credits": {
+            "type": "number",
+            "title": "Current Credits"
+          },
+          "total_transactions": {
+            "type": "integer",
+            "title": "Total Transactions"
+          },
+          "total_consumed_operations": {
+            "type": "integer",
+            "title": "Total Consumed Operations"
+          },
+          "total_deposits": {
+            "type": "integer",
+            "title": "Total Deposits"
+          },
+          "account_created": {
             "type": "string",
-            "title": "Error Type"
+            "format": "date-time",
+            "title": "Account Created"
           }
         },
         "type": "object",
         "required": [
-          "loc",
-          "msg",
-          "type"
+          "user_id",
+          "username",
+          "current_credits",
+          "total_transactions",
+          "total_consumed_operations",
+          "total_deposits",
+          "account_created"
         ],
-        "title": "ValidationError"
+        "title": "UserStatsResponse"
+      },
+      "ProfileCompletionResponse": {
+        "properties": {
+          "completion_percentage": {
+            "type": "number",
+            "title": "Completion Percentage"
+          },
+          "missing_fields": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Fields"
+          },
+          "suggestions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Suggestions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "completion_percentage",
+          "missing_fields",
+          "suggestions"
+        ],
+        "title": "ProfileCompletionResponse"
       },
       "CreditsCheck": {
         "properties": {
@@ -547,8 +574,16 @@
         ],
         "title": "CreditsCheck"
       },
-      "UserProfileUpdate": {
+      "BasicUserResponse": {
         "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
           "full_name": {
             "anyOf": [
               {
@@ -560,19 +595,7 @@
             ],
             "title": "Full Name"
           },
-          "email": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "email"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Email"
-          },
-          "phone": {
+          "avatar_url": {
             "anyOf": [
               {
                 "type": "string"
@@ -581,30 +604,18 @@
                 "type": "null"
               }
             ],
-            "title": "Phone"
+            "title": "Avatar Url"
           },
           "bio": {
             "anyOf": [
               {
-                "type": "string",
-                "maxLength": 500
+                "type": "string"
               },
               {
                 "type": "null"
               }
             ],
             "title": "Bio"
-          },
-          "website": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Website"
           },
           "location": {
             "anyOf": [
@@ -617,7 +628,7 @@
             ],
             "title": "Location"
           },
-          "birthday": {
+          "website": {
             "anyOf": [
               {
                 "type": "string"
@@ -626,161 +637,40 @@
                 "type": "null"
               }
             ],
-            "title": "Birthday"
+            "title": "Website"
           },
-          "gender": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Gender"
-          },
-          "occupation": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Occupation"
-          },
-          "company": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Company"
-          },
-          "social_links": {
-            "anyOf": [
-              {
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Social Links"
-          },
-          "github_username": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Github Username"
-          },
-          "twitter_username": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Twitter Username"
-          },
-          "linkedin_url": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Linkedin Url"
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
           }
         },
         "type": "object",
-        "title": "UserProfileUpdate"
+        "required": [
+          "id",
+          "username",
+          "created_at"
+        ],
+        "title": "BasicUserResponse",
+        "description": "简化的用户响应，不包含敏感信息"
       },
-      "AvatarUpload": {
+      "UserCreditsResponse": {
         "properties": {
-          "avatar_url": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Avatar Url"
+          "credits": {
+            "type": "number",
+            "title": "Credits"
           },
-          "avatar_file_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Avatar File Id"
+          "username": {
+            "type": "string",
+            "title": "Username"
           }
         },
         "type": "object",
-        "title": "AvatarUpload"
-      },
-      "UserPreferences": {
-        "properties": {
-          "language": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Language",
-            "default": "en"
-          },
-          "timezone": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Timezone",
-            "default": "UTC"
-          },
-          "theme": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Theme",
-            "default": "light"
-          }
-        },
-        "type": "object",
-        "title": "UserPreferences"
+        "required": [
+          "credits",
+          "username"
+        ],
+        "title": "UserCreditsResponse"
       },
       "UserResponse": {
         "properties": {
@@ -1052,49 +942,107 @@
         ],
         "title": "UserResponse"
       },
-      "UserStatsResponse": {
+      "HTTPValidationError": {
         "properties": {
-          "user_id": {
-            "type": "integer",
-            "title": "User Id"
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
           },
-          "username": {
+          "msg": {
             "type": "string",
-            "title": "Username"
+            "title": "Message"
           },
-          "current_credits": {
-            "type": "number",
-            "title": "Current Credits"
-          },
-          "total_transactions": {
-            "type": "integer",
-            "title": "Total Transactions"
-          },
-          "total_consumed_operations": {
-            "type": "integer",
-            "title": "Total Consumed Operations"
-          },
-          "total_deposits": {
-            "type": "integer",
-            "title": "Total Deposits"
-          },
-          "account_created": {
+          "type": {
             "type": "string",
-            "format": "date-time",
-            "title": "Account Created"
+            "title": "Error Type"
           }
         },
         "type": "object",
         "required": [
-          "user_id",
-          "username",
-          "current_credits",
-          "total_transactions",
-          "total_consumed_operations",
-          "total_deposits",
-          "account_created"
+          "loc",
+          "msg",
+          "type"
         ],
-        "title": "UserStatsResponse"
+        "title": "ValidationError"
+      },
+      "Body_upload_avatar_file_user_avatar_upload_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_avatar_file_user_avatar_upload_post"
+      },
+      "UserPreferences": {
+        "properties": {
+          "language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language",
+            "default": "en"
+          },
+          "timezone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timezone",
+            "default": "UTC"
+          },
+          "theme": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Theme",
+            "default": "light"
+          }
+        },
+        "type": "object",
+        "title": "UserPreferences"
       },
       "PublicUserProfile": {
         "properties": {
@@ -1245,27 +1193,8 @@
         "title": "PublicUserProfile",
         "description": "公开的用户资料，用于展示给其他用户"
       },
-      "BasicUserResponse": {
+      "AvatarUpload": {
         "properties": {
-          "id": {
-            "type": "integer",
-            "title": "Id"
-          },
-          "username": {
-            "type": "string",
-            "title": "Username"
-          },
-          "full_name": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Full Name"
-          },
           "avatar_url": {
             "anyOf": [
               {
@@ -1277,27 +1206,68 @@
             ],
             "title": "Avatar Url"
           },
-          "bio": {
+          "avatar_file_id": {
             "anyOf": [
               {
                 "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avatar File Id"
+          }
+        },
+        "type": "object",
+        "title": "AvatarUpload"
+      },
+      "UserProfileUpdate": {
+        "properties": {
+          "full_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Full Name"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "bio": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
               },
               {
                 "type": "null"
               }
             ],
             "title": "Bio"
-          },
-          "location": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Location"
           },
           "website": {
             "anyOf": [
@@ -1310,81 +1280,111 @@
             ],
             "title": "Website"
           },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Created At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "username",
-          "created_at"
-        ],
-        "title": "BasicUserResponse",
-        "description": "简化的用户响应，不包含敏感信息"
-      },
-      "Body_upload_avatar_file_user_avatar_upload_post": {
-        "properties": {
-          "file": {
-            "type": "string",
-            "format": "binary",
-            "title": "File"
-          }
-        },
-        "type": "object",
-        "required": [
-          "file"
-        ],
-        "title": "Body_upload_avatar_file_user_avatar_upload_post"
-      },
-      "ProfileCompletionResponse": {
-        "properties": {
-          "completion_percentage": {
-            "type": "number",
-            "title": "Completion Percentage"
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
           },
-          "missing_fields": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Missing Fields"
+          "birthday": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Birthday"
           },
-          "suggestions": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Suggestions"
+          "gender": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gender"
+          },
+          "occupation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Occupation"
+          },
+          "company": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company"
+          },
+          "social_links": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Social Links"
+          },
+          "github_username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Github Username"
+          },
+          "twitter_username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Twitter Username"
+          },
+          "linkedin_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Linkedin Url"
           }
         },
         "type": "object",
-        "required": [
-          "completion_percentage",
-          "missing_fields",
-          "suggestions"
-        ],
-        "title": "ProfileCompletionResponse"
-      },
-      "UserCreditsResponse": {
-        "properties": {
-          "credits": {
-            "type": "number",
-            "title": "Credits"
-          },
-          "username": {
-            "type": "string",
-            "title": "Username"
-          }
-        },
-        "type": "object",
-        "required": [
-          "credits",
-          "username"
-        ],
-        "title": "UserCreditsResponse"
+        "title": "UserProfileUpdate"
       }
     },
     "responses": {},

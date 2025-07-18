@@ -190,4 +190,34 @@ src/
 ## Workflow Tips
 
 - 本地已经开启一个 dev 服务，请不要 build，只要 pnpm lint:fix && pnpm check:types 即可
+
+## Checkpoint 记录
+
+### 项目检查点 - 2025-07-18
+
+**项目**: @lovpen/web | **分支**: main  
+**里程碑**: Beta Development | **健康度**: 9/10
+
+#### 技术状态
+- **代码质量**: 优秀 (165个TS/TSX文件，严格类型检查)
+- **架构健康**: 健康 (Next.js 15 + React 19，现代化技术栈)
+- **API集成**: 完善 (15个API模块，104个端点)
+
+#### 开发活动分析
+- **期间提交**: 最近30天27个提交 (高活跃度)
+- **主要特性**: Profile系统组件、排期功能、用户认证优化
+- **发展趋势**: 上升 (持续功能迭代和UI改进)
+
+#### 文档维护
+- [x] README.md: 完整且最新 (Next.js Boilerplate说明完善)
+- [x] API文档: 自动生成，结构清晰 (backend-apis/README.md)
+- [x] 配置同步: 正常 (package.json, CLAUDE.md同步)
+
+#### 建议行动
+1. 继续完善Profile组件系统 (已新增7个profile视图组件)
+2. 优化API文档结构 (当前15个模块文档完整)
+3. 加强用户认证流程 (Clerk集成基础已完成)
+4. 考虑添加更多测试覆盖 (当前有Vitest和Playwright配置)
+
+**Git提交**: f86cc8c (fix: user avatar dropdown)
 ```
