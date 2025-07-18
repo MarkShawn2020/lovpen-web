@@ -1,6 +1,6 @@
 'use client';
 
-import {useEffect, useRef, useState} from 'react';
+import {useState} from 'react';
 import Link from 'next/link';
 import {usePathname, useRouter} from 'next/navigation';
 import Image from 'next/image';
@@ -8,6 +8,13 @@ import {Button} from '@/components/lovpen-ui/button';
 import {useAuth} from '@/contexts/AuthContext';
 import {cn} from '@/lib/utils';
 import {BarChart3, BookOpen, Calendar, LogOut, Settings, User} from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
   AuthNavigationLink,
   AuthNavigationMenu,
@@ -22,25 +29,7 @@ const AuthNavbar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
-  const userMenuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
-        setIsUserMenuOpen(false);
-      }
-    };
-
-    if (isUserMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isUserMenuOpen]);
 
   const navigation = [
     {name: '创作工坊', href: '/playground', icon: '🏠'},
@@ -133,51 +122,39 @@ const AuthNavbar = () => {
 
           {/* User Menu */}
           <div className="hidden md:flex items-center space-x-4">
-            <div className="relative" ref={userMenuRef}>
-              <button
-                type="button"
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-text-main hover:bg-primary/5 transition-colors"
-              >
-                <div
-                  className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-medium"
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-text-main hover:bg-primary/5 transition-colors"
                 >
-                  {user?.username?.[0]?.toUpperCase() || 'U'}
-                </div>
-              </button>
-
-              {isUserMenuOpen && (
-                <div
-                  className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-border-default/20 py-1 z-50"
-                >
-                  <Link
-                    href="/profile"
-                    className="flex items-center px-4 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
-                    onClick={() => setIsUserMenuOpen(false)}
+                  <div
+                    className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-medium"
                   >
+                    {user?.username?.[0]?.toUpperCase() || 'U'}
+                  </div>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem asChild>
+                  <Link href="/profile" className="flex items-center">
                     <User className="w-4 h-4 mr-2"/>
                     个人资料
                   </Link>
-                  <Link
-                    href="/settings"
-                    className="flex items-center px-4 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
-                    onClick={() => setIsUserMenuOpen(false)}
-                  >
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/settings" className="flex items-center">
                     <Settings className="w-4 h-4 mr-2"/>
                     设置
                   </Link>
-                  <hr className="my-1 border-border-default/20"/>
-                  <button
-                    type="button"
-                    onClick={handleLogout}
-                    className="flex items-center w-full px-4 py-2 text-sm text-text-main hover:bg-primary/5 transition-colors"
-                  >
-                    <LogOut className="w-4 h-4 mr-2"/>
-                    退出登录
-                  </button>
-                </div>
-              )}
-            </div>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="w-4 h-4 mr-2"/>
+                  退出登录
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Mobile menu button */}
