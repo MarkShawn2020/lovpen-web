@@ -17,7 +17,7 @@ const IMPLEMENTED_ROUTES = [
   '/about',
   '/sign-in',
   '/sign-up',
-  '/create',
+  '/playground',
   '/dashboard',
   '/knowledge-base',
   '/counter',

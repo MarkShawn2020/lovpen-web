@@ -1,14 +1,14 @@
 'use client';
 
-import {useEffect, useState} from 'react';
+import { useEffect, useMemo, useState} from 'react';
 import {Button} from '@/components/lovpen-ui/button';
 import type {FileItem} from '@/services/file-client-v2';
-import {fileClientV2} from '@/services/file-client-v2';
 import {fastAPIAuthService} from '@/services/fastapi-auth-v2';
 import type {AuthState} from '@/services/fastapi-auth-v2';
 import {UploadModal} from './UploadModal';
 import {useFolderTemplates} from '@/hooks/useFolderTemplates';
 import type {FolderNode} from '@/hooks/useFolderTemplates';
+import {useDeleteFile, useFiles, useSearchFiles} from '@/hooks/useFileQueries';
 
 type FileNode = {
   id: string;
@@ -30,14 +30,77 @@ type KnowledgeBaseProps = {
   onFolderExpand?: (folder: FileNode) => void;
 };
 
+// 纯函数：基于模板创建文件夹结构
+const createTemplateFolders = (templates: FolderNode[]): FileNode[] => {
+  return templates.map(template => ({
+    id: template.id,
+    name: template.name,
+    type: 'folder' as const,
+    path: template.path,
+    isExpanded: template.isExpanded || false,
+    children: template.children ? createTemplateFolders(template.children) : [],
+  }));
+};
+
+// 纯函数：将文件添加到指定文件夹
+const addFileToFolder = (folders: FileNode[], file: FileNode, targetPath: string): boolean => {
+  for (const folder of folders) {
+    if (folder.path === targetPath) {
+      folder.children = folder.children || [];
+      folder.children.push(file);
+      return true;
+    }
+    if (folder.children && folder.path && targetPath.startsWith(folder.path)) {
+      if (addFileToFolder(folder.children, file, targetPath)) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+// 纯函数：将 FileItem 转换为树形结构
+const convertFilesToTree = (
+  files: FileItem[], 
+  folderTree: FolderNode[], 
+  recommendFolder: (file: any) => any
+): FileNode[] => {
+  if (files.length === 0) {
+ return []; 
+}
+  
+  const templateFolders = createTemplateFolders(folderTree);
+  
+  files.forEach((file) => {
+    const recommendedFolder = recommendFolder({
+      source_platform: file.source_platform,
+      content_type: file.content_type,
+      title: file.title,
+    });
+    
+    const fileNode: FileNode = {
+      id: file.id,
+      name: file.title || `File ${file.id.slice(0, 8)}`,
+      type: 'file',
+      path: `${recommendedFolder?.path || '/Library/Others'}/${file.id}`,
+      size: file.metadata?.fileSize || 0,
+      modified: new Date(file.updated_at),
+      contentType: file.content_type,
+      platform: file.source_platform,
+      tags: file.tags,
+      processingStatus: file.processing_status,
+    };
+    
+    addFileToFolder(templateFolders, fileNode, recommendedFolder?.path || '/Library/Others');
+  });
+  
+  return templateFolders;
+};
+
 export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
-  const [knowledgeBase, setKnowledgeBase] = useState<FileNode[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [files, setFiles] = useState<FileItem[]>([]);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [localFileNodes, setLocalFileNodes] = useState<FileNode[]>([]);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
@@ -45,6 +108,10 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
     loading: true,
     error: null,
   });
+  const [localFolders, setLocalFolders] = useState<FileNode[]>([]);
+  const [isLocalFolderSupported, setIsLocalFolderSupported] = useState(false);
+  const [localError, setLocalError] = useState<string | null>(null);
+  const [filteredCloudFiles, setFilteredCloudFiles] = useState<FileItem[] | null>(null);
   
   // 使用文件夹模板系统
   const {
@@ -54,147 +121,49 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
     toggleFolder: toggleTemplateFolder,
   } = useFolderTemplates();
 
-  // 基于模板创建文件夹结构
-  const createTemplateFolders = (templates: FolderNode[]): FileNode[] => {
-    return templates.map(template => ({
-      id: template.id,
-      name: template.name,
-      type: 'folder' as const,
-      path: template.path,
-      isExpanded: template.isExpanded || false,
-      children: template.children ? createTemplateFolders(template.children) : [],
-    }));
-  };
+  // React Query hooks for data management
+  const {
+    data: filesData,
+    isLoading: isFilesLoading,
+    error: filesError,
+    refetch: refetchFiles,
+  } = useFiles({
+    enabled: !!authState.user && !searchTerm.trim(),
+  });
 
-  // 将文件添加到指定文件夹
-  const addFileToFolder = (folders: FileNode[], file: FileNode, targetPath: string) => {
-    for (const folder of folders) {
-      if (folder.path === targetPath) {
-        folder.children = folder.children || [];
-        folder.children.push(file);
-        return true;
-      }
-      if (folder.children && folder.path && targetPath.startsWith(folder.path)) {
-        if (addFileToFolder(folder.children, file, targetPath)) {
-          return true;
-        }
-      }
-    }
-    return false;
-  };
+  const {
+    data: searchData,
+    isLoading: isSearchLoading,
+    error: searchError,
+  } = useSearchFiles({
+    query: searchTerm,
+    enabled: !!authState.user && !!searchTerm.trim(),
+  });
 
-  // 将 FileItem 转换为树形结构 - 基于模板系统
-  const convertToTreeStructure = (items: FileItem[]): FileNode[] => {
-    // 先创建基于模板的文件夹结构
-    const templateFolders = createTemplateFolders(folderTree);
-    
-    // 将文件分配到相应的文件夹中
-    items.forEach((file) => {
-      const recommendedFolder = recommendFolder({
-        source_platform: file.source_platform,
-        content_type: file.content_type,
-        title: file.title,
-      });
-      
-      const fileNode: FileNode = {
-        id: file.id,
-        name: file.title || `File ${file.id.slice(0, 8)}`,
-        type: 'file',
-        path: `${recommendedFolder?.path || '/Library/Others'}/${file.id}`,
-        size: file.metadata?.fileSize || 0,
-        modified: new Date(file.updated_at),
-        contentType: file.content_type,
-        platform: file.source_platform,
-        tags: file.tags,
-        processingStatus: file.processing_status,
-      };
-      
-      // 找到对应的文件夹并添加文件
-      addFileToFolder(templateFolders, fileNode, recommendedFolder?.path || '/Library/Others');
-    });
+  const deleteFileMutation = useDeleteFile();
 
-    return templateFolders;
-  };
+  // 合并数据和加载状态 - 使用useMemo稳定引用
+  const files = useMemo(() => {
+    const result = searchTerm.trim() ? (searchData?.items || []) : (filesData?.items || []);
+    return result;
+  }, [searchTerm, searchData?.items, filesData?.items]);
+  
+  const isLoading = searchTerm.trim() ? isSearchLoading : isFilesLoading;
+  const error = searchTerm.trim() ? searchError : filesError;
 
-  // 获取文件数据
-  const fetchFiles = async () => {
-    if (!authState.user) {
-      setError('请先登录以访问知识库');
-      setLoading(false);
-      return;
-    }
+  // 检查 File System Access API 支持
+  useEffect(() => {
+    const supported = 'showDirectoryPicker' in window
+      && typeof window.showDirectoryPicker === 'function';
+    setIsLocalFolderSupported(supported);
+  }, []);
 
+  // 处理文件删除
+  const handleDeleteFile = async (fileId: string) => {
     try {
-      setLoading(true);
-      setError(null);
-      const response = await fileClientV2.getFiles({
-        limit: 100,
-        offset: 0,
-      });
-      setFiles(response.items);
-
-      // 转换为树形结构
-      const treeData = convertToTreeStructure(response.items);
-      setKnowledgeBase(treeData);
-      
-      // 更新文件夹文件数量
-      updateFileCount(response.items);
-    } catch (err) {
-      console.error('Failed to fetch files:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load files';
-      
-      // 如果是认证错误，显示登录提示
-      if (errorMessage.includes('authenticated') || errorMessage.includes('401')) {
-        setError('认证已过期，请重新登录');
-      } else {
-        setError(errorMessage);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // 搜索文件
-  const searchFiles = async (query: string) => {
-    if (!query.trim()) {
-      // 不要在这里调用fetchFiles，会导致重复调用
-      return;
-    }
-
-    if (!authState.user) {
-      setError('请先登录以访问知识库');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await fileClientV2.searchFiles({
-        query,
-        limit: 100,
-        offset: 0,
-      });
-      setFiles(response.items);
-
-      // 转换为树形结构
-      const treeData = convertToTreeStructure(response.items);
-      setKnowledgeBase(treeData);
-      
-      // 更新文件夹文件数量
-      updateFileCount(response.items);
-    } catch (err) {
-      console.error('Search failed:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Search failed';
-      
-      // 如果是认证错误，显示登录提示
-      if (errorMessage.includes('authenticated') || errorMessage.includes('401')) {
-        setError('认证已过期，请重新登录');
-      } else {
-        setError(errorMessage);
-      }
-    } finally {
-      setLoading(false);
+      await deleteFileMutation.mutateAsync(fileId);
+    } catch (error) {
+      console.error('Failed to delete file:', error);
     }
   };
 
@@ -217,66 +186,108 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
     };
   }, []);
 
-  // 初始加载
+  // 使用纯函数计算云端文件树，避免循环依赖
+  const cloudFileTree = useMemo(() => {
+    const filesToUse = filteredCloudFiles || files;
+    return convertFilesToTree(filesToUse, folderTree, recommendFolder);
+  }, [filteredCloudFiles, files, folderTree, recommendFolder]);
+
+  // 单独的useEffect用于更新文件计数
   useEffect(() => {
-    if (!isInitialized && !authState.loading) {
-      if (authState.user) {
-        fetchFiles();
-      }
-      setIsInitialized(true);
+    if (files.length > 0) {
+      updateFileCount(files);
     }
-  }, [isInitialized, authState.loading, authState.user]);
+  }, [files, updateFileCount]);
 
-  // 搜索防抖
-  useEffect(() => {
-    // 跳过初始化时的空搜索词，避免重复调用
-    if (!isInitialized) {
-      return;
-    }
+  // 直接计算最终的知识库树，不使用useEffect避免循环
+  const finalKnowledgeBase = useMemo(() => {
+    // 获取本地文件夹（从当前 knowledgeBase 中过滤）
+    const currentLocalFolders = localFileNodes;
+    // 合并本地文件夹和云端文件树
+    return [...currentLocalFolders, ...cloudFileTree];
+  }, [localFileNodes, cloudFileTree]);
 
-    const debounceTimer = setTimeout(() => {
-      if (searchTerm) {
-        searchFiles(searchTerm);
-      } else {
-        // 当searchTerm为空时，重新获取所有文件
-        fetchFiles();
+  // 选择本地文件夹
+  // 递归读取本地文件夹结构
+  const readDirectoryRecursively = async (directoryHandle: any, basePath: string): Promise<FileNode> => {
+    const children: FileNode[] = [];
+    
+    for await (const [name, handle] of directoryHandle.entries()) {
+      const path = `${basePath}${name}`;
+      
+      if (handle.kind === 'file') {
+        const file = await handle.getFile();
+        children.push({
+          id: `local-${path}`,
+          name,
+          type: 'file',
+          path,
+          size: file.size,
+          modified: new Date(file.lastModified),
+          contentType: file.type || 'application/octet-stream',
+          platform: 'local',
+          tags: ['local'],
+          // @ts-ignore - 保存文件句柄用于后续读取内容
+          _fileHandle: handle
+        });
+      } else if (handle.kind === 'directory') {
+        const subFolder = await readDirectoryRecursively(handle, `${path}/`);
+        children.push(subFolder);
       }
-    }, 300);
+    }
+    
+    return {
+      id: `local-${basePath}`,
+      name: basePath === '/' ? directoryHandle.name : basePath.split('/').filter(Boolean).pop() || directoryHandle.name,
+      type: 'folder',
+      path: basePath,
+      children: children.sort((a, b) => {
+        // 文件夹在前，文件在后
+        if (a.type !== b.type) {
+          return a.type === 'folder' ? -1 : 1;
+        }
+        return a.name.localeCompare(b.name);
+      }),
+      isExpanded: false,
+      platform: 'local',
+      tags: ['local'],
+      // @ts-ignore - 保存目录句柄
+      _directoryHandle: directoryHandle
+    };
+  };
 
-    return () => clearTimeout(debounceTimer);
-  }, [searchTerm, isInitialized]);
-
-  // 删除文件
-  const deleteFile = async (fileId: string) => {
-    if (!authState.user) {
-      setError('请先登录以访问知识库');
+  const handleLocalFolderSelect = async () => {
+    if (!isLocalFolderSupported) {
+      console.error('您的浏览器不支持本地文件夹访问功能，请使用 Chrome 88+ 或 Edge 88+');
+      setLocalError('您的浏览器不支持本地文件夹访问功能，请使用 Chrome 88+ 或 Edge 88+');
       return;
     }
 
     try {
-      await fileClientV2.deleteFile(fileId);
-      // 重新获取文件列表
-      fetchFiles();
-    } catch (error) {
-      console.error('Failed to delete file:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Failed to delete file';
+      const directoryHandle = await (window as any).showDirectoryPicker({
+        mode: 'read'
+      });
       
-      // 如果是认证错误，显示登录提示
-      if (errorMessage.includes('authenticated') || errorMessage.includes('401')) {
-        setError('认证已过期，请重新登录');
-      } else {
-        setError(errorMessage);
+      const localFileTree = await readDirectoryRecursively(directoryHandle, '/');
+      setLocalFolders([localFileTree]);
+      
+      // 将本地文件夹添加到本地文件节点
+      setLocalFileNodes(prev => [localFileTree, ...prev]);
+    } catch (error) {
+      if ((error as Error).name !== 'AbortError') {
+        console.error('Failed to access local folder:', error);
+        setLocalError('访问本地文件夹失败，请检查权限设置');
       }
     }
   };
 
   // 切换文件夹展开状态
   const toggleFolder = (nodeId: string) => {
-    // 首先更新模板文件夹状态
+    // 更新模板文件夹状态（云端文件夹）
     toggleTemplateFolder(nodeId);
     
-    // 然后更新显示的知识库状态
-    const updateNodes = (nodes: FileNode[]): FileNode[] => {
+    // 更新本地文件夹状态
+    const updateLocalNodes = (nodes: FileNode[]): FileNode[] => {
       return nodes.map((node) => {
         if (node.id === nodeId && node.type === 'folder') {
           const updatedNode = {...node, isExpanded: !node.isExpanded};
@@ -284,20 +295,55 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
           return updatedNode;
         }
         if (node.children) {
-          return {...node, children: updateNodes(node.children)};
+          return {...node, children: updateLocalNodes(node.children)};
         }
         return node;
       });
     };
 
-    setKnowledgeBase(updateNodes(knowledgeBase));
+    setLocalFileNodes(updateLocalNodes);
+  };
+
+  // 读取本地文件内容
+  const readLocalFileContent = async (fileNode: FileNode): Promise<string> => {
+    try {
+      // @ts-ignore
+      const fileHandle = fileNode._fileHandle;
+      if (!fileHandle) {
+        throw new Error('未找到文件句柄');
+      }
+      
+      const file = await fileHandle.getFile();
+      const text = await file.text();
+      return text;
+    } catch (error) {
+      console.error('Failed to read local file:', error);
+      throw new Error('读取本地文件失败');
+    }
   };
 
   // 处理文件/文件夹点击
-  const handleFileClick = (file: FileNode) => {
+  const handleFileClick = async (file: FileNode) => {
     if (file.type === 'file') {
       setSelectedFile(file.id);
-      onFileSelect?.(file);
+      
+      // 如果是本地文件，尝试读取内容
+      if (file.platform === 'local') {
+        try {
+          const content = await readLocalFileContent(file);
+          // 将内容添加到文件节点中
+          const fileWithContent = {
+            ...file,
+            content
+          };
+          onFileSelect?.(fileWithContent);
+        } catch (error) {
+          console.error('Failed to read local file content:', error);
+          onFileSelect?.(file);
+        }
+      } else {
+        onFileSelect?.(file);
+      }
     } else {
       toggleFolder(file.id);
     }
@@ -327,6 +373,10 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
   // 获取文件/文件夹图标
   const getFileIcon = (node: FileNode) => {
     if (node.type === 'folder') {
+      // 本地文件夹使用不同图标
+      if (node.platform === 'local') {
+        return node.isExpanded ? '🗂️' : '🗁';
+      }
       return node.isExpanded ? '📂' : '📁';
     }
 
@@ -431,8 +481,15 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
               {node.type === 'file' && node.tags && node.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1 mt-1">
                   {node.tags.slice(0, 3).map((tag, index) => (
-                    <span key={index} className="text-xs bg-gray-100 text-gray-700 px-1 rounded">
-                      {tag}
+                    <span 
+                      key={index} 
+                      className={`text-xs px-1 rounded ${
+                        tag === 'local' 
+                          ? 'bg-blue-100 text-blue-700' 
+                          : 'bg-gray-100 text-gray-700'
+                      }`}
+                    >
+                      {tag === 'local' ? '💻 本地' : tag}
                     </span>
                   ))}
                   {node.tags.length > 3 && (
@@ -459,7 +516,7 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                     e.stopPropagation();
                     // eslint-disable-next-line no-alert
                     if (window.confirm('确定删除这个文件吗？')) {
-                      deleteFile(node.id);
+                      handleDeleteFile(node.id);
                     }
                   }}
                 >
@@ -502,10 +559,10 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
     }, [] as FileNode[]);
   };
 
-  // 使用搜索功能，如果有搜索词则使用模板搜索，否则使用当前知识库
+  // 使用搜索功能，如果有搜索词则使用模板搜索，否则使用最终知识库
   const filteredNodes = searchTerm.trim() 
-    ? filterNodes(knowledgeBase, searchTerm)
-    : knowledgeBase;
+    ? filterNodes(finalKnowledgeBase, searchTerm)
+    : finalKnowledgeBase;
 
   // 显示登录界面
   if (authState.loading) {
@@ -598,8 +655,7 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                 const todayFiles = files.filter(file =>
                   file.created_at?.startsWith(today || '') ?? false
                 );
-                const treeData = convertToTreeStructure(todayFiles);
-                setKnowledgeBase(treeData);
+                setFilteredCloudFiles(todayFiles);
               }}
             >
               📅 今日
@@ -613,8 +669,7 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                 const recentFiles = files
                   .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
                   .slice(0, 20);
-                const treeData = convertToTreeStructure(recentFiles);
-                setKnowledgeBase(treeData);
+                setFilteredCloudFiles(recentFiles);
               }}
             >
               🕒 最近
@@ -625,11 +680,26 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
               className="text-xs h-7 px-2"
               onClick={(e) => {
                 e.stopPropagation();
-                fetchFiles();
+                setFilteredCloudFiles(null);
+                refetchFiles();
               }}
             >
               🔄 刷新
             </Button>
+            {isLocalFolderSupported && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-xs h-7 px-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleLocalFolderSelect();
+                }}
+                title="选择本地文件夹进行映射"
+              >
+                📂 本地文件夹
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -656,7 +726,8 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
                 title="刷新"
                 onClick={(e) => {
                   e.stopPropagation();
-                  fetchFiles();
+                  setFilteredCloudFiles(null);
+                  refetchFiles();
                 }}
               >
                 🔄
@@ -681,13 +752,14 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
             <div className="p-4 bg-red-50 border-l-4 border-red-400 text-red-700 text-sm">
               ❌
               {' '}
-              {error}
+              {error instanceof Error ? error.message : String(error)}
               <button
                 type="button"
                 className="ml-2 underline"
                 onClick={(e) => {
                   e.stopPropagation();
-                  fetchFiles();
+                  setFilteredCloudFiles(null);
+                  refetchFiles();
                 }}
               >
                 重试
@@ -695,7 +767,7 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
             </div>
           )}
 
-          {loading
+          {isLoading
             ? (
               <div className="flex items-center justify-center h-32 text-text-faded">
                 <div className="text-center">
@@ -744,7 +816,8 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
         }}
         onUploadComplete={(_newItems) => {
           // 刷新文件列表
-          fetchFiles();
+          setFilteredCloudFiles(null);
+          refetchFiles();
           setIsUploadModalOpen(false);
         }}
       />

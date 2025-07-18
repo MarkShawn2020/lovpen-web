@@ -58,6 +58,15 @@ export default async function middleware(
     return NextResponse.redirect(homeUrl);
   }
 
+  // Protect (auth) routes - require authentication
+  const isAuthRoute = request.nextUrl.pathname.includes('/(auth)')
+    || request.nextUrl.pathname.match(`/${locale}/(playground|profile|space|topic-schedule)`);
+  
+  if (isAuthRoute && !isAuthenticated) {
+    const loginUrl = new URL(`/${locale}/login`, request.url);
+    return NextResponse.redirect(loginUrl);
+  }
+
   // Handle i18n routing
   return handleI18nRouting(request);
 }

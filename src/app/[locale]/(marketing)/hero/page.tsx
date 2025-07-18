@@ -4,6 +4,7 @@ import {Container} from '@/components/layout/Container';
 import {AnchorSection} from '@/components/layout/AnchorSection';
 import {Button} from '@/components/lovpen-ui/button';
 import {Logo} from '@/components/lovpen-ui/logo';
+import {AuthAwareButton} from '@/components/auth/AuthAwareButton';
 
 type IHeroProps = {
   params: Promise<{ locale: string }>;
@@ -86,23 +87,27 @@ export default async function Hero(props: IHeroProps) {
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
             <div className="relative group">
               <div className="absolute -inset-1 bg-brand-gradient rounded-lg blur opacity-70 group-hover:opacity-100 transition duration-300" />
-              <Button variant="primary" size="lg" className="relative shadow-brand-primary hover:shadow-brand-warm" asChild>
-                <Link href="/create">
-                  {t('hero_cta_primary')}
-                </Link>
-              </Button>
+              <AuthAwareButton 
+                variant="primary" 
+                size="lg" 
+                className="relative shadow-brand-primary hover:shadow-brand-warm"
+                authenticatedHref="/playground"
+                unauthenticatedHref="/register"
+              >
+                {t('hero_cta_primary')}
+              </AuthAwareButton>
             </div>
             
             <Button variant="outline" size="lg" className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white shadow-brand-primary" asChild>
               <Link href="/demo">
-                感受温暖
+                观看演示
               </Link>
             </Button>
           </div>
 
           {/* 产品亮点 */}
           <div className="mt-16 text-center">
-            <p className="u-paragraph-m text-text-main mb-8">献给所有与想法为伴的人</p>
+            <p className="u-paragraph-m text-text-main mb-8">为创作者和内容团队而生</p>
             <div className="flex flex-wrap justify-center items-center gap-8">
               <div className="flex items-center space-x-2 hover-brand-primary cursor-pointer transition-all duration-300">
                 <span className="text-xl">🕊️</span>

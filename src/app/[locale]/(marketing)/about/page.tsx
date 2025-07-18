@@ -203,7 +203,7 @@ export default async function About(props: IAboutProps) {
                 {t('contact_button')}
               </Button>
             </SafeLink>
-            <Link href="/create">
+            <Link href="/playground">
               <Button variant="secondary" size="lg">
                 {t('try_lovpen')}
               </Button>
