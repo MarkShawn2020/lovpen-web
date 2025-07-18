@@ -82,9 +82,9 @@ const Steps = () => (
             step.color,
           )}
           >
-            {/* 步骤编号 */}
+            {/* 桌面端步骤编号 */}
             <div
-              className="absolute -top-3 -right-3 lg:-top-3 lg:-right-3 w-8 h-8 lg:w-8 lg:h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg lg:shadow-lg"
+              className="hidden lg:block absolute -top-3 -right-3 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg"
             >
               {step.step}
             </div>
