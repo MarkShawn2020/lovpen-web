@@ -96,13 +96,55 @@ export default async function About(props: IAboutProps) {
 
         {/* Story Section */}
         <div className="mb-16">
-          <h2 className="text-3xl font-semibold text-brand-gradient mb-6 text-center">
+          <h2 className="text-3xl font-semibold text-brand-gradient mb-8 text-center">
             {t('story_title')}
           </h2>
-          <div className="space-y-6 text-lg text-text-main">
-            <p>{t('story_paragraph_1')}</p>
-            <p>{t('story_paragraph_2')}</p>
-            <p>{t('story_paragraph_3')}</p>
+          <div className="max-w-4xl mx-auto">
+            <div className="card-brand-gradient p-12 rounded-2xl shadow-brand-warm relative overflow-hidden">
+              {/* 装饰性背景 */}
+              <div className="absolute inset-0 u-bg-subtle-dots opacity-10" />
+              <div className="absolute top-0 left-0 w-32 h-32 bg-brand-primary/5 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 right-0 w-32 h-32 bg-brand-secondary/5 rounded-full blur-3xl" />
+              
+              {/* 诗歌内容 */}
+              <div className="relative z-10 space-y-8">
+                <div className="text-center">
+                  <div className="inline-block p-6 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm">
+                    <p
+                      className="text-lg leading-relaxed text-text-main font-medium italic" 
+                      dangerouslySetInnerHTML={{__html: t('story_paragraph_1')}}
+                    />
+                  </div>
+                </div>
+                
+                <div className="text-center">
+                  <div className="inline-block p-6 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm">
+                    <p
+                      className="text-lg leading-relaxed text-text-main font-medium italic" 
+                      dangerouslySetInnerHTML={{__html: t('story_paragraph_2')}}
+                    />
+                  </div>
+                </div>
+                
+                <div className="text-center">
+                  <div className="inline-block p-6 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm">
+                    <p
+                      className="text-lg leading-relaxed text-text-main font-medium italic" 
+                      dangerouslySetInnerHTML={{__html: t('story_paragraph_3')}}
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* 底部装饰 */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                <div className="flex space-x-2">
+                  <div className="w-2 h-2 bg-brand-primary/30 rounded-full" />
+                  <div className="w-2 h-2 bg-brand-secondary/30 rounded-full" />
+                  <div className="w-2 h-2 bg-brand-gradient/30 rounded-full" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

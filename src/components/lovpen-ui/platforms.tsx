@@ -1,4 +1,5 @@
 import * as React from "react";
+import Image from "next/image";
 import {cn} from "@/lib/utils";
 import {forceCollide, forceSimulation, forceX, forceY, SimulationNodeDatum} from 'd3-force';
 
@@ -15,7 +16,7 @@ const platforms: Platform[] = [
   // 专业文本平台
   {
     name: '知乎',
-    icon: '🎓',
+    icon: '/assets/platform_logos/zhihu_logo.png',
     description: '学术风格，知识分享',
     color: 'text-blue-600',
     bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
@@ -24,7 +25,7 @@ const platforms: Platform[] = [
   },
   {
     name: 'Medium',
-    icon: '📝',
+    icon: '/assets/platform_logos/medium_logo.png',
     description: '深度思考，优质内容',
     color: 'text-gray-600',
     bgColor: 'from-gray-50 to-gray-100 border-gray-200/50',
@@ -33,7 +34,7 @@ const platforms: Platform[] = [
   },
   {
     name: 'LinkedIn',
-    icon: '💼',
+    icon: '/assets/platform_logos/linkedin_logo.png',
     description: '商务社交，职场洞察',
     color: 'text-indigo-600',
     bgColor: 'from-indigo-50 to-indigo-100 border-indigo-200/50',
@@ -42,7 +43,7 @@ const platforms: Platform[] = [
   },
   {
     name: 'CSDN',
-    icon: '💻',
+    icon: '/assets/platform_logos/csdn_logo.png',
     description: '技术博客，开发者社区',
     color: 'text-red-600',
     bgColor: 'from-red-50 to-red-100 border-red-200/50',
@@ -51,7 +52,7 @@ const platforms: Platform[] = [
   },
   {
     name: '掘金',
-    icon: '⚒️',
+    icon: '/assets/platform_logos/juejin_logo.png',
     description: '技术分享，前沿资讯',
     color: 'text-blue-600',
     bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
@@ -62,7 +63,7 @@ const platforms: Platform[] = [
   // 专业图文平台
   {
     name: '微信公众号',
-    icon: '📱',
+    icon: '/assets/platform_logos/wechat_public_account_logo.png',
     description: '专业排版，完美呈现',
     color: 'text-emerald-600',
     bgColor: 'from-emerald-50 to-emerald-100 border-emerald-200/50',
@@ -71,7 +72,7 @@ const platforms: Platform[] = [
   },
   {
     name: '今日头条',
-    icon: '📰',
+    icon: '/assets/platform_logos/jinritoutiao_logo.png',
     description: '大众传媒，热点追踪',
     color: 'text-red-600',
     bgColor: 'from-red-50 to-red-100 border-red-200/50',
@@ -80,7 +81,7 @@ const platforms: Platform[] = [
   },
   {
     name: '百家号',
-    icon: '📄',
+    icon: '/assets/platform_logos/baijiahao_logo.jpg',
     description: '智能推荐，内容分发',
     color: 'text-blue-600',
     bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
@@ -89,7 +90,7 @@ const platforms: Platform[] = [
   },
   {
     name: '企鹅号',
-    icon: '🐧',
+    icon: '/assets/platform_logos/qiehao_logo.png',
     description: '腾讯生态，流量扶持',
     color: 'text-cyan-600',
     bgColor: 'from-cyan-50 to-cyan-100 border-cyan-200/50',
@@ -98,7 +99,7 @@ const platforms: Platform[] = [
   },
   {
     name: '大鱼号',
-    icon: '🐠',
+    icon: '/assets/platform_logos/dayuhao_logo.png',
     description: '阿里生态，商业变现',
     color: 'text-orange-600',
     bgColor: 'from-orange-50 to-orange-100 border-orange-200/50',
@@ -109,7 +110,7 @@ const platforms: Platform[] = [
   // 专业视频平台
   {
     name: 'YouTube',
-    icon: '🎬',
+    icon: '/assets/platform_logos/youtube_logo.png',
     description: '全球视频，创意无限',
     color: 'text-red-600',
     bgColor: 'from-red-50 to-red-100 border-red-200/50',
@@ -118,7 +119,7 @@ const platforms: Platform[] = [
   },
   {
     name: 'Bilibili',
-    icon: '📺',
+    icon: '/assets/platform_logos/bilibili_logo.png',
     description: '年轻社区，创意表达',
     color: 'text-cyan-600',
     bgColor: 'from-cyan-50 to-cyan-100 border-cyan-200/50',
@@ -129,7 +130,7 @@ const platforms: Platform[] = [
   // 娱乐文本平台
   {
     name: '简书',
-    icon: '🖋️',
+    icon: '/assets/platform_logos/jianshu_logo.png',
     description: '优质创作，文字社区',
     color: 'text-green-600',
     bgColor: 'from-green-50 to-green-100 border-green-200/50',
@@ -138,7 +139,7 @@ const platforms: Platform[] = [
   },
   {
     name: '豆瓣',
-    icon: '📚',
+    icon: '/assets/platform_logos/douban_logo.png',
     description: '文艺青年，品味生活',
     color: 'text-green-600',
     bgColor: 'from-green-50 to-green-100 border-green-200/50',
@@ -147,7 +148,7 @@ const platforms: Platform[] = [
   },
   {
     name: 'Twitter/X',
-    icon: '🐦',
+    icon: '/assets/platform_logos/twitter_x_logo.png',
     description: '国际传播，实时动态',
     color: 'text-sky-600',
     bgColor: 'from-sky-50 to-sky-100 border-sky-200/50',
@@ -156,7 +157,7 @@ const platforms: Platform[] = [
   },
   {
     name: '微博',
-    icon: '🔥',
+    icon: '/assets/platform_logos/weibo_logo.png',
     description: '热点传播，社交话题',
     color: 'text-orange-600',
     bgColor: 'from-orange-50 to-orange-100 border-orange-200/50',
@@ -165,7 +166,7 @@ const platforms: Platform[] = [
   },
   {
     name: '即刻',
-    icon: '⚡',
+    icon: '/assets/platform_logos/jike_logo.png',
     description: '即时分享，兴趣社区',
     color: 'text-yellow-600',
     bgColor: 'from-yellow-50 to-yellow-100 border-yellow-200/50',
@@ -176,7 +177,7 @@ const platforms: Platform[] = [
   // 娱乐图文平台
   {
     name: '小红书',
-    icon: '🌸',
+    icon: '/assets/platform_logos/xiaohongshu_logo.webp',
     description: '生活美学，精致展示',
     color: 'text-pink-600',
     bgColor: 'from-pink-50 to-pink-100 border-pink-200/50',
@@ -185,7 +186,7 @@ const platforms: Platform[] = [
   },
   {
     name: 'Instagram',
-    icon: '📸',
+    icon: '/assets/platform_logos/instagram_logo.webp',
     description: '视觉故事，美感分享',
     color: 'text-purple-600',
     bgColor: 'from-purple-50 to-purple-100 border-purple-200/50',
@@ -194,7 +195,7 @@ const platforms: Platform[] = [
   },
   {
     name: 'Facebook',
-    icon: '👥',
+    icon: '/assets/platform_logos/facebook_logo.png',
     description: '社交网络，连接世界',
     color: 'text-blue-600',
     bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
@@ -205,7 +206,7 @@ const platforms: Platform[] = [
   // 娱乐视频平台
   {
     name: '抖音',
-    icon: '🎵',
+    icon: '/assets/platform_logos/douyin_logo.png',
     description: '短视频，爆款制造',
     color: 'text-slate-700',
     bgColor: 'from-slate-50 to-slate-100 border-slate-200/50',
@@ -214,7 +215,7 @@ const platforms: Platform[] = [
   },
   {
     name: '快手',
-    icon: '⚡',
+    icon: '/assets/platform_logos/kuaishou_logo.jpg',
     description: '真实记录，生活分享',
     color: 'text-yellow-600',
     bgColor: 'from-yellow-50 to-yellow-100 border-yellow-200/50',
@@ -223,7 +224,7 @@ const platforms: Platform[] = [
   },
   {
     name: 'TikTok',
-    icon: '🎭',
+    icon: '/assets/platform_logos/tiktok_logo.png',
     description: '创意短视频，全球流行',
     color: 'text-pink-600',
     bgColor: 'from-pink-50 to-pink-100 border-pink-200/50',
@@ -234,7 +235,7 @@ const platforms: Platform[] = [
   // 社区交流平台
   {
     name: 'Reddit',
-    icon: '🗣️',
+    icon: '/assets/platform_logos/reddit_logo.png',
     description: '社区讨论，深度交流',
     color: 'text-orange-600',
     bgColor: 'from-orange-50 to-orange-100 border-orange-200/50',
@@ -243,7 +244,7 @@ const platforms: Platform[] = [
   },
   {
     name: 'Discord',
-    icon: '🎮',
+    icon: '/assets/platform_logos/discord_logo.png',
     description: '社群聊天，兴趣交流',
     color: 'text-indigo-600',
     bgColor: 'from-indigo-50 to-indigo-100 border-indigo-200/50',
@@ -252,7 +253,7 @@ const platforms: Platform[] = [
   },
   {
     name: 'Telegram',
-    icon: '✈️',
+    icon: '/assets/platform_logos/telegram_logo.png',
     description: '私密通讯，频道传播',
     color: 'text-sky-600',
     bgColor: 'from-sky-50 to-sky-100 border-sky-200/50',
@@ -263,7 +264,7 @@ const platforms: Platform[] = [
   // 专业工具平台
   {
     name: 'Substack',
-    icon: '💌',
+    icon: '/assets/platform_logos/substack_logo.png',
     description: '邮件订阅，深度写作',
     color: 'text-amber-600',
     bgColor: 'from-amber-50 to-amber-100 border-amber-200/50',
@@ -272,7 +273,7 @@ const platforms: Platform[] = [
   },
   {
     name: 'Notion',
-    icon: '📋',
+    icon: '/assets/platform_logos/notion_logo.png',
     description: '知识管理，协作文档',
     color: 'text-gray-600',
     bgColor: 'from-gray-50 to-gray-100 border-gray-200/50',
@@ -311,12 +312,13 @@ const PlatformCard = ({platform, style, scaleFactor, onHover, onLeave}: {
       onMouseLeave={onLeave}
     >
       {/* 图标 */}
-      <div 
-        className="transform group-hover:scale-110 transition-all duration-300"
-        style={{ fontSize: `${iconSize}px` }}
-      >
-        {platform.icon}
-      </div>
+      <Image 
+        src={platform.icon}
+        alt={platform.name}
+        width={iconSize}
+        height={iconSize}
+        className="transform group-hover:scale-110 transition-all duration-300 object-contain"
+      />
     </div>
   );
 };
@@ -412,7 +414,7 @@ export const Platforms = () => {
         {/* 象限图表 */}
         <div className="relative z-10 flex flex-col items-center">
           {/* 图表容器 */}
-          <div className="relative bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-primary/10 w-full">
+          <div className="relative bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg border border-primary/10 w-full">
             {/* SVG 图表 */}
             <svg 
               viewBox={`0 0 ${containerDimensions.width} ${containerDimensions.height}`}
@@ -453,9 +455,9 @@ export const Platforms = () => {
               </defs>
               <rect x={scaledPadding} y={scaledPadding} width={containerDimensions.width - 2 * scaledPadding} height={containerDimensions.height - 2 * scaledPadding} fill="url(#grid)" />
               
-              {/* 坐标轴 */}
-              <line x1={scaledPadding} y1={containerDimensions.height - scaledPadding} x2={containerDimensions.width - scaledPadding} y2={containerDimensions.height - scaledPadding} stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />
-              <line x1={scaledPadding} y1={containerDimensions.height - scaledPadding} x2={scaledPadding} y2={scaledPadding} stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />
+              {/* NO 坐标轴 */}
+              {/*<line x1={scaledPadding} y1={containerDimensions.height - scaledPadding} x2={containerDimensions.width - scaledPadding} y2={containerDimensions.height - scaledPadding} stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />*/}
+              {/*<line x1={scaledPadding} y1={containerDimensions.height - scaledPadding} x2={scaledPadding} y2={scaledPadding} stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)" />*/}
               
               {/* 箭头标记 */}
               <defs>
@@ -515,19 +517,19 @@ export const Platforms = () => {
               专业程度 →
             </div>
             
-            {/* 象限标签 */}
-            <div className="absolute top-6 left-6 text-xs font-medium text-blue-600 bg-blue-50/80 px-2 py-1 rounded">
-              专业文本
-            </div>
-            <div className="absolute top-6 right-6 text-xs font-medium text-green-600 bg-green-50/80 px-2 py-1 rounded">
-              专业多媒体
-            </div>
-            <div className="absolute bottom-6 left-6 text-xs font-medium text-yellow-600 bg-yellow-50/80 px-2 py-1 rounded">
-              娱乐文本
-            </div>
-            <div className="absolute bottom-6 right-6 text-xs font-medium text-pink-600 bg-pink-50/80 px-2 py-1 rounded">
-              娱乐多媒体
-            </div>
+            {/* NO 象限标签 */}
+            {/*<div className="absolute top-6 left-6 text-xs font-medium text-blue-600 bg-blue-50/80 px-2 py-1 rounded">*/}
+            {/*  专业文本*/}
+            {/*</div>*/}
+            {/*<div className="absolute top-6 right-6 text-xs font-medium text-green-600 bg-green-50/80 px-2 py-1 rounded">*/}
+            {/*  专业多媒体*/}
+            {/*</div>*/}
+            {/*<div className="absolute bottom-6 left-6 text-xs font-medium text-yellow-600 bg-yellow-50/80 px-2 py-1 rounded">*/}
+            {/*  娱乐文本*/}
+            {/*</div>*/}
+            {/*<div className="absolute bottom-6 right-6 text-xs font-medium text-pink-600 bg-pink-50/80 px-2 py-1 rounded">*/}
+            {/*  娱乐多媒体*/}
+            {/*</div>*/}
           </div>
         </div>
 

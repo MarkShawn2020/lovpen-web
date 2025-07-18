@@ -66,19 +66,19 @@ export default async function Hero(props: IHeroProps) {
           {/* 核心特性展示 */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 w-full max-w-4xl">
             <div className="text-center p-6 card-brand-primary rounded-lg hover:shadow-brand-primary transition-all duration-300 hover:scale-105">
-              <div className="text-4xl mb-4">✨</div>
-              <h3 className="u-display-s mb-2 text-brand-primary">智能创作</h3>
-              <p className="u-paragraph-m text-text-main">AI 驱动的内容创作</p>
+              <div className="text-4xl mb-4">🌱</div>
+              <h3 className="u-display-s mb-2 text-brand-primary">守护初心</h3>
+              <p className="u-paragraph-m text-text-main">呵护每一个念头萌芽</p>
             </div>
             <div className="text-center p-6 card-brand-secondary rounded-lg hover:shadow-brand-secondary transition-all duration-300 hover:scale-105">
-              <div className="text-4xl mb-4">🚀</div>
-              <h3 className="u-display-s mb-2 text-brand-secondary">即将发布</h3>
-              <p className="u-paragraph-m text-text-main">敬请期待全新体验</p>
+              <div className="text-4xl mb-4">🤝</div>
+              <h3 className="u-display-s mb-2 text-brand-secondary">温暖陪伴</h3>
+              <p className="u-paragraph-m text-text-main">与想法为伴的旅程</p>
             </div>
             <div className="text-center p-6 card-brand-gradient rounded-lg hover:shadow-brand-warm transition-all duration-300 hover:scale-105">
-              <div className="text-4xl mb-4">🎯</div>
-              <h3 className="u-display-s mb-2 text-brand-gradient">精准匹配</h3>
-              <p className="u-paragraph-m text-text-main">智能平台适配</p>
+              <div className="text-4xl mb-4">🌉</div>
+              <h3 className="u-display-s mb-2 text-brand-gradient">连接心灵</h3>
+              <p className="u-paragraph-m text-text-main">架起理解的桥梁</p>
             </div>
           </div>
 
@@ -95,26 +95,26 @@ export default async function Hero(props: IHeroProps) {
             
             <Button variant="outline" size="lg" className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white shadow-brand-primary" asChild>
               <Link href="/demo">
-                观看演示
+                感受温暖
               </Link>
             </Button>
           </div>
 
           {/* 产品亮点 */}
           <div className="mt-16 text-center">
-            <p className="u-paragraph-m text-text-main mb-8">为创作者和内容团队而生</p>
+            <p className="u-paragraph-m text-text-main mb-8">献给所有与想法为伴的人</p>
             <div className="flex flex-wrap justify-center items-center gap-8">
               <div className="flex items-center space-x-2 hover-brand-primary cursor-pointer transition-all duration-300">
-                <span className="text-xl">🎨</span>
-                <span className="u-paragraph-m text-text-main">创意无限</span>
+                <span className="text-xl">🕊️</span>
+                <span className="u-paragraph-m text-text-main">安全表达</span>
               </div>
               <div className="flex items-center space-x-2 hover-brand-primary cursor-pointer transition-all duration-300">
-                <span className="text-xl">💡</span>
-                <span className="u-paragraph-m text-text-main">智能推荐</span>
+                <span className="text-xl">🌱</span>
+                <span className="u-paragraph-m text-text-main">自然成长</span>
               </div>
               <div className="flex items-center space-x-2 hover-brand-primary cursor-pointer transition-all duration-300">
-                <span className="text-xl">🌟</span>
-                <span className="u-paragraph-m text-text-main">简单易用</span>
+                <span className="text-xl">💫</span>
+                <span className="u-paragraph-m text-text-main">真实共鸣</span>
               </div>
             </div>
           </div>
