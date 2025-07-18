@@ -29,8 +29,8 @@ export default async function Cases(props: ICasesProps) {
   });
 
   return (
-    <Container>
-      <AnchorSection id="cases" className="w-full py-16 lg:py-24 u-bg-ivory-medium u-bg-premium-texture relative">
+    <AnchorSection id="cases" className="w-full py-16 lg:py-24 bg-gradient-to-b from-background-main to-background-ivory-light u-bg-premium-texture relative">
+      <Container>
         <div className="text-center mb-12">
           <h2 className="u-display-m mb-4 text-text-main">{t('cases_title')}</h2>
           <p className="u-paragraph-l text-text-faded">
@@ -114,7 +114,7 @@ export default async function Cases(props: ICasesProps) {
             </div>
           </TabsContent>
         </Tabs>
-      </AnchorSection>
-    </Container>
+      </Container>
+    </AnchorSection>
   );
 }

@@ -1,6 +1,7 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import Link from 'next/link';
 import {Container} from '@/components/layout/Container';
+import {AnchorSection} from '@/components/layout/AnchorSection';
 import {Button} from '@/components/lovpen-ui/button';
 import Architecture from "@/app/[locale]/(marketing)/architecture/page";
 import Workflow from "@/app/[locale]/(marketing)/workflow/page";
@@ -35,7 +36,8 @@ export default async function Index(props: IIndexProps) {
   return (
     <>
       {/* Hero Section */}
-      <section
+      <AnchorSection
+        id="hero"
         className="w-full py-16 lg:py-24 bg-gradient-to-b from-background-main to-background-ivory-medium u-bg-layered-subtle relative overflow-hidden"
       >
         <Container>
@@ -55,7 +57,7 @@ export default async function Index(props: IIndexProps) {
             </div>
           </div>
         </Container>
-      </section>
+      </AnchorSection>
 
       {/* Architecture Section */}
       <Architecture params={props.params}/>

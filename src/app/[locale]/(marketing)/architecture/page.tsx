@@ -29,8 +29,8 @@ export default async function Architecture(props: IArchitectureProps) {
   });
 
   return (
-    <Container>
-      <AnchorSection id="architecture" className="mt-16 relative">
+    <AnchorSection id="architecture" className="w-full py-16 lg:py-24 bg-gradient-to-b from-background-main to-background-ivory-light u-bg-layered-subtle relative">
+      <Container>
         <div className="max-w-7xl mx-auto px-4">
           {/* Hero Section */}
           <div className="text-center mb-12">
@@ -323,7 +323,7 @@ export default async function Architecture(props: IArchitectureProps) {
             <p className="text-sm text-text-muted">{t('flow_description_2')}</p>
           </div>
         </div>
-      </AnchorSection>
-    </Container>
+      </Container>
+    </AnchorSection>
   );
 }

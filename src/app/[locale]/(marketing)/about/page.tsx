@@ -31,8 +31,8 @@ export default async function About(props: IAboutProps) {
   });
 
   return (
-    <Container>
-      <AnchorSection id="about" className="max-w-4xl mx-auto py-12">
+    <AnchorSection id="about" className="w-full py-16 lg:py-24 bg-gradient-to-b from-background-ivory-medium to-background-main u-bg-organic-noise relative">
+      <Container>
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-text-main mb-6">
@@ -225,7 +225,7 @@ export default async function About(props: IAboutProps) {
             </Link>
           </div>
         </div>
-      </AnchorSection>
-    </Container>
+      </Container>
+    </AnchorSection>
   );
 };

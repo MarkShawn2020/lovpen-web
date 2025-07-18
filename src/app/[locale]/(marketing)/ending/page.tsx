@@ -1,6 +1,7 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import Link from 'next/link';
 import {Container} from '@/components/layout/Container';
+import {AnchorSection} from '@/components/layout/AnchorSection';
 import {Button} from '@/components/lovpen-ui/button';
 
 type IEndingProps = {
@@ -29,10 +30,11 @@ export default async function Ending(props: IEndingProps) {
   });
 
   return (
-    <Container>
-      <section
-        className="w-full py-16 lg:py-24 bg-gradient-to-r from-primary/10 to-swatch-cactus/10 u-bg-organic-noise relative"
-      >
+    <AnchorSection
+      id="ending"
+      className="w-full py-16 lg:py-24 bg-gradient-to-r from-primary/10 to-swatch-cactus/10 u-bg-organic-noise relative"
+    >
+      <Container>
         <div className="text-center">
           <h2 className="u-display-m text-text-main mb-6">{t('cta_title')}</h2>
           <p className="u-paragraph-l text-text-faded mb-8 max-w-2xl mx-auto">
@@ -68,7 +70,7 @@ export default async function Ending(props: IEndingProps) {
             </div>
           </div>
         </div>
-      </section>
-    </Container>
+      </Container>
+    </AnchorSection>
   );
 }

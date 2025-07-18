@@ -30,8 +30,8 @@ export default async function Pricing(props: IPricingProps) {
   });
 
   return (
-    <Container>
-      <AnchorSection id="pricing" className="max-w-6xl mx-auto py-12">
+    <AnchorSection id="pricing" className="w-full py-16 lg:py-24 bg-gradient-to-b from-background-ivory-light to-background-ivory-medium u-bg-premium-texture relative">
+      <Container>
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-text-main mb-4">
             {t('hero_title')}
@@ -207,7 +207,7 @@ export default async function Pricing(props: IPricingProps) {
             </div>
           </div>
         </div>
-      </AnchorSection>
-    </Container>
+      </Container>
+    </AnchorSection>
   );
 }
