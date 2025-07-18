@@ -284,43 +284,34 @@ const PlatformCard = ({platform, style}: { platform: Platform; style?: React.CSS
   <div 
     className={cn(
       'absolute transform -translate-x-1/2 -translate-y-1/2',
-      'w-24 h-24 rounded-xl border border-solid backdrop-blur-sm bg-gradient-to-br',
-      'transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-black/10 hover:z-30',
-      'group cursor-pointer overflow-hidden',
-      platform.bgColor,
+      'w-16 h-16 rounded-full',
+      'transition-all duration-300 hover:scale-125 hover:z-30',
+      'group cursor-pointer flex items-center justify-center',
+      'bg-white/80 backdrop-blur-sm border border-white/50 shadow-sm',
+      'hover:shadow-lg hover:bg-white/95',
     )}
     style={style}
   >
-    {/* 悬停发光效果 */}
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-    
-    {/* 内容区域 */}
-    <div className="relative z-10 h-full flex flex-col items-center justify-center p-2">
-      {/* 图标 */}
-      <div className="text-2xl mb-1 transform group-hover:scale-110 transition-all duration-300">
-        {platform.icon}
-      </div>
-      
-      {/* 平台名称 */}
-      <h3 className={cn(
-        'font-medium text-xs text-center leading-tight transition-colors duration-200',
-        'group-hover:text-primary',
-        platform.color
-      )}
-      >
-        {platform.name}
-      </h3>
+    {/* 图标 */}
+    <div className="text-2xl transform group-hover:scale-110 transition-all duration-300">
+      {platform.icon}
     </div>
     
     {/* 悬停时显示的详细信息 */}
-    <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-48 p-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-40">
-      <p className="text-xs text-text-faded text-center">
-        {platform.description}
-      </p>
+    <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 w-48 p-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-40">
+      <div className="text-center">
+        <h3 className={cn(
+          'font-semibold text-sm mb-1',
+          platform.color
+        )}
+        >
+          {platform.name}
+        </h3>
+        <p className="text-xs text-text-faded">
+          {platform.description}
+        </p>
+      </div>
     </div>
-    
-    {/* 底部装饰线 */}
-    <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
   </div>
 );
 export const Platforms = () => {
