@@ -1,5 +1,6 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Container} from '@/components/layout/Container';
+import {AnchorSection} from '@/components/layout/AnchorSection';
 import {Card, CardContent, CardHeader, CardIcon} from '@/components/lovpen-ui/card';
 
 type IFeaturesHomeProps = {
@@ -62,7 +63,7 @@ export default async function FeaturesHome(props: IFeaturesHomeProps) {
 
   return (
     <Container>
-      <section id="features" className="w-full py-16 lg:py-24 bg-white u-bg-subtle-waves relative">
+      <AnchorSection id="features" className="w-full py-16 lg:py-24 bg-white u-bg-subtle-waves relative">
         <div className="text-center mb-16">
           <h2 className="u-display-m mb-4 text-text-main">{t('features_title')}</h2>
           <p className="u-paragraph-l text-text-faded max-w-3xl mx-auto">
@@ -91,7 +92,7 @@ export default async function FeaturesHome(props: IFeaturesHomeProps) {
             </div>
           ))}
         </div>
-      </section>
+      </AnchorSection>
     </Container>
   );
 }

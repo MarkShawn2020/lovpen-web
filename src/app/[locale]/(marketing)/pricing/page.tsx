@@ -1,6 +1,7 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import Link from 'next/link';
 import {Container} from '@/components/layout/Container';
+import {AnchorSection} from '@/components/layout/AnchorSection';
 import {Button} from '@/components/lovpen-ui/button';
 
 type IPricingProps = {
@@ -30,7 +31,7 @@ export default async function Pricing(props: IPricingProps) {
 
   return (
     <Container>
-      <div className="max-w-6xl mx-auto py-12">
+      <AnchorSection id="pricing" className="max-w-6xl mx-auto py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-text-main mb-4">
             {t('hero_title')}
@@ -206,7 +207,7 @@ export default async function Pricing(props: IPricingProps) {
             </div>
           </div>
         </div>
-      </div>
+      </AnchorSection>
     </Container>
   );
 }

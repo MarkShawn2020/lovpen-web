@@ -1,5 +1,6 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Container} from '@/components/layout/Container';
+import {AnchorSection} from '@/components/layout/AnchorSection';
 import {PlatformShowcase} from '@/components/lovpen-ui/platform-showcase';
 
 type IWorkflowProps = {
@@ -29,7 +30,7 @@ export default async function Workflow(props: IWorkflowProps) {
 
   return (
     <Container>
-      <section className="w-full py-16 lg:py-24 u-bg-ivory-medium u-bg-premium-texture relative">
+      <AnchorSection id="workflow" className="w-full py-16 lg:py-24 u-bg-ivory-medium u-bg-premium-texture relative">
         <div className="text-center mb-16">
           <h2 className="u-display-m mb-4 text-text-main">{t('ai_process_title')}</h2>
           <p className="u-paragraph-l text-text-faded max-w-3xl mx-auto">
@@ -37,7 +38,7 @@ export default async function Workflow(props: IWorkflowProps) {
           </p>
         </div>
         <PlatformShowcase/>
-      </section>
+      </AnchorSection>
     </Container>
   );
 }

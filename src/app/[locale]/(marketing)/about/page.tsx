@@ -1,6 +1,7 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import Link from 'next/link';
 import {Container} from '@/components/layout/Container';
+import {AnchorSection} from '@/components/layout/AnchorSection';
 import {Button} from '@/components/lovpen-ui/button';
 import {SafeLink} from '@/components/lovpen-ui/safe-link';
 
@@ -31,7 +32,7 @@ export default async function About(props: IAboutProps) {
 
   return (
     <Container>
-      <div className="max-w-4xl mx-auto py-12">
+      <AnchorSection id="about" className="max-w-4xl mx-auto py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-text-main mb-6">
@@ -224,7 +225,7 @@ export default async function About(props: IAboutProps) {
             </Link>
           </div>
         </div>
-      </div>
+      </AnchorSection>
     </Container>
   );
 };

@@ -1,5 +1,6 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Container} from '@/components/layout/Container';
+import {AnchorSection} from '@/components/layout/AnchorSection';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/lovpen-ui/tabs';
 
 type ICasesProps = {
@@ -29,7 +30,7 @@ export default async function Cases(props: ICasesProps) {
 
   return (
     <Container>
-      <section id="cases" className="w-full py-16 lg:py-24 u-bg-ivory-medium u-bg-premium-texture relative">
+      <AnchorSection id="cases" className="w-full py-16 lg:py-24 u-bg-ivory-medium u-bg-premium-texture relative">
         <div className="text-center mb-12">
           <h2 className="u-display-m mb-4 text-text-main">{t('cases_title')}</h2>
           <p className="u-paragraph-l text-text-faded">
@@ -113,7 +114,7 @@ export default async function Cases(props: ICasesProps) {
             </div>
           </TabsContent>
         </Tabs>
-      </section>
+      </AnchorSection>
     </Container>
   );
 }

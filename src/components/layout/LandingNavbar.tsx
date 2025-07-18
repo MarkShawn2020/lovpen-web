@@ -14,8 +14,8 @@ const LandingNavbar = async () => {
 
   const navigation = [
     {name: t('architecture'), href: '/architecture', scrollToId: 'architecture'},
-    {name: t('features'), href: '/features', scrollToId: 'features'},
     {name: t('workflow'), href: '/workflow', scrollToId: 'workflow'},
+    {name: t('features'), href: '/features', scrollToId: 'features'},
     {name: t('cases'), href: '/cases', scrollToId: 'cases'},
     {name: t('pricing'), href: '/pricing', scrollToId: 'pricing'},
     {name: t('about'), href: '/about', scrollToId: 'about'},
@@ -26,7 +26,7 @@ const LandingNavbar = async () => {
   const dashboardUrl = getI18nPath('/dashboard', locale);
 
   return (
-    <header className="w-full bg-background-main border-b border-border-default/20">
+    <header className="sticky top-0 z-50 w-full bg-background-main/95 backdrop-blur-md border-b border-border-default/20 shadow-sm">
       <Container>
         <div className="flex items-center justify-between py-4 lg:py-6">
           {/* Logo */}

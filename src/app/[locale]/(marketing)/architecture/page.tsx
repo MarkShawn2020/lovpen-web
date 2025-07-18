@@ -1,5 +1,6 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Container} from '@/components/layout/Container';
+import {AnchorSection} from '@/components/layout/AnchorSection';
 import {Logo} from '@/components/lovpen-ui/logo';
 
 type IArchitectureProps = {
@@ -29,7 +30,7 @@ export default async function Architecture(props: IArchitectureProps) {
 
   return (
     <Container>
-      <div className="mt-16 relative">
+      <AnchorSection id="architecture" className="mt-16 relative">
         <div className="max-w-7xl mx-auto px-4">
           {/* Hero Section */}
           <div className="text-center mb-12">
@@ -322,7 +323,7 @@ export default async function Architecture(props: IArchitectureProps) {
             <p className="text-sm text-text-muted">{t('flow_description_2')}</p>
           </div>
         </div>
-      </div>
+      </AnchorSection>
     </Container>
   );
 }
