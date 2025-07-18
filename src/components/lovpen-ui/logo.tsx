@@ -36,6 +36,8 @@ const sizeConfigs = {
 // Horizontal Logo Component (logo + text)
 const HorizontalLogo = ({ size, className, color }: { size: LogoSize; className?: string; color?: string }) => {
   const { width, height } = sizeConfigs.horizontal[size];
+  const gradientId = `logo-gradient-${Math.random().toString(36).substr(2, 9)}`;
+  const isGradient = className?.includes('text-brand-gradient');
   
   return (
     <svg
@@ -43,8 +45,16 @@ const HorizontalLogo = ({ size, className, color }: { size: LogoSize; className?
       height={height}
       viewBox="635 459 649 128"
       className={cn('transition-all duration-200', className)}
-      fill={color || 'currentColor'}
+      fill={isGradient ? `url(#${gradientId})` : (color || 'currentColor')}
     >
+      {isGradient && (
+        <defs>
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#d97757" />
+            <stop offset="100%" stopColor="#629a90" />
+          </linearGradient>
+        </defs>
+      )}
       <g>
         <path d="M635.3,459.33L635.3,459.33v91.19c0,23.24,18.84,42.09,42.09,42.09l0,0v-91.19C677.39,478.18,658.55,459.33,635.3,459.33z" />
         <path d="M687.91,487.39L687.91,487.39v91.19c0,23.24,18.84,42.09,42.09,42.09l0,0v-91.19C730,506.23,711.16,487.39,687.91,487.39z" />
@@ -63,6 +73,8 @@ const HorizontalLogo = ({ size, className, color }: { size: LogoSize; className?
 // Vertical Logo Component (logo on top, text below)
 const VerticalLogo = ({ size, className, color }: { size: LogoSize; className?: string; color?: string }) => {
   const { width, height } = sizeConfigs.vertical[size];
+  const gradientId = `logo-gradient-${Math.random().toString(36).substr(2, 9)}`;
+  const isGradient = className?.includes('text-brand-gradient');
   
   return (
     <svg
@@ -70,8 +82,16 @@ const VerticalLogo = ({ size, className, color }: { size: LogoSize; className?: 
       height={height}
       viewBox="730 402 509 287"
       className={cn('transition-all duration-200', className)}
-      fill={color || 'currentColor'}
+      fill={isGradient ? `url(#${gradientId})` : (color || 'currentColor')}
     >
+      {isGradient && (
+        <defs>
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#d97757" />
+            <stop offset="100%" stopColor="#629a90" />
+          </linearGradient>
+        </defs>
+      )}
       <g>
         <path d="M928.43,521.71v-91.19c0-23.24-18.84-42.09-42.09-42.09h0v91.19C886.35,502.87,905.19,521.71,928.43,521.71z" />
         <path d="M981.04,549.77v-91.19c0-23.24-18.84-42.09-42.09-42.09h0v91.19C938.96,530.93,957.8,549.77,981.04,549.77L981.04,549.77z" />
@@ -92,6 +112,8 @@ const VerticalLogo = ({ size, className, color }: { size: LogoSize; className?: 
 // Pure Logo Component (icon only)
 const PureLogo = ({ size, className, color }: { size: LogoSize; className?: string; color?: string }) => {
   const { width, height } = sizeConfigs.pure[size];
+  const gradientId = `logo-gradient-${Math.random().toString(36).substr(2, 9)}`;
+  const isGradient = className?.includes('text-brand-gradient');
   
   return (
     <svg
@@ -99,8 +121,16 @@ const PureLogo = ({ size, className, color }: { size: LogoSize; className?: stri
       height={height}
       viewBox="818 385 284 310"
       className={cn('transition-all duration-200', className)}
-      fill={color || 'currentColor'}
+      fill={isGradient ? `url(#${gradientId})` : (color || 'currentColor')}
     >
+      {isGradient && (
+        <defs>
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#d97757" />
+            <stop offset="100%" stopColor="#629a90" />
+          </linearGradient>
+        </defs>
+      )}
       <g>
         <path d="M899.41,640.99V465.94c0-44.62-36.17-80.79-80.79-80.79h0V560.2C818.62,604.82,854.79,640.99,899.41,640.99z" />
         <path d="M1000.4,694.85V519.8c0-44.62-36.17-80.79-80.79-80.79h0v175.05C919.6,658.68,955.78,694.85,1000.4,694.85L1000.4,694.85z" />
@@ -146,7 +176,7 @@ const LogoWithText = ({ ref, size = 'md', className, color, ...props }: LogoWith
         )}
         {...props}
       >
-        <Logo variant="horizontal" size={size} color={color} />
+        <Logo variant="horizontal" size={size} color={color} className={className} />
       </div>
     );
   };

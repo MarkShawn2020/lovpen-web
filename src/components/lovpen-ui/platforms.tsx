@@ -1,5 +1,6 @@
 import * as React from "react";
 import {cn} from "@/lib/utils";
+import {forceCollide, forceSimulation, forceX, forceY, SimulationNodeDatum} from 'd3-force';
 
 export type Platform = {
   name: string;
@@ -314,10 +315,46 @@ const PlatformCard = ({platform, style}: { platform: Platform; style?: React.CSS
     </div>
   </div>
 );
+type PlatformNode = {
+  x?: number;
+  y?: number;
+  fx?: number;
+  fy?: number;
+} & Platform & SimulationNodeDatum
+
 export const Platforms = () => {
   const chartWidth = 800;
   const chartHeight = 600;
   const padding = 100;
+  const [nodes, setNodes] = React.useState<PlatformNode[]>([]);
+  const simulationRef = React.useRef<any>(null);
+  
+  React.useEffect(() => {
+    // 初始化节点位置（基于原始象限位置）
+    const initialNodes: PlatformNode[] = platforms.map(platform => ({
+      ...platform,
+      x: padding + (platform.contentComplexity / 100) * (chartWidth - 2 * padding),
+      y: chartHeight - padding - (platform.seriousness / 100) * (chartHeight - 2 * padding),
+      fx: undefined, // 允许自由移动
+      fy: undefined,
+    }));
+    
+    // 创建力导向仿真
+    const simulation = forceSimulation(initialNodes)
+      .force('x', forceX((d: any) => padding + (d.contentComplexity / 100) * (chartWidth - 2 * padding)).strength(0.3))
+      .force('y', forceY((d: any) => chartHeight - padding - (d.seriousness / 100) * (chartHeight - 2 * padding)).strength(0.3))
+      .force('collide', forceCollide().radius(35).strength(0.8))
+      .alphaDecay(0.02)
+      .on('tick', () => {
+        setNodes([...initialNodes]);
+      });
+    
+    simulationRef.current = simulation;
+    
+    return () => {
+      simulation.stop();
+    };
+  }, [chartWidth, chartHeight, padding]);
   
   return (
     <div className="relative">
@@ -329,7 +366,7 @@ export const Platforms = () => {
         {/* 图表标题 */}
         <div className="mb-8 text-center">
           <h3 className="text-xl font-semibold text-text-main mb-2">平台特征分析矩阵</h3>
-          <p className="text-sm text-text-faded">根据内容复杂度与专业程度的二维分布</p>
+          <p className="text-sm text-text-faded">根据内容复杂度与专业程度的二维分布（智能防重叠）</p>
         </div>
         
         {/* 图表容器 */}
@@ -387,18 +424,15 @@ export const Platforms = () => {
           </svg>
           
           {/* 平台卡片 */}
-          {platforms.map((platform, index) => {
-            const x = padding + (platform.contentComplexity / 100) * (chartWidth - 2 * padding);
-            const y = chartHeight - padding - (platform.seriousness / 100) * (chartHeight - 2 * padding);
-            
+          {nodes.map((platform, _index) => {
             return (
               <PlatformCard
                 key={platform.name}
                 platform={platform}
                 style={{
-                  left: `${x}px`,
-                  top: `${y}px`,
-                  animationDelay: `${index * 50}ms`,
+                  left: `${platform.x || 0}px`,
+                  top: `${platform.y || 0}px`,
+                  transition: 'all 0.1s ease-out',
                 }}
               />
             );

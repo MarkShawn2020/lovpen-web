@@ -29,11 +29,11 @@ export default async function Workflow(props: IWorkflowProps) {
   });
 
   return (
-    <AnchorSection id="workflow" className="w-full py-16 lg:py-24 bg-gradient-to-b from-background-ivory-light to-background-ivory-medium u-bg-premium-texture relative">
+    <AnchorSection id="workflow" className="w-full py-16 lg:py-24 bg-brand-subtle u-bg-premium-texture relative">
       <Container>
         <div className="text-center mb-16">
-          <h2 className="u-display-m mb-4 text-text-main">{t('ai_process_title')}</h2>
-          <p className="u-paragraph-l text-text-faded max-w-3xl mx-auto">
+          <h2 className="u-display-m mb-4 text-brand-gradient">{t('ai_process_title')}</h2>
+          <p className="u-paragraph-l text-text-main max-w-3xl mx-auto">
             {t('ai_process_subtitle')}
           </p>
         </div>

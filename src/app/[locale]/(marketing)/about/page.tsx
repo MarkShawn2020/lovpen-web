@@ -31,63 +31,63 @@ export default async function About(props: IAboutProps) {
   });
 
   return (
-    <AnchorSection id="about" className="w-full py-16 lg:py-24 bg-gradient-to-b from-background-ivory-medium to-background-main u-bg-organic-noise relative">
+    <AnchorSection id="about" className="w-full py-16 lg:py-24 bg-brand-mesh u-bg-organic-noise relative">
       <Container>
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-text-main mb-6">
+          <h1 className="u-display-xl text-brand-gradient mb-6">
             {t('hero_title')}
           </h1>
-          <p className="text-xl text-text-faded max-w-3xl mx-auto">
+          <p className="u-paragraph-l text-text-main max-w-3xl mx-auto">
             {t('hero_subtitle')}
           </p>
         </div>
 
         {/* Mission Section */}
-        <div className="bg-background-ivory-light p-8 rounded-lg mb-16">
-          <h2 className="text-3xl font-semibold text-text-main mb-6 text-center">
+        <div className="card-brand-primary p-8 rounded-lg mb-16">
+          <h2 className="u-display-m text-brand-primary mb-6 text-center">
             {t('mission_title')}
           </h2>
-          <p className="text-lg text-text-faded text-center mb-8">
+          <p className="text-lg text-text-main text-center mb-8">
             {t('mission_description')}
           </p>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div
-                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
+                className="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
               >
                 💡
               </div>
-              <h3 className="text-xl font-semibold text-text-main mb-2">
+              <h3 className="text-xl font-semibold text-brand-primary mb-2">
                 {t('mission_point_1_title')}
               </h3>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('mission_point_1_description')}
               </p>
             </div>
             <div className="text-center">
               <div
-                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
+                className="w-16 h-16 bg-brand-secondary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
               >
                 🤝
               </div>
-              <h3 className="text-xl font-semibold text-text-main mb-2">
+              <h3 className="text-xl font-semibold text-brand-secondary mb-2">
                 {t('mission_point_2_title')}
               </h3>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('mission_point_2_description')}
               </p>
             </div>
             <div className="text-center">
               <div
-                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
+                className="w-16 h-16 bg-brand-gradient rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
               >
                 🌍
               </div>
-              <h3 className="text-xl font-semibold text-text-main mb-2">
+              <h3 className="text-xl font-semibold text-brand-gradient mb-2">
                 {t('mission_point_3_title')}
               </h3>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('mission_point_3_description')}
               </p>
             </div>
@@ -96,10 +96,10 @@ export default async function About(props: IAboutProps) {
 
         {/* Story Section */}
         <div className="mb-16">
-          <h2 className="text-3xl font-semibold text-text-main mb-6 text-center">
+          <h2 className="text-3xl font-semibold text-brand-gradient mb-6 text-center">
             {t('story_title')}
           </h2>
-          <div className="space-y-6 text-lg text-text-faded">
+          <div className="space-y-6 text-lg text-text-main">
             <p>{t('story_paragraph_1')}</p>
             <p>{t('story_paragraph_2')}</p>
             <p>{t('story_paragraph_3')}</p>
@@ -108,39 +108,39 @@ export default async function About(props: IAboutProps) {
 
         {/* Values Section */}
         <div className="mb-16">
-          <h2 className="text-3xl font-semibold text-text-main mb-8 text-center">
+          <h2 className="text-3xl font-semibold text-brand-gradient mb-8 text-center">
             {t('values_title')}
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-background-ivory-light p-6 rounded-lg">
-              <h3 className="text-xl font-semibold text-text-main mb-3">
+            <div className="card-brand-primary p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-brand-primary mb-3">
                 {t('value_1_title')}
               </h3>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('value_1_description')}
               </p>
             </div>
-            <div className="bg-background-ivory-light p-6 rounded-lg">
-              <h3 className="text-xl font-semibold text-text-main mb-3">
+            <div className="card-brand-secondary p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-brand-secondary mb-3">
                 {t('value_2_title')}
               </h3>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('value_2_description')}
               </p>
             </div>
-            <div className="bg-background-ivory-light p-6 rounded-lg">
-              <h3 className="text-xl font-semibold text-text-main mb-3">
+            <div className="card-brand-gradient p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-brand-gradient mb-3">
                 {t('value_3_title')}
               </h3>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('value_3_description')}
               </p>
             </div>
-            <div className="bg-background-ivory-light p-6 rounded-lg">
-              <h3 className="text-xl font-semibold text-text-main mb-3">
+            <div className="card-brand-primary p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-brand-primary mb-3">
                 {t('value_4_title')}
               </h3>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('value_4_description')}
               </p>
             </div>
@@ -148,11 +148,11 @@ export default async function About(props: IAboutProps) {
         </div>
 
         {/* Contact Section */}
-        <div className="text-center bg-primary/10 border border-primary/20 rounded-lg p-8">
-          <h2 className="text-3xl font-semibold text-text-main mb-4">
+        <div className="text-center card-brand-gradient rounded-lg p-8">
+          <h2 className="text-3xl font-semibold text-brand-gradient mb-4">
             {t('contact_title')}
           </h2>
-          <p className="text-lg text-text-faded mb-6">
+          <p className="text-lg text-text-main mb-6">
             {t('contact_description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

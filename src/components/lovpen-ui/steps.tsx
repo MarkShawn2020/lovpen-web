@@ -169,9 +169,9 @@ const Steps = () => (
           style={{animationDelay: '0.5s'}}
         />
       </div>
-      <h3 className="text-2xl font-bold text-text-main mt-4 mb-2">LovPen 引擎</h3>
-      <p className="text-text-faded max-w-md mx-auto">
-        智能整合碎片化思考，生成专业级美丽图文，为20+平台量身定制值得信赖的优质内容
+      <h3 className="u-display-m text-text-main mt-4 mb-2">LovPen 引擎</h3>
+      <p className="u-paragraph-l text-text-faded max-w-md mx-auto">
+        智能整合碎片化思考，生成专业级美丽图文，为28+平台量身定制值得信赖的优质内容
       </p>
     </div>
   </div>

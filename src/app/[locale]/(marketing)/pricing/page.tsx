@@ -30,13 +30,13 @@ export default async function Pricing(props: IPricingProps) {
   });
 
   return (
-    <AnchorSection id="pricing" className="w-full py-16 lg:py-24 bg-gradient-to-b from-background-ivory-light to-background-ivory-medium u-bg-premium-texture relative">
+    <AnchorSection id="pricing" className="w-full py-16 lg:py-24 bg-brand-subtle u-bg-premium-texture relative">
       <Container>
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-text-main mb-4">
+          <h1 className="u-display-m text-brand-gradient mb-4">
             {t('hero_title')}
           </h1>
-          <p className="text-xl text-text-faded">
+          <p className="u-paragraph-l text-text-main">
             {t('hero_subtitle')}
           </p>
         </div>
@@ -44,39 +44,39 @@ export default async function Pricing(props: IPricingProps) {
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {/* Free Plan */}
           <div
-            className="bg-background-ivory-light p-8 rounded-lg border-2 border-transparent max-w-sm mx-auto md:max-w-none"
+            className="card-brand-primary p-8 rounded-lg border-2 border-transparent max-w-sm mx-auto md:max-w-none hover:shadow-brand-primary transition-all duration-300"
           >
             <div className="text-center mb-6">
-              <h3 className="text-2xl font-semibold text-text-main mb-2">
+              <h3 className="text-2xl font-semibold text-brand-primary mb-2">
                 {t('free_plan_name')}
               </h3>
-              <div className="text-4xl font-bold text-text-main mb-2">
+              <div className="text-4xl font-bold text-brand-primary mb-2">
                 {t('free_plan_price')}
               </div>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('free_plan_description')}
               </p>
             </div>
             <ul className="space-y-3 mb-8">
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('free_plan_feature_1')}
               </li>
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('free_plan_feature_2')}
               </li>
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('free_plan_feature_3')}
               </li>
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('free_plan_feature_4')}
               </li>
             </ul>
             <Link href="/sign-up" className="block">
-              <Button variant="outline" size="lg" className="w-full">
+              <Button variant="outline" size="lg" className="w-full border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white">
                 {t('get_started')}
               </Button>
             </Link>
@@ -84,48 +84,48 @@ export default async function Pricing(props: IPricingProps) {
 
           {/* Pro Plan */}
           <div
-            className="bg-background-ivory-light p-8 rounded-lg border-2 border-primary relative max-w-sm mx-auto md:max-w-none"
+            className="card-brand-gradient p-8 rounded-lg border-2 border-brand-primary relative max-w-sm mx-auto md:max-w-none hover:shadow-brand-warm transition-all duration-300 hover:scale-105"
           >
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-              <span className="bg-primary text-white px-4 py-1 rounded-full text-sm font-medium">
+              <span className="bg-brand-gradient text-white px-4 py-1 rounded-full text-sm font-medium">
                 {t('popular_badge')}
               </span>
             </div>
             <div className="text-center mb-6">
-              <h3 className="text-2xl font-semibold text-text-main mb-2">
+              <h3 className="text-2xl font-semibold text-brand-gradient mb-2">
                 {t('pro_plan_name')}
               </h3>
-              <div className="text-4xl font-bold text-text-main mb-2">
+              <div className="text-4xl font-bold text-brand-gradient mb-2">
                 {t('pro_plan_price')}
               </div>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('pro_plan_description')}
               </p>
             </div>
             <ul className="space-y-3 mb-8">
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('pro_plan_feature_1')}
               </li>
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('pro_plan_feature_2')}
               </li>
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('pro_plan_feature_3')}
               </li>
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('pro_plan_feature_4')}
               </li>
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('pro_plan_feature_5')}
               </li>
             </ul>
             <Link href="/sign-up" className="block">
-              <Button variant="primary" size="lg" className="w-full">
+              <Button variant="primary" size="lg" className="w-full shadow-brand-warm">
                 {t('upgrade_to_pro')}
               </Button>
             </Link>
@@ -133,43 +133,43 @@ export default async function Pricing(props: IPricingProps) {
 
           {/* Enterprise Plan */}
           <div
-            className="bg-background-ivory-light p-8 rounded-lg border-2 border-transparent max-w-sm mx-auto md:max-w-none"
+            className="card-brand-secondary p-8 rounded-lg border-2 border-transparent max-w-sm mx-auto md:max-w-none hover:shadow-brand-secondary transition-all duration-300"
           >
             <div className="text-center mb-6">
-              <h3 className="text-2xl font-semibold text-text-main mb-2">
+              <h3 className="text-2xl font-semibold text-brand-secondary mb-2">
                 {t('enterprise_plan_name')}
               </h3>
-              <div className="text-4xl font-bold text-text-main mb-2">
+              <div className="text-4xl font-bold text-brand-secondary mb-2">
                 {t('enterprise_plan_price')}
               </div>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('enterprise_plan_description')}
               </p>
             </div>
             <ul className="space-y-3 mb-8">
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('enterprise_plan_feature_1')}
               </li>
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('enterprise_plan_feature_2')}
               </li>
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('enterprise_plan_feature_3')}
               </li>
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('enterprise_plan_feature_4')}
               </li>
-              <li className="flex items-center text-text-faded">
-                <span className="text-green-500 mr-2">✓</span>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
                 {t('enterprise_plan_feature_5')}
               </li>
             </ul>
             <Link href="/contact" className="block">
-              <Button variant="outline" size="lg" className="w-full">
+              <Button variant="outline" size="lg" className="w-full border-brand-secondary text-brand-secondary hover:bg-brand-secondary hover:text-white">
                 {t('contact_sales')}
               </Button>
             </Link>
@@ -177,31 +177,31 @@ export default async function Pricing(props: IPricingProps) {
         </div>
 
         <div className="mt-16 text-center">
-          <h2 className="text-3xl font-bold text-text-main mb-8">
+          <h2 className="text-3xl font-bold text-brand-gradient mb-8">
             {t('faq_title')}
           </h2>
           <div className="max-w-3xl mx-auto space-y-6">
-            <div className="bg-background-ivory-light p-6 rounded-lg">
-              <h3 className="text-xl font-semibold text-text-main mb-2">
+            <div className="card-brand-primary p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-brand-primary mb-2">
                 {t('faq_1_question')}
               </h3>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('faq_1_answer')}
               </p>
             </div>
-            <div className="bg-background-ivory-light p-6 rounded-lg">
-              <h3 className="text-xl font-semibold text-text-main mb-2">
+            <div className="card-brand-secondary p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-brand-secondary mb-2">
                 {t('faq_2_question')}
               </h3>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('faq_2_answer')}
               </p>
             </div>
-            <div className="bg-background-ivory-light p-6 rounded-lg">
-              <h3 className="text-xl font-semibold text-text-main mb-2">
+            <div className="card-brand-gradient p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-brand-gradient mb-2">
                 {t('faq_3_question')}
               </h3>
-              <p className="text-text-faded">
+              <p className="text-text-main">
                 {t('faq_3_answer')}
               </p>
             </div>
