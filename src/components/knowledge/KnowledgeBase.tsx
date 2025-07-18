@@ -7,6 +7,8 @@ import {fileClientV2} from '@/services/file-client-v2';
 import {fastAPIAuthService} from '@/services/fastapi-auth-v2';
 import type {AuthState} from '@/services/fastapi-auth-v2';
 import {UploadModal} from './UploadModal';
+import {useFolderTemplates} from '@/hooks/useFolderTemplates';
+import type {FolderNode} from '@/hooks/useFolderTemplates';
 
 type FileNode = {
   id: string;
@@ -43,109 +45,75 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
     loading: true,
     error: null,
   });
+  
+  // 使用文件夹模板系统
+  const {
+    folderTree,
+    updateFileCount,
+    recommendFolder,
+    toggleFolder: toggleTemplateFolder,
+  } = useFolderTemplates();
 
-  // 获取平台显示名称
-  const getPlatformDisplayName = (platform: string): string => {
-    const platformNames: Record<string, string> = {
-      'manual': '📝 手动上传',
-      'notion': '📋 Notion',
-      'flomo': '🔖 Flomo',
-      'wechat-mp': '💬 微信公众号',
-      'wechat-chat': '💬 微信聊天',
-      'feishu': '🚀 飞书',
-      'obsidian': '🔮 Obsidian',
-      'unknown': '❓ 未知来源',
-    };
-    return platformNames[platform] || platform;
+  // 基于模板创建文件夹结构
+  const createTemplateFolders = (templates: FolderNode[]): FileNode[] => {
+    return templates.map(template => ({
+      id: template.id,
+      name: template.name,
+      type: 'folder' as const,
+      path: template.path,
+      isExpanded: template.isExpanded || false,
+      children: template.children ? createTemplateFolders(template.children) : [],
+    }));
   };
 
-  // 获取类型显示名称
-  const getTypeDisplayName = (type: string): string => {
-    const typeNames: Record<string, string> = {
-      text: '📝 文本',
-      document: '📄 文档',
-      image: '🖼️ 图片',
-      video: '🎥 视频',
-      audio: '🎵 音频',
-      unknown: '❓ 未知类型',
-    };
-    return typeNames[type] || type;
+  // 将文件添加到指定文件夹
+  const addFileToFolder = (folders: FileNode[], file: FileNode, targetPath: string) => {
+    for (const folder of folders) {
+      if (folder.path === targetPath) {
+        folder.children = folder.children || [];
+        folder.children.push(file);
+        return true;
+      }
+      if (folder.children && folder.path && targetPath.startsWith(folder.path)) {
+        if (addFileToFolder(folder.children, file, targetPath)) {
+          return true;
+        }
+      }
+    }
+    return false;
   };
 
-  // 将 FileItem 转换为树形结构
+  // 将 FileItem 转换为树形结构 - 基于模板系统
   const convertToTreeStructure = (items: FileItem[]): FileNode[] => {
-    const rootFolders: FileNode[] = [];
-
-    // 按平台分组
-    const platformGroups = items.reduce((acc, item) => {
-      const platform = item.source_platform || 'unknown';
-      if (!acc[platform]) {
-        acc[platform] = [];
-      }
-      acc[platform].push(item);
-      return acc;
-    }, {} as Record<string, FileItem[]>);
-
-    // 创建平台文件夹
-    Object.entries(platformGroups).forEach(([platform, platformFiles]) => {
-      const platformFolder: FileNode = {
-        id: `platform-${platform}`,
-        name: getPlatformDisplayName(platform),
-        type: 'folder',
-        path: `/${platform}`,
-        isExpanded: platform === 'manual', // 默认展开手动上传的文件
-        children: [],
-      };
-
-      // 按内容类型分组
-      const typeGroups = platformFiles.reduce((acc, item) => {
-        const type = item.content_type || 'unknown';
-        if (!acc[type]) {
-          acc[type] = [];
-        }
-        acc[type].push(item);
-        return acc;
-      }, {} as Record<string, FileItem[]>);
-
-      // 创建类型文件夹
-      Object.entries(typeGroups).forEach(([type, typeFiles]) => {
-        const typeFolder: FileNode = {
-          id: `type-${platform}-${type}`,
-          name: getTypeDisplayName(type),
-          type: 'folder',
-          path: `/${platform}/${type}`,
-          isExpanded: false,
-          children: [],
-        };
-
-        // 添加文件
-        typeFiles.forEach((file) => {
-          const fileNode: FileNode = {
-            id: file.id,
-            name: file.title || `File ${file.id.slice(0, 8)}`,
-            type: 'file',
-            path: `/${platform}/${type}/${file.id}`,
-            size: file.metadata?.fileSize || 0,
-            modified: new Date(file.updated_at),
-            contentType: file.content_type,
-            platform: file.source_platform,
-            tags: file.tags,
-            processingStatus: file.processing_status,
-          };
-          typeFolder.children!.push(fileNode);
-        });
-
-        if (typeFolder.children!.length > 0) {
-          platformFolder.children!.push(typeFolder);
-        }
+    // 先创建基于模板的文件夹结构
+    const templateFolders = createTemplateFolders(folderTree);
+    
+    // 将文件分配到相应的文件夹中
+    items.forEach((file) => {
+      const recommendedFolder = recommendFolder({
+        source_platform: file.source_platform,
+        content_type: file.content_type,
+        title: file.title,
       });
-
-      if (platformFolder.children!.length > 0) {
-        rootFolders.push(platformFolder);
-      }
+      
+      const fileNode: FileNode = {
+        id: file.id,
+        name: file.title || `File ${file.id.slice(0, 8)}`,
+        type: 'file',
+        path: `${recommendedFolder?.path || '/Library/Others'}/${file.id}`,
+        size: file.metadata?.fileSize || 0,
+        modified: new Date(file.updated_at),
+        contentType: file.content_type,
+        platform: file.source_platform,
+        tags: file.tags,
+        processingStatus: file.processing_status,
+      };
+      
+      // 找到对应的文件夹并添加文件
+      addFileToFolder(templateFolders, fileNode, recommendedFolder?.path || '/Library/Others');
     });
 
-    return rootFolders;
+    return templateFolders;
   };
 
   // 获取文件数据
@@ -168,6 +136,9 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
       // 转换为树形结构
       const treeData = convertToTreeStructure(response.items);
       setKnowledgeBase(treeData);
+      
+      // 更新文件夹文件数量
+      updateFileCount(response.items);
     } catch (err) {
       console.error('Failed to fetch files:', err);
       const errorMessage = err instanceof Error ? err.message : 'Failed to load files';
@@ -209,6 +180,9 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
       // 转换为树形结构
       const treeData = convertToTreeStructure(response.items);
       setKnowledgeBase(treeData);
+      
+      // 更新文件夹文件数量
+      updateFileCount(response.items);
     } catch (err) {
       console.error('Search failed:', err);
       const errorMessage = err instanceof Error ? err.message : 'Search failed';
@@ -298,6 +272,10 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
 
   // 切换文件夹展开状态
   const toggleFolder = (nodeId: string) => {
+    // 首先更新模板文件夹状态
+    toggleTemplateFolder(nodeId);
+    
+    // 然后更新显示的知识库状态
     const updateNodes = (nodes: FileNode[]): FileNode[] => {
       return nodes.map((node) => {
         if (node.id === nodeId && node.type === 'folder') {
@@ -524,7 +502,10 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
     }, [] as FileNode[]);
   };
 
-  const filteredNodes = filterNodes(knowledgeBase, searchTerm);
+  // 使用搜索功能，如果有搜索词则使用模板搜索，否则使用当前知识库
+  const filteredNodes = searchTerm.trim() 
+    ? filterNodes(knowledgeBase, searchTerm)
+    : knowledgeBase;
 
   // 显示登录界面
   if (authState.loading) {

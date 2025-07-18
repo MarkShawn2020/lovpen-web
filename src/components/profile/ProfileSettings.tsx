@@ -57,6 +57,48 @@ const PROFILE_SECTIONS = [
   },
 ] as const;
 
+type NavigationContentProps = {
+  visibleSections: (typeof PROFILE_SECTIONS)[number][];
+  activeSection: string;
+  onSectionChange: (sectionId: string) => void;
+}
+
+const NavigationContent = ({ visibleSections, activeSection, onSectionChange }: NavigationContentProps) => (
+  <div className="flex flex-col h-full">
+    <div className="p-6">
+      <h1 className="text-2xl font-semibold text-text-main mb-2">个人设置</h1>
+      <p className="text-sm text-text-faded">管理您的个人资料和偏好设置</p>
+    </div>
+    
+    <nav className="flex-1 px-3">
+      <div className="space-y-1">
+        {visibleSections.map(section => (
+          <button
+            key={section.id}
+            onClick={() => onSectionChange(section.id)}
+            className={cn(
+              'w-full flex items-center px-3 py-2.5 text-left rounded-lg text-sm font-medium transition-colors',
+              'hover:bg-primary/5',
+              activeSection === section.id
+                ? 'bg-primary/10 text-primary border-l-2 border-primary'
+                : 'text-text-main border-l-2 border-transparent'
+            )}
+          >
+            <span className="mr-3 text-base">{section.icon}</span>
+            <span>{section.label}</span>
+          </button>
+        ))}
+      </div>
+    </nav>
+    
+    <div className="p-4 border-t border-border-default/20">
+      <p className="text-xs text-text-faded text-center">
+        LovPen Profile Settings
+      </p>
+    </div>
+  </div>
+);
+
 export function ProfileSettings() {
   const [activeSection, setActiveSection] = useState<string>('overview');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -71,47 +113,15 @@ export function ProfileSettings() {
     setMobileMenuOpen(false);
   };
 
-  const NavigationContent = () => (
-    <div className="flex flex-col h-full">
-      <div className="p-6">
-        <h1 className="text-2xl font-semibold text-text-main mb-2">个人设置</h1>
-        <p className="text-sm text-text-faded">管理您的个人资料和偏好设置</p>
-      </div>
-      
-      <nav className="flex-1 px-3">
-        <div className="space-y-1">
-          {visibleSections.map(section => (
-            <button
-              key={section.id}
-              onClick={() => handleSectionChange(section.id)}
-              className={cn(
-                'w-full flex items-center px-3 py-2.5 text-left rounded-lg text-sm font-medium transition-colors',
-                'hover:bg-primary/5',
-                activeSection === section.id
-                  ? 'bg-primary/10 text-primary border-l-2 border-primary'
-                  : 'text-text-main border-l-2 border-transparent'
-              )}
-            >
-              <span className="mr-3 text-base">{section.icon}</span>
-              <span>{section.label}</span>
-            </button>
-          ))}
-        </div>
-      </nav>
-      
-      <div className="p-4 border-t border-border-default/20">
-        <p className="text-xs text-text-faded text-center">
-          LovPen Profile Settings
-        </p>
-      </div>
-    </div>
-  );
-
   return (
     <div className="flex h-full bg-background-main">
       {/* Desktop Left Sidebar - Apple Settings Style */}
       <div className="hidden lg:flex w-80 bg-background-main border-r border-border-default/20 flex-col">
-        <NavigationContent />
+        <NavigationContent 
+          visibleSections={visibleSections} 
+          activeSection={activeSection} 
+          onSectionChange={handleSectionChange} 
+        />
       </div>
 
       {/* Right Content Panel */}
@@ -129,7 +139,11 @@ export function ProfileSettings() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-80 p-0">
-              <NavigationContent />
+              <NavigationContent 
+                visibleSections={visibleSections} 
+                activeSection={activeSection} 
+                onSectionChange={handleSectionChange} 
+              />
             </SheetContent>
           </Sheet>
         </div>

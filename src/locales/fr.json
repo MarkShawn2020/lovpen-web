@@ -9,12 +9,13 @@
   },
   "Header": {
     "features": "Fonctionnalités",
-    "docs": "Documentation",
+    "cases": "Cas d'usage",
     "pricing": "Tarifs",
     "about": "À propos",
     "sign_in": "Se connecter",
     "get_started": "Commencer",
     "download_plugin": "Télécharger le Plugin",
+    "try_now": "Essayer Maintenant",
     "dashboard": "Tableau de bord",
     "sign_out": "Se déconnecter"
   },
@@ -25,7 +26,7 @@
   "Index": {
     "meta_title": "LovPen - Plateforme de création intelligente",
     "meta_description": "Exprimez simplement vos idées, LovPen crée automatiquement du contenu basé sur votre base de connaissances, votre style d'écriture et la plateforme cible. Support vocal, modification par dialogue, distribution en un clic.",
-    "hero_title": "LovPen transforme vos idées en contenu exceptionnel",
+    "hero_title": "Faire de la création une passion",
     "hero_subtitle": "Exprimez simplement vos idées, LovPen crée automatiquement du contenu personnalisé basé sur votre base de connaissances et vos préférences stylistiques, optimisé pour chaque plateforme",
     "hero_cta_primary": "Commencer à créer gratuitement",
     "hero_cta_secondary": "Voir comment LovPen écrit",

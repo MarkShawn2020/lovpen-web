@@ -3,8 +3,8 @@
 import {useState} from 'react';
 import Link from 'next/link';
 import {usePathname, useRouter} from 'next/navigation';
-import Image from 'next/image';
 import {Button} from '@/components/lovpen-ui/button';
+import {Logo} from '@/components/lovpen-ui/logo';
 import {useAuth} from '@/contexts/AuthContext';
 import {cn} from '@/lib/utils';
 import {BarChart3, BookOpen, Calendar, LogOut, Settings, User} from 'lucide-react';
@@ -71,14 +71,11 @@ const AuthNavbar = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link href="/playground" className="flex items-center space-x-2 no-underline">
-              <Image
-                src="/logo.png"
-                alt="Logo"
-                width={32}
-                height={32}
-                className="w-8 h-8"
+              <Logo
+                variant="horizontal"
+                size="md"
+                className="text-text-main"
               />
-              <span className="text-2xl font-semibold text-text-main">LovPen</span>
             </Link>
             <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full border border-gray-200">
               v

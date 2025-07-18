@@ -1,0 +1,69 @@
+{
+  "RootLayout": {
+    "home_link": "首页",
+    "about_link": "关于",
+    "counter_link": "计数器",
+    "portfolio_link": "作品集",
+    "sign_in_link": "登录",
+    "sign_up_link": "注册"
+  },
+  "Header": {
+    "features": "功能特性",
+    "cases": "使用案例", 
+    "pricing": "价格方案",
+    "about": "关于我们",
+    "sign_in": "登录",
+    "get_started": "开始使用",
+    "download_plugin": "下载插件",
+    "try_now": "立即体验",
+    "dashboard": "控制台",
+    "sign_out": "退出登录"
+  },
+  "BaseTemplate": {
+    "description": "用爱创作，处处分享 - LovPen Obsidian 插件",
+    "made_with": "用 <author></author> 制作。"
+  },
+  "Index": {
+    "meta_title": "LovPen - 智能创作平台",
+    "meta_description": "只需输入想法，LovPen 自动基于你的知识库、文风偏好和目标平台智能成文。支持语音输入、对话修改、一键多平台分发。",
+    "hero_title": "让创作成为一种热爱",
+    "hero_subtitle": "只需说出你的想法，LovPen 就能基于你的知识库、学习你喜欢的文风，为不同平台自动创作和排版，一键分发到微信、小红书、即刻、推特",
+    "hero_cta_primary": "免费开始创作",
+    "hero_cta_secondary": "看看 LovPen 怎么写",
+    "ai_process_title": "LovPen 智能创作流程",
+    "ai_process_subtitle": "从想法到发布，LovPen 全程协助",
+    "features_title": "让 LovPen 成为你的专属创作助手",
+    "features_subtitle": "个性化学习，智能化创作，自动化分发",
+    "platforms_title": "一键适配所有主流平台",
+    "platforms_subtitle": "LovPen 自动优化每个平台的格式和风格",
+    "cta_title": "开启 LovPen 驱动的创作新时代",
+    "cta_subtitle": "让 LovPen 学习你的风格，为你创作出独一无二的内容",
+    "cta_button": "立即体验 LovPen 创作"
+  },
+  "Create": {
+    "meta_title": "开始创作 - LovPen",
+    "meta_description": "选择你喜欢的方式开始创作，语音、文字、文档或对话，LovPen 让每个想法都能变成精彩内容",
+    "hero_title": "开始你的创作之旅",
+    "hero_subtitle": "选择最适合你的输入方式，让 LovPen 帮你把想法变成精美的图文内容"
+  },
+  "Profile": {
+    "meta_title": "个人资料",
+    "meta_description": "管理你的个人资料信息",
+    "title": "个人资料"
+  },
+  "DashboardLayout": {
+    "dashboard_link": "控制台",
+    "portfolio_link": "作品集",
+    "profile_link": "个人资料"
+  },
+  "Dashboard": {
+    "meta_title": "控制台",
+    "meta_description": "LovPen 控制台 - 管理你的创作内容",
+    "title": "欢迎回到 LovPen"
+  },
+  "PortfolioSlug": {
+    "meta_title": "作品详情",
+    "meta_description": "查看作品详情",
+    "header": "作品集"
+  }
+}

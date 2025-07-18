@@ -46,7 +46,7 @@ export default async function middleware(
   
   // Get the locale from the pathname
   const pathSegments = request.nextUrl.pathname.split('/').filter(Boolean);
-  const locale = pathSegments[0] && ['en', 'fr'].includes(pathSegments[0]) ? pathSegments[0] : 'en';
+  const locale = pathSegments[0] && ['zh', 'en'].includes(pathSegments[0]) ? pathSegments[0] : 'zh';
   
   // Check if user is accessing root path (with or without locale)
   if (isAuthenticated && (

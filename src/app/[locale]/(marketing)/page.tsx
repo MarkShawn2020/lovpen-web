@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {Container} from '@/components/layout/Container';
 import {Button} from '@/components/lovpen-ui/button';
 import {Card, CardContent, CardHeader, CardIcon} from '@/components/lovpen-ui/card';
+import {Logo} from '@/components/lovpen-ui/logo';
 import {PlatformShowcase} from '@/components/lovpen-ui/platform-showcase';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/lovpen-ui/tabs';
 
@@ -75,14 +76,11 @@ export default async function Index(props: IIndexProps) {
             <p className="u-paragraph-l mb-8 text-text-faded max-w-3xl mx-auto">
               {t('hero_subtitle')}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <div className="flex justify-center mb-12">
               <Button variant="primary" size="lg" asChild>
                 <Link href="/create">
-                  {t('hero_cta_primary')}
+                  立即开始创作
                 </Link>
-              </Button>
-              <Button variant="secondary" size="lg">
-                {t('hero_cta_secondary')}
               </Button>
             </div>
 
@@ -155,9 +153,14 @@ export default async function Index(props: IIndexProps) {
                       className="w-40 h-40 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center shadow-2xl border-4 border-white/30"
                     >
                       <div className="text-center text-white">
-                        <div className="text-4xl mb-2">❤️</div>
-                        <div className="text-sm font-bold">LovPen</div>
-                        <div className="text-xs opacity-80">智能引擎</div>
+                        <div className="mb-2 flex justify-center">
+                          <Logo
+                            variant="pure"
+                            size="lg"
+                            color="white"
+                          />
+                        </div>
+                        <div className="text-xl font-bold">LovPen</div>
                       </div>
                     </div>
                     {/* 脉动效果 */}
@@ -301,8 +304,8 @@ export default async function Index(props: IIndexProps) {
         </Container>
       </section>
 
-      {/* Use Cases Section */}
-      <section className="w-full py-16 lg:py-24 u-bg-ivory-medium u-bg-premium-texture relative">
+      {/* Cases Section */}
+      <section id="cases" className="w-full py-16 lg:py-24 u-bg-ivory-medium u-bg-premium-texture relative">
         <Container>
           <div className="text-center mb-12">
             <h2 className="u-display-m mb-4 text-text-main">LovPen 让每个人都能成为优秀创作者</h2>
@@ -384,6 +387,220 @@ export default async function Index(props: IIndexProps) {
         </Container>
       </section>
 
+      {/* Pricing Section */}
+      <section id="pricing" className="w-full py-16 lg:py-24 bg-white relative">
+        <Container>
+          <div className="text-center mb-16">
+            <h2 className="u-display-m mb-4 text-text-main">选择适合你的创作方案</h2>
+            <p className="u-paragraph-l text-text-faded max-w-3xl mx-auto">
+              从个人创作者到专业团队，LovPen 为每个阶段提供贴心服务
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {/* 免费版 */}
+            <div className="bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-primary/30 transition-colors">
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-text-main mb-2">免费体验</h3>
+                <div className="text-3xl font-bold text-text-main mb-4">
+¥0
+<span className="text-sm font-normal text-text-faded">/月</span>
+                </div>
+                <p className="text-sm text-text-faded mb-6">探索 LovPen 的基础功能</p>
+              </div>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  每月 10 篇文章生成
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  基础模板库
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  3个平台发布
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  社区支持
+                </li>
+              </ul>
+              <Button variant="secondary" size="md" className="w-full">
+                免费开始
+              </Button>
+            </div>
+
+            {/* 入门版 */}
+            <div className="bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-primary/30 transition-colors">
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-text-main mb-2">入门创作</h3>
+                <div className="text-3xl font-bold text-text-main mb-4">
+¥29
+<span className="text-sm font-normal text-text-faded">/月</span>
+                </div>
+                <p className="text-sm text-text-faded mb-6">适合初学者的创作工具</p>
+              </div>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  每月 50 篇文章生成
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  标准模板库
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  10个平台发布
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  邮件支持
+                </li>
+              </ul>
+              <Button variant="secondary" size="md" className="w-full">
+                立即开始
+              </Button>
+            </div>
+
+            {/* 专业版 */}
+            <div className="bg-gradient-to-br from-primary/5 to-swatch-cactus/5 rounded-2xl p-6 border-2 border-primary relative">
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <span className="bg-primary text-white px-3 py-1 rounded-full text-xs font-medium">推荐</span>
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-text-main mb-2">专业创作</h3>
+                <div className="text-3xl font-bold text-text-main mb-4">
+¥99
+<span className="text-sm font-normal text-text-faded">/月</span>
+                </div>
+                <p className="text-sm text-text-faded mb-6">适合认真创作的个人用户</p>
+              </div>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  无限文章生成
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  全部模板库
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  20+平台发布
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  风格学习训练
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  优先客服支持
+                </li>
+              </ul>
+              <Button variant="primary" size="md" className="w-full">
+                立即订阅
+              </Button>
+            </div>
+
+            {/* 团队版 */}
+            <div className="bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-primary/30 transition-colors">
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-text-main mb-2">团队协作</h3>
+                <div className="text-2xl font-bold text-text-main mb-4">
+联系销售
+<span className="text-xs font-normal text-text-faded block">定制报价</span>
+                </div>
+                <p className="text-sm text-text-faded mb-6">企业级内容创作解决方案</p>
+              </div>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  专业版全部功能
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  团队协作工作区
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  品牌风格定制
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  数据分析报告
+                </li>
+                <li className="flex items-center text-sm text-text-main">
+                  <span className="text-green-500 mr-2">✓</span>
+                  专属客户经理
+                </li>
+              </ul>
+              <Button variant="secondary" size="md" className="w-full">
+                联系销售
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="w-full py-16 lg:py-24 u-bg-ivory-medium u-bg-premium-texture relative">
+        <Container>
+          <div className="text-center mb-16">
+            <h2 className="u-display-m mb-4 text-text-main">关于 LovPen</h2>
+            <p className="u-paragraph-l text-text-faded max-w-3xl mx-auto">
+              我们致力于让每个人都能轻松创作出专业级的内容
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-3xl font-bold text-text-main mb-6">让创作回归本质</h3>
+              <div className="space-y-6">
+                <p className="text-lg text-text-faded">
+                  在信息爆炸的时代，优质内容变得比以往任何时候都更加重要。但传统的创作方式往往耗时费力，让许多有价值的想法无法得到及时表达。
+                </p>
+                <p className="text-lg text-text-faded">
+                  LovPen 相信，技术应该赋能创作者，而不是取代创作者。我们通过 AI 技术帮助你把想法快速转化为精美的图文内容，让你专注于最重要的事情——思考和创新。
+                </p>
+                <p className="text-lg text-text-faded">
+                  无论你是个人博主、知识工作者，还是企业内容团队，LovPen 都能学习你的风格，理解你的需求，成为你最可靠的创作伙伴。
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-8 shadow-lg">
+              <div className="space-y-8">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">🎯</span>
+                  </div>
+                  <h4 className="text-xl font-bold text-text-main mb-2">我们的使命</h4>
+                  <p className="text-text-faded">让每个有想法的人都能轻松创作出专业级的内容</p>
+                </div>
+
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">💡</span>
+                  </div>
+                  <h4 className="text-xl font-bold text-text-main mb-2">我们的愿景</h4>
+                  <p className="text-text-faded">成为全球创作者最信赖的智能创作平台</p>
+                </div>
+
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">❤️</span>
+                  </div>
+                  <h4 className="text-xl font-bold text-text-main mb-2">我们的价值观</h4>
+                  <p className="text-text-faded">用爱创作，让技术温暖人心</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       {/* CTA Section */}
       <section
         className="w-full py-16 lg:py-24 bg-gradient-to-r from-primary/10 to-swatch-cactus/10 u-bg-organic-noise relative"
@@ -394,14 +611,11 @@ export default async function Index(props: IIndexProps) {
             <p className="u-paragraph-l text-text-faded mb-8 max-w-2xl mx-auto">
               {t('cta_subtitle')}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex justify-center">
               <Button variant="primary" size="lg" className="text-lg px-8 py-4" asChild>
                 <Link href="/create">
-                  {t('cta_button')}
+                  立即开始创作
                 </Link>
-              </Button>
-              <Button variant="secondary" size="lg" className="text-lg px-8 py-4">
-                查看 GitHub 源码
               </Button>
             </div>
 

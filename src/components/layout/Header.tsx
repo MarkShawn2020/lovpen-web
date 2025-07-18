@@ -13,10 +13,10 @@ const Header = async () => {
   const t = await getTranslations('Header');
 
   const navigation = [
-    {name: t('features'), href: '/features'},
-    {name: t('docs'), href: '/docs'},
-    {name: t('pricing'), href: '/pricing'},
-    {name: t('about'), href: '/about'},
+    {name: t('features'), href: '/features', scrollToId: 'features'},
+    {name: t('cases'), href: '/cases', scrollToId: 'cases'},
+    {name: t('pricing'), href: '/pricing', scrollToId: 'pricing'},
+    {name: t('about'), href: '/about', scrollToId: 'about'},
   ];
 
   const signInUrl = getI18nPath('/login', locale);
@@ -44,26 +44,14 @@ const Header = async () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             {navigation.map(item => (
-              item.href === '/features'
-                ? (
-                    <SmartNavLink
-                      key={item.name}
-                      href={item.href}
-                      scrollToId="features"
-                      className="text-text-main hover:text-primary transition-colors no-underline"
-                    >
-                      {item.name}
-                    </SmartNavLink>
-                  )
-                : (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="text-text-main hover:text-primary transition-colors no-underline"
-                    >
-                      {item.name}
-                    </Link>
-                  )
+              <SmartNavLink
+                key={item.name}
+                href={item.href}
+                scrollToId={item.scrollToId}
+                className="text-text-main hover:text-primary transition-colors no-underline"
+              >
+                {item.name}
+              </SmartNavLink>
             ))}
           </nav>
 
@@ -78,6 +66,7 @@ const Header = async () => {
             translations={{
               signIn: t('sign_in'),
               getStarted: t('download_plugin'),
+              tryNow: t('try_now'),
               dashboard: t('dashboard'),
               signOut: t('sign_out'),
             }}

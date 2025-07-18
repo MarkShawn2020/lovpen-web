@@ -10,6 +10,8 @@ import {fastAPIAuthService} from '@/services/fastapi-auth-v2';
 import type {AuthState} from '@/services/fastapi-auth-v2';
 import type {SupportedPlatform} from '@/types/knowledge-base';
 import {PLATFORM_CONFIGS} from '@/types/knowledge-base';
+import {useFolderTemplates} from '@/hooks/useFolderTemplates';
+import type {FolderTemplate} from '@/constants/folderTemplates';
 
 type UploadModalProps = {
   isOpen: boolean;
@@ -23,6 +25,7 @@ type FileUploadProgress = {
   status: 'pending' | 'uploading' | 'completed' | 'failed';
   error?: string;
   result?: FileItem;
+  recommendedFolder?: FolderTemplate;
 }
 
 export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProps) {
@@ -38,6 +41,9 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
   });
 
   const platformConfig = PLATFORM_CONFIGS[selectedPlatform];
+  
+  // 使用文件夹模板系统
+  const { recommendFolder } = useFolderTemplates();
 
   // 订阅认证状态
   useEffect(() => {
@@ -122,10 +128,18 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
         continue;
       }
 
+      // 推荐文件夹
+      const recommended = recommendFolder({
+        source_platform: selectedPlatform,
+        content_type: file.type,
+        filename: file.name,
+      });
+
       validFiles.push({
         file,
         progress: 0,
         status: 'pending',
+        recommendedFolder: recommended || undefined,
       });
     }
 
@@ -366,6 +380,17 @@ export function UploadModal({isOpen, onClose, onUploadComplete}: UploadModalProp
                           {formatFileSize(fileProgress.file.size)}
                         </span>
                       </div>
+
+                      {/* 推荐文件夹显示 */}
+                      {fileProgress.recommendedFolder && (
+                        <div className="text-xs text-blue-600 mt-1 flex items-center gap-1">
+                          <span>📁</span>
+                          <span>
+推荐:
+{fileProgress.recommendedFolder.name}
+                          </span>
+                        </div>
+                      )}
 
                       {fileProgress.status === 'uploading' && (
                         <Progress value={fileProgress.progress} className="mt-1"/>

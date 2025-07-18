@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { Logo } from './logo';
 
 export type Platform = {
   name: string;
@@ -177,7 +178,11 @@ const FlowDiagram = () => (
           <div
             className="w-20 h-20 bg-gradient-to-br from-primary to-swatch-cactus rounded-full flex items-center justify-center text-white"
           >
-            <span className="text-3xl">❤️</span>
+            <Logo
+              variant="pure"
+              size="md"
+              color="white"
+            />
           </div>
         </div>
         {/* 脉动动画环 */}
