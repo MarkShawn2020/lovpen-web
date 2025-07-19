@@ -3,7 +3,6 @@ import Link from 'next/link';
 import {Container} from '@/components/layout/Container';
 import {AnchorSection} from '@/components/layout/AnchorSection';
 import {Button} from '@/components/lovpen-ui/button';
-import {SafeLink} from '@/components/lovpen-ui/safe-link';
 
 type IAboutProps = {
   params: Promise<{ locale: string }>;
@@ -198,11 +197,11 @@ export default async function About(props: IAboutProps) {
             {t('contact_description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <SafeLink href="/contact">
+            <a href="mailto:mark@cs-magic.com">
               <Button variant="primary" size="lg">
                 {t('contact_button')}
               </Button>
-            </SafeLink>
+            </a>
             <Link href="/playground">
               <Button variant="secondary" size="lg">
                 {t('try_lovpen')}

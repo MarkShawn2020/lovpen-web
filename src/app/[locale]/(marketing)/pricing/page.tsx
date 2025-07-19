@@ -168,11 +168,11 @@ export default async function Pricing(props: IPricingProps) {
                 {t('enterprise_plan_feature_5')}
               </li>
             </ul>
-            <Link href="/contact" className="block">
+            <a href="mailto:mark@cs-magic.com" className="block">
               <Button variant="outline" size="lg" className="w-full border-brand-secondary text-brand-secondary hover:bg-brand-secondary hover:text-white">
                 {t('contact_sales')}
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
 
