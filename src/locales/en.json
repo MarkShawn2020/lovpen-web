@@ -505,5 +505,125 @@
     "meta_description": "Learn about LovPen's intelligent creation workflow, from AI processing to platform distribution.",
     "ai_process_title": "LovPen Intelligent Creation Process",
     "ai_process_subtitle": "From idea to publication, LovPen assists you throughout"
+  },
+  "Platforms": {
+    "platforms_title": "Platform Distribution",
+    "content_complexity": "Content Complexity",
+    "professionalism": "Professionalism",
+    "support_platforms": "Supports 28+ mainstream platforms with intelligent analysis for optimal publishing strategies",
+    "platforms": {
+      "zhihu": {
+        "name": "Zhihu",
+        "description": "Academic style, knowledge sharing"
+      },
+      "medium": {
+        "name": "Medium",
+        "description": "Deep thinking, quality content"
+      },
+      "linkedin": {
+        "name": "LinkedIn",
+        "description": "Business social, professional insights"
+      },
+      "csdn": {
+        "name": "CSDN",
+        "description": "Tech blogs, developer community"
+      },
+      "juejin": {
+        "name": "Juejin",
+        "description": "Tech sharing, cutting-edge news"
+      },
+      "wechat_public": {
+        "name": "WeChat Official",
+        "description": "Professional layout, perfect presentation"
+      },
+      "toutiao": {
+        "name": "Toutiao",
+        "description": "Mass media, trend tracking"
+      },
+      "baijiahao": {
+        "name": "Baijiahao",
+        "description": "Smart recommendations, content distribution"
+      },
+      "qiehao": {
+        "name": "Qiehao",
+        "description": "Tencent ecosystem, traffic support"
+      },
+      "dayuhao": {
+        "name": "Dayuhao",
+        "description": "Alibaba ecosystem, business monetization"
+      },
+      "youtube": {
+        "name": "YouTube",
+        "description": "Global video, unlimited creativity"
+      },
+      "bilibili": {
+        "name": "Bilibili",
+        "description": "Young community, creative expression"
+      },
+      "jianshu": {
+        "name": "Jianshu",
+        "description": "Quality creation, text community"
+      },
+      "douban": {
+        "name": "Douban",
+        "description": "Literary youth, tasteful living"
+      },
+      "twitter": {
+        "name": "Twitter/X",
+        "description": "Global communication, real-time updates"
+      },
+      "weibo": {
+        "name": "Weibo",
+        "description": "Trending topics, social conversation"
+      },
+      "jike": {
+        "name": "Jike",
+        "description": "Instant sharing, interest community"
+      },
+      "xiaohongshu": {
+        "name": "Xiaohongshu",
+        "description": "Lifestyle aesthetics, refined display"
+      },
+      "instagram": {
+        "name": "Instagram",
+        "description": "Visual stories, aesthetic sharing"
+      },
+      "facebook": {
+        "name": "Facebook",
+        "description": "Social network, connecting the world"
+      },
+      "douyin": {
+        "name": "Douyin",
+        "description": "Short videos, viral content"
+      },
+      "kuaishou": {
+        "name": "Kuaishou",
+        "description": "Authentic records, life sharing"
+      },
+      "tiktok": {
+        "name": "TikTok",
+        "description": "Creative short videos, global trends"
+      },
+      "reddit": {
+        "name": "Reddit",
+        "description": "Community discussion, deep exchange"
+      },
+      "discord": {
+        "name": "Discord",
+        "description": "Community chat, interest exchange"
+      },
+      "telegram": {
+        "name": "Telegram",
+        "description": "Private messaging, channel broadcasting"
+      },
+      "substack": {
+        "name": "Substack",
+        "description": "Email subscription, deep writing"
+      },
+      "notion": {
+        "name": "Notion",
+        "description": "Knowledge management, collaborative docs"
+      }
+    }
   }
 }

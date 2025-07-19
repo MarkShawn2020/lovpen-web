@@ -3,6 +3,7 @@ import * as React from "react";
 import Image from "next/image";
 import {cn} from "@/lib/utils";
 import {forceCollide, forceSimulation, forceX, forceY, SimulationNodeDatum} from 'd3-force';
+import {useTranslations} from 'next-intl';
 
 export type Platform = {
   name: string;
@@ -10,272 +11,245 @@ export type Platform = {
   description: string;
   color: string;
   bgColor: string;
-  contentComplexity: number; // 0-100: 文本 → 图文 → 视频
-  seriousness: number; // 0-100: 娱乐化 → 专业化
+  contentComplexity: number; // 0-100: text → media → video
+  seriousness: number; // 0-100: entertainment → professional
+  key: string; // translation key
 };
-const platforms: Platform[] = [
-  // 专业文本平台
+const platformsConfig = [
+  // Professional text platforms
   {
-    name: '知乎',
+    key: 'zhihu',
     icon: '/assets/platform_logos/zhihu_logo.png',
-    description: '学术风格，知识分享',
     color: 'text-blue-600',
     bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
     contentComplexity: 25,
     seriousness: 85,
   },
   {
-    name: 'Medium',
+    key: 'medium',
     icon: '/assets/platform_logos/medium_logo.png',
-    description: '深度思考，优质内容',
     color: 'text-gray-600',
     bgColor: 'from-gray-50 to-gray-100 border-gray-200/50',
     contentComplexity: 20,
     seriousness: 90,
   },
   {
-    name: 'LinkedIn',
+    key: 'linkedin',
     icon: '/assets/platform_logos/linkedin_logo.png',
-    description: '商务社交，职场洞察',
     color: 'text-indigo-600',
     bgColor: 'from-indigo-50 to-indigo-100 border-indigo-200/50',
     contentComplexity: 30,
     seriousness: 95,
   },
   {
-    name: 'CSDN',
+    key: 'csdn',
     icon: '/assets/platform_logos/csdn_logo.png',
-    description: '技术博客，开发者社区',
     color: 'text-red-600',
     bgColor: 'from-red-50 to-red-100 border-red-200/50',
     contentComplexity: 25,
     seriousness: 90,
   },
   {
-    name: '掘金',
+    key: 'juejin',
     icon: '/assets/platform_logos/juejin_logo.png',
-    description: '技术分享，前沿资讯',
     color: 'text-blue-600',
     bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
     contentComplexity: 30,
     seriousness: 85,
   },
   
-  // 专业图文平台
+  // Professional media platforms
   {
-    name: '微信公众号',
+    key: 'wechat_public',
     icon: '/assets/platform_logos/wechat_public_account_logo.png',
-    description: '专业排版，完美呈现',
     color: 'text-emerald-600',
     bgColor: 'from-emerald-50 to-emerald-100 border-emerald-200/50',
     contentComplexity: 55,
     seriousness: 75,
   },
   {
-    name: '今日头条',
+    key: 'toutiao',
     icon: '/assets/platform_logos/jinritoutiao_logo.png',
-    description: '大众传媒，热点追踪',
     color: 'text-red-600',
     bgColor: 'from-red-50 to-red-100 border-red-200/50',
     contentComplexity: 50,
     seriousness: 70,
   },
   {
-    name: '百家号',
+    key: 'baijiahao',
     icon: '/assets/platform_logos/baijiahao_logo.jpg',
-    description: '智能推荐，内容分发',
     color: 'text-blue-600',
     bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
     contentComplexity: 45,
     seriousness: 65,
   },
   {
-    name: '企鹅号',
+    key: 'qiehao',
     icon: '/assets/platform_logos/qiehao_logo.png',
-    description: '腾讯生态，流量扶持',
     color: 'text-cyan-600',
     bgColor: 'from-cyan-50 to-cyan-100 border-cyan-200/50',
     contentComplexity: 50,
     seriousness: 60,
   },
   {
-    name: '大鱼号',
+    key: 'dayuhao',
     icon: '/assets/platform_logos/dayuhao_logo.png',
-    description: '阿里生态，商业变现',
     color: 'text-orange-600',
     bgColor: 'from-orange-50 to-orange-100 border-orange-200/50',
     contentComplexity: 48,
     seriousness: 65,
   },
   
-  // 专业视频平台
+  // Professional video platforms
   {
-    name: 'YouTube',
+    key: 'youtube',
     icon: '/assets/platform_logos/youtube_logo.png',
-    description: '全球视频，创意无限',
     color: 'text-red-600',
     bgColor: 'from-red-50 to-red-100 border-red-200/50',
     contentComplexity: 85,
     seriousness: 70,
   },
   {
-    name: 'Bilibili',
+    key: 'bilibili',
     icon: '/assets/platform_logos/bilibili_logo.png',
-    description: '年轻社区，创意表达',
     color: 'text-cyan-600',
     bgColor: 'from-cyan-50 to-cyan-100 border-cyan-200/50',
     contentComplexity: 80,
     seriousness: 60,
   },
   
-  // 娱乐文本平台
+  // Entertainment text platforms
   {
-    name: '简书',
+    key: 'jianshu',
     icon: '/assets/platform_logos/jianshu_logo.png',
-    description: '优质创作，文字社区',
     color: 'text-green-600',
     bgColor: 'from-green-50 to-green-100 border-green-200/50',
     contentComplexity: 20,
     seriousness: 55,
   },
   {
-    name: '豆瓣',
+    key: 'douban',
     icon: '/assets/platform_logos/douban_logo.png',
-    description: '文艺青年，品味生活',
     color: 'text-green-600',
     bgColor: 'from-green-50 to-green-100 border-green-200/50',
     contentComplexity: 25,
     seriousness: 50,
   },
   {
-    name: 'Twitter/X',
+    key: 'twitter',
     icon: '/assets/platform_logos/twitter_x_logo.png',
-    description: '国际传播，实时动态',
     color: 'text-sky-600',
     bgColor: 'from-sky-50 to-sky-100 border-sky-200/50',
     contentComplexity: 15,
     seriousness: 45,
   },
   {
-    name: '微博',
+    key: 'weibo',
     icon: '/assets/platform_logos/weibo_logo.png',
-    description: '热点传播，社交话题',
     color: 'text-orange-600',
     bgColor: 'from-orange-50 to-orange-100 border-orange-200/50',
     contentComplexity: 20,
     seriousness: 35,
   },
   {
-    name: '即刻',
+    key: 'jike',
     icon: '/assets/platform_logos/jike_logo.png',
-    description: '即时分享，兴趣社区',
     color: 'text-yellow-600',
     bgColor: 'from-yellow-50 to-yellow-100 border-yellow-200/50',
     contentComplexity: 15,
     seriousness: 30,
   },
   
-  // 娱乐图文平台
+  // Entertainment media platforms
   {
-    name: '小红书',
+    key: 'xiaohongshu',
     icon: '/assets/platform_logos/xiaohongshu_logo.webp',
-    description: '生活美学，精致展示',
     color: 'text-pink-600',
     bgColor: 'from-pink-50 to-pink-100 border-pink-200/50',
     contentComplexity: 65,
     seriousness: 35,
   },
   {
-    name: 'Instagram',
+    key: 'instagram',
     icon: '/assets/platform_logos/instagram_logo.webp',
-    description: '视觉故事，美感分享',
     color: 'text-purple-600',
     bgColor: 'from-purple-50 to-purple-100 border-purple-200/50',
     contentComplexity: 70,
     seriousness: 40,
   },
   {
-    name: 'Facebook',
+    key: 'facebook',
     icon: '/assets/platform_logos/facebook_logo.png',
-    description: '社交网络，连接世界',
     color: 'text-blue-600',
     bgColor: 'from-blue-50 to-blue-100 border-blue-200/50',
     contentComplexity: 60,
     seriousness: 45,
   },
   
-  // 娱乐视频平台
+  // Entertainment video platforms
   {
-    name: '抖音',
+    key: 'douyin',
     icon: '/assets/platform_logos/douyin_logo.png',
-    description: '短视频，爆款制造',
     color: 'text-slate-700',
     bgColor: 'from-slate-50 to-slate-100 border-slate-200/50',
     contentComplexity: 90,
     seriousness: 25,
   },
   {
-    name: '快手',
+    key: 'kuaishou',
     icon: '/assets/platform_logos/kuaishou_logo.jpg',
-    description: '真实记录，生活分享',
     color: 'text-yellow-600',
     bgColor: 'from-yellow-50 to-yellow-100 border-yellow-200/50',
     contentComplexity: 85,
     seriousness: 30,
   },
   {
-    name: 'TikTok',
+    key: 'tiktok',
     icon: '/assets/platform_logos/tiktok_logo.png',
-    description: '创意短视频，全球流行',
     color: 'text-pink-600',
     bgColor: 'from-pink-50 to-pink-100 border-pink-200/50',
     contentComplexity: 95,
     seriousness: 20,
   },
   
-  // 社区交流平台
+  // Community platforms
   {
-    name: 'Reddit',
+    key: 'reddit',
     icon: '/assets/platform_logos/reddit_logo.png',
-    description: '社区讨论，深度交流',
     color: 'text-orange-600',
     bgColor: 'from-orange-50 to-orange-100 border-orange-200/50',
     contentComplexity: 35,
     seriousness: 65,
   },
   {
-    name: 'Discord',
+    key: 'discord',
     icon: '/assets/platform_logos/discord_logo.png',
-    description: '社群聊天，兴趣交流',
     color: 'text-indigo-600',
     bgColor: 'from-indigo-50 to-indigo-100 border-indigo-200/50',
     contentComplexity: 40,
     seriousness: 40,
   },
   {
-    name: 'Telegram',
+    key: 'telegram',
     icon: '/assets/platform_logos/telegram_logo.png',
-    description: '私密通讯，频道传播',
     color: 'text-sky-600',
     bgColor: 'from-sky-50 to-sky-100 border-sky-200/50',
     contentComplexity: 45,
     seriousness: 55,
   },
   
-  // 专业工具平台
+  // Professional tool platforms
   {
-    name: 'Substack',
+    key: 'substack',
     icon: '/assets/platform_logos/substack_logo.png',
-    description: '邮件订阅，深度写作',
     color: 'text-amber-600',
     bgColor: 'from-amber-50 to-amber-100 border-amber-200/50',
     contentComplexity: 35,
     seriousness: 80,
   },
   {
-    name: 'Notion',
+    key: 'notion',
     icon: '/assets/platform_logos/notion_logo.png',
-    description: '知识管理，协作文档',
     color: 'text-gray-600',
     bgColor: 'from-gray-50 to-gray-100 border-gray-200/50',
     contentComplexity: 40,
@@ -339,6 +313,7 @@ type PlatformNode = {
 } & Platform & SimulationNodeDatum
 
 export const Platforms = () => {
+  const t = useTranslations('Platforms');
   const chartWidth = 800;
   const chartHeight = 600;
   const padding = 100;
@@ -347,6 +322,15 @@ export const Platforms = () => {
   const [hoveredPlatform, setHoveredPlatform] = React.useState<Platform | null>(null);
   const simulationRef = React.useRef<any>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
+
+  // Convert platform config to platforms with translations
+  const platforms: Platform[] = React.useMemo(() => {
+    return platformsConfig.map(config => ({
+      ...config,
+      name: t(`platforms.${config.key}.name` as any),
+      description: t(`platforms.${config.key}.description` as any),
+    }));
+  }, [t]);
   
   // 监听容器尺寸变化
   React.useEffect(() => {
@@ -512,17 +496,21 @@ export const Platforms = () => {
               )
 : (
                 <div className="text-xs sm:text-sm font-medium text-text-main opacity-50 bg-white/70 backdrop-blur-sm rounded px-2 py-1">
-                  平台分布图
+                  {t('platforms_title')}
                 </div>
               )}
             </div>
             
             {/* 坐标轴标签 */}
             <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 text-xs sm:text-sm font-medium text-text-main bg-white/70 backdrop-blur-sm rounded px-2 py-1">
-              内容复杂度 →
+              {t('content_complexity')}
+{' '}
+→
             </div>
             <div className="absolute top-1/2 left-2 sm:left-4 transform -translate-y-1/2 -rotate-90 text-xs sm:text-sm font-medium text-text-main bg-white/70 backdrop-blur-sm rounded px-2 py-1">
-              专业程度 →
+              {t('professionalism')}
+{' '}
+→
             </div>
             
             {/* NO 象限标签 */}
@@ -546,7 +534,7 @@ export const Platforms = () => {
           <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white/80 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg">
             <div className="w-2 h-2 bg-gradient-to-r from-primary to-swatch-cactus rounded-full animate-pulse" />
             <p className="text-text-faded text-xs sm:text-sm font-medium text-center">
-              支持28+主流平台，智能分析选择最佳发布策略
+              {t('support_platforms')}
             </p>
             <div className="w-2 h-2 bg-gradient-to-r from-swatch-cactus to-primary rounded-full animate-pulse" style={{animationDelay: '0.5s'}} />
           </div>

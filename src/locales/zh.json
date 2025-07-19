@@ -243,6 +243,126 @@
     "ai_process_title": "LovPen 智能创作流程",
     "ai_process_subtitle": "从想法到发布，LovPen 全程协助"
   },
+  "Platforms": {
+    "platforms_title": "平台分布图",
+    "content_complexity": "内容复杂度",
+    "professionalism": "专业程度",
+    "support_platforms": "支持28+主流平台，智能分析选择最佳发布策略",
+    "platforms": {
+      "zhihu": {
+        "name": "知乎",
+        "description": "学术风格，知识分享"
+      },
+      "medium": {
+        "name": "Medium", 
+        "description": "深度思考，优质内容"
+      },
+      "linkedin": {
+        "name": "LinkedIn",
+        "description": "商务社交，职场洞察"
+      },
+      "csdn": {
+        "name": "CSDN",
+        "description": "技术博客，开发者社区"
+      },
+      "juejin": {
+        "name": "掘金",
+        "description": "技术分享，前沿资讯"
+      },
+      "wechat_public": {
+        "name": "微信公众号",
+        "description": "专业排版，完美呈现"
+      },
+      "toutiao": {
+        "name": "今日头条",
+        "description": "大众传媒，热点追踪"
+      },
+      "baijiahao": {
+        "name": "百家号",
+        "description": "智能推荐，内容分发"
+      },
+      "qiehao": {
+        "name": "企鹅号",
+        "description": "腾讯生态，流量扶持"
+      },
+      "dayuhao": {
+        "name": "大鱼号",
+        "description": "阿里生态，商业变现"
+      },
+      "youtube": {
+        "name": "YouTube",
+        "description": "全球视频，创意无限"
+      },
+      "bilibili": {
+        "name": "Bilibili",
+        "description": "年轻社区，创意表达"
+      },
+      "jianshu": {
+        "name": "简书",
+        "description": "优质创作，文字社区"
+      },
+      "douban": {
+        "name": "豆瓣",
+        "description": "文艺青年，品味生活"
+      },
+      "twitter": {
+        "name": "Twitter/X",
+        "description": "国际传播，实时动态"
+      },
+      "weibo": {
+        "name": "微博",
+        "description": "热点传播，社交话题"
+      },
+      "jike": {
+        "name": "即刻",
+        "description": "即时分享，兴趣社区"
+      },
+      "xiaohongshu": {
+        "name": "小红书",
+        "description": "生活美学，精致展示"
+      },
+      "instagram": {
+        "name": "Instagram",
+        "description": "视觉故事，美感分享"
+      },
+      "facebook": {
+        "name": "Facebook",
+        "description": "社交网络，连接世界"
+      },
+      "douyin": {
+        "name": "抖音",
+        "description": "短视频，爆款制造"
+      },
+      "kuaishou": {
+        "name": "快手",
+        "description": "真实记录，生活分享"
+      },
+      "tiktok": {
+        "name": "TikTok",
+        "description": "创意短视频，全球流行"
+      },
+      "reddit": {
+        "name": "Reddit",
+        "description": "社区讨论，深度交流"
+      },
+      "discord": {
+        "name": "Discord",
+        "description": "社群聊天，兴趣交流"
+      },
+      "telegram": {
+        "name": "Telegram",
+        "description": "私密通讯，频道传播"
+      },
+      "substack": {
+        "name": "Substack",
+        "description": "邮件订阅，深度写作"
+      },
+      "notion": {
+        "name": "Notion",
+        "description": "知识管理，协作文档"
+      }
+    }
+  },
   "About": {
     "meta_title": "关于 LovPen - 使命愿景",
     "meta_description": "了解 LovPen 通过 AI 辅助写作和多平台分发实现内容创作民主化的使命。",
