@@ -40,7 +40,7 @@ export default async function Pricing(props: IPricingProps) {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {/* Free Plan */}
           <div
             className="card-brand-primary p-8 rounded-lg border-2 border-transparent max-w-md sm:mx-auto md:max-w-none hover:shadow-brand-primary transition-all duration-300"
@@ -133,6 +133,57 @@ export default async function Pricing(props: IPricingProps) {
               className="w-full shadow-brand-warm bg-brand-primary text-white hover:bg-brand-primary/90"
             >
               {t('upgrade_to_pro')}
+            </WaitlistButton>
+          </div>
+
+          {/* Max Plan */}
+          <div
+            className="card-brand-secondary p-8 rounded-lg border-2 border-transparent max-w-md sm:mx-auto md:max-w-none hover:shadow-brand-secondary transition-all duration-300"
+          >
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-semibold text-brand-secondary mb-2">
+                {t('max_plan_name')}
+              </h3>
+              <div className="text-4xl font-bold text-brand-secondary mb-2">
+                {t('max_plan_price')}
+              </div>
+              <p className="text-text-main">
+                {t('max_plan_description')}
+              </p>
+            </div>
+            <ul className="space-y-3 mb-8">
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
+                {t('max_plan_feature_1')}
+              </li>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
+                {t('max_plan_feature_2')}
+              </li>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
+                {t('max_plan_feature_3')}
+              </li>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
+                {t('max_plan_feature_4')}
+              </li>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
+                {t('max_plan_feature_5')}
+              </li>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
+                {t('max_plan_feature_6')}
+              </li>
+            </ul>
+            <WaitlistButton 
+              source="pricing-max"
+              variant="outline" 
+              size="lg" 
+              className="w-full border-brand-secondary text-brand-secondary hover:bg-brand-secondary hover:text-white"
+            >
+              {t('upgrade_to_max')}
             </WaitlistButton>
           </div>
 
