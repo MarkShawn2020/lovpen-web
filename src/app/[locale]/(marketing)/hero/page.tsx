@@ -53,7 +53,7 @@ export default async function Hero(props: IHeroProps) {
             
             {/* 主标题 */}
             <div className="space-y-4 sm:space-y-6 mb-8 sm:mb-10 lg:mb-12">
-              <h1 className="u-display-xl text-brand-gradient">
+              <h1 className="u-display-xl text-brand-gradient whitespace-nowrap">
                 {t('hero_title')}
               </h1>
               
