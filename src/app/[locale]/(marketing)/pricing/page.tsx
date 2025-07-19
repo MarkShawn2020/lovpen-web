@@ -223,6 +223,18 @@ export default async function Pricing(props: IPricingProps) {
                 <span className="text-success mr-2">✓</span>
                 {t('enterprise_plan_feature_5')}
               </li>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
+                {t('enterprise_plan_feature_6')}
+              </li>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
+                {t('enterprise_plan_feature_7')}
+              </li>
+              <li className="flex items-center text-text-main">
+                <span className="text-success mr-2">✓</span>
+                {t('enterprise_plan_feature_8')}
+              </li>
             </ul>
             <WaitlistButton 
               source="pricing-enterprise"

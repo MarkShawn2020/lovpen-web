@@ -37,13 +37,13 @@ export function WaitlistButtonWithEffect({
 
   // 未申请时显示带特效的按钮
   return (
-    <div className="relative group w-full">
+    <div className="relative group">
       <div className="absolute -inset-1 bg-brand-gradient rounded-lg blur opacity-70 group-hover:opacity-100 transition duration-300" />
       <WaitlistButton 
         source={source}
         variant={variant}
         size={size}
-        className={className}
+        className={`relative z-10 ${className}`}
       >
         {children}
       </WaitlistButton>
