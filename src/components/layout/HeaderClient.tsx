@@ -117,7 +117,7 @@ export const HeaderClient = ({navigation, urls, translations}: HeaderClientProps
             <nav className="p-4">
               {navigation.map(item => (
                 <SmartNavLink
-                  key={item.name}
+                  key={item.href}
                   href={item.href}
                   scrollToId={item.scrollToId}
                   className="block text-text-main hover:text-primary transition-colors py-2 no-underline"

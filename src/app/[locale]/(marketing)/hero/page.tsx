@@ -66,18 +66,18 @@ export default async function Hero(props: IHeroProps) {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-10 lg:mb-12 w-full max-w-4xl">
             <div className="text-center p-4 sm:p-6 card-brand-primary rounded-lg hover:shadow-brand-primary transition-all duration-300 hover:scale-105">
               <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">🤖</div>
-              <h3 className="text-lg sm:text-xl font-bold mb-2 text-brand-primary">AI 智能创作</h3>
-              <p className="text-sm sm:text-base text-text-main">学习你的风格，生成专业内容</p>
+              <h3 className="text-lg sm:text-xl font-bold mb-2 text-brand-primary">{t('hero_feature_ai_title')}</h3>
+              <p className="text-sm sm:text-base text-text-main">{t('hero_feature_ai_desc')}</p>
             </div>
             <div className="text-center p-4 sm:p-6 card-brand-secondary rounded-lg hover:shadow-brand-secondary transition-all duration-300 hover:scale-105">
               <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">🚀</div>
-              <h3 className="text-lg sm:text-xl font-bold mb-2 text-brand-secondary">一键分发</h3>
-              <p className="text-sm sm:text-base text-text-main">20+ 平台同步发布</p>
+              <h3 className="text-lg sm:text-xl font-bold mb-2 text-brand-secondary">{t('hero_feature_distribution_title')}</h3>
+              <p className="text-sm sm:text-base text-text-main">{t('hero_feature_distribution_desc')}</p>
             </div>
             <div className="text-center p-4 sm:p-6 card-brand-gradient rounded-lg hover:shadow-brand-warm transition-all duration-300 hover:scale-105 sm:col-span-2 lg:col-span-1">
               <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">⚡</div>
-              <h3 className="text-lg sm:text-xl font-bold mb-2 text-brand-gradient">高效创作</h3>
-              <p className="text-sm sm:text-base text-text-main">10倍提升内容产出效率</p>
+              <h3 className="text-lg sm:text-xl font-bold mb-2 text-brand-gradient">{t('hero_feature_efficiency_title')}</h3>
+              <p className="text-sm sm:text-base text-text-main">{t('hero_feature_efficiency_desc')}</p>
             </div>
           </div>
 
@@ -101,19 +101,19 @@ export default async function Hero(props: IHeroProps) {
 
           {/* 产品亮点 */}
           <div className="mt-12 sm:mt-16 text-center">
-            <p className="text-sm sm:text-base text-text-main mb-6 sm:mb-8">专为内容创作者打造</p>
+            <p className="text-sm sm:text-base text-text-main mb-6 sm:mb-8">{t('hero_tagline')}</p>
             <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 lg:gap-8">
               <div className="flex items-center space-x-2 hover-brand-primary cursor-pointer transition-all duration-300">
                 <span className="text-lg sm:text-xl">📝</span>
-                <span className="text-sm sm:text-base text-text-main">智能写作</span>
+                <span className="text-sm sm:text-base text-text-main">{t('hero_highlight_writing')}</span>
               </div>
               <div className="flex items-center space-x-2 hover-brand-primary cursor-pointer transition-all duration-300">
                 <span className="text-lg sm:text-xl">🎯</span>
-                <span className="text-sm sm:text-base text-text-main">精准适配</span>
+                <span className="text-sm sm:text-base text-text-main">{t('hero_highlight_targeting')}</span>
               </div>
               <div className="flex items-center space-x-2 hover-brand-primary cursor-pointer transition-all duration-300">
                 <span className="text-lg sm:text-xl">⏰</span>
-                <span className="text-sm sm:text-base text-text-main">节省时间</span>
+                <span className="text-sm sm:text-base text-text-main">{t('hero_highlight_time')}</span>
               </div>
             </div>
           </div>

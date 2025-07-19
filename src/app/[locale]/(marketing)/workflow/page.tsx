@@ -1,6 +1,6 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {AnchorSection} from '@/components/layout/AnchorSection';
-import {PlatformShowcase} from '@/components/lovpen-ui/platform-showcase';
+import {PlatformShowcaseServer} from '@/components/lovpen-ui/platform-showcase-server';
 
 type IWorkflowProps = {
   params: Promise<{ locale: string }>;
@@ -29,7 +29,7 @@ export default async function Workflow(props: IWorkflowProps) {
 
   return (
     <AnchorSection id="workflow" className="w-full py-16 lg:py-24 bg-brand-subtle u-bg-premium-texture relative">
-      <PlatformShowcase/>
+      <PlatformShowcaseServer locale={locale} />
     </AnchorSection>
   );
 }

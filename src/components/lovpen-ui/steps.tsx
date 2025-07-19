@@ -2,50 +2,68 @@
 import {cn} from "@/lib/utils";
 import * as React from "react";
 
-const steps = [
-  {
-    step: 1,
-    title: '碎片化输入',
-    description: '观点、报告、语音...',
-    icon: '💭',
-    color: 'bg-blue-100 border-blue-200',
-    features: ['flomo式记录', '多格式支持', '随时随地'],
-  },
-  {
-    step: 2,
-    title: 'LovPen 分析',
-    description: '知识库+文风+平台',
-    icon: '🧠',
-    color: 'bg-purple-100 border-purple-200',
-    features: ['个人知识库', '文风学习', '平台适配'],
-  },
-  {
-    step: 3,
-    title: '美丽图文生成',
-    description: '专业排版+精美配图',
-    icon: '✨',
-    color: 'bg-green-100 border-green-200',
-    features: ['智能配图', '优雅排版', '品质保证'],
-  },
-  {
-    step: 4,
-    title: '一键分发',
-    description: '多平台自动发布',
-    icon: '🚀',
-    color: 'bg-orange-100 border-orange-200',
-    features: ['格式转换', '定时发布', '自动投放'],
-  },
-  {
-    step: 5,
-    title: '数据监控与优化',
-    description: '全流程效果追踪',
-    icon: '📊',
-    color: 'bg-rose-100 border-rose-200',
-    features: ['数据分析', '效果优化', '人工协作'],
-  },
-];
+type StepData = {
+  title: string;
+  description: string;
+  features: string[];
+}
+
+type StepsProps = {
+  stepData: {
+    step1: StepData;
+    step2: StepData;
+    step3: StepData;
+    step4: StepData;
+    step5: StepData;
+  };
+}
+
 // LovPen 创作流程展示组件
-const Steps = () => (
+const Steps = ({ stepData }: StepsProps) => {
+  const steps = [
+    {
+      step: 1,
+      title: stepData.step1.title,
+      description: stepData.step1.description,
+      icon: '💭',
+      color: 'bg-blue-100 border-blue-200',
+      features: stepData.step1.features,
+    },
+    {
+      step: 2,
+      title: stepData.step2.title,
+      description: stepData.step2.description,
+      icon: '🧠',
+      color: 'bg-purple-100 border-purple-200',
+      features: stepData.step2.features,
+    },
+    {
+      step: 3,
+      title: stepData.step3.title,
+      description: stepData.step3.description,
+      icon: '✨',
+      color: 'bg-green-100 border-green-200',
+      features: stepData.step3.features,
+    },
+    {
+      step: 4,
+      title: stepData.step4.title,
+      description: stepData.step4.description,
+      icon: '🚀',
+      color: 'bg-orange-100 border-orange-200',
+      features: stepData.step4.features,
+    },
+    {
+      step: 5,
+      title: stepData.step5.title,
+      description: stepData.step5.description,
+      icon: '📊',
+      color: 'bg-rose-100 border-rose-200',
+      features: stepData.step5.features,
+    },
+  ];
+
+  return (
   <div className="max-w-7xl mx-auto">
     {/* 流程步骤 */}
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 mb-8 sm:mb-12">
@@ -143,5 +161,7 @@ const Steps = () => (
       ))}
     </div>
   </div>
-);
+  );
+};
+
 export {Steps};

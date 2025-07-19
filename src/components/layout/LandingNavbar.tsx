@@ -46,7 +46,7 @@ const LandingNavbar = async () => {
           <nav className="hidden lg:flex items-center space-x-8">
             {navigation.map(item => (
               <SmartNavLink
-                key={item.name}
+                key={item.href}
                 href={item.href}
                 scrollToId={item.scrollToId}
                 className="text-text-main hover:text-primary transition-colors no-underline"
