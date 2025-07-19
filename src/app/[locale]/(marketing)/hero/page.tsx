@@ -56,9 +56,13 @@ export default async function Hero(props: IHeroProps) {
               </h1>
               
               {/* 副标题 */}
-              <p className="u-paragraph-l text-text-main">
-                {t('hero_subtitle')}
-              </p>
+              <div className="space-y-2">
+                {t('hero_subtitle').split('\n').map((line, index) => (
+                  <p key={index} className="u-paragraph-l text-text-main">
+                    {line}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
 
