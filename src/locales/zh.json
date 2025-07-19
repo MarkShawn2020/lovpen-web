@@ -208,7 +208,9 @@
   "PortfolioSlug": {
     "meta_title": "作品详情",
     "meta_description": "查看作品详情",
-    "header": "作品集"
+    "header": "作品集",
+    "content": "为一场企业活动创建了一套宣传材料和品牌元素。打造了统一的视觉主题，涵盖标志、海报、横幅和数字资产。在融入现代创新元素的同时整合了客户的品牌标识。",
+    "code_review_powered_by": "代码审查由以下提供支持"
   },
   "Architecture": {
     "meta_title": "架构设计 - LovPen",
@@ -486,5 +488,71 @@
       "in_development": "正在研发",
       "future_plan": "未来规划"
     }
+  },
+  "Features": {
+    "meta_title": "功能特性 - LovPen",
+    "meta_description": "发现 LovPen 智能内容创作和多平台分发的强大功能特性。",
+    "hero_title": "为内容创作者打造的强大功能",
+    "hero_subtitle": "创作、编辑和多平台分发内容所需的一切工具。",
+    "feature_1_title": "AI 智能写作",
+    "feature_1_description": "让 LovPen 理解你的写作风格，创作出符合你声音的内容。",
+    "feature_2_title": "多平台发布",
+    "feature_2_description": "一键自动格式化并发布到 Medium、Twitter 等多个平台。",
+    "feature_3_title": "智能内容适配",
+    "feature_3_description": "自动调整内容格式和风格，适应不同平台和受众群体。",
+    "feature_4_title": "精美模板",
+    "feature_4_description": "从 30+ 个专业设计的主题和模板中选择，美化你的内容。",
+    "feature_5_title": "语音输入支持",
+    "feature_5_description": "说出你的想法，让 LovPen 将其转换为结构良好的书面内容。",
+    "feature_6_title": "知识库集成",
+    "feature_6_description": "连接你的个人知识库，用相关信息丰富你的内容创作。"
+  },
+  "Portfolio": {
+    "meta_title": "作品集",
+    "meta_description": "欢迎来到我的作品集页面！",
+    "presentation": "欢迎来到我的作品集页面！这里您将看到我精心策划的作品和成就集合。通过这个作品集，我希望展示我的专业技能、创造力以及能为您的项目带来的价值。",
+    "portfolio_name": "作品集 {name}",
+    "error_reporting_powered_by": "错误报告由以下提供支持",
+    "coverage_powered_by": "代码覆盖率由以下提供支持"
+  },
+  "Docs": {
+    "meta_title": "文档 - LovPen",
+    "meta_description": "完整的文档和 LovPen 入门指南。",
+    "hero_title": "文档和指南",
+    "hero_subtitle": "有效使用 LovPen 所需了解的一切。",
+    "getting_started_title": "开始使用",
+    "installation_guide": "安装指南",
+    "quick_start_guide": "快速入门指南",
+    "configuration_guide": "配置指南",
+    "features_title": "功能特性",
+    "writing_guide": "写作指南",
+    "styling_guide": "样式指南",
+    "publishing_guide": "发布指南",
+    "api_title": "API 和开发",
+    "api_reference": "API 参考",
+    "plugins_guide": "插件指南",
+    "integrations_guide": "集成指南",
+    "support_title": "支持",
+    "troubleshooting_guide": "故障排除",
+    "faq_guide": "常见问题",
+    "community_guide": "社区",
+    "help_title": "需要帮助？",
+    "help_description": "找不到您要寻找的内容？我们的支持团队随时为您提供帮助。",
+    "contact_support": "联系支持"
+  },
+  "Counter": {
+    "meta_title": "计数器",
+    "meta_description": "数据库操作示例",
+    "loading_counter": "加载计数器中...",
+    "security_powered_by": "安全防护、机器人检测和限流由以下提供"
+  },
+  "CounterForm": {
+    "presentation": "计数器存储在数据库中，可以根据您提供的值进行递增。",
+    "label_increment": "递增值",
+    "button_increment": "递增",
+    "error_increment_range": "值必须在 1 到 3 之间"
+  },
+  "CurrentCount": {
+    "count": "计数: {count}"
   }
 }

@@ -1,3 +1,5 @@
+'use client';
+
 import { FileInput } from '@/components/ui/file-input';
 import type { FileItem } from '@/components/ui/file-input';
 
