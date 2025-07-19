@@ -102,16 +102,16 @@ function DraggablePreviewPanel({
       role="button"
       tabIndex={0}
       aria-label={`Select preview panel for ${panel.title}`}
-      className={`bg-background-main rounded-lg border overflow-hidden flex flex-col min-h-[400px] transition-all duration-200 cursor-pointer ${
+      className={`overflow-hidden flex flex-col min-h-[400px] transition-all duration-200 cursor-pointer ${
         isDragging
-          ? 'opacity-50 shadow-xl scale-105 border-primary/40'
+          ? 'opacity-50 scale-105'
           : panel.isSelected
-            ? 'border-primary/60 shadow-md ring-2 ring-primary/20'
-            : 'border-border-default/20 shadow-sm hover:shadow-md hover:border-primary/30'
+            ? 'ring-2 ring-primary/20'
+            : 'hover:ring-1 hover:ring-primary/10'
       }`}
     >
       {/* 单个预览面板工具栏 */}
-      <div className="bg-background-ivory-medium px-6 py-3 border-b border-border-default/20">
+      <div className="px-6 py-3 border-b border-border-default/10">
         <div className="flex items-center justify-between">
           <div className="flex items-center u-gap-s">
             {/* 拖拽句柄 */}
@@ -179,7 +179,7 @@ function DraggablePreviewPanel({
       <div className="flex-1 p-6">
         {generatedContent
           ? (
-            <div className="bg-background-ivory-medium rounded-md border border-border-default/20 p-6">
+            <div className="p-6">
                 <pre className="whitespace-pre-wrap font-sans text-text-main leading-relaxed text-sm">
                   {generatedContent}
                 </pre>
@@ -197,7 +197,7 @@ function DraggablePreviewPanel({
 
       {/* 单个面板底部操作栏 */}
       {generatedContent && (
-        <div className="border-t border-border-default/20 p-4 bg-background-ivory-medium">
+        <div className="border-t border-border-default/10 p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center u-gap-l text-xs text-text-faded">
               <span>
@@ -281,7 +281,7 @@ export function PreviewSection({
     >
       {/* 全局工具栏 */}
       <div
-        className="bg-background-main rounded-lg border border-border-default/20 px-6 py-4"
+        className="px-6 py-4 border-b border-border-default/10"
         onClick={e => e.stopPropagation()}
         onKeyDown={e => e.stopPropagation()}
         role="toolbar"

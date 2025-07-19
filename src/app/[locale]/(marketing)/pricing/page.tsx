@@ -44,7 +44,7 @@ export default async function Pricing(props: IPricingProps) {
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {/* Free Plan */}
           <div
-            className="card-brand-primary p-8 rounded-lg border-2 border-transparent max-w-sm mx-auto md:max-w-none hover:shadow-brand-primary transition-all duration-300"
+            className="card-brand-primary p-8 rounded-lg border-2 border-transparent max-w-md sm:mx-auto md:max-w-none hover:shadow-brand-primary transition-all duration-300"
           >
             <div className="text-center mb-6">
               <h3 className="text-2xl font-semibold text-brand-primary mb-2">
@@ -84,7 +84,7 @@ export default async function Pricing(props: IPricingProps) {
 
           {/* Pro Plan */}
           <div
-            className="card-brand-gradient p-8 rounded-lg border-2 border-brand-primary relative max-w-sm mx-auto md:max-w-none hover:shadow-brand-warm transition-all duration-300 hover:scale-105"
+            className="card-brand-gradient p-8 rounded-lg border-2 border-brand-primary relative max-w-md sm:mx-auto md:max-w-none hover:shadow-brand-warm transition-all duration-300 hover:scale-105"
           >
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
               <span className="bg-brand-gradient text-white px-4 py-1 rounded-full text-sm font-medium">
@@ -133,7 +133,7 @@ export default async function Pricing(props: IPricingProps) {
 
           {/* Enterprise Plan */}
           <div
-            className="card-brand-secondary p-8 rounded-lg border-2 border-transparent max-w-sm mx-auto md:max-w-none hover:shadow-brand-secondary transition-all duration-300"
+            className="card-brand-secondary p-8 rounded-lg border-2 border-transparent max-w-md sm:mx-auto md:max-w-none hover:shadow-brand-secondary transition-all duration-300"
           >
             <div className="text-center mb-6">
               <h3 className="text-2xl font-semibold text-brand-secondary mb-2">

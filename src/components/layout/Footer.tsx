@@ -4,8 +4,19 @@ import React from 'react';
 import {SafeLink} from '@/components/lovpen-ui/safe-link';
 import {Container} from './Container';
 
+type FooterLink = {
+  name: string;
+  href: string;
+  status?: string;
+  description?: string;
+}
+
 const Footer = () => {
-  const footerLinks = {
+  const footerLinks: {
+    company: FooterLink[];
+    product: FooterLink[];
+    support: FooterLink[];
+  } = {
     company: [
       {name: '关于我们', href: '/about'},
       {name: '加入我们', href: '#careers'},
@@ -13,10 +24,12 @@ const Footer = () => {
       {name: '博客', href: '/blog'},
     ],
     product: [
-      {name: 'Lovpen 平台', href: '/products/lovpen'},
-      {name: '定价方案', href: '/pricing'},
-      {name: 'API 文档', href: '/docs/api'},
-      {name: '帮助文档', href: '/docs'},
+      {name: 'LovPen Web', href: '/', status: '当前版本'},
+      {name: 'LovPen Sider', href: '#', status: '即将上线', description: '谷歌插件'},
+      {name: 'LovPen Clip', href: '#', status: '即将上线', description: 'Mac软件'},
+      {name: 'LovPen Obsidian', href: '#', status: '即将上线', description: 'Obsidian排版插件'},
+      {name: 'LovPen Desktop', href: '#', status: '即将上线', description: '桌面版'},
+      {name: 'LovPen NAS', href: '#', status: '未来规划', description: '硬件中心'},
     ],
     support: [
       {name: '帮助中心', href: '/help'},
@@ -43,7 +56,7 @@ const Footer = () => {
                 />
               </Link>
               <p className="u-paragraph-m text-gray-300 mb-6">
-                让一部分人先机械飞升，最大化思想者的价值。专为知识博主和内容创作者打造的 AI 智能创作平台。
+                Neurora：AI时代，为创作者而生
               </p>
               <div className="flex space-x-4">
                 <a href="https://github.com/neurora-ai" className="text-gray-400 hover:text-white transition-colors">
@@ -95,18 +108,38 @@ const Footer = () => {
             </div>
 
             <div className="lg:col-span-2">
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-2">
                 产品
               </h3>
+              <p className="text-xs text-gray-400 mb-4">
+                所有产品共享用户中心、知识库等数据
+              </p>
               <ul className="space-y-3">
                 {footerLinks.product.map(link => (
                   <li key={link.name}>
-                    <SafeLink
-                      href={link.href}
-                      className="text-gray-300 hover:text-white transition-colors no-underline"
-                    >
-                      {link.name}
-                    </SafeLink>
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2">
+                        <SafeLink
+                          href={link.href}
+                          className="text-gray-300 hover:text-white transition-colors no-underline"
+                        >
+                          {link.name}
+                        </SafeLink>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          link.status === '当前版本'
+? 'bg-green-500 text-white'
+                          : link.status === '即将上线'
+? 'bg-blue-500 text-white'
+                          : 'bg-gray-500 text-white'
+                        }`}
+                        >
+                          {link.status}
+                        </span>
+                      </div>
+                      {link.description && (
+                        <span className="text-xs text-gray-400 mt-1">{link.description}</span>
+                      )}
+                    </div>
                   </li>
                 ))}
               </ul>

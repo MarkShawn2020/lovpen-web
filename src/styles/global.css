@@ -285,8 +285,22 @@
     max-width: var(--container-main);
     margin-left: auto;
     margin-right: auto;
-    padding-left: var(--site-margin);
-    padding-right: var(--site-margin);
+    padding-left: 0.75rem; /* 12px on mobile */
+    padding-right: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .u-container {
+      padding-left: 1rem; /* 16px on small screens */
+      padding-right: 1rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .u-container {
+      padding-left: var(--site-margin); /* 24px on desktop */
+      padding-right: var(--site-margin);
+    }
   }
 
   /* Grid System */

@@ -429,22 +429,55 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
     }
   };
 
+  // 拖拽相关事件处理
+  const handleDragStart = (e: React.DragEvent, node: FileNode) => {
+    if (node.type === 'file') {
+      // 设置拖拽数据
+      const dragData = {
+        type: 'file-tree-item',
+        node: {
+          id: node.id,
+          name: node.name,
+          contentType: node.contentType || 'application/octet-stream',
+          size: node.size || 0,
+          path: node.path,
+          platform: node.platform
+        }
+      };
+      
+      e.dataTransfer.setData('application/json', JSON.stringify(dragData));
+      e.dataTransfer.effectAllowed = 'copy';
+      
+      // 设置拖拽图像
+      e.dataTransfer.setDragImage(e.currentTarget as HTMLElement, 0, 0);
+    }
+  };
+
+  const handleDragEnd = (e: React.DragEvent) => {
+    // 拖拽结束时的处理
+    e.preventDefault();
+  };
+
   // 渲染文件树
   const renderFileTree = (nodes: FileNode[], depth = 0) => {
     return nodes.map((node) => {
       const isSelected = selectedFile === node.id;
       const paddingLeft = depth * 16 + 12;
+      const isDraggableFile = node.type === 'file';
 
       return (
         <div key={node.id}>
           <div
             className={`flex items-center p-2 cursor-pointer transition-colors hover:bg-background-ivory-medium ${
               isSelected ? 'bg-primary/10 border-l-2 border-l-primary' : ''
-            }`}
+            } ${isDraggableFile ? 'hover:shadow-sm' : ''}`}
             style={{paddingLeft}}
             onClick={() => handleFileClick(node)}
             role="button"
             tabIndex={0}
+            draggable={isDraggableFile}
+            onDragStart={e => handleDragStart(e, node)}
+            onDragEnd={handleDragEnd}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();

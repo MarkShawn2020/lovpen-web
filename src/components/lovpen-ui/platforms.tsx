@@ -290,18 +290,23 @@ const PlatformCard = ({platform, style, scaleFactor, onHover, onLeave}: {
   onHover: (platform: Platform) => void;
   onLeave: () => void;
 }) => {
-  const cardSize = Math.max(40, 64 * scaleFactor); // 最小尺寸40px，按比例缩放
-  const iconSize = Math.max(16, 24 * scaleFactor); // 图标尺寸
+  // 移动端使用更小的尺寸，最大化图表空间
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const minSize = isMobile ? 32 : 40;  
+  const baseSize = isMobile ? 40 : 64;
+  const cardSize = Math.max(minSize, baseSize * scaleFactor);
+  const iconSize = Math.max(isMobile ? 12 : 16, (isMobile ? 16 : 24) * scaleFactor);
   
   return (
     <div 
       className={cn(
         'absolute transform -translate-x-1/2 -translate-y-1/2',
         'rounded-full',
-        'transition-all duration-300 hover:scale-125 hover:z-30',
+        'transition-all duration-300 hover:scale-125 hover:z-30 active:scale-110',
         'group cursor-pointer flex items-center justify-center',
         'bg-white/80 backdrop-blur-sm border border-white/50 shadow-sm',
-        'hover:shadow-lg hover:bg-white/95',
+        'hover:shadow-lg hover:bg-white/95 active:shadow-md',
+        'touch-manipulation', // 优化移动端触摸
       )}
       style={{
         ...style,
@@ -310,6 +315,8 @@ const PlatformCard = ({platform, style, scaleFactor, onHover, onLeave}: {
       }}
       onMouseEnter={() => onHover(platform)}
       onMouseLeave={onLeave}
+      onTouchStart={() => onHover(platform)}
+      onTouchEnd={onLeave}
     >
       {/* 图标 */}
       <Image 
@@ -317,7 +324,7 @@ const PlatformCard = ({platform, style, scaleFactor, onHover, onLeave}: {
         alt={platform.name}
         width={iconSize}
         height={iconSize}
-        className="transform group-hover:scale-110 transition-all duration-300 object-contain"
+        className="transform group-hover:scale-110 group-active:scale-105 transition-all duration-300 object-contain"
       />
     </div>
   );
@@ -414,7 +421,7 @@ export const Platforms = () => {
         {/* 象限图表 */}
         <div className="relative z-10 flex flex-col items-center">
           {/* 图表容器 */}
-          <div className="relative bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg border border-primary/10 w-full">
+          <div className="relative bg-white/50 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-primary/10 w-full overflow-hidden">
             {/* SVG 图表 */}
             <svg 
               viewBox={`0 0 ${containerDimensions.width} ${containerDimensions.height}`}
@@ -490,30 +497,30 @@ export const Platforms = () => {
             })}
             
             {/* 图表标题 - 坐标系正中上方 */}
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-center transition-all duration-300">
+            <div className="absolute top-2 sm:top-4 left-1/2 transform -translate-x-1/2 text-center transition-all duration-300 z-30">
               {hoveredPlatform
 ? (
-                <div className="flex flex-col items-center">
-                  <span className={cn('font-bold text-lg', hoveredPlatform.color)}>
+                <div className="flex flex-col items-center bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-md">
+                  <span className={cn('font-bold text-sm sm:text-lg', hoveredPlatform.color)}>
                     {hoveredPlatform.name}
                   </span>
-                  <span className="text-sm text-text-faded mt-1">
+                  <span className="text-xs sm:text-sm text-text-faded mt-1">
                     {hoveredPlatform.description}
                   </span>
                 </div>
               )
 : (
-                <div className="text-sm font-medium text-text-main opacity-50">
+                <div className="text-xs sm:text-sm font-medium text-text-main opacity-50 bg-white/70 backdrop-blur-sm rounded px-2 py-1">
                   平台分布图
                 </div>
               )}
             </div>
             
             {/* 坐标轴标签 */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm font-medium text-text-main">
+            <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 text-xs sm:text-sm font-medium text-text-main bg-white/70 backdrop-blur-sm rounded px-2 py-1">
               内容复杂度 →
             </div>
-            <div className="absolute top-1/2 left-4 transform -translate-y-1/2 -rotate-90 text-sm font-medium text-text-main">
+            <div className="absolute top-1/2 left-2 sm:left-4 transform -translate-y-1/2 -rotate-90 text-xs sm:text-sm font-medium text-text-main bg-white/70 backdrop-blur-sm rounded px-2 py-1">
               专业程度 →
             </div>
             
@@ -534,10 +541,10 @@ export const Platforms = () => {
         </div>
 
         {/* 更多平台提示 */}
-        <div className="mt-12 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/80 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg">
+        <div className="mt-8 sm:mt-12 text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white/80 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg">
             <div className="w-2 h-2 bg-gradient-to-r from-primary to-swatch-cactus rounded-full animate-pulse" />
-            <p className="text-text-faded text-sm font-medium">
+            <p className="text-text-faded text-xs sm:text-sm font-medium text-center">
               支持28+主流平台，智能分析选择最佳发布策略
             </p>
             <div className="w-2 h-2 bg-gradient-to-r from-swatch-cactus to-primary rounded-full animate-pulse" style={{animationDelay: '0.5s'}} />
