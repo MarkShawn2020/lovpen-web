@@ -18,7 +18,7 @@ const Footer = () => {
     support: FooterLink[];
   } = {
     company: [
-      {name: '关于我们', href: '/about'},
+      {name: '关于我们', href: '#about'},
       {name: '加入我们', href: '#careers'},
       {name: '媒体报道', href: '#press'},
       {name: '博客', href: '/blog'},
