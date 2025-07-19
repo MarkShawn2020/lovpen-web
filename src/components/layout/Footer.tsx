@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import {SafeLink} from '@/components/lovpen-ui/safe-link';
 import {Container} from './Container';
+import {useTranslations} from 'next-intl';
 
 type FooterLink = {
   name: string;
@@ -12,30 +13,32 @@ type FooterLink = {
 }
 
 const Footer = () => {
+  const t = useTranslations('Footer');
+  
   const footerLinks: {
     company: FooterLink[];
     product: FooterLink[];
     support: FooterLink[];
   } = {
     company: [
-      {name: '关于我们', href: '#about'},
-      {name: '加入我们', href: '#careers'},
-      {name: '媒体报道', href: '#press'},
-      {name: '博客', href: '/blog'},
+      {name: t('links.company.about'), href: '#about'},
+      {name: t('links.company.careers'), href: '#careers'},
+      {name: t('links.company.press'), href: '#press'},
+      {name: t('links.company.blog'), href: '/blog'},
     ],
     product: [
-      {name: 'LovPen Web', href: '/', status: '当前版本'},
-      {name: 'LovPen Sider', href: '#', status: '即将上线'},
-      {name: 'LovPen Clip', href: '#', status: '即将上线'},
-      {name: 'LovPen Obsidian', href: '#', status: '即将上线'},
-      {name: 'LovPen Desktop', href: '#', status: '正在研发'},
-      {name: 'LovPen NAS', href: '#', status: '未来规划'},
+      {name: t('links.product.lovpen_web'), href: '/', status: t('status.current')},
+      {name: t('links.product.lovpen_sider'), href: '#', status: t('status.coming_soon')},
+      {name: t('links.product.lovpen_clip'), href: '#', status: t('status.coming_soon')},
+      {name: t('links.product.lovpen_obsidian'), href: '#', status: t('status.coming_soon')},
+      {name: t('links.product.lovpen_desktop'), href: '#', status: t('status.in_development')},
+      {name: t('links.product.lovpen_nas'), href: '#', status: t('status.future_plan')},
     ],
     support: [
-      {name: '帮助中心', href: '/help'},
-      {name: '联系我们', href: 'mailto:mark@cs-magic.com'},
-      {name: '服务状态', href: '/status'},
-      {name: '隐私政策', href: '/privacy'},
+      {name: t('links.support.help_center'), href: '/help'},
+      {name: t('links.support.contact_us'), href: 'mailto:mark@cs-magic.com'},
+      {name: t('links.support.service_status'), href: '/status'},
+      {name: t('links.support.privacy_policy'), href: '/privacy'},
     ],
   };
 
@@ -56,7 +59,7 @@ const Footer = () => {
                 />
               </Link>
               <p className="u-paragraph-m text-gray-300 mb-6">
-                Neurora：AI时代，为创作者而生
+                {t('company_description')}
               </p>
               <div className="flex space-x-4">
                 <a href="https://github.com/markshawn2020" className="text-gray-400 hover:text-white transition-colors">
@@ -75,7 +78,7 @@ const Footer = () => {
             {/* Links */}
             <div className="lg:col-span-2">
               <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-                公司
+                {t('sections.company')}
               </h3>
               <ul className="space-y-3">
                 {footerLinks.company.map(link => (
@@ -93,10 +96,10 @@ const Footer = () => {
 
             <div className="lg:col-span-2">
               <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-2">
-                产品
+                {t('sections.product')}
               </h3>
               <p className="text-xs text-gray-400 mb-4">
-                所有产品共享用户中心、知识库等数据
+                {t('product_description')}
               </p>
               <ul className="space-y-3">
                 {footerLinks.product.map(link => (
@@ -114,11 +117,11 @@ const Footer = () => {
                         )}
                       </div>
                       <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${
-                        link.status === '当前版本'
+                        link.status === t('status.current')
                           ? 'bg-[#629A90] text-white'
-                        : link.status === '即将上线'
+                        : link.status === t('status.coming_soon')
                           ? 'bg-[#97B5D5] text-white'
-                        : link.status === '正在研发'
+                        : link.status === t('status.in_development')
                           ? 'bg-[#C2C07D] text-white'
                         : 'bg-[#87867F] text-white'
                       }`}
@@ -133,7 +136,7 @@ const Footer = () => {
 
             <div className="lg:col-span-2">
               <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-                支持
+                {t('sections.support')}
               </h3>
               <ul className="space-y-3">
                 {footerLinks.support.map(link => (
@@ -154,26 +157,26 @@ const Footer = () => {
           <div className="mt-12 pt-8 border-t border-gray-700">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-gray-400 text-sm">
-                © 2025 Neurora Technology. All rights reserved.
+                {t('copyright')}
               </p>
               <div className="flex space-x-6 mt-4 md:mt-0">
                 <SafeLink
                   href="/terms"
                   className="text-gray-400 hover:text-white text-sm transition-colors no-underline"
                 >
-                  服务条款
+                  {t('links.legal.terms')}
                 </SafeLink>
                 <SafeLink
                   href="/privacy"
                   className="text-gray-400 hover:text-white text-sm transition-colors no-underline"
                 >
-                  隐私政策
+                  {t('links.legal.privacy')}
                 </SafeLink>
                 <SafeLink
                   href="/cookies"
                   className="text-gray-400 hover:text-white text-sm transition-colors no-underline"
                 >
-                  Cookie 政策
+                  {t('links.legal.cookies')}
                 </SafeLink>
               </div>
             </div>

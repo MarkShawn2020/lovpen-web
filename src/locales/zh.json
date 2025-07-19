@@ -443,5 +443,48 @@
     "faq_2_answer": "我们支持所有主要信用卡、支付宝、微信支付，企业客户还支持银行转账。",
     "faq_3_question": "有免费试用吗？",
     "faq_3_answer": "是的，我们的免费版让您无时间限制地试用LovPen。准备好使用更多功能时随时升级。"
+  },
+  "Footer": {
+    "company_description": "Neurora：AI时代，为创作者而生",
+    "copyright": "© 2025 Neurora Technology. All rights reserved.",
+    "sections": {
+      "company": "公司",
+      "product": "产品", 
+      "support": "支持"
+    },
+    "product_description": "所有产品共享用户中心、知识库等数据",
+    "links": {
+      "company": {
+        "about": "关于我们",
+        "careers": "加入我们",
+        "press": "媒体报道",
+        "blog": "博客"
+      },
+      "product": {
+        "lovpen_web": "LovPen Web",
+        "lovpen_sider": "LovPen Sider",
+        "lovpen_clip": "LovPen Clip",
+        "lovpen_obsidian": "LovPen Obsidian",
+        "lovpen_desktop": "LovPen Desktop",
+        "lovpen_nas": "LovPen NAS"
+      },
+      "support": {
+        "help_center": "帮助中心",
+        "contact_us": "联系我们",
+        "service_status": "服务状态",
+        "privacy_policy": "隐私政策"
+      },
+      "legal": {
+        "terms": "服务条款",
+        "privacy": "隐私政策",
+        "cookies": "Cookie 政策"
+      }
+    },
+    "status": {
+      "current": "当前版本",
+      "coming_soon": "即将上线",
+      "in_development": "正在研发",
+      "future_plan": "未来规划"
+    }
   }
 }

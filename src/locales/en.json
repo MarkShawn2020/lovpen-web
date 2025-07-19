@@ -625,5 +625,48 @@
         "description": "Knowledge management, collaborative docs"
       }
     }
+  },
+  "Footer": {
+    "company_description": "Neurora: Born for creators in the AI era",
+    "copyright": "© 2025 Neurora Technology. All rights reserved.",
+    "sections": {
+      "company": "Company",
+      "product": "Products", 
+      "support": "Support"
+    },
+    "product_description": "All products share user center, knowledge base and other data",
+    "links": {
+      "company": {
+        "about": "About Us",
+        "careers": "Join Us",
+        "press": "Press",
+        "blog": "Blog"
+      },
+      "product": {
+        "lovpen_web": "LovPen Web",
+        "lovpen_sider": "LovPen Sider",
+        "lovpen_clip": "LovPen Clip",
+        "lovpen_obsidian": "LovPen Obsidian",
+        "lovpen_desktop": "LovPen Desktop",
+        "lovpen_nas": "LovPen NAS"
+      },
+      "support": {
+        "help_center": "Help Center",
+        "contact_us": "Contact Us",
+        "service_status": "Service Status",
+        "privacy_policy": "Privacy Policy"
+      },
+      "legal": {
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy",
+        "cookies": "Cookie Policy"
+      }
+    },
+    "status": {
+      "current": "Current",
+      "coming_soon": "Coming Soon",
+      "in_development": "In Development",
+      "future_plan": "Future Plan"
+    }
   }
 }
