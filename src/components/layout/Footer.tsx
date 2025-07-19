@@ -25,11 +25,11 @@ const Footer = () => {
     ],
     product: [
       {name: 'LovPen Web', href: '/', status: '当前版本'},
-      {name: 'LovPen Sider', href: '#', status: '即将上线', description: '谷歌插件'},
-      {name: 'LovPen Clip', href: '#', status: '即将上线', description: 'Mac软件'},
-      {name: 'LovPen Obsidian', href: '#', status: '即将上线', description: 'Obsidian排版插件'},
-      {name: 'LovPen Desktop', href: '#', status: '即将上线', description: '桌面版'},
-      {name: 'LovPen NAS', href: '#', status: '未来规划', description: '硬件中心'},
+      {name: 'LovPen Sider', href: '#', status: '即将上线'},
+      {name: 'LovPen Clip', href: '#', status: '即将上线'},
+      {name: 'LovPen Obsidian', href: '#', status: '即将上线'},
+      {name: 'LovPen Desktop', href: '#', status: '正在研发'},
+      {name: 'LovPen NAS', href: '#', status: '未来规划'},
     ],
     support: [
       {name: '帮助中心', href: '/help'},
@@ -101,28 +101,30 @@ const Footer = () => {
               <ul className="space-y-3">
                 {footerLinks.product.map(link => (
                   <li key={link.name}>
-                    <div className="flex flex-col">
-                      <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-col">
                         <SafeLink
                           href={link.href}
                           className="text-gray-300 hover:text-white transition-colors no-underline"
                         >
                           {link.name}
                         </SafeLink>
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                          link.status === '当前版本'
-? 'bg-green-500 text-white'
-                          : link.status === '即将上线'
-? 'bg-blue-500 text-white'
-                          : 'bg-gray-500 text-white'
-                        }`}
-                        >
-                          {link.status}
-                        </span>
+                        {link.description && (
+                          <span className="text-xs text-gray-400 mt-1">{link.description}</span>
+                        )}
                       </div>
-                      {link.description && (
-                        <span className="text-xs text-gray-400 mt-1">{link.description}</span>
-                      )}
+                      <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${
+                        link.status === '当前版本'
+                          ? 'bg-[#629A90] text-white'
+                        : link.status === '即将上线'
+                          ? 'bg-[#97B5D5] text-white'
+                        : link.status === '正在研发'
+                          ? 'bg-[#C2C07D] text-white'
+                        : 'bg-[#87867F] text-white'
+                      }`}
+                      >
+                        {link.status}
+                      </span>
                     </div>
                   </li>
                 ))}

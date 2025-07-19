@@ -1,8 +1,6 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
-import Link from 'next/link';
 import {Container} from '@/components/layout/Container';
 import {AnchorSection} from '@/components/layout/AnchorSection';
-import {Button} from '@/components/lovpen-ui/button';
 import {Logo} from '@/components/lovpen-ui/logo';
 import {WaitlistButtonWithEffect} from '@/components/ui/waitlist-button-with-effect';
 
@@ -94,11 +92,11 @@ export default async function Hero(props: IHeroProps) {
               {t('hero_cta_primary')}
             </WaitlistButtonWithEffect>
             
-            <Button variant="outline" size="lg" className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white shadow-brand-primary w-full sm:w-auto" asChild>
-              <Link href="/demo">
-                观看演示
-              </Link>
-            </Button>
+            {/*<Button variant="outline" size="lg" className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white shadow-brand-primary w-full sm:w-auto" asChild>*/}
+            {/*  <Link href="/demo">*/}
+            {/*    观看演示*/}
+            {/*  </Link>*/}
+            {/*</Button>*/}
           </div>
 
           {/* 产品亮点 */}

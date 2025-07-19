@@ -27,7 +27,7 @@ export function WaitlistButtonWithEffect({
       <WaitlistButton 
         source={source}
         variant={variant}
-        size={size}
+        size={"lg"}
         className={className}
       >
         {children}
