@@ -3,16 +3,16 @@ import {z} from 'zod';
 
 export const Env = createEnv({
   server: {
-    OPENROUTER_API_KEY: z.string().min(1),
+    OPENROUTER_API_KEY: z.string().min(1).optional(),
     ANTHROPIC_API_KEY: z.string().min(1).optional(),
     ARCJET_KEY: z.string().startsWith('ajkey_').optional(),
-    CLERK_SECRET_KEY: z.string().min(1),
-    DATABASE_URL: z.string().min(1),
+    CLERK_SECRET_KEY: z.string().min(1).optional(),
+    DATABASE_URL: z.string().default('postgresql://postgres:password@localhost:5432/lovpen_local'),
     BETTER_STACK_SOURCE_TOKEN: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().optional(),
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1).optional(),
     NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
     NEXT_PUBLIC_POSTHOG_HOST: z.string().optional(),
   },

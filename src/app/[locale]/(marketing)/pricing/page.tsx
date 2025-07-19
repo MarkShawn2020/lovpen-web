@@ -1,8 +1,7 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
-import Link from 'next/link';
 import {Container} from '@/components/layout/Container';
 import {AnchorSection} from '@/components/layout/AnchorSection';
-import {Button} from '@/components/lovpen-ui/button';
+import {WaitlistButton} from '@/components/ui/waitlist-button';
 
 type IPricingProps = {
   params: Promise<{ locale: string }>;
@@ -75,11 +74,14 @@ export default async function Pricing(props: IPricingProps) {
                 {t('free_plan_feature_4')}
               </li>
             </ul>
-            <Link href="/sign-up" className="block">
-              <Button variant="outline" size="lg" className="w-full border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white">
-                {t('get_started')}
-              </Button>
-            </Link>
+            <WaitlistButton 
+              source="pricing-free"
+              variant="outline" 
+              size="lg" 
+              className="w-full border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white"
+            >
+              {t('get_started')}
+            </WaitlistButton>
           </div>
 
           {/* Pro Plan */}
@@ -124,11 +126,14 @@ export default async function Pricing(props: IPricingProps) {
                 {t('pro_plan_feature_5')}
               </li>
             </ul>
-            <Link href="/sign-up" className="block">
-              <Button variant="primary" size="lg" className="w-full shadow-brand-warm">
-                {t('upgrade_to_pro')}
-              </Button>
-            </Link>
+            <WaitlistButton 
+              source="pricing-pro"
+              variant="default" 
+              size="lg" 
+              className="w-full shadow-brand-warm bg-brand-primary text-white hover:bg-brand-primary/90"
+            >
+              {t('upgrade_to_pro')}
+            </WaitlistButton>
           </div>
 
           {/* Enterprise Plan */}
@@ -168,11 +173,14 @@ export default async function Pricing(props: IPricingProps) {
                 {t('enterprise_plan_feature_5')}
               </li>
             </ul>
-            <a href="mailto:mark@cs-magic.com" className="block">
-              <Button variant="outline" size="lg" className="w-full border-brand-secondary text-brand-secondary hover:bg-brand-secondary hover:text-white">
-                {t('contact_sales')}
-              </Button>
-            </a>
+            <WaitlistButton 
+              source="pricing-enterprise"
+              variant="outline" 
+              size="lg" 
+              className="w-full border-brand-secondary text-brand-secondary hover:bg-brand-secondary hover:text-white"
+            >
+              {t('contact_sales')}
+            </WaitlistButton>
           </div>
         </div>
 

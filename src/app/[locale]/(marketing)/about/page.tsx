@@ -1,8 +1,6 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
-import Link from 'next/link';
 import {Container} from '@/components/layout/Container';
 import {AnchorSection} from '@/components/layout/AnchorSection';
-import {Button} from '@/components/lovpen-ui/button';
 
 type IAboutProps = {
   params: Promise<{ locale: string }>;
@@ -188,27 +186,6 @@ export default async function About(props: IAboutProps) {
           </div>
         </div>
 
-        {/* Contact Section */}
-        <div className="text-center card-brand-gradient rounded-lg p-8">
-          <h2 className="text-3xl font-semibold text-brand-gradient mb-4">
-            {t('contact_title')}
-          </h2>
-          <p className="text-lg text-text-main mb-6">
-            {t('contact_description')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="mailto:mark@cs-magic.com">
-              <Button variant="primary" size="lg">
-                {t('contact_button')}
-              </Button>
-            </a>
-            <Link href="/playground">
-              <Button variant="secondary" size="lg">
-                {t('try_lovpen')}
-              </Button>
-            </Link>
-          </div>
-        </div>
       </Container>
     </AnchorSection>
   );

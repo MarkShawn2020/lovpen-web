@@ -5,6 +5,7 @@ import {Fira_Code, Inter} from 'next/font/google';
 import {notFound} from 'next/navigation';
 import {PostHogProvider} from '@/components/analytics/PostHogProvider';
 import {ReactQueryProvider} from '@/components/providers/ReactQueryProvider';
+import {JotaiProvider} from '@/providers/JotaiProvider';
 import {AuthProvider} from '@/contexts/AuthContext';
 import {routing} from '@/lib/I18nRouting';
 import '@/styles/global.css';
@@ -66,15 +67,17 @@ export default async function RootLayout(props: {
   return (
     <html lang={locale} className={`${inter.variable} ${firaCode.variable}`}>
       <body className="font-sans antialiased">
-        <AuthProvider>
-          <NextIntlClientProvider>
-            <ReactQueryProvider>
-              <PostHogProvider>
-                {props.children}
-              </PostHogProvider>
-            </ReactQueryProvider>
-          </NextIntlClientProvider>
-        </AuthProvider>
+        <JotaiProvider>
+          <AuthProvider>
+            <NextIntlClientProvider>
+              <ReactQueryProvider>
+                <PostHogProvider>
+                  {props.children}
+                </PostHogProvider>
+              </ReactQueryProvider>
+            </NextIntlClientProvider>
+          </AuthProvider>
+        </JotaiProvider>
       </body>
     </html>
   );

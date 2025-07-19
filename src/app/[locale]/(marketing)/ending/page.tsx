@@ -1,7 +1,7 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Container} from '@/components/layout/Container';
 import {AnchorSection} from '@/components/layout/AnchorSection';
-import {AuthAwareButton} from '@/components/auth/AuthAwareButton';
+import {WaitlistButtonWithEffect} from '@/components/ui/waitlist-button-with-effect';
 
 type IEndingProps = {
   params: Promise<{ locale: string }>;
@@ -40,18 +40,14 @@ export default async function Ending(props: IEndingProps) {
             {t('cta_subtitle')}
           </p>
           <div className="flex justify-center">
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-white/20 rounded-lg blur opacity-70 group-hover:opacity-100 transition duration-300" />
-              <AuthAwareButton 
-                variant="secondary" 
-                size="lg" 
-                className="relative text-lg px-8 py-4 bg-white text-brand-primary hover:bg-white/90 border-white"
-                authenticatedHref="/playground"
-                unauthenticatedHref="/register"
-              >
-                {t('hero_cta_primary')}
-              </AuthAwareButton>
-            </div>
+            <WaitlistButtonWithEffect 
+              source="ending"
+              variant="secondary" 
+              size="lg" 
+              className="text-lg px-8 py-4 bg-white text-brand-primary hover:bg-white/90 border-white"
+            >
+              {t('hero_cta_primary')}
+            </WaitlistButtonWithEffect>
           </div>
 
           {/* Trust indicators */}

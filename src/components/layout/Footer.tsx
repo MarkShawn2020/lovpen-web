@@ -33,7 +33,7 @@ const Footer = () => {
     ],
     support: [
       {name: '帮助中心', href: '/help'},
-      {name: '联系我们', href: '#contact'},
+      {name: '联系我们', href: 'mailto:mark@cs-magic.com'},
       {name: '服务状态', href: '/status'},
       {name: '隐私政策', href: '/privacy'},
     ],
@@ -145,23 +145,6 @@ const Footer = () => {
                   </li>
                 ))}
               </ul>
-            </div>
-
-            <div className="lg:col-span-2">
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-                联系我们
-              </h3>
-              <p className="text-gray-300 text-sm mb-4">
-                有任何问题或建议，欢迎与我们联系。
-              </p>
-              <div className="flex flex-col gap-2">
-                <a 
-                  href="mailto:mark@cs-magic.com"
-                  className="text-gray-300 hover:text-white transition-colors text-sm"
-                >
-                  📧 mark@cs-magic.com
-                </a>
-              </div>
             </div>
           </div>
 

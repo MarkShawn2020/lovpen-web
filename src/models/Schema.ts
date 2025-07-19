@@ -71,3 +71,21 @@ export const processingJobsSchema = pgTable('processing_jobs', {
     .$onUpdate(() => new Date())
     .notNull(),
 });
+
+export const waitlistSchema = pgTable('waitlist', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: varchar('email', {length: 255}).notNull(),
+  name: varchar('name', {length: 255}),
+  company: varchar('company', {length: 255}),
+  useCase: text('use_case'),
+  source: varchar('source', {length: 100}).notNull(), // 追踪来源
+  userId: varchar('user_id', {length: 255}), // Clerk用户ID（如果已登录）
+  isAuthenticated: boolean('is_authenticated').default(false).notNull(),
+  status: varchar('status', {length: 20}).default('pending').notNull(), // pending, invited, converted
+  invitedAt: timestamp('invited_at', {mode: 'date'}),
+  createdAt: timestamp('created_at', {mode: 'date'}).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', {mode: 'date'})
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
+});

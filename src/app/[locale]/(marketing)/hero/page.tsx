@@ -4,7 +4,7 @@ import {Container} from '@/components/layout/Container';
 import {AnchorSection} from '@/components/layout/AnchorSection';
 import {Button} from '@/components/lovpen-ui/button';
 import {Logo} from '@/components/lovpen-ui/logo';
-import {AuthAwareButton} from '@/components/auth/AuthAwareButton';
+import {WaitlistButtonWithEffect} from '@/components/ui/waitlist-button-with-effect';
 
 type IHeroProps = {
   params: Promise<{ locale: string }>;
@@ -85,18 +85,14 @@ export default async function Hero(props: IHeroProps) {
 
           {/* CTA按钮组 */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center w-full max-w-md sm:max-w-none">
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-brand-gradient rounded-lg blur opacity-70 group-hover:opacity-100 transition duration-300" />
-              <AuthAwareButton 
-                variant="primary" 
-                size="lg" 
-                className="relative shadow-brand-primary hover:shadow-brand-warm"
-                authenticatedHref="/playground"
-                unauthenticatedHref="/register"
-              >
-                {t('hero_cta_primary')}
-              </AuthAwareButton>
-            </div>
+            <WaitlistButtonWithEffect 
+              source="hero"
+              variant="default" 
+              size="lg" 
+              className="relative shadow-brand-primary hover:shadow-brand-warm w-full sm:w-auto bg-brand-primary text-white hover:bg-brand-primary/90"
+            >
+              {t('hero_cta_primary')}
+            </WaitlistButtonWithEffect>
             
             <Button variant="outline" size="lg" className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white shadow-brand-primary w-full sm:w-auto" asChild>
               <Link href="/demo">
