@@ -7,7 +7,6 @@ import {Button} from '@/components/lovpen-ui/button';
 import {SmartNavLink} from '@/components/lovpen-ui/smart-nav-link';
 import {useAuth} from '@/contexts/AuthContext';
 import {LanguageSwitcher} from './LanguageSwitcher';
-import {WaitlistButton} from '@/components/ui/waitlist-button';
 
 type HeaderClientProps = {
   navigation: Array<{ name: string; href: string; scrollToId: string }>;
@@ -66,13 +65,11 @@ export const HeaderClient = ({navigation, urls, translations}: HeaderClientProps
             )
           : (
             // Unauthenticated user actions
-              <WaitlistButton 
-                source="header-desktop"
-                variant="default" 
-                size="default"
-              >
-                {translations.tryNow}
-              </WaitlistButton>
+              <Link href={urls.signIn}>
+                <Button variant="primary" size="md">
+                  {translations.signIn}
+                </Button>
+              </Link>
             )}
       </div>
 
@@ -153,14 +150,11 @@ export const HeaderClient = ({navigation, urls, translations}: HeaderClientProps
                     )
                   : (
                     // Unauthenticated user actions
-                      <WaitlistButton 
-                        source="header-mobile"
-                        variant="default" 
-                        size="default" 
-                        className="w-full"
-                      >
-                        {translations.tryNow}
-                      </WaitlistButton>
+                      <Link href={urls.signIn} onClick={() => setIsMenuOpen(false)}>
+                        <Button variant="primary" size="md" className="w-full">
+                          {translations.signIn}
+                        </Button>
+                      </Link>
                     )}
               </div>
             </nav>
