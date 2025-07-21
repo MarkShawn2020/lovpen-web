@@ -24,6 +24,26 @@ export type WaitlistResponse = {
   updated_at: string;
   reviewed_at?: string | null;
   reviewed_by?: number | null;
+  // New fields for position notification
+  queue_position?: number | null;
+  estimated_wait_weeks?: number | null;
+  position_tier?: 'priority' | 'regular' | 'extended' | null;
+  total_submissions?: number | null;
+}
+
+export type NotificationTier = 'priority' | 'regular' | 'extended';
+
+export type NotificationConfig = {
+  type: 'success' | 'info' | 'warning';
+  title: string;
+  message: string;
+  duration: number;
+  celebratory?: boolean;
+  actions?: Array<{
+    key: string;
+    label: string;
+    handler: () => void;
+  }>;
 }
 
 export type WaitlistUpdate = {

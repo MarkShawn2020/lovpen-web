@@ -26,10 +26,11 @@ export const waitlistStatusAtom = atom((get) => {
 // 设置申请状态的action
 export const setWaitlistAppliedAtom = atom(
   null,
-  (get, set, { email }: { email: string }) => {
+  (get, set, { email, position, submissionTime }: { email: string; position?: number; submissionTime?: string }) => {
     set(hasAppliedWaitlistAtom, true);
     set(waitlistEmailAtom, email);
-    set(waitlistAppliedAtAtom, new Date().toISOString());
+    set(waitlistAppliedAtAtom, submissionTime || new Date().toISOString());
+    // Note: position could be stored in a separate atom if needed for later features
   }
 );
 

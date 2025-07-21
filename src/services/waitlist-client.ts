@@ -42,11 +42,31 @@ export class WaitlistClient {
   }
 
   async submitWaitlist(data: WaitlistSubmit): Promise<WaitlistResponse> {
-    // Public endpoint - no authentication required
-    return this.publicRequest<WaitlistResponse>('/waitlist/submit', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
+    try {
+      // Public endpoint - no authentication required
+      return await this.publicRequest<WaitlistResponse>('/waitlist/submit', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+    } catch (error: any) {
+      // Handle 409 conflict (existing email) specially
+      if (error.message && typeof error.message === 'string') {
+        try {
+          const errorData = JSON.parse(error.message);
+          if (errorData.detail?.waitlist_info) {
+            // Return the waitlist info for existing email notification
+            const waitlistInfo = errorData.detail.waitlist_info;
+            const errorWithInfo = new Error(errorData.detail.message) as any;
+            errorWithInfo.waitlistInfo = waitlistInfo;
+            throw errorWithInfo;
+          }
+        } catch (parseError) {
+          // If parsing fails, fall through to regular error handling
+        }
+      }
+      
+      throw error;
+    }
   }
 
   async getWaitlistEntries(params: {

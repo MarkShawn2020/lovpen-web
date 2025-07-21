@@ -2,10 +2,14 @@
 
 import { useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
+import { useLocale } from 'next-intl';
 import { setWaitlistAppliedAtom, waitlistStatusAtom } from '@/stores/waitlist';
 import { waitlistClient } from '@/services/waitlist-client';
 import { waitlistSubmitSchema } from '@/validations/waitlist';
 import type { WaitlistSubmitInput } from '@/validations/waitlist';
+import type { WaitlistResponse } from '@/types/waitlist';
+import { WaitlistNotificationService } from '@/services/waitlist-notification-service';
+import { WaitlistPositionNotification } from '@/components/ui/waitlist-position-notification';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -25,13 +29,30 @@ type WaitlistModalProps = {
   source?: string; // 追踪来源，如 'hero', 'pricing', 'about'
 }
 
+function useLocaleWithFallback(): string {
+  try {
+    return useLocale();
+  } catch {
+    // Fallback to 'zh' if no intl context is available
+    // This can happen when the component is rendered outside of NextIntlClientProvider
+    if (typeof window !== 'undefined') {
+      // Check browser language preference
+      const browserLang = navigator.language.toLowerCase();
+      return browserLang.startsWith('zh') ? 'zh' : 'en';
+    }
+    return 'zh';
+  }
+}
+
 export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalProps) {
+  const locale = useLocaleWithFallback();
   const waitlistStatus = useAtomValue(waitlistStatusAtom);
   const [, setWaitlistApplied] = useAtom(setWaitlistAppliedAtom);
   
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [notificationConfig, setNotificationConfig] = useState<any>(null);
   const [formData, setFormData] = useState<WaitlistSubmitInput>({
     email: '',
     name: '',
@@ -54,13 +75,35 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
       });
 
       // Submit to API
-      await waitlistClient.submitWaitlist(validatedData);
+      const response: WaitlistResponse = await waitlistClient.submitWaitlist(validatedData);
+      
+      // Generate notification configuration
+      const notification = WaitlistNotificationService.generateNotification(response, locale);
+      setNotificationConfig(notification);
       
       // 保存申请状态到本地存储
-      setWaitlistApplied({ email: formData.email });
+      setWaitlistApplied({ 
+        email: formData.email, 
+        position: response.queue_position || undefined,
+        submissionTime: new Date().toISOString() 
+      });
+      
+      // Close modal immediately to show notification
+      setIsOpen(false);
       setIsSuccess(true);
     } catch (error: any) {
       console.error('Waitlist submission error:', error);
+      
+      // Handle existing email error with position info
+      if (error.waitlistInfo) {
+        const notification = WaitlistNotificationService.generateExistingEmailNotification(
+          error.waitlistInfo, 
+          locale
+        );
+        setNotificationConfig(notification);
+        setIsOpen(false);
+        return;
+      }
       
       if (error.name === 'ZodError') {
         // Handle validation errors
@@ -94,10 +137,19 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
   const hasAlreadyApplied = waitlistStatus.hasApplied;
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
+    <>
+      {/* Position Notification */}
+      {notificationConfig && (
+        <WaitlistPositionNotification
+          config={notificationConfig}
+          onDismiss={() => setNotificationConfig(null)}
+        />
+      )}
+      
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogTrigger asChild>
+          {children}
+        </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle className="text-center">
@@ -217,6 +269,7 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
           </form>
         )}
       </DialogContent>
-    </Dialog>
+      </Dialog>
+    </>
   );
 }
