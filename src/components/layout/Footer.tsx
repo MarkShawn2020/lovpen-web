@@ -23,7 +23,7 @@ const Footer = () => {
     company: [
       {name: t('links.company.about'), href: '#about'},
       {name: t('links.company.careers'), href: '#careers'},
-      {name: t('links.company.press'), href: '#press'},
+      {name: t('links.company.press'), href: 'https://mp.weixin.qq.com/s/119YaD6JTgI9uZsv-Zl2UQ'},
       {name: t('links.company.blog'), href: '/blog'},
     ],
     product: [
@@ -83,12 +83,25 @@ const Footer = () => {
               <ul className="space-y-3">
                 {footerLinks.company.map(link => (
                   <li key={link.name}>
-                    <SafeLink
-                      href={link.href}
-                      className="text-gray-300 hover:text-white transition-colors no-underline"
-                    >
-                      {link.name}
-                    </SafeLink>
+                    {link.href.startsWith('http')
+? (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-300 hover:text-white transition-colors no-underline"
+                      >
+                        {link.name}
+                      </a>
+                    )
+: (
+                      <SafeLink
+                        href={link.href}
+                        className="text-gray-300 hover:text-white transition-colors no-underline"
+                      >
+                        {link.name}
+                      </SafeLink>
+                    )}
                   </li>
                 ))}
               </ul>
