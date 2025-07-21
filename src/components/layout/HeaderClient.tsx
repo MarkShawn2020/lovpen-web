@@ -7,6 +7,7 @@ import {Button} from '@/components/lovpen-ui/button';
 import {SmartNavLink} from '@/components/lovpen-ui/smart-nav-link';
 import {useAuth} from '@/contexts/AuthContext';
 import {LanguageSwitcher} from './LanguageSwitcher';
+import {AuthActionButton} from '@/components/ui/auth-action-button';
 
 type HeaderClientProps = {
   navigation: Array<{ name: string; href: string; scrollToId: string }>;
@@ -65,12 +66,15 @@ export const HeaderClient = ({navigation, urls, translations}: HeaderClientProps
             )
           : (
             // Unauthenticated user actions
-              <Link href={urls.signIn}>
-                <Button variant="primary" size="md">
-                  {translations.signIn}
-                </Button>
-              </Link>
-            )}
+            <AuthActionButton
+              source="navbar-desktop"
+              variant="default"
+              size="default"
+              signInUrl={urls.signIn}
+            >
+              {translations.signIn}
+            </AuthActionButton>
+          )}
       </div>
 
       {/* Mobile Menu */}
@@ -150,12 +154,17 @@ export const HeaderClient = ({navigation, urls, translations}: HeaderClientProps
                     )
                   : (
                     // Unauthenticated user actions
-                      <Link href={urls.signIn} onClick={() => setIsMenuOpen(false)}>
-                        <Button variant="primary" size="md" className="w-full">
-                          {translations.signIn}
-                        </Button>
-                      </Link>
-                    )}
+                    <AuthActionButton
+                      source="navbar-mobile"
+                      variant="default"
+                      size="default"
+                      className="w-full"
+                      signInUrl={urls.signIn}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {translations.signIn}
+                    </AuthActionButton>
+                  )}
               </div>
             </nav>
           </div>

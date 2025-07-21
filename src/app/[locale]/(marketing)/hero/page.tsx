@@ -2,7 +2,7 @@ import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Container} from '@/components/layout/Container';
 import {AnchorSection} from '@/components/layout/AnchorSection';
 import {Logo} from '@/components/lovpen-ui/logo';
-import {WaitlistButtonWithEffect} from '@/components/ui/waitlist-button-with-effect';
+import {AuthActionButton} from '@/components/ui/auth-action-button';
 
 type IHeroProps = {
   params: Promise<{ locale: string }>;
@@ -87,14 +87,15 @@ export default async function Hero(props: IHeroProps) {
 
           {/* CTA按钮组 */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center w-full max-w-md sm:max-w-none">
-            <WaitlistButtonWithEffect 
+            <AuthActionButton
               source="hero"
               variant="default" 
               size="lg" 
               className="relative shadow-brand-primary hover:shadow-brand-warm w-full sm:w-auto bg-brand-primary text-white hover:bg-brand-primary/90"
+              withEffect={true}
             >
               {t('hero_cta_primary')}
-            </WaitlistButtonWithEffect>
+            </AuthActionButton>
             
             {/*<Button variant="outline" size="lg" className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white shadow-brand-primary w-full sm:w-auto" asChild>*/}
             {/*  <Link href="/demo">*/}

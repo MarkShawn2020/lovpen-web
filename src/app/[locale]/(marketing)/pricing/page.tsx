@@ -1,7 +1,7 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Container} from '@/components/layout/Container';
 import {AnchorSection} from '@/components/layout/AnchorSection';
-import {WaitlistButton} from '@/components/ui/waitlist-button';
+import {AuthActionButton} from '@/components/ui/auth-action-button';
 
 type IPricingProps = {
   params: Promise<{ locale: string }>;
@@ -74,14 +74,14 @@ export default async function Pricing(props: IPricingProps) {
                 {t('free_plan_feature_4')}
               </li>
             </ul>
-            <WaitlistButton 
+            <AuthActionButton
               source="pricing-free"
               variant="outline" 
               size="lg" 
               className="w-full border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white"
             >
               {t('get_started')}
-            </WaitlistButton>
+            </AuthActionButton>
           </div>
 
           {/* Pro Plan */}
@@ -126,14 +126,14 @@ export default async function Pricing(props: IPricingProps) {
                 {t('pro_plan_feature_5')}
               </li>
             </ul>
-            <WaitlistButton 
+            <AuthActionButton
               source="pricing-pro"
               variant="default" 
               size="lg" 
               className="w-full shadow-brand-warm bg-brand-primary text-white hover:bg-brand-primary/90"
             >
               {t('upgrade_to_pro')}
-            </WaitlistButton>
+            </AuthActionButton>
           </div>
 
           {/* Max Plan */}
@@ -177,14 +177,14 @@ export default async function Pricing(props: IPricingProps) {
                 {t('max_plan_feature_6')}
               </li>
             </ul>
-            <WaitlistButton 
+            <AuthActionButton
               source="pricing-max"
               variant="outline" 
               size="lg" 
               className="w-full border-brand-secondary text-brand-secondary hover:bg-brand-secondary hover:text-white"
             >
               {t('upgrade_to_max')}
-            </WaitlistButton>
+            </AuthActionButton>
           </div>
 
           {/* Enterprise Plan */}
@@ -236,14 +236,14 @@ export default async function Pricing(props: IPricingProps) {
                 {t('enterprise_plan_feature_8')}
               </li>
             </ul>
-            <WaitlistButton 
+            <AuthActionButton
               source="pricing-enterprise"
               variant="outline" 
               size="lg" 
               className="w-full border-brand-secondary text-brand-secondary hover:bg-brand-secondary hover:text-white"
             >
               {t('contact_sales')}
-            </WaitlistButton>
+            </AuthActionButton>
           </div>
         </div>
 

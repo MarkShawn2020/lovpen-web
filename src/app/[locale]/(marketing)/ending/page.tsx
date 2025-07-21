@@ -1,7 +1,7 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Container} from '@/components/layout/Container';
 import {AnchorSection} from '@/components/layout/AnchorSection';
-import {WaitlistButtonWithEffect} from '@/components/ui/waitlist-button-with-effect';
+import {AuthActionButton} from '@/components/ui/auth-action-button';
 
 type IEndingProps = {
   params: Promise<{ locale: string }>;
@@ -40,14 +40,15 @@ export default async function Ending(props: IEndingProps) {
             {t('cta_subtitle')}
           </p>
           <div className="flex justify-center">
-            <WaitlistButtonWithEffect 
+            <AuthActionButton
               source="ending"
               variant="secondary" 
               size="lg" 
               className="text-lg px-8 py-4 bg-white text-brand-primary hover:bg-white/90 border-white"
+              withEffect={true}
             >
               {t('hero_cta_primary')}
-            </WaitlistButtonWithEffect>
+            </AuthActionButton>
           </div>
 
           {/* Trust indicators */}
