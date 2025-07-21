@@ -91,6 +91,16 @@ export default async function About(props: IAboutProps) {
           </div>
         </div>
         
+        {/* Vision Section */}
+        <div className="card-brand-secondary p-8 rounded-lg mb-16">
+          <h2 className="u-display-m text-brand-secondary mb-6 text-center">
+            {t('vision_title')}
+          </h2>
+          <p className="text-lg text-text-main text-center">
+            {t('vision_description')}
+          </p>
+        </div>
+        
         {/* Values Section */}
         <div className="mb-16">
           <h2 className="text-3xl font-semibold text-brand-gradient mb-8 text-center">
