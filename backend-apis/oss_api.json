@@ -49,21 +49,6 @@
   },
   "components": {
     "schemas": {
-      "Body_oss_upload_file_oss_upload_post": {
-        "properties": {
-          "file": {
-            "type": "string",
-            "format": "binary",
-            "title": "File",
-            "description": "待上传文件"
-          }
-        },
-        "type": "object",
-        "required": [
-          "file"
-        ],
-        "title": "Body_oss_upload_file_oss_upload_post"
-      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -109,6 +94,21 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "Body_oss_upload_file_oss_upload_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File",
+            "description": "待上传文件"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_oss_upload_file_oss_upload_post"
       }
     },
     "responses": {},

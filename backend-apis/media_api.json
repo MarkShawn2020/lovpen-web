@@ -194,17 +194,6 @@
   },
   "components": {
     "schemas": {
-      "Body_convert_audio_to_text_media_audio_to_srt_post": {
-        "properties": {
-          "audio_file": {
-            "type": "string",
-            "format": "binary",
-            "title": "Audio File"
-          }
-        },
-        "type": "object",
-        "title": "Body_convert_audio_to_text_media_audio_to_srt_post"
-      },
       "TranscriptionEngine": {
         "type": "string",
         "enum": [
@@ -215,16 +204,16 @@
         ],
         "title": "TranscriptionEngine"
       },
-      "Body_convert_srt_to_markdown_media_srt_to_markdown_post": {
+      "Body_convert_audio_to_text_media_audio_to_srt_post": {
         "properties": {
-          "srt_file": {
+          "audio_file": {
             "type": "string",
             "format": "binary",
-            "title": "Srt File"
+            "title": "Audio File"
           }
         },
         "type": "object",
-        "title": "Body_convert_srt_to_markdown_media_srt_to_markdown_post"
+        "title": "Body_convert_audio_to_text_media_audio_to_srt_post"
       },
       "Body_convert_video_to_audio_media_video_to_audio_post": {
         "properties": {
@@ -282,6 +271,17 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "Body_convert_srt_to_markdown_media_srt_to_markdown_post": {
+        "properties": {
+          "srt_file": {
+            "type": "string",
+            "format": "binary",
+            "title": "Srt File"
+          }
+        },
+        "type": "object",
+        "title": "Body_convert_srt_to_markdown_media_srt_to_markdown_post"
       }
     },
     "responses": {},

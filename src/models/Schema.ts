@@ -1,4 +1,4 @@
-import {boolean, integer, jsonb, pgTable, serial, text, timestamp, uuid, varchar} from 'drizzle-orm/pg-core';
+import {integer, pgTable, serial, timestamp} from 'drizzle-orm/pg-core';
 
 // This file defines the structure of your database tables using the Drizzle ORM.
 
@@ -21,71 +21,4 @@ export const counterSchema = pgTable('counter', {
     .$onUpdate(() => new Date())
     .notNull(),
   createdAt: timestamp('created_at', {mode: 'date'}).defaultNow().notNull(),
-});
-
-export const knowledgeItemsSchema = pgTable('knowledge_items', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  userId: varchar('user_id', {length: 255}).notNull(),
-  sourcePlatform: varchar('source_platform', {length: 100}).notNull(),
-  sourceId: varchar('source_id', {length: 255}),
-  contentType: varchar('content_type', {length: 50}).notNull(),
-  title: text('title'),
-  content: text('content'),
-  rawContent: jsonb('raw_content'),
-  metadata: jsonb('metadata').default('{}').notNull(),
-  embedding: jsonb('embedding'),
-  tags: jsonb('tags').default('[]').notNull(),
-  processingStatus: varchar('processing_status', {length: 20}).default('pending').notNull(),
-  createdAt: timestamp('created_at', {mode: 'date'}).defaultNow().notNull(),
-  updatedAt: timestamp('updated_at', {mode: 'date'})
-    .defaultNow()
-    .$onUpdate(() => new Date())
-    .notNull(),
-});
-
-export const platformIntegrationsSchema = pgTable('platform_integrations', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  userId: varchar('user_id', {length: 255}).notNull(),
-  platformType: varchar('platform_type', {length: 100}).notNull(),
-  authData: jsonb('auth_data'),
-  syncSettings: jsonb('sync_settings'),
-  lastSync: timestamp('last_sync', {mode: 'date'}),
-  isActive: boolean('is_active').default(true).notNull(),
-  createdAt: timestamp('created_at', {mode: 'date'}).defaultNow().notNull(),
-  updatedAt: timestamp('updated_at', {mode: 'date'})
-    .defaultNow()
-    .$onUpdate(() => new Date())
-    .notNull(),
-});
-
-export const processingJobsSchema = pgTable('processing_jobs', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  knowledgeItemId: uuid('knowledge_item_id').references(() => knowledgeItemsSchema.id),
-  jobType: varchar('job_type', {length: 100}).notNull(),
-  status: varchar('status', {length: 20}).default('pending').notNull(),
-  result: jsonb('result'),
-  errorMessage: text('error_message'),
-  createdAt: timestamp('created_at', {mode: 'date'}).defaultNow().notNull(),
-  updatedAt: timestamp('updated_at', {mode: 'date'})
-    .defaultNow()
-    .$onUpdate(() => new Date())
-    .notNull(),
-});
-
-export const waitlistSchema = pgTable('waitlist', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  email: varchar('email', {length: 255}).notNull(),
-  name: varchar('name', {length: 255}),
-  company: varchar('company', {length: 255}),
-  useCase: text('use_case'),
-  source: varchar('source', {length: 100}).notNull(), // 追踪来源
-  userId: varchar('user_id', {length: 255}), // Clerk用户ID（如果已登录）
-  isAuthenticated: boolean('is_authenticated').default(false).notNull(),
-  status: varchar('status', {length: 20}).default('pending').notNull(), // pending, invited, converted
-  invitedAt: timestamp('invited_at', {mode: 'date'}),
-  createdAt: timestamp('created_at', {mode: 'date'}).defaultNow().notNull(),
-  updatedAt: timestamp('updated_at', {mode: 'date'})
-    .defaultNow()
-    .$onUpdate(() => new Date())
-    .notNull(),
 });

@@ -2,7 +2,7 @@
 
 ## 概述
 
-本目录包含按标签分类的API文档，共 15 个API模块。
+本目录包含按标签分类的API文档，共 18 个API模块。
 
 ## 文件结构
 
@@ -13,6 +13,7 @@ backend-apis/
 ├── README.md          # 本文件
 ├── account_api.json     # Account API (9 个端点)
 ├── badminton_api.json   # Badminton API (1 个端点)
+├── clipboard_api.json   # Clipboard API (5 个端点)
 ├── files_api.json       # Files API (13 个端点)
 ├── knowledge_api.json   # Knowledge API (28 个端点)
 ├── llm_api.json         # LLM API (4 个端点)
@@ -21,6 +22,8 @@ backend-apis/
 ├── spider_api.json      # Spider API (1 个端点)
 ├── user_api.json        # User API (11 个端点)
 ├── vpn_api.json         # VPN API (4 个端点)
+├── waitlist_api.json    # Waitlist API (4 个端点)
+├── admin_api.json       # admin API (6 个端点)
 ├── media_api.json       # media API (3 个端点)
 ├── thoughts_api.json    # thoughts API (2 个端点)
 ├── uni-pusher_api.json  # uni-pusher API (9 个端点)
@@ -41,6 +44,12 @@ backend-apis/
 - **端点数量**: 1
 - **Schema数量**: 3
 - **文件大小**: 5015 bytes
+
+### Clipboard API
+- **文件**: `clipboard_api.json`
+- **端点数量**: 5
+- **Schema数量**: 10
+- **文件大小**: 25087 bytes
 
 ### Files API
 - **文件**: `files_api.json`
@@ -90,6 +99,18 @@ backend-apis/
 - **Schema数量**: 4
 - **文件大小**: 6989 bytes
 
+### Waitlist API
+- **文件**: `waitlist_api.json`
+- **端点数量**: 4
+- **Schema数量**: 8
+- **文件大小**: 17050 bytes
+
+### admin API
+- **文件**: `admin_api.json`
+- **端点数量**: 6
+- **Schema数量**: 2
+- **文件大小**: 8076 bytes
+
 ### media API
 - **文件**: `media_api.json`
 - **端点数量**: 3
@@ -128,13 +149,13 @@ backend-apis/
 
 ## 生成信息
 
-- **生成时间**: 2025-07-18T09:48:48.904655
-- **总API数量**: 15
-- **成功导出**: 15
+- **生成时间**: 2025-07-21T22:07:22.164675
+- **总API数量**: 18
+- **成功导出**: 18
 - **失败导出**: 0
 
 ## 统计信息
 
-- **总端点数**: 104
-- **总Schema数**: 101
-- **总文件大小**: 291343 bytes
+- **总端点数**: 119
+- **总Schema数**: 121
+- **总文件大小**: 341556 bytes

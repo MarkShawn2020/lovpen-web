@@ -14,7 +14,8 @@ const globalForDb = globalThis as unknown as {
 // Need a database for production? Check out https://www.prisma.io/?via=nextjsboilerplate
 // Tested and compatible with Next.js Boilerplate
 const createDbConnection = () => {
-  const client = new PGlite('./local.db');
+  const dbPath = path.join(process.cwd(), 'local.db');
+  const client = new PGlite(dbPath);
   return drizzle(client, { schema });
 };
 

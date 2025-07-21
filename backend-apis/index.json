@@ -2,7 +2,7 @@
   "title": "API Documentation Index",
   "description": "按标签分类的API文档索引",
   "generated_at": "",
-  "total_apis": 15,
+  "total_apis": 18,
   "apis": {
     "Account": {
       "title": "Account API",
@@ -17,6 +17,13 @@
       "file": "badminton_api.json",
       "paths_count": 1,
       "schemas_count": 3
+    },
+    "Clipboard": {
+      "title": "Clipboard API",
+      "description": "API endpoints tagged with 'Clipboard'",
+      "file": "clipboard_api.json",
+      "paths_count": 5,
+      "schemas_count": 10
     },
     "Files": {
       "title": "Files API",
@@ -73,6 +80,20 @@
       "file": "vpn_api.json",
       "paths_count": 4,
       "schemas_count": 4
+    },
+    "Waitlist": {
+      "title": "Waitlist API",
+      "description": "API endpoints tagged with 'Waitlist'",
+      "file": "waitlist_api.json",
+      "paths_count": 4,
+      "schemas_count": 8
+    },
+    "admin": {
+      "title": "admin API",
+      "description": "API endpoints tagged with 'admin'",
+      "file": "admin_api.json",
+      "paths_count": 6,
+      "schemas_count": 2
     },
     "media": {
       "title": "media API",

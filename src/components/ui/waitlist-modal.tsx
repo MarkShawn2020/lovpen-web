@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
-import { useAuth } from '@/contexts/AuthContext';
 import { setWaitlistAppliedAtom, waitlistStatusAtom } from '@/stores/waitlist';
+import { waitlistClient } from '@/services/waitlist-client';
+import { waitlistSubmitSchema } from '@/validations/waitlist';
+import type { WaitlistSubmitInput } from '@/validations/waitlist';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -24,49 +26,55 @@ type WaitlistModalProps = {
 }
 
 export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalProps) {
-  const { isAuthenticated, user } = useAuth();
   const waitlistStatus = useAtomValue(waitlistStatusAtom);
   const [, setWaitlistApplied] = useAtom(setWaitlistAppliedAtom);
   
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [formData, setFormData] = useState(() => ({
-    email: user?.email || '',
-    name: user?.full_name || '',
+  const [formData, setFormData] = useState<WaitlistSubmitInput>({
+    email: '',
+    name: '',
     company: '',
     useCase: '',
-  }));
+    source,
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrors({});
 
     try {
-      const response = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          source,
-          isAuthenticated,
-          userId: user?.id,
-        }),
+      // Validate form data
+      const validatedData = waitlistSubmitSchema.parse({
+        ...formData,
+        source,
       });
 
-      if (response.ok) {
-        // 保存申请状态到本地存储
-        setWaitlistApplied({ email: formData.email });
-        setIsSuccess(true);
-      } else {
-        throw new Error('提交失败');
-      }
-    } catch (error) {
+      // Submit to API
+      await waitlistClient.submitWaitlist(validatedData);
+      
+      // 保存申请状态到本地存储
+      setWaitlistApplied({ email: formData.email });
+      setIsSuccess(true);
+    } catch (error: any) {
       console.error('Waitlist submission error:', error);
-      // eslint-disable-next-line no-alert
-      alert('提交失败，请稍后重试');
+      
+      if (error.name === 'ZodError') {
+        // Handle validation errors
+        const fieldErrors: Record<string, string> = {};
+        error.errors.forEach((err: any) => {
+          if (err.path.length > 0) {
+            fieldErrors[err.path[0]] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+      } else {
+        // Handle API errors
+        setErrors({ general: error.message || '提交失败，请稍后重试' });
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -135,6 +143,12 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
             )
             : (
           <form onSubmit={handleSubmit} className="space-y-4">
+            {errors.general && (
+              <div className="text-red-500 text-sm bg-red-50 p-3 rounded">
+                {errors.general}
+              </div>
+            )}
+            
             <div className="space-y-2">
               <Label htmlFor="email">邮箱地址 *</Label>
               <Input
@@ -144,18 +158,20 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
                 value={formData.email}
                 onChange={e => handleInputChange('email', e.target.value)}
                 required
-                disabled={isAuthenticated} // 已登录用户不可修改邮箱
               />
+              {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="name">姓名</Label>
+              <Label htmlFor="name">姓名 *</Label>
               <Input
                 id="name"
                 placeholder="您的姓名"
                 value={formData.name}
                 onChange={e => handleInputChange('name', e.target.value)}
+                required
               />
+              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
 
             <div className="space-y-2">
@@ -163,9 +179,10 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
               <Input
                 id="company"
                 placeholder="您的公司或机构"
-                value={formData.company}
+                value={formData.company || ''}
                 onChange={e => handleInputChange('company', e.target.value)}
               />
+              {errors.company && <p className="text-red-500 text-sm">{errors.company}</p>}
             </div>
 
             <div className="space-y-2">
@@ -173,10 +190,11 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
               <Textarea
                 id="useCase"
                 placeholder="您计划如何使用 LovPen？例如：写作博客、制作公众号内容、企业营销等"
-                value={formData.useCase}
+                value={formData.useCase || ''}
                 onChange={e => handleInputChange('useCase', e.target.value)}
                 rows={3}
               />
+              {errors.useCase && <p className="text-red-500 text-sm">{errors.useCase}</p>}
             </div>
 
             <div className="flex space-x-2 pt-4">
@@ -190,7 +208,7 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
               </Button>
               <Button
                 type="submit"
-                disabled={isSubmitting || !formData.email}
+                disabled={isSubmitting || !formData.email || !formData.name}
                 className="flex-1"
               >
                 {isSubmitting ? '提交中...' : '申请试用'}

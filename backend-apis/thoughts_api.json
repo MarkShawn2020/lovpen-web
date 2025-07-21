@@ -116,21 +116,6 @@
   },
   "components": {
     "schemas": {
-      "Body_get_record_metadata_thoughts_new_post": {
-        "properties": {
-          "upload_file": {
-            "type": "string",
-            "format": "binary",
-            "title": "Upload File",
-            "description": "iOS Shortcuts录音文件"
-          }
-        },
-        "type": "object",
-        "required": [
-          "upload_file"
-        ],
-        "title": "Body_get_record_metadata_thoughts_new_post"
-      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -176,6 +161,21 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "Body_get_record_metadata_thoughts_new_post": {
+        "properties": {
+          "upload_file": {
+            "type": "string",
+            "format": "binary",
+            "title": "Upload File",
+            "description": "iOS Shortcuts录音文件"
+          }
+        },
+        "type": "object",
+        "required": [
+          "upload_file"
+        ],
+        "title": "Body_get_record_metadata_thoughts_new_post"
       }
     },
     "responses": {},

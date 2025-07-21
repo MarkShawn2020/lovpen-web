@@ -1,5 +1,5 @@
 {
-  "total_tags": 15,
+  "total_tags": 18,
   "exported_apis": {
     "Account": {
       "tag": "Account",
@@ -16,6 +16,14 @@
       "paths_count": 1,
       "schemas_count": 3,
       "file_size": 5015
+    },
+    "Clipboard": {
+      "tag": "Clipboard",
+      "filename": "clipboard_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/clipboard_api.json",
+      "paths_count": 5,
+      "schemas_count": 10,
+      "file_size": 25087
     },
     "Files": {
       "tag": "Files",
@@ -81,6 +89,22 @@
       "schemas_count": 4,
       "file_size": 6989
     },
+    "Waitlist": {
+      "tag": "Waitlist",
+      "filename": "waitlist_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/waitlist_api.json",
+      "paths_count": 4,
+      "schemas_count": 8,
+      "file_size": 17050
+    },
+    "admin": {
+      "tag": "admin",
+      "filename": "admin_api.json",
+      "file_path": "/Users/mark/projects/lovpen-web/backend-apis/admin_api.json",
+      "paths_count": 6,
+      "schemas_count": 2,
+      "file_size": 8076
+    },
     "media": {
       "tag": "media",
       "filename": "media_api.json",
@@ -125,12 +149,12 @@
   "failed_exports": {},
   "output_directory": "/Users/mark/projects/lovpen-web/backend-apis",
   "format": "json",
-  "generated_at": "2025-07-18T09:48:48.904655",
+  "generated_at": "2025-07-21T22:07:22.164675",
   "summary": {
-    "total_exported": 15,
+    "total_exported": 18,
     "total_failed": 0,
-    "total_paths": 104,
-    "total_schemas": 101,
-    "total_file_size": 291343
+    "total_paths": 119,
+    "total_schemas": 121,
+    "total_file_size": 341556
   }
 }

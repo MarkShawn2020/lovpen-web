@@ -231,81 +231,6 @@
   },
   "components": {
     "schemas": {
-      "Body_call_agent__llm_agent_post": {
-        "properties": {
-          "input": {
-            "type": "string",
-            "title": "Input"
-          },
-          "agent_type": {
-            "type": "string",
-            "enum": [
-              "default",
-              "summarize-content",
-              "summarize-poem",
-              "totem-gen"
-            ],
-            "title": "Agent Type",
-            "default": "default"
-          },
-          "llm_model_type": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "gpt-3.5-turbo",
-                  "gpt-3.5-turbo-16k",
-                  "gpt-3.5-turbo-0301",
-                  "gpt-3.5-turbo-0613",
-                  "gpt-3.5-turbo-1106",
-                  "gpt-3.5-turbo-0125",
-                  "gpt-3.5-turbo-16k-0613",
-                  "gpt-4-0125-preview",
-                  "gpt-4-turbo-preview",
-                  "gpt-4-1106-preview",
-                  "gpt-4-vision-preview",
-                  "gpt-4",
-                  "gpt-4-0314",
-                  "gpt-4-0613",
-                  "gpt-4-32k",
-                  "gpt-4-32k-0314",
-                  "gpt-4-32k-0613",
-                  "moonshot-v1_plain-8k",
-                  "moonshot-v1_plain-32k",
-                  "moonshot-v1_plain-128k",
-                  "glm-3-turbo",
-                  "glm-4",
-                  "abab6-chat",
-                  "abab5.5-chat",
-                  "abab5.5s-chat",
-                  "qwen-turbo",
-                  "qwen-plus",
-                  "qwen-max",
-                  "Baichuan2-Turbo",
-                  "Baichuan2-Turbo-192k",
-                  "Doubao-lite-4k",
-                  "Doubao-lite-32k",
-                  "Doubao-lite-128k",
-                  "Doubao-pro-4k",
-                  "Doubao-pro-32k",
-                  "Doubao-pro-128k",
-                  "claude-3-5-sonnet-20240620"
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Llm Model Type",
-            "description": "覆盖配置中的model"
-          }
-        },
-        "type": "object",
-        "required": [
-          "input"
-        ],
-        "title": "Body_call_agent__llm_agent_post"
-      },
       "ILLMBody": {
         "properties": {
           "messages": {
@@ -421,6 +346,81 @@
           "role"
         ],
         "title": "IMessage"
+      },
+      "Body_call_agent__llm_agent_post": {
+        "properties": {
+          "input": {
+            "type": "string",
+            "title": "Input"
+          },
+          "agent_type": {
+            "type": "string",
+            "enum": [
+              "default",
+              "summarize-content",
+              "summarize-poem",
+              "totem-gen"
+            ],
+            "title": "Agent Type",
+            "default": "default"
+          },
+          "llm_model_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "gpt-3.5-turbo",
+                  "gpt-3.5-turbo-16k",
+                  "gpt-3.5-turbo-0301",
+                  "gpt-3.5-turbo-0613",
+                  "gpt-3.5-turbo-1106",
+                  "gpt-3.5-turbo-0125",
+                  "gpt-3.5-turbo-16k-0613",
+                  "gpt-4-0125-preview",
+                  "gpt-4-turbo-preview",
+                  "gpt-4-1106-preview",
+                  "gpt-4-vision-preview",
+                  "gpt-4",
+                  "gpt-4-0314",
+                  "gpt-4-0613",
+                  "gpt-4-32k",
+                  "gpt-4-32k-0314",
+                  "gpt-4-32k-0613",
+                  "moonshot-v1_plain-8k",
+                  "moonshot-v1_plain-32k",
+                  "moonshot-v1_plain-128k",
+                  "glm-3-turbo",
+                  "glm-4",
+                  "abab6-chat",
+                  "abab5.5-chat",
+                  "abab5.5s-chat",
+                  "qwen-turbo",
+                  "qwen-plus",
+                  "qwen-max",
+                  "Baichuan2-Turbo",
+                  "Baichuan2-Turbo-192k",
+                  "Doubao-lite-4k",
+                  "Doubao-lite-32k",
+                  "Doubao-lite-128k",
+                  "Doubao-pro-4k",
+                  "Doubao-pro-32k",
+                  "Doubao-pro-128k",
+                  "claude-3-5-sonnet-20240620"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Llm Model Type",
+            "description": "覆盖配置中的model"
+          }
+        },
+        "type": "object",
+        "required": [
+          "input"
+        ],
+        "title": "Body_call_agent__llm_agent_post"
       },
       "HTTPValidationError": {
         "properties": {

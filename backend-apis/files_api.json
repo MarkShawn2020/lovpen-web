@@ -802,6 +802,230 @@
   },
   "components": {
     "schemas": {
+      "StorageUpgradeRequest": {
+        "properties": {
+          "vip_quota_bytes": {
+            "type": "integer",
+            "title": "Vip Quota Bytes"
+          },
+          "duration_months": {
+            "type": "integer",
+            "title": "Duration Months",
+            "default": 12
+          }
+        },
+        "type": "object",
+        "required": [
+          "vip_quota_bytes"
+        ],
+        "title": "StorageUpgradeRequest",
+        "description": "存储升级请求"
+      },
+      "Body_upload_file_files_upload_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          },
+          "parent_id": {
+            "type": "string",
+            "title": "Parent Id",
+            "default": ""
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "is_public": {
+            "type": "boolean",
+            "title": "Is Public",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_file_files_upload_post"
+      },
+      "FileUploadResponse": {
+        "properties": {
+          "file_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Id"
+          },
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "file_size": {
+            "type": "integer",
+            "title": "File Size"
+          },
+          "file_type": {
+            "type": "string",
+            "title": "File Type"
+          },
+          "file_url": {
+            "type": "string",
+            "title": "File Url"
+          },
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "filename",
+          "file_size",
+          "file_type",
+          "file_url",
+          "success",
+          "message"
+        ],
+        "title": "FileUploadResponse",
+        "description": "文件上传响应"
+      },
+      "UserFileUpdate": {
+        "properties": {
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "is_public": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Public"
+          },
+          "parent_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Id"
+          }
+        },
+        "type": "object",
+        "title": "UserFileUpdate",
+        "description": "更新文件请求"
+      },
+      "FileOperationResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "file_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message"
+        ],
+        "title": "FileOperationResponse",
+        "description": "文件操作响应"
+      },
+      "StorageUpgradeResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "new_quota_bytes": {
+            "type": "integer",
+            "title": "New Quota Bytes"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message",
+          "new_quota_bytes"
+        ],
+        "title": "StorageUpgradeResponse",
+        "description": "存储升级响应"
+      },
       "UserFileListResponse": {
         "properties": {
           "files": {
@@ -984,67 +1208,11 @@
         "title": "DirectoryCreateResponse",
         "description": "目录创建响应"
       },
-      "UserFileUpdate": {
+      "Body_create_directory_files_directories_post": {
         "properties": {
-          "filename": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Filename"
-          },
-          "description": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Description"
-          },
-          "is_public": {
-            "anyOf": [
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Is Public"
-          },
-          "parent_id": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uuid"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Parent Id"
-          }
-        },
-        "type": "object",
-        "title": "UserFileUpdate",
-        "description": "更新文件请求"
-      },
-      "Body_batch_upload_files_files_batch_upload_post": {
-        "properties": {
-          "files": {
-            "items": {
-              "type": "string",
-              "format": "binary"
-            },
-            "type": "array",
-            "title": "Files"
+          "directory_name": {
+            "type": "string",
+            "title": "Directory Name"
           },
           "parent_id": {
             "type": "string",
@@ -1054,60 +1222,9 @@
         },
         "type": "object",
         "required": [
-          "files"
+          "directory_name"
         ],
-        "title": "Body_batch_upload_files_files_batch_upload_post"
-      },
-      "FileUploadResponse": {
-        "properties": {
-          "file_id": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uuid"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "File Id"
-          },
-          "filename": {
-            "type": "string",
-            "title": "Filename"
-          },
-          "file_size": {
-            "type": "integer",
-            "title": "File Size"
-          },
-          "file_type": {
-            "type": "string",
-            "title": "File Type"
-          },
-          "file_url": {
-            "type": "string",
-            "title": "File Url"
-          },
-          "success": {
-            "type": "boolean",
-            "title": "Success"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
-          }
-        },
-        "type": "object",
-        "required": [
-          "filename",
-          "file_size",
-          "file_type",
-          "file_url",
-          "success",
-          "message"
-        ],
-        "title": "FileUploadResponse",
-        "description": "文件上传响应"
+        "title": "Body_create_directory_files_directories_post"
       },
       "HTTPValidationError": {
         "properties": {
@@ -1155,71 +1272,27 @@
         ],
         "title": "ValidationError"
       },
-      "FileOperationResponse": {
+      "Body_batch_upload_files_files_batch_upload_post": {
         "properties": {
-          "success": {
-            "type": "boolean",
-            "title": "Success"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
-          },
-          "file_id": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uuid"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "File Id"
-          }
-        },
-        "type": "object",
-        "required": [
-          "success",
-          "message"
-        ],
-        "title": "FileOperationResponse",
-        "description": "文件操作响应"
-      },
-      "Body_upload_file_files_upload_post": {
-        "properties": {
-          "file": {
-            "type": "string",
-            "format": "binary",
-            "title": "File"
+          "files": {
+            "items": {
+              "type": "string",
+              "format": "binary"
+            },
+            "type": "array",
+            "title": "Files"
           },
           "parent_id": {
             "type": "string",
             "title": "Parent Id",
             "default": ""
-          },
-          "description": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Description"
-          },
-          "is_public": {
-            "type": "boolean",
-            "title": "Is Public",
-            "default": false
           }
         },
         "type": "object",
         "required": [
-          "file"
+          "files"
         ],
-        "title": "Body_upload_file_files_upload_post"
+        "title": "Body_batch_upload_files_files_batch_upload_post"
       },
       "UserStorageQuotaResponse": {
         "properties": {
@@ -1277,79 +1350,6 @@
         ],
         "title": "UserStorageQuotaResponse",
         "description": "存储配额响应"
-      },
-      "StorageUpgradeResponse": {
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "title": "Success"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
-          },
-          "new_quota_bytes": {
-            "type": "integer",
-            "title": "New Quota Bytes"
-          },
-          "expires_at": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Expires At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "success",
-          "message",
-          "new_quota_bytes"
-        ],
-        "title": "StorageUpgradeResponse",
-        "description": "存储升级响应"
-      },
-      "Body_create_directory_files_directories_post": {
-        "properties": {
-          "directory_name": {
-            "type": "string",
-            "title": "Directory Name"
-          },
-          "parent_id": {
-            "type": "string",
-            "title": "Parent Id",
-            "default": ""
-          }
-        },
-        "type": "object",
-        "required": [
-          "directory_name"
-        ],
-        "title": "Body_create_directory_files_directories_post"
-      },
-      "StorageUpgradeRequest": {
-        "properties": {
-          "vip_quota_bytes": {
-            "type": "integer",
-            "title": "Vip Quota Bytes"
-          },
-          "duration_months": {
-            "type": "integer",
-            "title": "Duration Months",
-            "default": 12
-          }
-        },
-        "type": "object",
-        "required": [
-          "vip_quota_bytes"
-        ],
-        "title": "StorageUpgradeRequest",
-        "description": "存储升级请求"
       }
     },
     "responses": {},

@@ -36,6 +36,13 @@
       "when": 1752906084263,
       "tag": "0004_low_guardsmen",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1737550000000,
+      "tag": "0005_waitlist_update",
+      "breakpoints": true
     }
   ]
 }

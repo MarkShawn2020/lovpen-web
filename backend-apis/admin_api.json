@@ -1,27 +1,28 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Uni Api - VPN API",
+    "title": "Uni Api - admin API",
     "description": "聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能 （opensource: https://github.com/cs-magic/uni-api）",
     "version": "0.5.0"
   },
   "servers": [],
   "paths": {
-    "/vpn/config": {
+    "/admin/me": {
       "get": {
         "tags": [
-          "VPN"
+          "admin"
         ],
-        "summary": "Get Vpn Config",
-        "operationId": "get_vpn_config_vpn_config_get",
+        "summary": "Get Admin Info",
+        "description": "Get current admin user information",
+        "operationId": "get_admin_info_admin_me_get",
         "parameters": [
           {
-            "name": "provider",
-            "in": "query",
+            "name": "authorization",
+            "in": "header",
             "required": false,
             "schema": {
-              "$ref": "#/components/schemas/Provider",
-              "default": "foosber"
+              "type": "string",
+              "title": "Authorization"
             }
           }
         ],
@@ -47,70 +48,63 @@
         }
       }
     },
-    "/vpn/upload-cache.db": {
+    "/admin/config": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get Admin Config",
+        "description": "Get admin configuration",
+        "operationId": "get_admin_config_admin_config_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/verify": {
       "post": {
         "tags": [
-          "VPN"
+          "admin"
         ],
-        "summary": "Upload Cache Db",
-        "description": "需要和 config.yaml 配套",
-        "operationId": "upload_cache_db_vpn_upload_cache_db_post",
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "$ref": "#/components/schemas/Body_upload_cache_db_vpn_upload_cache_db_post"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/vpn/clash.zip": {
-      "get": {
-        "tags": [
-          "VPN"
-        ],
-        "summary": "Install Vpn",
-        "operationId": "install_vpn_vpn_clash_zip_get",
+        "summary": "Verify Admin Access",
+        "description": "Verify admin access for frontend applications",
+        "operationId": "verify_admin_access_admin_verify_post",
         "parameters": [
           {
-            "name": "clash_version",
-            "in": "query",
+            "name": "authorization",
+            "in": "header",
             "required": false,
             "schema": {
-              "default": "2.0.24",
-              "title": "Clash Version"
-            }
-          },
-          {
-            "name": "clash_platform",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "default": "linux_amd64",
-              "title": "Clash Platform"
+              "type": "string",
+              "title": "Authorization"
             }
           }
         ],
@@ -136,30 +130,99 @@
         }
       }
     },
-    "/vpn/install-clash.sh": {
+    "/admin/stats": {
       "get": {
         "tags": [
-          "VPN"
+          "admin"
         ],
-        "summary": "Get Install Clash",
-        "operationId": "get_install_clash_vpn_install_clash_sh_get",
+        "summary": "Get Admin Stats",
+        "description": "Get system statistics for admin dashboard",
+        "operationId": "get_admin_stats_admin_stats_get",
         "parameters": [
           {
-            "name": "clash_version",
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/health": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Admin Health Check",
+        "description": "Health check endpoint for admin services",
+        "operationId": "admin_health_check_admin_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/test-auth": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Test Admin Auth",
+        "description": "Test admin authentication with current token",
+        "operationId": "test_admin_auth_admin_test_auth_post",
+        "parameters": [
+          {
+            "name": "test_token",
             "in": "query",
             "required": false,
             "schema": {
-              "default": "2.0.24",
-              "title": "Clash Version"
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Test Token"
             }
           },
           {
-            "name": "clash_platform",
-            "in": "query",
+            "name": "authorization",
+            "in": "header",
             "required": false,
             "schema": {
-              "default": "linux_amd64",
-              "title": "Clash Platform"
+              "type": "string",
+              "title": "Authorization"
             }
           }
         ],
@@ -188,14 +251,6 @@
   },
   "components": {
     "schemas": {
-      "Provider": {
-        "type": "string",
-        "enum": [
-          "foosber",
-          "biznet"
-        ],
-        "title": "Provider"
-      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -241,20 +296,6 @@
           "type"
         ],
         "title": "ValidationError"
-      },
-      "Body_upload_cache_db_vpn_upload_cache_db_post": {
-        "properties": {
-          "file": {
-            "type": "string",
-            "format": "binary",
-            "title": "File"
-          }
-        },
-        "type": "object",
-        "required": [
-          "file"
-        ],
-        "title": "Body_upload_cache_db_vpn_upload_cache_db_post"
       }
     },
     "responses": {},

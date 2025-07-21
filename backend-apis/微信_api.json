@@ -404,24 +404,6 @@
   },
   "components": {
     "schemas": {
-      "ApiTokenResponse": {
-        "properties": {
-          "api_token": {
-            "type": "string",
-            "title": "Api Token"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
-          }
-        },
-        "type": "object",
-        "required": [
-          "api_token",
-          "message"
-        ],
-        "title": "ApiTokenResponse"
-      },
       "WechatCredentials": {
         "properties": {
           "cookies": {
@@ -459,6 +441,24 @@
           "token"
         ],
         "title": "WechatCredentials"
+      },
+      "ApiTokenResponse": {
+        "properties": {
+          "api_token": {
+            "type": "string",
+            "title": "Api Token"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "api_token",
+          "message"
+        ],
+        "title": "ApiTokenResponse"
       },
       "HTTPValidationError": {
         "properties": {
