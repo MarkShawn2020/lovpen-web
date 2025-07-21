@@ -27,6 +27,12 @@ export const metadata: Metadata = {
     {
       rel: 'apple-touch-icon',
       url: '/apple-touch-icon.png',
+      sizes: '180x180',
+    },
+    {
+      rel: 'icon',
+      type: 'image/svg+xml',
+      url: '/lovpen-logo-2/LovPen-pure-logo_primaryColor.svg',
     },
     {
       rel: 'icon',
@@ -42,6 +48,10 @@ export const metadata: Metadata = {
     },
     {
       rel: 'icon',
+      url: '/favicon.ico',
+    },
+    {
+      rel: 'shortcut icon',
       url: '/favicon.ico',
     },
   ],

@@ -5,7 +5,7 @@ import {Button} from '@/components/lovpen-ui/button';
 import type {FileItem} from '@/services/file-client-v2';
 import {fastAPIAuthService} from '@/services/fastapi-auth-v2';
 import type {AuthState} from '@/services/fastapi-auth-v2';
-import {UploadModal} from './UploadModal';
+import {CategorizedUploadModal} from './CategorizedUploadModal';
 import {useFolderTemplates} from '@/hooks/useFolderTemplates';
 import type {FolderNode} from '@/hooks/useFolderTemplates';
 import {useDeleteFile, useFiles, useSearchFiles} from '@/hooks/useFileQueries';
@@ -841,8 +841,8 @@ export function KnowledgeBase({onFileSelect, onFolderExpand}: KnowledgeBaseProps
         </div>
       </div>
 
-      {/* Upload Modal */}
-      <UploadModal 
+      {/* Categorized Upload Modal */}
+      <CategorizedUploadModal 
         isOpen={isUploadModalOpen}
         onClose={() => {
           setIsUploadModalOpen(false);
