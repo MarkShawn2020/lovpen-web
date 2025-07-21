@@ -90,7 +90,7 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle className="text-center">
             {hasAlreadyApplied 
