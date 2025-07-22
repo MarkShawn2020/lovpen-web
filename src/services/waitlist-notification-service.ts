@@ -21,6 +21,8 @@ export class WaitlistNotificationService {
     }
 
     const tier = position_tier || this.calculateTier(queue_position);
+    const shouldCelebrate = tier === 'priority' && queue_position <= 50;
+    
     const message = this.getLocalizedMessage(tier, normalizedLocale, {
       position: queue_position,
       weeks: estimated_wait_weeks || this.estimateWeeks(queue_position),
@@ -32,7 +34,7 @@ export class WaitlistNotificationService {
       title: this.getLocalizedTitle(tier, normalizedLocale),
       message,
       duration: tier === 'priority' ? 12000 : 8000, // Longer for VIP
-      celebratory: tier === 'priority' && queue_position <= 50,
+      celebratory: shouldCelebrate,
       actions: this.getContextualActions(tier, normalizedLocale)
     };
   }

@@ -71,6 +71,7 @@ const LandingNavbar = async () => {
               dashboard: t('dashboard'),
               signOut: t('sign_out'),
             }}
+            currentLocale={locale}
           />
         </div>
       </Container>

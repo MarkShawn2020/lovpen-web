@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
 import { cn } from '@/lib/utils';
 
 type Language = {
@@ -16,11 +15,14 @@ const languages: Language[] = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
 ];
 
-export const LanguageSwitcher = () => {
+type LanguageSwitcherProps = {
+  currentLocale: string;
+};
+
+export const LanguageSwitcher = ({ currentLocale }: LanguageSwitcherProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const currentLocale = useLocale();
   
   const currentLanguage = languages.find(lang => lang.code === currentLocale) || languages[0]!;
 

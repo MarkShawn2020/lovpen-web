@@ -10,6 +10,7 @@ type WaitlistButtonWithEffectProps = {
   className?: string;
   variant?: 'default' | 'secondary' | 'outline' | 'destructive' | 'ghost' | 'link';
   size?: 'default' | 'sm' | 'lg' | 'icon';
+  pendingText?: string;
 };
 
 export function WaitlistButtonWithEffect({ 
@@ -17,7 +18,8 @@ export function WaitlistButtonWithEffect({
   children, 
   className,
   variant = 'default',
-  size = 'lg'
+  size = 'lg',
+  pendingText
 }: WaitlistButtonWithEffectProps) {
   const waitlistStatus = useAtomValue(waitlistStatusAtom);
   
@@ -29,6 +31,7 @@ export function WaitlistButtonWithEffect({
         variant={variant}
         size={"lg"}
         className={className}
+        pendingText={pendingText}
       >
         {children}
       </WaitlistButton>
@@ -44,6 +47,7 @@ export function WaitlistButtonWithEffect({
         variant={variant}
         size={size}
         className={`relative z-10 ${className}`}
+        pendingText={pendingText}
       >
         {children}
       </WaitlistButton>

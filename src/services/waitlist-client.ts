@@ -5,68 +5,38 @@ import type {
   WaitlistSubmit,
   WaitlistUpdate,
 } from '@/types/waitlist';
-import { fastAPIAuthService } from './fastapi-auth-v2';
+import { supabase } from '@/lib/supabase';
+import {
+  deleteWaitlistEntryAction,
+  getWaitlistEntriesAction,
+  getWaitlistStatsAction,
+  submitWaitlistAction,
+  updateWaitlistEntryAction
+} from '@/app/actions/waitlist';
 
 export class WaitlistClient {
-  private baseUrl: string;
-
   constructor() {
-    this.baseUrl = process.env.NEXT_PUBLIC_FASTAPI_BASE_URL || 'http://localhost:8000';
+    // Using Server Actions instead of direct API calls
   }
 
-  private async publicRequest<T>(
-    endpoint: string,
-    options: RequestInit = {}
-  ): Promise<T> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      ...options,
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(
-        errorData.detail 
-        || `API Error: ${response.status} ${response.statusText}`
-      );
-    }
-
-    if (response.status === 204) {
-      return {} as T;
-    }
-
-    return response.json();
-  }
+  // Removed publicRequest method as we're using Server Actions
 
   async submitWaitlist(data: WaitlistSubmit): Promise<WaitlistResponse> {
-    try {
-      // Public endpoint - no authentication required
-      return await this.publicRequest<WaitlistResponse>('/waitlist/submit', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      });
-    } catch (error: any) {
-      // Handle 409 conflict (existing email) specially
-      if (error.message && typeof error.message === 'string') {
-        try {
-          const errorData = JSON.parse(error.message);
-          if (errorData.detail?.waitlist_info) {
-            // Return the waitlist info for existing email notification
-            const waitlistInfo = errorData.detail.waitlist_info;
-            const errorWithInfo = new Error(errorData.detail.message) as any;
-            errorWithInfo.waitlistInfo = waitlistInfo;
-            throw errorWithInfo;
-          }
-        } catch (parseError) {
-          // If parsing fails, fall through to regular error handling
-        }
+    // Use Server Action for waitlist submission
+    const result = await submitWaitlistAction(data);
+    
+    if (!result.success) {
+      // Handle existing email specially
+      if (result.waitlistInfo) {
+        const errorWithInfo = new Error(result.error!) as any;
+        errorWithInfo.waitlistInfo = result.waitlistInfo;
+        throw errorWithInfo;
       }
       
-      throw error;
+      throw new Error(result.error || 'Submission failed');
     }
+
+    return result.data!;
   }
 
   async getWaitlistEntries(params: {
@@ -75,54 +45,67 @@ export class WaitlistClient {
     status_filter?: 'pending' | 'approved' | 'rejected';
     search?: string;
   } = {}): Promise<WaitlistListResponse> {
-    const searchParams = new URLSearchParams();
+    // Use Server Action for list operations
+    const result = await getWaitlistEntriesAction(params);
     
-    if (params.page) {
- searchParams.set('page', params.page.toString()); 
-}
-    if (params.size) {
- searchParams.set('size', params.size.toString()); 
-}
-    if (params.status_filter) {
- searchParams.set('status_filter', params.status_filter); 
-}
-    if (params.search) {
- searchParams.set('search', params.search); 
-}
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to get entries');
+    }
 
-    const query = searchParams.toString();
-    // Admin endpoint - requires authentication
-    return fastAPIAuthService.authenticatedRequest<WaitlistListResponse>(
-      `/waitlist/list${query ? `?${query}` : ''}`
-    );
+    return result.data!;
   }
 
   async getWaitlistStats(): Promise<WaitlistStats> {
-    // Admin endpoint - requires authentication
-    return fastAPIAuthService.authenticatedRequest<WaitlistStats>('/waitlist/stats');
+    // Use Server Action for stats
+    const result = await getWaitlistStatsAction();
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to get stats');
+    }
+
+    return result.data!;
   }
 
   async getWaitlistEntry(id: number): Promise<WaitlistResponse> {
-    // Admin endpoint - requires authentication
-    return fastAPIAuthService.authenticatedRequest<WaitlistResponse>(`/waitlist/${id}`);
+    // Use Supabase direct query
+    const { data, error } = await supabase
+      .from('waitlist')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    // Transform database row to WaitlistResponse
+    return {
+      ...data,
+      status: data.status as 'pending' | 'approved' | 'rejected'
+    } as WaitlistResponse;
   }
 
   async updateWaitlistEntry(
     id: number,
     data: WaitlistUpdate
   ): Promise<WaitlistResponse> {
-    // Admin endpoint - requires authentication
-    return fastAPIAuthService.authenticatedRequest<WaitlistResponse>(`/waitlist/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify(data),
-    });
+    // Use Server Action for update
+    const result = await updateWaitlistEntryAction(id, data);
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to update entry');
+    }
+
+    return result.data!;
   }
 
   async deleteWaitlistEntry(id: number): Promise<void> {
-    // Admin endpoint - requires authentication
-    return fastAPIAuthService.authenticatedRequest<void>(`/waitlist/${id}`, {
-      method: 'DELETE',
-    });
+    // Use Server Action for delete
+    const result = await deleteWaitlistEntryAction(id);
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to delete entry');
+    }
   }
 
   async approveWaitlistEntry(id: number, notes?: string): Promise<WaitlistResponse> {
@@ -148,7 +131,7 @@ export class WaitlistClient {
 export const waitlistClient = new WaitlistClient();
 
 // React hooks for easier usage
-export function useWaitlistMutations() {
+export function waitlistMutations() {
   return {
     submitWaitlist: (data: WaitlistSubmit) => waitlistClient.submitWaitlist(data),
     approveEntry: (id: number, notes?: string) => waitlistClient.approveWaitlistEntry(id, notes),

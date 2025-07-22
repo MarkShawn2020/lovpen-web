@@ -7,6 +7,7 @@ import {PostHogProvider} from '@/components/analytics/PostHogProvider';
 import {ReactQueryProvider} from '@/components/providers/ReactQueryProvider';
 import {JotaiProvider} from '@/providers/JotaiProvider';
 import {AuthProvider} from '@/contexts/AuthContext';
+import {EnvironmentBanner} from '@/components/EnvironmentBanner';
 import {routing} from '@/lib/I18nRouting';
 import '@/styles/global.css';
 
@@ -83,6 +84,7 @@ export default async function RootLayout(props: {
               <ReactQueryProvider>
                 <PostHogProvider>
                   {props.children}
+                  <EnvironmentBanner />
                 </PostHogProvider>
               </ReactQueryProvider>
             </NextIntlClientProvider>

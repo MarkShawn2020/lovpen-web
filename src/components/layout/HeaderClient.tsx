@@ -23,9 +23,10 @@ type HeaderClientProps = {
     dashboard: string;
     signOut: string;
   };
+  currentLocale: string;
 };
 
-export const HeaderClient = ({navigation, urls, translations}: HeaderClientProps) => {
+export const HeaderClient = ({navigation, urls, translations, currentLocale}: HeaderClientProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {isAuthenticated, logout, loading} = useAuth();
   const router = useRouter();
@@ -44,7 +45,7 @@ export const HeaderClient = ({navigation, urls, translations}: HeaderClientProps
     <>
       {/* Desktop Actions */}
       <div className="hidden lg:flex items-center space-x-3">
-        <LanguageSwitcher />
+        <LanguageSwitcher currentLocale={currentLocale} />
         {isAuthenticated
           ? (
             // Authenticated user actions
@@ -130,7 +131,7 @@ export const HeaderClient = ({navigation, urls, translations}: HeaderClientProps
               <div className="flex flex-col space-y-3 pt-4 border-t border-border-default/20">
                 {/* Language Switcher for Mobile */}
                 <div className="flex justify-center">
-                  <LanguageSwitcher />
+                  <LanguageSwitcher currentLocale={currentLocale} />
                 </div>
                 {isAuthenticated
                   ? (

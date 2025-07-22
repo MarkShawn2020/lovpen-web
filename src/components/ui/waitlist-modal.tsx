@@ -3,13 +3,12 @@
 import { useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import { useLocale } from 'next-intl';
-import { setWaitlistAppliedAtom, waitlistStatusAtom } from '@/stores/waitlist';
+import { setWaitlistAppliedAtom, setWaitlistNotificationAtom, waitlistStatusAtom } from '@/stores/waitlist';
 import { waitlistClient } from '@/services/waitlist-client';
 import { waitlistSubmitSchema } from '@/validations/waitlist';
 import type { WaitlistSubmitInput } from '@/validations/waitlist';
 import type { WaitlistResponse } from '@/types/waitlist';
 import { WaitlistNotificationService } from '@/services/waitlist-notification-service';
-import { WaitlistPositionNotification } from '@/components/ui/waitlist-position-notification';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -48,11 +47,11 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
   const locale = useLocaleWithFallback();
   const waitlistStatus = useAtomValue(waitlistStatusAtom);
   const [, setWaitlistApplied] = useAtom(setWaitlistAppliedAtom);
+  const [, setGlobalNotification] = useAtom(setWaitlistNotificationAtom);
   
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [notificationConfig, setNotificationConfig] = useState<any>(null);
   const [formData, setFormData] = useState<WaitlistSubmitInput>({
     email: '',
     name: '',
@@ -77,10 +76,6 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
       // Submit to API
       const response: WaitlistResponse = await waitlistClient.submitWaitlist(validatedData);
       
-      // Generate notification configuration
-      const notification = WaitlistNotificationService.generateNotification(response, locale);
-      setNotificationConfig(notification);
-      
       // 保存申请状态到本地存储
       setWaitlistApplied({ 
         email: formData.email, 
@@ -88,7 +83,11 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
         submissionTime: new Date().toISOString() 
       });
       
-      // Close modal immediately to show notification
+      // Generate and set global notification
+      const notification = WaitlistNotificationService.generateNotification(response, locale);
+      setGlobalNotification(notification);
+      
+      // Close modal
       setIsOpen(false);
       setIsSuccess(true);
     } catch (error: any) {
@@ -100,7 +99,7 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
           error.waitlistInfo, 
           locale
         );
-        setNotificationConfig(notification);
+        setGlobalNotification(notification);
         setIsOpen(false);
         return;
       }
@@ -138,14 +137,6 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
 
   return (
     <>
-      {/* Position Notification */}
-      {notificationConfig && (
-        <WaitlistPositionNotification
-          config={notificationConfig}
-          onDismiss={() => setNotificationConfig(null)}
-        />
-      )}
-      
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           {children}

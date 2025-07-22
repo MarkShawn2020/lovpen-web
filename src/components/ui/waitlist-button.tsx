@@ -1,7 +1,6 @@
 'use client';
 
 import { useAtomValue } from 'jotai';
-import { useTranslations } from 'next-intl';
 import { waitlistStatusAtom } from '@/stores/waitlist';
 import { Button } from '@/components/ui/button';
 import { WaitlistModal } from './waitlist-modal';
@@ -12,6 +11,7 @@ type WaitlistButtonProps = {
   className?: string;
   variant?: 'default' | 'secondary' | 'outline' | 'destructive' | 'ghost' | 'link';
   size?: 'default' | 'sm' | 'lg' | 'icon';
+  pendingText?: string; // 添加可选的 pending 文本
 };
 
 export function WaitlistButton({ 
@@ -19,9 +19,9 @@ export function WaitlistButton({
   children, 
   className,
   variant = 'default',
-  size = 'lg'
+  size = 'lg',
+  pendingText = '申请已提交'
 }: WaitlistButtonProps) {
-  const t = useTranslations('Index');
   const waitlistStatus = useAtomValue(waitlistStatusAtom);
   
   if (waitlistStatus.hasApplied) {
@@ -32,7 +32,7 @@ export function WaitlistButton({
         className={`${className} border-gray-300 text-gray-500 cursor-default bg-gray-50`}
         disabled
       >
-        {t('waitlist_button_pending')}
+        {pendingText}
       </Button>
     );
   }

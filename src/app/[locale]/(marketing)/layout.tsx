@@ -2,6 +2,7 @@ import {setRequestLocale} from 'next-intl/server';
 import {Footer} from '@/components/layout/Footer';
 import {LandingNavbar} from '@/components/layout/LandingNavbar';
 import {NotificationBanner} from '@/components/NotificationBanner';
+import {GlobalWaitlistNotification} from '@/components/GlobalWaitlistNotification';
 
 export default async function Layout(props: {
   children: React.ReactNode;
@@ -13,6 +14,7 @@ export default async function Layout(props: {
   return (
     <>
       <NotificationBanner/>
+      <GlobalWaitlistNotification/>
       <div className="min-h-screen flex flex-col">
         <LandingNavbar/>
         <main className="flex-grow">

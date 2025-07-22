@@ -15,6 +15,7 @@ type AuthActionButtonProps = {
   onClick?: () => void;
   useWaitlistForLogin?: boolean; // 新增：是否在登录时也使用waitlist
   withEffect?: boolean; // 新增：是否使用特效版本
+  pendingText?: string; // 添加 pending 文本传递
 };
 
 // 映射不同Button组件的variant和size
@@ -46,7 +47,8 @@ export function AuthActionButton({
                                    size = 'default',
                                    signInUrl = '/login',
                                    onClick,
-                                   withEffect = false
+                                   withEffect = false,
+                                   pendingText = '申请已提交'
                                  }: AuthActionButtonProps) {
   const WaitlistComponent = withEffect ? WaitlistButtonWithEffect : WaitlistButton;
 
@@ -73,6 +75,7 @@ export function AuthActionButton({
       variant={variant}
       size={size}
       className={className}
+      pendingText={pendingText}
     >
       申请内测
     </WaitlistComponent>
