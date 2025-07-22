@@ -80,7 +80,9 @@ export function WaitlistModal({ children, source = 'unknown' }: WaitlistModalPro
       setWaitlistApplied({ 
         email: formData.email, 
         position: response.queue_position || undefined,
-        submissionTime: new Date().toISOString() 
+        submissionTime: new Date().toISOString(),
+        tier: response.position_tier || undefined,
+        estimatedWeeks: response.estimated_wait_weeks || undefined
       });
       
       // Generate and set global notification

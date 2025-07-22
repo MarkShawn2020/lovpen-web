@@ -4,6 +4,7 @@ import { useAtomValue } from 'jotai';
 import { waitlistStatusAtom } from '@/stores/waitlist';
 import { Button } from '@/components/ui/button';
 import { WaitlistModal } from './waitlist-modal';
+import { WaitlistStatusModal } from './waitlist-status-modal';
 
 type WaitlistButtonProps = {
   source: string;
@@ -26,14 +27,17 @@ export function WaitlistButton({
   
   if (waitlistStatus.hasApplied) {
     return (
-      <Button 
-        variant="outline" 
-        size={size}
-        className={`${className} border-gray-300 text-gray-500 cursor-default bg-gray-50`}
-        disabled
-      >
-        {pendingText}
-      </Button>
+      <WaitlistStatusModal>
+        <Button 
+          variant="outline" 
+          size={size}
+          className={`${className} border-green-300 text-green-700 bg-green-50 hover:bg-green-100 transition-colors`}
+        >
+          {pendingText}
+{' '}
+· 查看详情
+        </Button>
+      </WaitlistStatusModal>
     );
   }
 

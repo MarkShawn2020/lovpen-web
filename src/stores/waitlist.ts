@@ -38,11 +38,27 @@ export const waitlistStatusAtom = atom((get) => {
 // 设置申请状态的action
 export const setWaitlistAppliedAtom = atom(
   null,
-  (get, set, { email, position, submissionTime }: { email: string; position?: number; submissionTime?: string }) => {
+  (get, set, { 
+    email, 
+    position, 
+    submissionTime,
+    tier,
+    estimatedWeeks
+  }: { 
+    email: string; 
+    position?: number; 
+    submissionTime?: string;
+    tier?: 'priority' | 'regular' | 'extended';
+    estimatedWeeks?: number;
+  }) => {
     set(hasAppliedWaitlistAtom, true);
     set(waitlistEmailAtom, email);
     set(waitlistAppliedAtAtom, submissionTime || new Date().toISOString());
-    // Note: position could be stored in a separate atom if needed for later features
+    set(waitlistDetailsAtom, {
+      position,
+      tier,
+      estimatedWeeks
+    });
   }
 );
 
@@ -53,6 +69,7 @@ export const resetWaitlistAtom = atom(
     set(hasAppliedWaitlistAtom, false);
     set(waitlistEmailAtom, null);
     set(waitlistAppliedAtAtom, null);
+    set(waitlistDetailsAtom, null);
   }
 );
 
