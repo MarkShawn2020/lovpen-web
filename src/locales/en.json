@@ -2,7 +2,6 @@
   "RootLayout": {
     "home_link": "Home",
     "about_link": "About",
-    "counter_link": "Counter",
     "portfolio_link": "Portfolio",
     "sign_in_link": "Sign in",
     "sign_up_link": "Sign up"
@@ -226,21 +225,6 @@
     "success_message": "Profile updated successfully",
     "upload_success": "Avatar uploaded successfully",
     "verify_success": "Token verified successfully"
-  },
-  "Counter": {
-    "meta_title": "Counter",
-    "meta_description": "An example of DB operation",
-    "loading_counter": "Loading counter...",
-    "security_powered_by": "Security, bot detection and rate limiting powered by"
-  },
-  "CounterForm": {
-    "presentation": "The counter is stored in the database and incremented by the value you provide.",
-    "label_increment": "Increment by",
-    "button_increment": "Increment",
-    "error_increment_range": "Value must be between 1 and 3"
-  },
-  "CurrentCount": {
-    "count": "Count: {count}"
   },
   "About": {
     "meta_title": "About LovPen - Our Story & Mission",

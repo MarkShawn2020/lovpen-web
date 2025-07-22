@@ -553,20 +553,5 @@
     "help_title": "需要帮助？",
     "help_description": "找不到您要寻找的内容？我们的支持团队随时为您提供帮助。",
     "contact_support": "联系支持"
-  },
-  "Counter": {
-    "meta_title": "计数器",
-    "meta_description": "数据库操作示例",
-    "loading_counter": "加载计数器中...",
-    "security_powered_by": "安全防护、机器人检测和限流由以下提供"
-  },
-  "CounterForm": {
-    "presentation": "计数器存储在数据库中，可以根据您提供的值进行递增。",
-    "label_increment": "递增值",
-    "button_increment": "递增",
-    "error_increment_range": "值必须在 1 到 3 之间"
-  },
-  "CurrentCount": {
-    "count": "计数: {count}"
   }
 }
