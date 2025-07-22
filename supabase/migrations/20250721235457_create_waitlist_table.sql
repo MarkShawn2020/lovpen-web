@@ -30,6 +30,7 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+DROP TRIGGER IF EXISTS update_waitlist_updated_at ON waitlist;
 CREATE TRIGGER update_waitlist_updated_at
     BEFORE UPDATE ON waitlist
     FOR EACH ROW
@@ -38,7 +39,12 @@ CREATE TRIGGER update_waitlist_updated_at
 -- Enable Row Level Security
 ALTER TABLE waitlist ENABLE ROW LEVEL SECURITY;
 
--- Create RLS policies
+-- Create RLS policies (drop existing ones first to avoid conflicts)
+DROP POLICY IF EXISTS "Anyone can submit to waitlist" ON waitlist;
+DROP POLICY IF EXISTS "Users can view all waitlist entries" ON waitlist;
+DROP POLICY IF EXISTS "Only admins can update waitlist entries" ON waitlist;
+DROP POLICY IF EXISTS "Only admins can delete waitlist entries" ON waitlist;
+
 CREATE POLICY "Anyone can submit to waitlist"
 ON waitlist FOR INSERT
 TO anon, authenticated
