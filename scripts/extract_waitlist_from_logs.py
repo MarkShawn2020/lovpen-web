@@ -7,6 +7,7 @@ import json
 import sys
 import os
 import argparse
+import subprocess
 from typing import List, Dict, Optional
 from datetime import datetime
 from supabase import create_client, Client
@@ -15,17 +16,128 @@ from dotenv import load_dotenv
 # 加载环境变量
 load_dotenv()
 
+def get_supabase_config():
+    """获取Supabase配置信息"""
+    config = {}
+    
+    # 优先从环境变量获取
+    config['url'] = os.getenv('NEXT_PUBLIC_SUPABASE_URL')
+    config['service_role_key'] = os.getenv('SUPABASE_SERVICE_ROLE_KEY')
+    
+    # 如果环境变量不存在，尝试从supabase CLI获取
+    if not config['url'] or not config['service_role_key']:
+        try:
+            # 获取项目URL
+            if not config['url']:
+                result = subprocess.run(
+                    ['supabase', 'status', '--output', 'json'],
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
+                status_data = json.loads(result.stdout)
+                
+                # 尝试从不同字段获取URL
+                if 'API URL' in status_data:
+                    config['url'] = status_data['API URL']
+                elif 'api_url' in status_data:
+                    config['url'] = status_data['api_url']
+                elif isinstance(status_data, dict):
+                    # 搜索包含URL的字段
+                    for key, value in status_data.items():
+                        if isinstance(value, str) and 'supabase' in value and ('http' in value):
+                            config['url'] = value
+                            break
+            
+            # 获取service role key
+            if not config['service_role_key']:
+                # 尝试从secrets获取
+                try:
+                    result = subprocess.run(
+                        ['supabase', 'secrets', 'list', '--output', 'json'],
+                        capture_output=True,
+                        text=True,
+                        check=True
+                    )
+                    secrets = json.loads(result.stdout)
+                    if isinstance(secrets, list):
+                        for secret in secrets:
+                            if secret.get('name') == 'service_role_key':
+                                config['service_role_key'] = secret.get('value')
+                                break
+                except:
+                    pass
+                
+                # 如果还是没有，尝试从项目设置获取
+                if not config['service_role_key']:
+                    # 读取本地配置文件
+                    config_files = [
+                        '.env.local',
+                        '.env',
+                        'supabase/.env',
+                        os.path.expanduser('~/.supabase/config.toml')
+                    ]
+                    
+                    for config_file in config_files:
+                        if os.path.exists(config_file):
+                            try:
+                                with open(config_file, 'r') as f:
+                                    content = f.read()
+                                    
+                                # 查找service role key
+                                patterns = [
+                                    r'SUPABASE_SERVICE_ROLE_KEY\s*=\s*["\']?([^"\'\s]+)["\']?',
+                                    r'service_role_key\s*=\s*["\']?([^"\'\s]+)["\']?',
+                                    r'SERVICE_ROLE_KEY\s*=\s*["\']?([^"\'\s]+)["\']?'
+                                ]
+                                
+                                for pattern in patterns:
+                                    match = re.search(pattern, content)
+                                    if match:
+                                        config['service_role_key'] = match.group(1)
+                                        break
+                                
+                                if config['service_role_key']:
+                                    break
+                            except:
+                                continue
+                
+        except subprocess.CalledProcessError:
+            pass
+        except json.JSONDecodeError:
+            pass
+        except Exception:
+            pass
+    
+    return config
+
 class WaitlistExtractor:
     def __init__(self, verbose=False, quiet=False):
         """初始化Supabase客户端"""
         self.verbose = verbose
         self.quiet = quiet
         
-        self.supabase_url = os.getenv('NEXT_PUBLIC_SUPABASE_URL')
-        self.supabase_key = os.getenv('SUPABASE_SERVICE_ROLE_KEY')
+        # 获取Supabase配置
+        config = get_supabase_config()
+        self.supabase_url = config.get('url')
+        self.supabase_key = config.get('service_role_key')
         
-        if not self.supabase_url or not self.supabase_key:
-            raise ValueError("请设置 NEXT_PUBLIC_SUPABASE_URL 和 SUPABASE_SERVICE_ROLE_KEY 环境变量")
+        if not self.supabase_url:
+            raise ValueError(
+                "无法获取Supabase URL。请确保:\n"
+                "1. 设置 NEXT_PUBLIC_SUPABASE_URL 环境变量，或\n"
+                "2. 在项目目录中运行 'supabase link'"
+            )
+        
+        if not self.supabase_key:
+            raise ValueError(
+                "无法获取Supabase Service Role Key。请确保:\n"
+                "1. 设置 SUPABASE_SERVICE_ROLE_KEY 环境变量，或\n"
+                "2. 在 .env 文件中配置相关密钥"
+            )
+        
+        self._log_verbose(f"使用Supabase URL: {self.supabase_url}")
+        self._log_verbose(f"Service Role Key: {'*' * 20}...{self.supabase_key[-4:] if len(self.supabase_key) > 4 else '****'}")
         
         self.supabase: Client = create_client(self.supabase_url, self.supabase_key)
     
@@ -296,7 +408,7 @@ def parse_arguments():
     # 位置参数
     parser.add_argument(
         'log_files',
-        nargs='+',
+        nargs='*',  # 改为可选，支持 --show-config 不需要文件
         help='要处理的日志文件路径（支持多个文件和通配符）'
     )
     
@@ -350,6 +462,12 @@ def parse_arguments():
     )
     
     parser.add_argument(
+        '--show-config',
+        action='store_true',
+        help='显示检测到的Supabase配置信息'
+    )
+    
+    parser.add_argument(
         '--version',
         action='version',
         version='%(prog)s 1.0.0'
@@ -359,6 +477,39 @@ def parse_arguments():
 
 def main():
     args = parse_arguments()
+    
+    # 如果只是显示配置，直接输出并退出
+    if args.show_config:
+        config = get_supabase_config()
+        print("=== Supabase 配置信息 ===")
+        print(f"URL: {config.get('url', '未检测到')}")
+        
+        if config.get('service_role_key'):
+            key = config['service_role_key']
+            masked_key = f"{'*' * 20}...{key[-4:] if len(key) > 4 else '****'}"
+            print(f"Service Role Key: {masked_key}")
+        else:
+            print("Service Role Key: 未检测到")
+        
+        # 显示检测方法
+        print("\n=== 配置来源 ===")
+        if os.getenv('NEXT_PUBLIC_SUPABASE_URL'):
+            print("URL来源: 环境变量 NEXT_PUBLIC_SUPABASE_URL")
+        else:
+            print("URL来源: 尝试从 supabase CLI 获取")
+            
+        if os.getenv('SUPABASE_SERVICE_ROLE_KEY'):
+            print("Key来源: 环境变量 SUPABASE_SERVICE_ROLE_KEY")
+        else:
+            print("Key来源: 尝试从本地配置文件获取")
+        
+        sys.exit(0)
+    
+    # 检查是否提供了日志文件
+    if not args.log_files:
+        print("错误: 请提供至少一个日志文件路径")
+        print("使用 --help 查看使用方法")
+        sys.exit(1)
     
     # 设置输出级别
     verbose = args.verbose and not args.quiet

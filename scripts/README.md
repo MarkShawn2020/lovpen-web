@@ -25,11 +25,35 @@ pip install -r requirements.txt
 
 ## 环境配置
 
-确保在项目根目录的 `.env` 文件中设置以下环境变量：
+脚本支持多种方式获取Supabase配置：
+
+### 方式1：自动检测（推荐）
+
+如果项目已经通过 `supabase link` 连接，脚本会自动检测配置：
+
+```bash
+# 确保项目已经链接到Supabase
+supabase link
+
+# 脚本会自动检测配置
+python extract_waitlist_from_logs.py --show-config
+```
+
+### 方式2：环境变量
+
+在项目根目录的 `.env` 文件中设置：
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+```
+
+### 配置检测
+
+使用以下命令检查当前检测到的配置：
+
+```bash
+python extract_waitlist_from_logs.py --show-config
 ```
 
 ## 使用方法
@@ -52,6 +76,7 @@ python extract_waitlist_from_logs.py [选项] <日志文件路径...>
 | `--encoding` | 日志文件编码（默认: utf-8） |
 | `--skip-duplicates` | 跳过重复邮箱检查（加速处理） |
 | `--force` | 强制导入，即使存在重复邮箱 |
+| `--show-config` | 显示检测到的Supabase配置信息 |
 | `--version` | 显示版本信息 |
 | `--help, -h` | 显示帮助信息 |
 
@@ -87,6 +112,9 @@ python extract_waitlist_from_logs.py ~/.pm2/logs/*.log --batch --verbose --outpu
 
 # 快速处理模式（跳过重复检查）
 python extract_waitlist_from_logs.py large_log.txt --skip-duplicates --quiet
+
+# 检查配置
+python extract_waitlist_from_logs.py --show-config
 ```
 
 ### 高级用法
