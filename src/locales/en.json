@@ -630,7 +630,8 @@
     "sections": {
       "company": "Company",
       "product": "Products", 
-      "support": "Support"
+      "support": "Support",
+      "partners": "Partners"
     },
     "product_description": "All products share user center, knowledge base and other data",
     "links": {

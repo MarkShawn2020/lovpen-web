@@ -166,6 +166,31 @@ const Footer = () => {
             </div>
           </div>
 
+          {/* Partner Logos */}
+          <div className="mt-12 pt-8 border-t border-gray-700">
+            <div className="text-center">
+              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-6">
+                {t('sections.partners')}
+              </h3>
+              <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+                <a
+                  href="https://booko.ai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="opacity-60 hover:opacity-100 transition-opacity duration-300"
+                >
+                  <Image
+                    src="/bukoo_logo_dark.png"
+                    alt="Booko"
+                    width={120}
+                    height={40}
+                    className="h-8 md:h-10 w-auto filter brightness-0 invert"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+
           {/* Copyright */}
           <div className="mt-12 pt-8 border-t border-gray-700">
             <div className="flex flex-col md:flex-row justify-between items-center">

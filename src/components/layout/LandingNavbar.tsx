@@ -1,6 +1,6 @@
 import {getLocale, getTranslations} from 'next-intl/server';
 import Link from 'next/link';
-import {LogoWithText} from '@/components/lovpen-ui/logo';
+import Image from 'next/image';
 import {SmartNavLink} from '@/components/lovpen-ui/smart-nav-link';
 import {getI18nPath} from '@/utils/Helpers';
 import {Container} from './Container';
@@ -34,7 +34,14 @@ const LandingNavbar = async () => {
               href="/"
               className="flex items-center no-underline text-text-main hover:text-primary transition-colors"
             >
-              <LogoWithText size="md" className="text-brand-primary"/>
+              <div className="text-brand-primary transition-all duration-200 hover:scale-105 hover:opacity-90">
+                <Image 
+                  src="/assets/images/neurora-logo-theme.svg"
+                  alt="Neurora Logo" 
+                  width={120}
+                  height={36}
+                />
+              </div>
             </Link>
             <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full border border-gray-200">
               v

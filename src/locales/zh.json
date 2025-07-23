@@ -466,7 +466,8 @@
     "sections": {
       "company": "公司",
       "product": "产品", 
-      "support": "支持"
+      "support": "支持",
+      "partners": "合作伙伴"
     },
     "product_description": "所有产品共享用户中心、知识库等数据",
     "links": {
