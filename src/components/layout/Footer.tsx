@@ -50,13 +50,18 @@ const Footer = () => {
             {/* Logo and Description */}
             <div className="lg:col-span-4">
               <Link href="/" className="flex items-center no-underline mb-4">
-                <Image
-                  src="/assets/images/neurora-logo-white.png"
-                  alt="Neurora"
+                <svg
                   width={40}
                   height={40}
-                  className="h-10 w-auto"
-                />
+                  viewBox="0 0 435.55 477.03"
+                  className="h-10 w-auto fill-white"
+                >
+                  <g>
+                    <path d="M0,0L0,0v269.62c0,68.71,55.7,124.45,124.45,124.45l0,0V124.45C124.45,55.73,68.74,0,0,0z"/>
+                    <path d="M155.55,82.96L155.55,82.96v269.62c0,68.71,55.7,124.45,124.45,124.45l0,0V207.41C280,138.67,224.29,82.96,155.55,82.96z"/>
+                    <path d="M311.1,40.27v248.86c68.71,0,124.45-55.7,124.45-124.45S379.84,40.27,311.1,40.27z"/>
+                  </g>
+                </svg>
               </Link>
               <p className="u-paragraph-m text-gray-300 mb-6">
                 {t('company_description')}
@@ -174,31 +179,59 @@ const Footer = () => {
               </h3>
               <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
                 <a
-                  href="https://booko.ai"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="opacity-60 hover:opacity-100 transition-opacity duration-300"
-                >
-                  <Image
-                    src="/bukoo_logo_dark.png"
-                    alt="Booko"
-                    width={120}
-                    height={40}
-                    className="h-8 md:h-10 w-auto filter brightness-0 invert"
-                  />
-                </a>
-                <a
                   href="https://puppyagent.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="opacity-60 hover:opacity-100 transition-opacity duration-300"
+                  className="group opacity-60 hover:opacity-100 transition-all duration-300"
                 >
                   <Image
                     src="/puppyagent_logo.png"
                     alt="PuppyAgent"
                     width={120}
                     height={40}
-                    className="h-8 md:h-10 w-auto filter brightness-0 invert"
+                    className="h-8 md:h-10 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a
+                  href="https://terracottasec.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group opacity-60 hover:opacity-100 transition-all duration-300"
+                >
+                  <Image
+                    src="/terracottasec_logo.png"
+                    alt="Terracotta"
+                    width={120}
+                    height={40}
+                    className="h-8 md:h-10 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a
+                  href="https://featbit.co"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group opacity-60 hover:opacity-100 transition-all duration-300"
+                >
+                  <Image
+                    src="/logo/featbit_logo.png"
+                    alt="FeatBit"
+                    width={120}
+                    height={40}
+                    className="h-8 md:h-10 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a
+                  href="https://www.bukoo.ai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group opacity-60 hover:opacity-100 transition-all duration-300"
+                >
+                  <Image
+                    src="/bukoo_logo_dark.png"
+                    alt="Bukoo"
+                    width={120}
+                    height={40}
+                    className="h-8 md:h-10 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
                   />
                 </a>
               </div>
