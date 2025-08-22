@@ -220,6 +220,52 @@ const Footer = () => {
                     className="h-8 md:h-10 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
                   />
                 </a>
+                <div className="group opacity-60 hover:opacity-100 transition-all duration-300">
+                  <a
+                    href="https://grimo.ai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 no-underline"
+                  >
+                    <svg
+                      width="40"
+                      height="40"
+                      viewBox="0 0 824 824"
+                      className="h-8 md:h-10 w-auto filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                    >
+                      <rect width="824" height="824" rx="183" fill="#FAFAFA"/>
+                      <path d="M223.79 603V563.4H162.374V260.6H223.79V221H122.719V603H223.79Z" fill="#37363A"/>
+                      <path d="M382.464 603V563.4H321.04V260.599H382.464V220.999H281.393V603H382.464Z" fill="#5E4DB2" fillOpacity="0.8"/>
+                      <path d="M502.007 563.009H440.192V602.602H541.263V220.999H440.192V260.599H502.007V563.009Z" fill="#5E4DB2" fillOpacity="0.8"/>
+                      <path d="M661.455 563.011H599.64V602.603H700.719V221H599.64V260.6H661.455V563.011Z" fill="#37363A"/>
+                    </svg>
+                    <span className="text-gray-400 group-hover:text-white font-semibold text-lg md:text-xl transition-all duration-300">
+                      Grimo.ai
+                    </span>
+                  </a>
+                </div>
+                <div className="group opacity-60 hover:opacity-100 transition-all duration-300">
+                  <a
+                    href="https://shareai-lab.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 no-underline"
+                  >
+                    <svg
+                      width="30"
+                      height="30"
+                      viewBox="15 21 153 158"
+                      className="h-8 md:h-10 w-auto filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                    >
+                      <path d="M103.5,178.6c-20.7,1.4-46.1-7-63.1-24.7C18,130.7,10.1,104.6,18.2,73.2c1.5-5.9,4.9-9.1,11-8.4c9.6,1.1,14,6.8,12.1,15.7c-7,33.4,13.4,69.6,45.7,81.3c27.3,9.8,52.1,5.4,74.6-12.9c1.1-0.9,5.3-4.1,6.4-5C162.9,155.3,137.1,176.4,103.5,178.6z" fill="#1730C6"/>
+                      <path d="M45,94.7C41.6,65,50.4,41.4,74.4,24.2c4.2-3.4,10.4-4.6,14.1,1c3.7,5.6,3.1,10.9-2.2,15C70.5,52.4,62.9,68.8,61.7,89c-1.6,27.5,17.6,55.4,43.4,62.3c6.2,1.7,13,2.3,20.7,3.3c-6.3,1.1-13.3,1.7-19.2,1.1c-19-2.1-35.7-10.3-46.9-26.5C53.7,120.5,46.7,109.9,45,94.7z" fill="#033CDD"/>
+                      <path d="M82.3,127.2c-13.7-17.6-16.1-38-8.5-59.4c11.4-32,46.6-47.7,76.5-34.5c7.3,3.2,8.9,5.8,6.9,11.3c-2.4,6.6-5.8,8-13.1,5.4c-22.6-8-45-1-58.5,19.1c-10.3,15.4-12,32.3-5.2,49.9c0.6,1.5,1.1,2.9,1.7,4.3c0.5,1.1,3.5,7.1,3.5,7.1S84,129.3,82.3,127.2z" fill="#15BCC8"/>
+                    </svg>
+                    <span className="text-gray-400 group-hover:text-white font-semibold text-lg md:text-xl transition-all duration-300">
+                      ShareAI
+                    </span>
+                  </a>
+                </div>
                 <a
                   href="https://www.bukoo.ai"
                   target="_blank"
@@ -229,9 +275,9 @@ const Footer = () => {
                   <Image
                     src="/bukoo_logo_dark.png"
                     alt="Bukoo"
-                    width={120}
-                    height={40}
-                    className="h-8 md:h-10 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
+                    width={100}
+                    height={33}
+                    className="h-7 md:h-8 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
                   />
                 </a>
               </div>
