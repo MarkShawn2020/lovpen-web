@@ -8,7 +8,7 @@
   "scripts": {
     "dev:spotlight": "npx @spotlightjs/sidecar",
     "dev:next": "next dev",
-    "dev": "run-p supabase:start dev:*",
+    "dev": "run-p supabase:start dev:spotlight dev:next",
     "dev:prod": "SUPABASE_ENV=production npm run dev:next",
     "build:next": "next build",
     "build": "npm run build:next",
