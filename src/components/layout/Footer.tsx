@@ -187,6 +187,20 @@ const Footer = () => {
                     className="h-8 md:h-10 w-auto filter brightness-0 invert"
                   />
                 </a>
+                <a
+                  href="https://puppyagent.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="opacity-60 hover:opacity-100 transition-opacity duration-300"
+                >
+                  <Image
+                    src="/puppyagent_logo.png"
+                    alt="PuppyAgent"
+                    width={120}
+                    height={40}
+                    className="h-8 md:h-10 w-auto filter brightness-0 invert"
+                  />
+                </a>
               </div>
             </div>
           </div>
