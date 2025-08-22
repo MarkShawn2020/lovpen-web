@@ -179,20 +179,6 @@ const Footer = () => {
               </h3>
               <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
                 <a
-                  href="https://puppyagent.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group opacity-60 hover:opacity-100 transition-all duration-300"
-                >
-                  <Image
-                    src="/puppyagent_logo.png"
-                    alt="PuppyAgent"
-                    width={120}
-                    height={40}
-                    className="h-8 md:h-10 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
-                  />
-                </a>
-                <a
                   href="https://terracottasec.com"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -201,6 +187,20 @@ const Footer = () => {
                   <Image
                     src="/terracottasec_logo.png"
                     alt="Terracotta"
+                    width={120}
+                    height={40}
+                    className="h-8 md:h-10 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a
+                  href="https://puppyagent.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group opacity-60 hover:opacity-100 transition-all duration-300"
+                >
+                  <Image
+                    src="/puppyagent_logo.png"
+                    alt="PuppyAgent"
                     width={120}
                     height={40}
                     className="h-8 md:h-10 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
