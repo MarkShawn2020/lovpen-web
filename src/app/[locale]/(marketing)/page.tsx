@@ -2,7 +2,6 @@ import {getTranslations, setRequestLocale} from 'next-intl/server';
 import Hero from "@/app/[locale]/(marketing)/hero/page";
 import Workflow from "@/app/[locale]/(marketing)/workflow/page";
 import FeaturesHome from "@/app/[locale]/(marketing)/features-home/page";
-import Cases from "@/app/[locale]/(marketing)/cases/page";
 import Testimonials from "@/app/[locale]/(marketing)/testimonials/page";
 import Pricing from "@/app/[locale]/(marketing)/pricing/page";
 import Ending from "@/app/[locale]/(marketing)/ending/page";
@@ -42,8 +41,8 @@ export default async function Index(props: IIndexProps) {
       {/* Features Section */}
       <FeaturesHome params={props.params}/>
 
-      {/* Cases Section */}
-      <Cases params={props.params}/>
+      {/* Cases Section
+      <Cases params={props.params}/> */}
 
       {/* Testimonials Section */}
       <Testimonials params={props.params}/>
