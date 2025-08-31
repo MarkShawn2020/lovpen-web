@@ -5,7 +5,6 @@ import FeaturesHome from "@/app/[locale]/(marketing)/features-home/page";
 import Cases from "@/app/[locale]/(marketing)/cases/page";
 import Testimonials from "@/app/[locale]/(marketing)/testimonials/page";
 import Pricing from "@/app/[locale]/(marketing)/pricing/page";
-import About from "@/app/[locale]/(marketing)/about/page";
 import Ending from "@/app/[locale]/(marketing)/ending/page";
 
 type IIndexProps = {
@@ -51,9 +50,6 @@ export default async function Index(props: IIndexProps) {
 
       {/* Pricing Section */}
       <Pricing params={props.params}/>
-
-      {/* About Section */}
-      <About params={props.params}/>
 
       {/* Ending Section */}
       <Ending params={props.params}/>
