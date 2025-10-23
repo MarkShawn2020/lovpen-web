@@ -14,7 +14,7 @@
 // tailwind.config.js -> theme.extend
 {
   "colors": {
-    "primary": "#D97757", // (推断自主色调，如按钮和高亮)
+    "primary": "#CC785C", // (推断自主色调，如按钮和高亮)
     "text": {
       "main": "#181818", // (主要文本颜色)
       "faded": "#87867F" // (次要/褪色文本)
